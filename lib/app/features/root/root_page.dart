@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:travel_cost_log/app/cubit/root_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:travel_cost_log/app/features/home/home_page.dart';
+import 'package:travel_cost_log/app/features/loading/loading_page.dart';
+import 'package:travel_cost_log/app/features/login/login_page.dart';
 
 class RootPage extends StatelessWidget {
   const RootPage({
@@ -16,12 +19,12 @@ class RootPage extends StatelessWidget {
           final user = state.user;
 
           if (state.isLoading) {
-            return const Scaffold();
+            return LoadingPage();
           }
           if (user == null) {
-            return const Scaffold();
+            return LoginPage();
           }
-          return const Scaffold();
+          return HomePage();
         },
       ),
     );

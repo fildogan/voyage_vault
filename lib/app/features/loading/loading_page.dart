@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({
+class LoadingPage extends StatelessWidget {
+  const LoadingPage({
     Key? key,
   }) : super(key: key);
 
