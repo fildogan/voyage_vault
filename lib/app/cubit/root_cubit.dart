@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:meta/meta.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -15,6 +16,22 @@ class RootCubit extends Cubit<RootState> {
         ));
 
   StreamSubscription? _streamSubscription;
+
+  Future<void> signOut() async {
+    FirebaseAuth.instance.signOut();
+  }
+
+  Future<void> createUserWithEmailAndPassword(
+      {required String email, required String password}) async {
+    await FirebaseAuth.instance
+        .createUserWithEmailAndPassword(email: email, password: password);
+  }
+
+  Future<void> signInWithEmailAndPassword(
+      {required String email, required String password}) async {
+    await FirebaseAuth.instance
+        .signInWithEmailAndPassword(email: email, password: password);
+  }
 
   Future<void> start() async {
     emit(
@@ -42,5 +59,11 @@ class RootCubit extends Cubit<RootState> {
               errorMessage: error.toString(),
             ));
           });
+  }
+
+  @override
+  Future<void> close() {
+    _streamSubscription?.cancel();
+    return super.close();
   }
 }
