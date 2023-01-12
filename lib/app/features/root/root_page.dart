@@ -19,12 +19,12 @@ class RootPage extends StatelessWidget {
           final user = state.user;
 
           if (state.isLoading) {
-            return LoadingPage();
+            return const LoadingPage();
           }
           if (user == null) {
-            return LoginPage();
+            return const LoginPage();
           }
-          return HomePage();
+          return const HomePage();
         },
       ),
     );
