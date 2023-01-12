@@ -8,7 +8,7 @@
 PRODUCT_NAME = travel_cost_log
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.example.travelCostLog
+PRODUCT_BUNDLE_IDENTIFIER = com.filipdoganowski.travelCostLog
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2023 com.example. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2023 com.filipdoganowski. All rights reserved.

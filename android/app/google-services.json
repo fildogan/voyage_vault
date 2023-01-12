@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1074086011061",
+    "project_id": "travel-cost-log",
+    "storage_bucket": "travel-cost-log.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1074086011061:android:08baf50909285b42ae1efc",
+        "android_client_info": {
+          "package_name": "com.filipdoganowski.travel_cost_log"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1074086011061-ni9ioj8ag007atl52hi0ir7h2kn2ap57.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbCSlbtnLnCAmvEevC09w9yh3Fb7HVvIA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1074086011061-ni9ioj8ag007atl52hi0ir7h2kn2ap57.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
