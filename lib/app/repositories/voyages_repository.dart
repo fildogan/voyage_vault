@@ -29,4 +29,24 @@ class VoyagesRepository {
       },
     );
   }
+
+  Future<void> add(
+    String title,
+    DateTime startDate,
+    DateTime endDate,
+  ) async {
+    final userID = FirebaseAuth.instance.currentUser?.uid;
+    if (userID == null) {
+      throw Exception('User is not logged in');
+    }
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userID)
+        .collection('voyages')
+        .add({
+      'title': title,
+      'startdate': startDate,
+      'enddate': endDate,
+    });
+  }
 }
