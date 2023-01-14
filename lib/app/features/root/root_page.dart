@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:travel_cost_log/app/cubit/root_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:travel_cost_log/app/features/home/home_page.dart';
+import 'package:travel_cost_log/app/features/home/pages/home_page.dart';
 import 'package:travel_cost_log/app/features/loading/loading_page.dart';
 import 'package:travel_cost_log/app/features/login/login_page.dart';
 
