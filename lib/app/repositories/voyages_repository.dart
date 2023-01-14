@@ -21,8 +21,8 @@ class VoyagesRepository {
             return VoyageModel(
               id: doc.id,
               title: doc['title'],
-              // startDate: (doc['release_date'] as Timestamp).toDate(),
-              // endDate: (doc['release_date'] as Timestamp).toDate(),
+              startDate: (doc['startdate'] as Timestamp).toDate(),
+              endDate: (doc['enddate'] as Timestamp).toDate(),
             );
           },
         ).toList();
