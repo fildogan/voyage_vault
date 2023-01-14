@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:travel_cost_log/app/features/home/pages/add/add_page_content.dart';
+import 'package:travel_cost_log/app/features/home/pages/add_page_content/add_page_content.dart';
 import 'package:travel_cost_log/app/features/home/pages/my_account/my_account_page_content.dart';
 import 'package:travel_cost_log/app/features/home/pages/voyages/voyages_page_content.dart';
 

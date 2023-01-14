@@ -8,7 +8,7 @@ import 'package:travel_cost_log/app/repositories/voyages_repository.dart';
 part 'voyages_state.dart';
 
 class VoyagesCubit extends Cubit<VoyagesState> {
-  VoyagesCubit(this._voyagesRepository) : super(VoyagesState());
+  VoyagesCubit(this._voyagesRepository) : super(const VoyagesState());
 
   final VoyagesRepository _voyagesRepository;
 
@@ -20,7 +20,7 @@ class VoyagesCubit extends Cubit<VoyagesState> {
       emit(VoyagesState(voyages: voyages));
     })
           ..onError((error) {
-            emit(VoyagesState(loadingErrorOccured: true));
+            emit(const VoyagesState(loadingErrorOccured: true));
           });
   }
 
