@@ -9,7 +9,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Travel Cost Log',
-      theme: ThemeData(),
+      theme: ThemeData.dark(),
       home: const AuthGate(),
     );
   }

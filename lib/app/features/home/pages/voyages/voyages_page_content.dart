@@ -41,7 +41,7 @@ class _ListViewItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.pink.shade300,
+      color: Colors.brown.shade700,
       margin: const EdgeInsets.only(top: 10) +
           const EdgeInsets.symmetric(horizontal: 10),
       child: Padding(

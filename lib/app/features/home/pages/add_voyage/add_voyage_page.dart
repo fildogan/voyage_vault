@@ -17,9 +17,26 @@ class _AddVoyagePageState extends State<AddVoyagePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [TextField()]),
+        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          TextField(),
+          ElevatedButton(
+            onPressed: () async {
+              final selectedDate = await showDatePicker(
+                context: context,
+                initialDate: DateTime.now(),
+                firstDate: DateTime.now(),
+                lastDate: DateTime.now().add(
+                  const Duration(days: 365 * 10),
+                ),
+              );
+              (selectedDate);
+            },
+            child: Text('Choose voyage start date'),
+          ),
+          ElevatedButton(
+              onPressed: (() => Navigator.of(context).pop()),
+              child: Text('Add Voyage'))
+        ]),
       ),
     );
   }
