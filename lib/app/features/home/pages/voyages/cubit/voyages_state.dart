@@ -2,7 +2,7 @@ part of 'voyages_cubit.dart';
 
 @immutable
 class VoyagesState {
-  VoyagesState({
+  const VoyagesState({
     this.voyages = const [],
     this.loadingErrorOccured = false,
     this.removingErrorOccured = false,
