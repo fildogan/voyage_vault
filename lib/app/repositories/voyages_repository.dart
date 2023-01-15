@@ -63,20 +63,21 @@ class VoyagesRepository {
         .delete();
   }
 
-  Future<String> getDocumentIdByTitle(String title) async {
+  Future<String> getVoyageIDByTitle(String title) async {
     final userID = FirebaseAuth.instance.currentUser?.uid;
     if (userID == null) {
       throw Exception('User is not logged in');
     }
-    final snapshot = await FirebaseFirestore.instance
+    final querySnapshot = await FirebaseFirestore.instance
         .collection('users')
         .doc(userID)
         .collection('voyages')
         .where('title', isEqualTo: title)
         .get();
-    if (snapshot.docs.isEmpty) {
+    if (querySnapshot.docs.isEmpty) {
       throw Exception('No document with title $title found');
     }
-    return snapshot.docs.first.id;
+    final doc = querySnapshot.docs.first;
+    return doc.id;
   }
 }
