@@ -1,7 +1,8 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:travel_cost_log/app/repositories/voyages_repository.dart';
-import 'dart:async';
 
 part 'add_voyage_state.dart';
 

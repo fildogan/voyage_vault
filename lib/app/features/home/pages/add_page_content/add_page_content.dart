@@ -11,16 +11,17 @@ class AddPageContent extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           ElevatedButton(
-              onPressed: (() {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const AddVoyagePage(),
-                    fullscreenDialog: true,
-                  ),
-                );
-              }),
-              child: const Text('Add Voyage')),
-          ElevatedButton(onPressed: (() {}), child: const Text('Add Expense')),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const AddVoyagePage(),
+                  fullscreenDialog: true,
+                ),
+              );
+            },
+            child: const Text('Add Voyage'),
+          ),
+          ElevatedButton(onPressed: () {}, child: const Text('Add Expense')),
           const Center(
             child: Icon(Icons.add),
           ),

@@ -20,7 +20,7 @@ class VoyagesRepository {
           (doc) {
             return VoyageModel(
               id: doc.id,
-              title: doc['title'],
+              title: doc['title'].toString(),
               startDate: (doc['startdate'] as Timestamp).toDate(),
               endDate: (doc['enddate'] as Timestamp).toDate(),
             );

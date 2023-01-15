@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel_cost_log/app/features/home/pages/voyages/cubit/voyages_cubit.dart';
 import 'package:travel_cost_log/app/features/home/pages/voyages/widgets/alert_dialog.dart';
 import 'package:travel_cost_log/app/models/voyage_model.dart';
 import 'package:travel_cost_log/app/repositories/voyages_repository.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class VoyagesPageContent extends StatelessWidget {
   const VoyagesPageContent({super.key});
@@ -20,19 +20,22 @@ class VoyagesPageContent extends StatelessWidget {
               children: [
                 for (final voyageModel in voyageModels)
                   Dismissible(
-                      key: ValueKey(voyageModel.id),
-                      onDismissed: (direction) => context
-                          .read<VoyagesCubit>()
-                          .remove(documentID: voyageModel.id),
-                      confirmDismiss: (direction) {
-                        return showDialog(
-                            context: context,
-                            builder: ((BuildContext context) {
-                              return RemoveVoyageAlertDialog(
-                                  voyageModel: voyageModel);
-                            }));
-                      },
-                      child: _ListViewItem(voyageModel: voyageModel))
+                    key: ValueKey(voyageModel.id),
+                    onDismissed: (direction) => context
+                        .read<VoyagesCubit>()
+                        .remove(documentID: voyageModel.id),
+                    confirmDismiss: (direction) {
+                      return showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return RemoveVoyageAlertDialog(
+                            voyageModel: voyageModel,
+                          );
+                        },
+                      );
+                    },
+                    child: _ListViewItem(voyageModel: voyageModel),
+                  )
               ],
             );
           },
@@ -44,9 +47,8 @@ class VoyagesPageContent extends StatelessWidget {
 
 class _ListViewItem extends StatelessWidget {
   const _ListViewItem({
-    Key? key,
     required this.voyageModel,
-  }) : super(key: key);
+  });
 
   final VoyageModel voyageModel;
 
@@ -66,7 +68,9 @@ class _ListViewItem extends StatelessWidget {
                 Text(
                   voyageModel.title,
                   style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 15),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                  ),
                 ),
                 const SizedBox(
                   height: 10,
@@ -82,7 +86,6 @@ class _ListViewItem extends StatelessWidget {
               ],
             ),
             Column(
-              mainAxisAlignment: MainAxisAlignment.start,
               children: const [
                 Text(
                   '€ 500',

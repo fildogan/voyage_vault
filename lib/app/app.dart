@@ -6,11 +6,9 @@ class MyApp extends StatelessWidget {
 
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Travel Cost Log',
-      theme: ThemeData.dark(useMaterial3: true),
-      home: const AuthGate(),
-    );
-  }
+  Widget build(BuildContext context) => MaterialApp(
+        title: 'Travel Cost Log',
+        theme: ThemeData.dark(useMaterial3: true),
+        home: const AuthGate(),
+      );
 }

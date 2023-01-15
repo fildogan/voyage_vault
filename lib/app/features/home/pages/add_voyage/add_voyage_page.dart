@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:travel_cost_log/app/features/home/pages/add_voyage/cubit/add_voyage_cubit.dart';
-import 'package:travel_cost_log/app/repositories/voyages_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:travel_cost_log/app/features/home/pages/add_voyage/cubit/add_voyage_cubit.dart';
+import 'package:travel_cost_log/app/repositories/voyages_repository.dart';
 
 class AddVoyagePage extends StatefulWidget {
   const AddVoyagePage({super.key});
@@ -65,17 +65,16 @@ class _AddVoyagePageState extends State<AddVoyagePage> {
 }
 
 class _AddVoyagePageBody extends StatelessWidget {
-  const _AddVoyagePageBody(
-      {Key? key,
-      required this.onTitleChanged,
-      required this.onStartDateChanged,
-      this.startDateFormated,
-      required this.onEndDateChanged,
-      this.endDateFormated,
-      this.voyageTitle,
-      this.voyageStartDate,
-      this.voyageEndDate})
-      : super(key: key);
+  const _AddVoyagePageBody({
+    required this.onTitleChanged,
+    required this.onStartDateChanged,
+    this.startDateFormated,
+    required this.onEndDateChanged,
+    this.endDateFormated,
+    this.voyageTitle,
+    this.voyageStartDate,
+    this.voyageEndDate,
+  });
 
   final Function(String?) onTitleChanged;
 
@@ -93,54 +92,55 @@ class _AddVoyagePageBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Center(
-        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          SizedBox(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
               width: 200,
               child: TextField(
                 onChanged: onTitleChanged,
-              )),
-          ElevatedButton(
-            onPressed: () async {
-              final selectedDate = await showDatePicker(
-                context: context,
-                initialDate: DateTime.now(),
-                firstDate: DateTime.now(),
-                lastDate: DateTime.now().add(
-                  const Duration(days: 365 * 10),
-                ),
-              );
-              onStartDateChanged(selectedDate);
-            },
-            child: Text(startDateFormated ?? 'Choose voyage start date'),
-          ),
-          ElevatedButton(
-            onPressed: () async {
-              final selectedDate = await showDatePicker(
-                context: context,
-                initialDate: DateTime.now(),
-                firstDate: DateTime.now(),
-                lastDate: DateTime.now().add(
-                  const Duration(days: 365 * 10),
-                ),
-              );
-              onEndDateChanged(selectedDate);
-            },
-            child: Text(endDateFormated ?? 'Choose voyage end date'),
-          ),
-          ElevatedButton(
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                final selectedDate = await showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime.now(),
+                  lastDate: DateTime.now().add(
+                    const Duration(days: 365 * 10),
+                  ),
+                );
+                onStartDateChanged(selectedDate);
+              },
+              child: Text(startDateFormated ?? 'Choose voyage start date'),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                final selectedDate = await showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime.now(),
+                  lastDate: DateTime.now().add(
+                    const Duration(days: 365 * 10),
+                  ),
+                );
+                onEndDateChanged(selectedDate);
+              },
+              child: Text(endDateFormated ?? 'Choose voyage end date'),
+            ),
+            ElevatedButton(
               onPressed: voyageTitle == null ||
                       voyageStartDate == null ||
                       voyageEndDate == null
-                  ? () {
-                      Navigator.of(context).pop();
-                    }
-                  : () {
-                      context
-                          .read<AddVoyageCubit>()
-                          .add(voyageTitle!, voyageStartDate!, voyageEndDate!);
-                    },
-              child: const Text('Add Voyage'))
-        ]),
+                  ? () => Navigator.of(context).pop()
+                  : () => context
+                      .read<AddVoyageCubit>()
+                      .add(voyageTitle!, voyageStartDate!, voyageEndDate!),
+              child: const Text('Add Voyage'),
+            )
+          ],
+        ),
       ),
     );
   }

@@ -3,9 +3,9 @@ import 'package:travel_cost_log/app/models/voyage_model.dart';
 
 class RemoveVoyageAlertDialog extends StatelessWidget {
   const RemoveVoyageAlertDialog({
-    Key? key,
+    super.key,
     required this.voyageModel,
-  }) : super(key: key);
+  });
 
   final VoyageModel voyageModel;
 
@@ -16,15 +16,13 @@ class RemoveVoyageAlertDialog extends StatelessWidget {
       content: Text('Voyage: ${voyageModel.title}'),
       actions: [
         TextButton(
-            onPressed: (() {
-              Navigator.of(context).pop(true);
-            }),
-            child: const Text('Yes')),
+          onPressed: () => Navigator.of(context).pop(true),
+          child: const Text('Yes'),
+        ),
         TextButton(
-            onPressed: (() {
-              Navigator.of(context).pop(false);
-            }),
-            child: const Text('No'))
+          onPressed: () => Navigator.of(context).pop(false),
+          child: const Text('No'),
+        )
       ],
     );
   }

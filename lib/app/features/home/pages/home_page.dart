@@ -5,8 +5,8 @@ import 'package:travel_cost_log/app/features/home/pages/voyages/voyages_page_con
 
 class HomePage extends StatefulWidget {
   const HomePage({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -27,18 +27,15 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  BottomNavigationBar _buildBottomNavigationBar() {
-    return BottomNavigationBar(
-        onTap: (newIndex) {
-          setState(() {
-            _currentIndex = newIndex;
-          });
-        },
+  BottomNavigationBar _buildBottomNavigationBar() => BottomNavigationBar(
+        onTap: (newIndex) => setState(
+          () => _currentIndex = newIndex,
+        ),
         currentIndex: _currentIndex,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.luggage), label: 'Voyages'),
           BottomNavigationBarItem(icon: Icon(Icons.add), label: 'Add'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Account')
-        ]);
-  }
+        ],
+      );
 }
