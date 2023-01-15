@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travel_cost_log/app/features/home/pages/voyages/cubit/voyages_cubit.dart';
+import 'package:travel_cost_log/app/features/home/pages/voyages/widgets/alert_dialog.dart';
 import 'package:travel_cost_log/app/models/voyage_model.dart';
 import 'package:travel_cost_log/app/repositories/voyages_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,6 +24,14 @@ class VoyagesPageContent extends StatelessWidget {
                       onDismissed: (direction) => context
                           .read<VoyagesCubit>()
                           .remove(documentID: voyageModel.id),
+                      confirmDismiss: (direction) {
+                        return showDialog(
+                            context: context,
+                            builder: ((BuildContext context) {
+                              return RemoveVoyageAlertDialog(
+                                  voyageModel: voyageModel);
+                            }));
+                      },
                       child: _ListViewItem(voyageModel: voyageModel))
               ],
             );
