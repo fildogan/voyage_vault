@@ -20,6 +20,9 @@ class VoyagesPageContent extends StatelessWidget {
                 for (final voyageModel in voyageModels)
                   Dismissible(
                       key: ValueKey(voyageModel.id),
+                      onDismissed: (direction) => context
+                          .read<VoyagesCubit>()
+                          .remove(documentID: voyageModel.id),
                       child: _ListViewItem(voyageModel: voyageModel))
               ],
             );

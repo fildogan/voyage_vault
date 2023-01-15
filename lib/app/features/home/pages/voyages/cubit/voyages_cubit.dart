@@ -24,6 +24,16 @@ class VoyagesCubit extends Cubit<VoyagesState> {
           });
   }
 
+  Future<void> remove({
+    required String documentID,
+  }) async {
+    try {
+      await _voyagesRepository.remove(id: documentID);
+    } catch (error) {
+      emit(const VoyagesState(removingErrorOccured: true));
+    }
+  }
+
   @override
   Future<void> close() {
     _streamSubscription?.cancel();
