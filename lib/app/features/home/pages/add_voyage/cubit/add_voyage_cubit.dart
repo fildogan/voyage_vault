@@ -6,7 +6,7 @@ import 'dart:async';
 part 'add_voyage_state.dart';
 
 class AddVoyageCubit extends Cubit<AddVoyageState> {
-  AddVoyageCubit(this._voyagesRepository) : super(AddVoyageState());
+  AddVoyageCubit(this._voyagesRepository) : super(const AddVoyageState());
 
   final VoyagesRepository _voyagesRepository;
 
