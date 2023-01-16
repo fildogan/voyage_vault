@@ -15,7 +15,7 @@ class AddExpensePage extends StatefulWidget {
 
 class _AddExpensePageState extends State<AddExpensePage> {
   String? _expenseName;
-  String? _expenseVoyageID;
+  String? _expenseVoyageTitle;
   double? _expensePrice;
   String? _expenseCategory;
 
@@ -27,13 +27,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
           ExpensesRepository(),
           ExpenseCategoriesRepository(),
           VoyagesRepository(),
-        )..getCategoryList().then(
-            (value) => AddExpenseCubit(
-              ExpensesRepository(),
-              ExpenseCategoriesRepository(),
-              VoyagesRepository(),
-            )..getVoyageTitleStream(),
-          ),
+        )..getCategoryList(),
         child: BlocListener<AddExpenseCubit, AddExpenseState>(
           listener: (context, state) {
             if (state.saved) {
@@ -52,14 +46,13 @@ class _AddExpensePageState extends State<AddExpensePage> {
           },
           child: BlocBuilder<AddExpenseCubit, AddExpenseState>(
             builder: (context, state) {
-              final voyageTitleList = state.voyageTitles;
               return _AddExpensePageBody(
                 onNameChanged: (newValue) =>
                     setState(() => _expenseName = newValue),
                 expenseName: _expenseName,
-                onVoyageIDChanged: (newValue) =>
-                    setState(() => _expenseVoyageID = newValue),
-                expenseVoyageID: _expenseVoyageID,
+                onVoyageTitleChanged: (newValue) =>
+                    setState(() => _expenseVoyageTitle = newValue),
+                expenseVoyageTitle: _expenseVoyageTitle,
                 onPriceChanged: (newValue) =>
                     setState(() => _expensePrice = newValue),
                 expensePrice: _expensePrice,
@@ -67,6 +60,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
                     setState(() => _expenseCategory = newValue),
                 expenseCategory: _expenseCategory,
                 categoryTitles: state.categoryTitles,
+                voyageTitles: state.voyageTitles,
               );
             },
           ),
@@ -80,26 +74,28 @@ class _AddExpensePageBody extends StatelessWidget {
   const _AddExpensePageBody({
     required this.onNameChanged,
     this.expenseName,
-    required this.onVoyageIDChanged,
-    this.expenseVoyageID,
+    required this.onVoyageTitleChanged,
+    this.expenseVoyageTitle,
     required this.onPriceChanged,
     this.expensePrice,
     required this.onCategoryChanged,
     this.expenseCategory,
     required this.categoryTitles,
+    required this.voyageTitles,
   });
 
   final Function(String?) onNameChanged;
-  final Function(String?) onVoyageIDChanged;
+  final Function(String?) onVoyageTitleChanged;
   final Function(double?) onPriceChanged;
   final Function(String?) onCategoryChanged;
 
   final String? expenseName;
-  final String? expenseVoyageID;
+  final String? expenseVoyageTitle;
   final double? expensePrice;
   final String? expenseCategory;
 
   final List<String> categoryTitles;
+  final List<String> voyageTitles;
 
   @override
   Widget build(BuildContext context) {
@@ -136,16 +132,36 @@ class _AddExpensePageBody extends StatelessWidget {
               items: [
                 if (expenseCategory == null)
                   const DropdownMenuItem(
-                    child: Text('Choose from list'),
+                    child: Text('Choose category from list'),
                   ),
                 ...categoryTitles.map((String category) {
                   return DropdownMenuItem(
                     value: category,
-                    child: Text(category),
+                    child: Text(
+                      category[0].toUpperCase() + category.substring(1),
+                    ),
                   );
                 }),
               ],
               onChanged: onCategoryChanged,
+            ),
+            DropdownButton<String>(
+              value: expenseVoyageTitle,
+              items: [
+                if (expenseVoyageTitle == null)
+                  const DropdownMenuItem(
+                    child: Text('Choose voyage from list'),
+                  ),
+                ...voyageTitles.map((String voyage) {
+                  return DropdownMenuItem(
+                    value: voyage,
+                    child: Text(
+                      voyage[0].toUpperCase() + voyage.substring(1),
+                    ),
+                  );
+                }),
+              ],
+              onChanged: onVoyageTitleChanged,
             ),
             ElevatedButton(
               onPressed: expenseName == null || expensePrice == null
