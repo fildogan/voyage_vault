@@ -63,6 +63,7 @@ class VoyagesRepository {
         .delete();
   }
 
+  //Returns the id of a voyage by its title
   Future<String> getVoyageIDByTitle(String title) async {
     final userID = FirebaseAuth.instance.currentUser?.uid;
     if (userID == null) {
@@ -79,5 +80,12 @@ class VoyagesRepository {
     }
     final doc = querySnapshot.docs.first;
     return doc.id;
+  }
+
+  //Returns the list of voyage titles
+  Stream<List<String>> getVoyageTitlesStream() {
+    return getVoyagesStream().map((voyages) {
+      return voyages.map((voyage) => voyage.title).toList();
+    });
   }
 }

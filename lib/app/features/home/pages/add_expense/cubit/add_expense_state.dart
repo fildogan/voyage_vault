@@ -5,10 +5,14 @@ class AddExpenseState {
   const AddExpenseState({
     this.saved = false,
     this.errorMessage = '',
-    this.categoryTitleList = const [],
+    this.categoryTitles = const [],
+    this.loadingErrorOccured = false,
+    this.voyageTitles = const [],
   });
 
   final bool saved;
   final String errorMessage;
-  final List<String> categoryTitleList;
+  final List<String> categoryTitles;
+  final bool loadingErrorOccured;
+  final List<String> voyageTitles;
 }

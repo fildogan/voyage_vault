@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel_cost_log/app/features/home/pages/add_expense/cubit/add_expense_cubit.dart';
 import 'package:travel_cost_log/app/repositories/expense_categories_repository.dart';
 import 'package:travel_cost_log/app/repositories/expenses_repository.dart';
+import 'package:travel_cost_log/app/repositories/voyages_repository.dart';
 
 class AddExpensePage extends StatefulWidget {
   const AddExpensePage({super.key});
@@ -25,7 +26,14 @@ class _AddExpensePageState extends State<AddExpensePage> {
         create: (context) => AddExpenseCubit(
           ExpensesRepository(),
           ExpenseCategoriesRepository(),
-        )..getCategoryList(),
+          VoyagesRepository(),
+        )..getCategoryList().then(
+            (value) => AddExpenseCubit(
+              ExpensesRepository(),
+              ExpenseCategoriesRepository(),
+              VoyagesRepository(),
+            )..getVoyageTitleStream(),
+          ),
         child: BlocListener<AddExpenseCubit, AddExpenseState>(
           listener: (context, state) {
             if (state.saved) {
@@ -44,6 +52,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
           },
           child: BlocBuilder<AddExpenseCubit, AddExpenseState>(
             builder: (context, state) {
+              final voyageTitleList = state.voyageTitles;
               return _AddExpensePageBody(
                 onNameChanged: (newValue) =>
                     setState(() => _expenseName = newValue),
@@ -57,7 +66,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
                 onCategoryChanged: (newValue) =>
                     setState(() => _expenseCategory = newValue),
                 expenseCategory: _expenseCategory,
-                categoryTitleList: state.categoryTitleList,
+                categoryTitles: state.categoryTitles,
               );
             },
           ),
@@ -68,7 +77,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
 }
 
 class _AddExpensePageBody extends StatelessWidget {
-  _AddExpensePageBody({
+  const _AddExpensePageBody({
     required this.onNameChanged,
     this.expenseName,
     required this.onVoyageIDChanged,
@@ -77,7 +86,7 @@ class _AddExpensePageBody extends StatelessWidget {
     this.expensePrice,
     required this.onCategoryChanged,
     this.expenseCategory,
-    required this.categoryTitleList,
+    required this.categoryTitles,
   });
 
   final Function(String?) onNameChanged;
@@ -90,8 +99,7 @@ class _AddExpensePageBody extends StatelessWidget {
   final double? expensePrice;
   final String? expenseCategory;
 
-  final _categories = ['a', 'b'];
-  final List<String> categoryTitleList;
+  final List<String> categoryTitles;
 
   @override
   Widget build(BuildContext context) {
@@ -123,21 +131,26 @@ class _AddExpensePageBody extends StatelessWidget {
                 },
               ),
             ),
-            DropdownButton(
+            DropdownButton<String>(
               value: expenseCategory,
-              items: categoryTitleList.map((String category) {
-                return DropdownMenuItem(
-                  value: category,
-                  child: Text(category),
-                );
-              }).toList(),
+              items: [
+                if (expenseCategory == null)
+                  const DropdownMenuItem(
+                    child: Text('Choose from list'),
+                  ),
+                ...categoryTitles.map((String category) {
+                  return DropdownMenuItem(
+                    value: category,
+                    child: Text(category),
+                  );
+                }),
+              ],
               onChanged: onCategoryChanged,
             ),
             ElevatedButton(
               onPressed: expenseName == null || expensePrice == null
                   ? () {
                       Navigator.of(context).pop();
-                      print(categoryTitleList);
                     }
                   : () => context
                       .read<AddExpenseCubit>()

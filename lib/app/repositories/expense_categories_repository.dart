@@ -28,7 +28,7 @@ class ExpenseCategoriesRepository {
   List<ExpenseCategoryModel> getCategoryList() => _categoryList;
 
   //Returns the list of category titles
-  List<String> getCategoryTitleList() =>
+  List<String> getcategoryTitles() =>
       _categoryList.map((category) => category.categoryTitle).toList();
 
   //Returns the index of a category by its title
