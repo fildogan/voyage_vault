@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:travel_cost_log/app/repositories/expense_categories_repository.dart';
 import 'package:travel_cost_log/app/repositories/expenses_repository.dart';
 import 'package:travel_cost_log/app/repositories/voyages_repository.dart';
 
@@ -11,13 +10,10 @@ part 'add_expense_state.dart';
 class AddExpenseCubit extends Cubit<AddExpenseState> {
   AddExpenseCubit(
     this._expensesRepository,
-    this._expenseCategoriesRepository,
     this._voyagesRepository,
   ) : super(const AddExpenseState());
 
   final ExpensesRepository _expensesRepository;
-
-  final ExpenseCategoriesRepository _expenseCategoriesRepository;
 
   final VoyagesRepository _voyagesRepository;
 
@@ -35,12 +31,6 @@ class AddExpenseCubit extends Cubit<AddExpenseState> {
     } catch (error) {
       emit(AddExpenseState(errorMessage: error.toString()));
     }
-  }
-
-  Future<void> getCategoryList() async {
-    final List<String> categoryTitles =
-        _expenseCategoriesRepository.getcategoryTitles();
-    emit(AddExpenseState(categoryTitles: categoryTitles));
   }
 
   Future<void> getVoyageTitleStream() async {

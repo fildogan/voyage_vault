@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:travel_cost_log/app/data_sources.dart/local_data_sources.dart/expense_category_list.dart';
 import 'package:travel_cost_log/app/features/home/pages/add_expense/cubit/add_expense_cubit.dart';
-import 'package:travel_cost_log/app/repositories/expense_categories_repository.dart';
 import 'package:travel_cost_log/app/repositories/expenses_repository.dart';
 import 'package:travel_cost_log/app/repositories/voyages_repository.dart';
 
@@ -25,9 +25,8 @@ class _AddExpensePageState extends State<AddExpensePage> {
       body: BlocProvider(
         create: (context) => AddExpenseCubit(
           ExpensesRepository(),
-          ExpenseCategoriesRepository(),
           VoyagesRepository(),
-        )..getCategoryList(),
+        )..getVoyageTitleStream(),
         child: BlocListener<AddExpenseCubit, AddExpenseState>(
           listener: (context, state) {
             if (state.saved) {
@@ -59,7 +58,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
                 onCategoryChanged: (newValue) =>
                     setState(() => _expenseCategory = newValue),
                 expenseCategory: _expenseCategory,
-                categoryTitles: state.categoryTitles,
+                categoryTitles: expenseCategoryList,
                 voyageTitles: state.voyageTitles,
               );
             },
