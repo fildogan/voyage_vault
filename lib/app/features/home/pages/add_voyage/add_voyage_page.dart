@@ -20,7 +20,8 @@ class _AddVoyagePageState extends State<AddVoyagePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocProvider(
-        create: (context) => AddVoyageCubit(VoyagesRepository()),
+        create: (context) =>
+            AddVoyageCubit(VoyagesRepository())..getVoyageTitleStream(),
         child: BlocListener<AddVoyageCubit, AddVoyageState>(
           listener: (context, state) {
             if (state.saved) {
@@ -55,6 +56,7 @@ class _AddVoyagePageState extends State<AddVoyagePage> {
                 voyageTitle: _voyageTitle,
                 voyageStartDate: _voyageStartDate,
                 voyageEndDate: _voyageEndDate,
+                voyageTitles: state.voyageTitles,
               );
             },
           ),
@@ -74,6 +76,7 @@ class _AddVoyagePageBody extends StatelessWidget {
     this.voyageTitle,
     this.voyageStartDate,
     this.voyageEndDate,
+    required this.voyageTitles,
   });
 
   final Function(String?) onTitleChanged;
@@ -87,6 +90,8 @@ class _AddVoyagePageBody extends StatelessWidget {
   final String? voyageTitle;
   final DateTime? voyageStartDate;
   final DateTime? voyageEndDate;
+
+  final List<String> voyageTitles;
 
   @override
   Widget build(BuildContext context) {
@@ -133,10 +138,18 @@ class _AddVoyagePageBody extends StatelessWidget {
               onPressed: voyageTitle == null ||
                       voyageStartDate == null ||
                       voyageEndDate == null
-                  ? () => Navigator.of(context).pop()
-                  : () => context
+                  ? () => context
                       .read<AddVoyageCubit>()
-                      .add(voyageTitle!, voyageStartDate!, voyageEndDate!),
+                      .error('Please fill all fields')
+                  : voyageTitles
+                          .map((i) => i.toLowerCase())
+                          .contains(voyageTitle!.toLowerCase())
+                      ? () => context
+                          .read<AddVoyageCubit>()
+                          .error('Voyage title already exists')
+                      : () => context
+                          .read<AddVoyageCubit>()
+                          .add(voyageTitle!, voyageStartDate!, voyageEndDate!),
               child: const Text('Add Voyage'),
             )
           ],

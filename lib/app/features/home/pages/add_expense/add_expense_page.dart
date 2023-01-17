@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:travel_cost_log/app/data_sources.dart/local_data_sources.dart/expense_category_list.dart';
+import 'package:travel_cost_log/app/data_sources/local_data_sources/expense_category_list.dart';
 import 'package:travel_cost_log/app/features/home/pages/add_expense/cubit/add_expense_cubit.dart';
 import 'package:travel_cost_log/app/repositories/expenses_repository.dart';
 import 'package:travel_cost_log/app/repositories/voyages_repository.dart';

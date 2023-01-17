@@ -11,6 +11,8 @@ class AddVoyageCubit extends Cubit<AddVoyageState> {
 
   final VoyagesRepository _voyagesRepository;
 
+  StreamSubscription? _streamSubscription;
+
   Future<void> add(
     String title,
     DateTime startDate,
@@ -22,5 +24,26 @@ class AddVoyageCubit extends Cubit<AddVoyageState> {
     } catch (error) {
       emit(AddVoyageState(errorMessage: error.toString()));
     }
+  }
+
+  Future<void> error(String error) async {
+    emit(AddVoyageState(errorMessage: error));
+  }
+
+  Future<void> getVoyageTitleStream() async {
+    _streamSubscription = _voyagesRepository
+        .getVoyagesStream()
+        .map((voyages) => voyages.map((voyage) => voyage.title).toList())
+        .listen(
+          (voyageTitles) => emit(AddVoyageState(voyageTitles: voyageTitles)),
+        )..onError(
+        (error) => emit(const AddVoyageState(loadingErrorOccured: true)),
+      );
+  }
+
+  @override
+  Future<void> close() {
+    _streamSubscription?.cancel();
+    return super.close();
   }
 }
