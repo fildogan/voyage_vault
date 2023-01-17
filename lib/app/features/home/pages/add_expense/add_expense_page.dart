@@ -22,6 +22,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: const Text('Add an expense')),
       body: BlocProvider(
         create: (context) => AddExpenseCubit(
           ExpensesRepository(),

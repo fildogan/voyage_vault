@@ -19,6 +19,9 @@ class _AddVoyagePageState extends State<AddVoyagePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Add a voyage'),
+      ),
       body: BlocProvider(
         create: (context) =>
             AddVoyageCubit(VoyagesRepository())..getVoyageTitleStream(),
@@ -135,21 +138,25 @@ class _AddVoyagePageBody extends StatelessWidget {
               child: Text(endDateFormated ?? 'Choose voyage end date'),
             ),
             ElevatedButton(
-              onPressed: voyageTitle == null ||
-                      voyageStartDate == null ||
-                      voyageEndDate == null
-                  ? () => context
+              onPressed: () {
+                if (voyageTitle == null ||
+                    voyageStartDate == null ||
+                    voyageEndDate == null) {
+                  context
                       .read<AddVoyageCubit>()
-                      .error('Please fill all fields')
-                  : voyageTitles
-                          .map((i) => i.toLowerCase())
-                          .contains(voyageTitle!.toLowerCase())
-                      ? () => context
-                          .read<AddVoyageCubit>()
-                          .error('Voyage title already exists')
-                      : () => context
-                          .read<AddVoyageCubit>()
-                          .add(voyageTitle!, voyageStartDate!, voyageEndDate!),
+                      .error('Please fill all fields');
+                } else if (voyageTitles
+                    .map((i) => i.toLowerCase())
+                    .contains(voyageTitle!.toLowerCase())) {
+                  context
+                      .read<AddVoyageCubit>()
+                      .error('Voyage title already exists');
+                } else {
+                  context
+                      .read<AddVoyageCubit>()
+                      .add(voyageTitle!, voyageStartDate!, voyageEndDate!);
+                }
+              },
               child: const Text('Add Voyage'),
             )
           ],
