@@ -33,6 +33,10 @@ class AddExpenseCubit extends Cubit<AddExpenseState> {
     }
   }
 
+  Future<void> error(String error) async {
+    emit(AddExpenseState(errorMessage: error));
+  }
+
   Future<void> getVoyageTitleStream() async {
     _streamSubscription = _voyagesRepository
         .getVoyagesStream()

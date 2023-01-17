@@ -163,13 +163,21 @@ class _AddExpensePageBody extends StatelessWidget {
               onChanged: onVoyageTitleChanged,
             ),
             ElevatedButton(
-              onPressed: expenseName == null || expensePrice == null
+              onPressed: expenseName == null ||
+                      expenseVoyageTitle == null ||
+                      expensePrice == null ||
+                      expenseCategory == null
                   ? () {
-                      Navigator.of(context).pop();
+                      context
+                          .read<AddExpenseCubit>()
+                          .error('Please fill all fields');
                     }
-                  : () => context
-                      .read<AddExpenseCubit>()
-                      .add(expenseName!, '', expensePrice!, ''),
+                  : () => context.read<AddExpenseCubit>().add(
+                        expenseName!,
+                        expenseVoyageTitle!,
+                        expensePrice!,
+                        expenseCategory!,
+                      ),
               child: const Text('Add Expense'),
             )
           ],
