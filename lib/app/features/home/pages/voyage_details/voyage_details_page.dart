@@ -38,6 +38,7 @@ class VoyageDetailsPage extends StatelessWidget {
                 },
               ),
             ),
+            //FIXME two seperate bloc builders and providers?
             BlocProvider(
               create: (context) => VoyageDetailsCubit(
                 VoyagesRepository(),
@@ -57,7 +58,13 @@ class VoyageDetailsPage extends StatelessWidget {
                             Dismissible(
                               key: ValueKey(expenseModel.id),
                               child: Card(
-                                child: Text(expenseModel.name),
+                                child: Column(
+                                  children: [
+                                    Text(expenseModel.name),
+                                    Text(expenseModel.price.toString()),
+                                    Text(expenseModel.category),
+                                  ],
+                                ),
                               ),
                             ),
                       ],
@@ -66,12 +73,6 @@ class VoyageDetailsPage extends StatelessWidget {
                 },
               ),
             ),
-            ElevatedButton(
-              onPressed: () {
-                print('expenseModels');
-              },
-              child: const Text('press'),
-            )
           ],
         ),
       ),

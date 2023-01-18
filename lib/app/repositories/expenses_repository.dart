@@ -22,7 +22,7 @@ class ExpensesRepository {
               id: doc.id,
               name: doc['name'].toString(),
               voyageID: doc['voyageid'].toString(),
-              expenseCategory: doc['category'].toString(),
+              category: doc['category'].toString(),
               price: double.parse(doc['price'].toString()),
             );
           },
@@ -71,7 +71,7 @@ class ExpensesRepository {
             id: doc.id,
             name: doc['name'].toString(),
             voyageID: doc['voyageid'].toString(),
-            expenseCategory: doc['category'].toString(),
+            category: doc['category'].toString(),
             price: double.parse(doc['price'].toString()),
           );
         }).toList();

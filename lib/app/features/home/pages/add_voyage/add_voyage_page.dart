@@ -145,6 +145,7 @@ class _AddVoyagePageBody extends StatelessWidget {
                   context
                       .read<AddVoyageCubit>()
                       .error('Please fill all fields');
+                  //FIXME fix check, does voyage exist in collection
                 } else if (voyageTitles
                     .map((i) => i.toLowerCase())
                     .contains(voyageTitle!.toLowerCase())) {

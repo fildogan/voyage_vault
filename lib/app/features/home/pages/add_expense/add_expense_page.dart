@@ -61,6 +61,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
                 expenseCategory: _expenseCategory,
                 categoryTitles: expenseCategoryList,
                 voyageTitles: state.voyageTitles,
+                //FIXME Map voyagetitle to voyageid
               );
             },
           ),
