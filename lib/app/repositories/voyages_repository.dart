@@ -82,6 +82,25 @@ class VoyagesRepository {
     return doc.id;
   }
 
+  Future<VoyageModel> getVoyageByID(String id) async {
+    final userID = FirebaseAuth.instance.currentUser?.uid;
+    if (userID == null) {
+      throw Exception('User is not logged in');
+    }
+    final doc = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userID)
+        .collection('voyages')
+        .doc(id)
+        .get();
+    return VoyageModel(
+      id: doc.id,
+      title: doc['title'].toString(),
+      startDate: (doc['startdate'] as Timestamp).toDate(),
+      endDate: (doc['enddate'] as Timestamp).toDate(),
+    );
+  }
+
   //Returns the list of voyage titles
   Stream<List<String>> getVoyageTitlesStream() {
     return getVoyagesStream().map((voyages) {

@@ -16,14 +16,17 @@ class ExpensesRepository {
         .snapshots()
         .map(
       (querySnapshot) {
-        return querySnapshot.docs.map((doc) {
-          return ExpenseModel(
-            expenseID: doc.id,
-            name: doc['name'].toString(),
-            voyageID: doc['voyageid'].toString(),
-            expenseCategory: doc['category'].toString(),
-          );
-        }).toList();
+        return querySnapshot.docs.map(
+          (doc) {
+            return ExpenseModel(
+              id: doc.id,
+              name: doc['name'].toString(),
+              voyageID: doc['voyageid'].toString(),
+              expenseCategory: doc['category'].toString(),
+              price: double.parse(doc['price'].toString()),
+            );
+          },
+        ).toList();
       },
     );
   }
@@ -48,5 +51,31 @@ class ExpensesRepository {
       'price': price,
       'category': category
     });
+  }
+
+  Stream<List<ExpenseModel>> getExpensesStreamByVoyageID(String voyageID) {
+    final userID = FirebaseAuth.instance.currentUser?.uid;
+    if (userID == null) {
+      throw Exception('User is not logged in');
+    }
+    return FirebaseFirestore.instance
+        .collection('users')
+        .doc(userID)
+        .collection('expenses')
+        .where('voyageid', isEqualTo: voyageID)
+        .snapshots()
+        .map(
+      (querySnapshot) {
+        return querySnapshot.docs.map((doc) {
+          return ExpenseModel(
+            id: doc.id,
+            name: doc['name'].toString(),
+            voyageID: doc['voyageid'].toString(),
+            expenseCategory: doc['category'].toString(),
+            price: double.parse(doc['price'].toString()),
+          );
+        }).toList();
+      },
+    );
   }
 }
