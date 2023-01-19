@@ -12,8 +12,7 @@ class VoyageModel {
   final DateTime startDate;
   final DateTime endDate;
 
-  int duration() =>
-      endDate.difference(startDate.subtract(const Duration(days: 1))).inDays;
+  int duration() => endDate.difference(startDate).inDays + 1;
 
   String startDateFormated() => DateFormat.yMd().format(startDate);
   // Formats start date to string
