@@ -18,6 +18,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
   String? _expenseVoyageTitle;
   double? _expensePrice;
   String? _expenseCategory;
+  String? _voyageID;
 
   @override
   Widget build(BuildContext context) {
@@ -50,8 +51,9 @@ class _AddExpensePageState extends State<AddExpensePage> {
                 onNameChanged: (newValue) =>
                     setState(() => _expenseName = newValue),
                 expenseName: _expenseName,
-                onVoyageTitleChanged: (newValue) =>
-                    setState(() => _expenseVoyageTitle = newValue),
+                onVoyageTitleChanged: (newValue) => setState(() {
+                  _expenseVoyageTitle = newValue;
+                }),
                 expenseVoyageTitle: _expenseVoyageTitle,
                 onPriceChanged: (newValue) =>
                     setState(() => _expensePrice = newValue),
@@ -61,6 +63,20 @@ class _AddExpensePageState extends State<AddExpensePage> {
                 expenseCategory: _expenseCategory,
                 categoryTitles: expenseCategoryList,
                 voyageTitles: state.voyageTitles,
+                getVoyageID: (title) async {
+                  _voyageID = await context
+                      .read<AddExpenseCubit>()
+                      .getVoyageIDbyTitle(title!);
+
+                  // print(_voyageID);
+                  context.read<AddExpenseCubit>().add(
+                        _expenseName!,
+                        _voyageID!,
+                        _expensePrice!,
+                        _expenseCategory!,
+                      );
+                },
+
                 //FIXME Map voyagetitle to voyageid
               );
             },
@@ -83,12 +99,14 @@ class _AddExpensePageBody extends StatelessWidget {
     this.expenseCategory,
     required this.categoryTitles,
     required this.voyageTitles,
+    required this.getVoyageID,
   });
 
   final Function(String?) onNameChanged;
   final Function(String?) onVoyageTitleChanged;
   final Function(double?) onPriceChanged;
   final Function(String?) onCategoryChanged;
+  final Function(String?) getVoyageID;
 
   final String? expenseName;
   final String? expenseVoyageTitle;
@@ -174,12 +192,16 @@ class _AddExpensePageBody extends StatelessWidget {
                           .read<AddExpenseCubit>()
                           .error('Please fill all fields');
                     }
-                  : () => context.read<AddExpenseCubit>().add(
-                        expenseName!,
-                        expenseVoyageTitle!,
-                        expensePrice!,
-                        expenseCategory!,
-                      ),
+                  : () {
+                      getVoyageID(expenseVoyageTitle);
+
+                      // context.read<AddExpenseCubit>().add(
+                      //       expenseName!,
+                      //       expensevoyageID!,
+                      //       expensePrice!,
+                      //       expenseCategory!,
+                      //     );
+                    },
               child: const Text('Add Expense'),
             )
           ],

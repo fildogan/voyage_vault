@@ -48,6 +48,12 @@ class AddExpenseCubit extends Cubit<AddExpenseState> {
       );
   }
 
+  Future<String> getVoyageIDbyTitle(String voyageTitle) async {
+    final voyageID = await _voyagesRepository.getVoyageIDByTitle(voyageTitle);
+    emit(AddExpenseState(voyageID: voyageID));
+    return voyageID;
+  }
+
   @override
   Future<void> close() {
     _streamSubscription?.cancel();

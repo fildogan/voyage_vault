@@ -8,6 +8,7 @@ class AddExpenseState {
     this.categoryTitles = const [],
     this.loadingErrorOccured = false,
     this.voyageTitles = const [],
+    this.voyageID = '',
   });
 
   final bool saved;
@@ -15,4 +16,5 @@ class AddExpenseState {
   final List<String> categoryTitles;
   final bool loadingErrorOccured;
   final List<String> voyageTitles;
+  final String voyageID;
 }
