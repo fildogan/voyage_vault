@@ -1,16 +1,17 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:intl/intl.dart';
 
-class VoyageModel {
-  VoyageModel({
-    required this.id,
-    required this.title,
-    required this.startDate,
-    required this.endDate,
-  });
-  final String id;
-  final String title;
-  final DateTime startDate;
-  final DateTime endDate;
+part 'voyage_model.freezed.dart';
+
+@freezed
+class VoyageModel with _$VoyageModel {
+  const factory VoyageModel({
+    required String id,
+    required String title,
+    required DateTime startDate,
+    required DateTime endDate,
+  }) = _VoyageModel;
+  const VoyageModel._();
 
   int duration() => endDate.difference(startDate).inDays + 1;
 
@@ -19,5 +20,4 @@ class VoyageModel {
 
   String endDateFormated() => DateFormat.yMd().format(endDate);
   // Formats end date to string
-
 }
