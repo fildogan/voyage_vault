@@ -1,15 +1,14 @@
-class ExpenseModel {
-  ExpenseModel({
-    required this.id,
-    required this.voyageID,
-    required this.name,
-    required this.category,
-    required this.price,
-  });
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  final String id;
-  final String voyageID;
-  final String name;
-  final String category;
-  final double price;
+part 'expense_model.freezed.dart';
+
+@freezed
+class ExpenseModel with _$ExpenseModel {
+  const factory ExpenseModel({
+    required String id,
+    required String voyageID,
+    required String name,
+    required String category,
+    required double price,
+  }) = _ExpenseModel;
 }
