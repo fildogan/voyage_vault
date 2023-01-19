@@ -114,7 +114,7 @@ class _AddVoyagePageBody extends StatelessWidget {
                 final selectedDate = await showDatePicker(
                   context: context,
                   initialDate: DateTime.now(),
-                  firstDate: DateTime.now(),
+                  firstDate: DateTime(2020),
                   lastDate: DateTime.now().add(
                     const Duration(days: 365 * 10),
                   ),
@@ -128,7 +128,7 @@ class _AddVoyagePageBody extends StatelessWidget {
                 final selectedDate = await showDatePicker(
                   context: context,
                   initialDate: DateTime.now(),
-                  firstDate: DateTime.now(),
+                  firstDate: DateTime(2020),
                   lastDate: DateTime.now().add(
                     const Duration(days: 365 * 10),
                   ),
