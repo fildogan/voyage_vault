@@ -11,6 +11,7 @@ class VoyageModel with _$VoyageModel {
     required DateTime startDate,
     required DateTime endDate,
     String? location,
+    double? budget,
   }) = _VoyageModel;
   const VoyageModel._();
 

@@ -21,6 +21,7 @@ mixin _$VoyageModel {
   DateTime get startDate => throw _privateConstructorUsedError;
   DateTime get endDate => throw _privateConstructorUsedError;
   String? get location => throw _privateConstructorUsedError;
+  double? get budget => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $VoyageModelCopyWith<VoyageModel> get copyWith =>
@@ -38,7 +39,8 @@ abstract class $VoyageModelCopyWith<$Res> {
       String title,
       DateTime startDate,
       DateTime endDate,
-      String? location});
+      String? location,
+      double? budget});
 }
 
 /// @nodoc
@@ -59,6 +61,7 @@ class _$VoyageModelCopyWithImpl<$Res, $Val extends VoyageModel>
     Object? startDate = null,
     Object? endDate = null,
     Object? location = freezed,
+    Object? budget = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -81,6 +84,10 @@ class _$VoyageModelCopyWithImpl<$Res, $Val extends VoyageModel>
           ? _value.location
           : location // ignore: cast_nullable_to_non_nullable
               as String?,
+      budget: freezed == budget
+          ? _value.budget
+          : budget // ignore: cast_nullable_to_non_nullable
+              as double?,
     ) as $Val);
   }
 }
@@ -98,7 +105,8 @@ abstract class _$$_VoyageModelCopyWith<$Res>
       String title,
       DateTime startDate,
       DateTime endDate,
-      String? location});
+      String? location,
+      double? budget});
 }
 
 /// @nodoc
@@ -117,6 +125,7 @@ class __$$_VoyageModelCopyWithImpl<$Res>
     Object? startDate = null,
     Object? endDate = null,
     Object? location = freezed,
+    Object? budget = freezed,
   }) {
     return _then(_$_VoyageModel(
       id: null == id
@@ -139,6 +148,10 @@ class __$$_VoyageModelCopyWithImpl<$Res>
           ? _value.location
           : location // ignore: cast_nullable_to_non_nullable
               as String?,
+      budget: freezed == budget
+          ? _value.budget
+          : budget // ignore: cast_nullable_to_non_nullable
+              as double?,
     ));
   }
 }
@@ -151,7 +164,8 @@ class _$_VoyageModel extends _VoyageModel {
       required this.title,
       required this.startDate,
       required this.endDate,
-      this.location})
+      this.location,
+      this.budget})
       : super._();
 
   @override
@@ -164,10 +178,12 @@ class _$_VoyageModel extends _VoyageModel {
   final DateTime endDate;
   @override
   final String? location;
+  @override
+  final double? budget;
 
   @override
   String toString() {
-    return 'VoyageModel(id: $id, title: $title, startDate: $startDate, endDate: $endDate, location: $location)';
+    return 'VoyageModel(id: $id, title: $title, startDate: $startDate, endDate: $endDate, location: $location, budget: $budget)';
   }
 
   @override
@@ -181,12 +197,13 @@ class _$_VoyageModel extends _VoyageModel {
                 other.startDate == startDate) &&
             (identical(other.endDate, endDate) || other.endDate == endDate) &&
             (identical(other.location, location) ||
-                other.location == location));
+                other.location == location) &&
+            (identical(other.budget, budget) || other.budget == budget));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, title, startDate, endDate, location);
+      Object.hash(runtimeType, id, title, startDate, endDate, location, budget);
 
   @JsonKey(ignore: true)
   @override
@@ -201,7 +218,8 @@ abstract class _VoyageModel extends VoyageModel {
       required final String title,
       required final DateTime startDate,
       required final DateTime endDate,
-      final String? location}) = _$_VoyageModel;
+      final String? location,
+      final double? budget}) = _$_VoyageModel;
   const _VoyageModel._() : super._();
 
   @override
@@ -214,6 +232,8 @@ abstract class _VoyageModel extends VoyageModel {
   DateTime get endDate;
   @override
   String? get location;
+  @override
+  double? get budget;
   @override
   @JsonKey(ignore: true)
   _$$_VoyageModelCopyWith<_$_VoyageModel> get copyWith =>

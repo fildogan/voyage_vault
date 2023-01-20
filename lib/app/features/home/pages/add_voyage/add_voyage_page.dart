@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:travel_cost_log/app/features/home/pages/add_voyage/cubit/add_voyage_cubit.dart';
@@ -13,6 +14,7 @@ class AddVoyagePage extends StatefulWidget {
 
 class _AddVoyagePageState extends State<AddVoyagePage> {
   String? _voyageTitle;
+  double? _voyageBudget;
   DateTime? _voyageStartDate;
   DateTime? _voyageEndDate;
 
@@ -45,6 +47,8 @@ class _AddVoyagePageState extends State<AddVoyagePage> {
               return _AddVoyagePageBody(
                 onTitleChanged: (newValue) =>
                     setState(() => _voyageTitle = newValue),
+                onBudgetChanged: (newValue) =>
+                    setState(() => _voyageBudget = newValue),
                 onStartDateChanged: (newValue) =>
                     setState(() => _voyageStartDate = newValue),
                 onEndDateChanged: (newValue) =>
@@ -56,6 +60,7 @@ class _AddVoyagePageState extends State<AddVoyagePage> {
                     ? null
                     : 'Selected end date: ${_voyageEndDate == null ? null : DateFormat.yMd().format(_voyageEndDate!)}',
                 voyageTitle: _voyageTitle,
+                voyageBudget: _voyageBudget,
                 voyageStartDate: _voyageStartDate,
                 voyageEndDate: _voyageEndDate,
                 voyageTitles: state.voyageTitles,
@@ -71,17 +76,21 @@ class _AddVoyagePageState extends State<AddVoyagePage> {
 class _AddVoyagePageBody extends StatelessWidget {
   const _AddVoyagePageBody({
     required this.onTitleChanged,
+    required this.onBudgetChanged,
     required this.onStartDateChanged,
     this.startDateFormated,
     required this.onEndDateChanged,
     this.endDateFormated,
     this.voyageTitle,
+    this.voyageBudget,
     this.voyageStartDate,
     this.voyageEndDate,
     required this.voyageTitles,
   });
 
   final Function(String?) onTitleChanged;
+
+  final Function(double?) onBudgetChanged;
 
   final Function(DateTime?) onStartDateChanged;
   final Function(DateTime?) onEndDateChanged;
@@ -90,6 +99,7 @@ class _AddVoyagePageBody extends StatelessWidget {
   final String? endDateFormated;
 
   final String? voyageTitle;
+  final double? voyageBudget;
   final DateTime? voyageStartDate;
   final DateTime? voyageEndDate;
 
@@ -102,11 +112,40 @@ class _AddVoyagePageBody extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(
-              width: 200,
-              child: TextField(
-                onChanged: onTitleChanged,
-              ),
+            Row(
+              children: [
+                const Text('Title: '),
+                SizedBox(
+                  width: 200,
+                  child: TextField(
+                    onChanged: onTitleChanged,
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                const Text('Budget: '),
+                SizedBox(
+                  width: 200,
+                  child: TextField(
+                    textAlign: TextAlign.end,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(
+                        RegExp(r'^\d*\.?\d{0,2}'),
+                      ),
+                    ],
+                    keyboardType:
+                        const TextInputType.numberWithOptions(decimal: true),
+                    onChanged: (value) {
+                      final budget = double.tryParse(value);
+                      if (budget != null) {
+                        onBudgetChanged(budget);
+                      }
+                    },
+                  ),
+                ),
+              ],
             ),
             ElevatedButton(
               onPressed: () async {
@@ -139,6 +178,7 @@ class _AddVoyagePageBody extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 if (voyageTitle == null ||
+                    voyageBudget == null ||
                     voyageStartDate == null ||
                     voyageEndDate == null) {
                   context
@@ -156,9 +196,8 @@ class _AddVoyagePageBody extends StatelessWidget {
                       .read<AddVoyageCubit>()
                       .error('Voyage title already exists');
                 } else {
-                  context
-                      .read<AddVoyageCubit>()
-                      .add(voyageTitle!, voyageStartDate!, voyageEndDate!);
+                  context.read<AddVoyageCubit>().add(voyageTitle!,
+                      voyageBudget!, voyageStartDate!, voyageEndDate!);
                 }
               },
               child: const Text('Add Voyage'),

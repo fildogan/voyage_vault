@@ -37,6 +37,7 @@ class VoyageDetailsPage extends StatelessWidget {
             body: SafeArea(
               child: Column(
                 children: [
+                  Text('Voyage budget: ${voyageModel.budget}'),
                   Text('Total expenses spent: € ${expenseSum.toString()}'),
                   Expanded(
                     child: ListView(

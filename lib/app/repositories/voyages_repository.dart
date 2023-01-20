@@ -23,6 +23,7 @@ class VoyagesRepository {
             return VoyageModel(
               id: doc.id,
               title: doc['title'].toString(),
+              budget: double.parse(doc['budget'].toString()),
               startDate: (doc['startdate'] as Timestamp).toDate(),
               endDate: (doc['enddate'] as Timestamp).toDate(),
             );
@@ -34,6 +35,7 @@ class VoyagesRepository {
 
   Future<void> add(
     String title,
+    double budget,
     DateTime startDate,
     DateTime endDate,
   ) async {
@@ -47,6 +49,7 @@ class VoyagesRepository {
         .collection('voyages')
         .add({
       'title': title,
+      'budget': budget,
       'startdate': startDate,
       'enddate': endDate,
     });
@@ -98,6 +101,7 @@ class VoyagesRepository {
     return VoyageModel(
       id: doc.id,
       title: doc['title'].toString(),
+      budget: double.parse(doc['budget'].toString()),
       startDate: (doc['startdate'] as Timestamp).toDate(),
       endDate: (doc['enddate'] as Timestamp).toDate(),
     );

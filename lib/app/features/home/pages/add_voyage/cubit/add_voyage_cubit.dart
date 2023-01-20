@@ -17,11 +17,12 @@ class AddVoyageCubit extends Cubit<AddVoyageState> {
 
   Future<void> add(
     String title,
+    double budget,
     DateTime startDate,
     DateTime endDate,
   ) async {
     try {
-      await _voyagesRepository.add(title, startDate, endDate);
+      await _voyagesRepository.add(title, budget, startDate, endDate);
       emit(const AddVoyageState(saved: true));
     } catch (error) {
       emit(AddVoyageState(errorMessage: error.toString()));
