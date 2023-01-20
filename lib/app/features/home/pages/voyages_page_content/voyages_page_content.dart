@@ -5,7 +5,6 @@ import 'package:travel_cost_log/app/features/home/pages/voyages_page_content/cub
 import 'package:travel_cost_log/app/features/home/pages/voyages_page_content/widgets/alert_dialog.dart';
 import 'package:travel_cost_log/app/injection_container.dart';
 import 'package:travel_cost_log/app/models/voyage_model.dart';
-import 'package:travel_cost_log/app/repositories/voyages_repository.dart';
 
 class VoyagesPageContent extends StatelessWidget {
   const VoyagesPageContent({super.key});

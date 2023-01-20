@@ -4,9 +4,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel_cost_log/app/data_sources/local_data_sources/expense_category_list.dart';
 import 'package:travel_cost_log/app/features/home/pages/add_expense/cubit/add_expense_cubit.dart';
 import 'package:travel_cost_log/app/injection_container.dart';
+import 'package:travel_cost_log/app/models/voyage_model.dart';
 
 class AddExpensePage extends StatefulWidget {
-  const AddExpensePage({super.key});
+  const AddExpensePage({super.key, this.voyageModel});
+
+  final VoyageModel? voyageModel;
 
   @override
   State<AddExpensePage> createState() => _AddExpensePageState();
@@ -17,10 +20,13 @@ class _AddExpensePageState extends State<AddExpensePage> {
   String? _expenseVoyageTitle;
   double? _expensePrice;
   String? _expenseCategory;
-  String? _voyageId;
+  late String? _voyageId;
 
   @override
   Widget build(BuildContext context) {
+    if (widget.voyageModel != null) {
+      _expenseVoyageTitle = widget.voyageModel!.title;
+    }
     return Scaffold(
       appBar: AppBar(title: const Text('Add an expense')),
       body: BlocProvider<AddExpenseCubit>(
@@ -59,6 +65,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
                 expenseCategory: _expenseCategory,
                 categoryTitles: expenseCategoryList,
                 voyageTitles: state.voyageTitles,
+                voyageModel: widget.voyageModel,
                 addExpense: (title) async {
                   _voyageId = await context
                       .read<AddExpenseCubit>()
@@ -92,6 +99,7 @@ class _AddExpensePageBody extends StatelessWidget {
     required this.categoryTitles,
     required this.voyageTitles,
     required this.addExpense,
+    this.voyageModel,
   });
 
   final Function(String?) onNameChanged;
@@ -104,6 +112,7 @@ class _AddExpensePageBody extends StatelessWidget {
   final String? expenseVoyageTitle;
   final double? expensePrice;
   final String? expenseCategory;
+  final VoyageModel? voyageModel;
 
   final List<String> categoryTitles;
   final List<String> voyageTitles;
@@ -156,24 +165,27 @@ class _AddExpensePageBody extends StatelessWidget {
               ],
               onChanged: onCategoryChanged,
             ),
-            DropdownButton<String>(
-              value: expenseVoyageTitle,
-              items: [
-                if (expenseVoyageTitle == null)
-                  const DropdownMenuItem(
-                    child: Text('Choose voyage from list'),
-                  ),
-                ...voyageTitles.map((String voyage) {
-                  return DropdownMenuItem(
-                    value: voyage,
-                    child: Text(
-                      voyage[0].toUpperCase() + voyage.substring(1),
+            if (voyageModel == null)
+              DropdownButton<String>(
+                value: expenseVoyageTitle,
+                items: [
+                  if (expenseVoyageTitle == null)
+                    const DropdownMenuItem(
+                      child: Text('Choose voyage from list'),
                     ),
-                  );
-                }),
-              ],
-              onChanged: onVoyageTitleChanged,
-            ),
+                  ...voyageTitles.map((String voyage) {
+                    return DropdownMenuItem(
+                      value: voyage,
+                      child: Text(
+                        voyage[0].toUpperCase() + voyage.substring(1),
+                      ),
+                    );
+                  }),
+                ],
+                onChanged: onVoyageTitleChanged,
+              )
+            else
+              Text(voyageModel!.title),
             ElevatedButton(
               onPressed: expenseName == null ||
                       expenseVoyageTitle == null ||

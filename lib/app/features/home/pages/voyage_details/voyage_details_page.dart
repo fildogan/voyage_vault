@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:travel_cost_log/app/features/home/pages/add_expense/add_expense_page.dart';
 import 'package:travel_cost_log/app/features/home/pages/voyage_details/cubit/voyage_details_cubit.dart';
 import 'package:travel_cost_log/app/injection_container.dart';
 import 'package:travel_cost_log/app/models/voyage_model.dart';
-import 'package:travel_cost_log/app/repositories/expenses_repository.dart';
 
 class VoyageDetailsPage extends StatelessWidget {
   const VoyageDetailsPage({super.key, required this.voyageModel});
@@ -20,7 +20,18 @@ class VoyageDetailsPage extends StatelessWidget {
           final expenseModels = state.expenses;
 
           return Scaffold(
-            appBar: AppBar(title: const Text('Voyage details')),
+            appBar: AppBar(title: Text(voyageModel.title)),
+            floatingActionButton: FloatingActionButton(
+              onPressed: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => AddExpensePage(
+                    voyageModel: voyageModel,
+                  ),
+                  fullscreenDialog: true,
+                ),
+              ),
+              child: const Icon(Icons.add),
+            ),
             body: SafeArea(
               child: Column(
                 children: [
