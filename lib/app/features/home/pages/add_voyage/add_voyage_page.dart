@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:travel_cost_log/app/features/home/pages/add_voyage/cubit/add_voyage_cubit.dart';
-import 'package:travel_cost_log/app/repositories/voyages_repository.dart';
+import 'package:travel_cost_log/app/injection_container.dart';
 
 class AddVoyagePage extends StatefulWidget {
   const AddVoyagePage({super.key});
@@ -22,9 +22,8 @@ class _AddVoyagePageState extends State<AddVoyagePage> {
       appBar: AppBar(
         title: const Text('Add a voyage'),
       ),
-      body: BlocProvider(
-        create: (context) =>
-            AddVoyageCubit(VoyagesRepository())..getVoyageTitleStream(),
+      body: BlocProvider<AddVoyageCubit>(
+        create: (context) => getIt<AddVoyageCubit>()..getVoyageTitleStream(),
         child: BlocListener<AddVoyageCubit, AddVoyageState>(
           listener: (context, state) {
             if (state.saved) {

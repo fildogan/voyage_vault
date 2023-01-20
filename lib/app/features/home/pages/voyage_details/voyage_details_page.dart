@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel_cost_log/app/features/home/pages/voyage_details/cubit/voyage_details_cubit.dart';
+import 'package:travel_cost_log/app/injection_container.dart';
 import 'package:travel_cost_log/app/models/voyage_model.dart';
 import 'package:travel_cost_log/app/repositories/expenses_repository.dart';
 
@@ -12,9 +13,8 @@ class VoyageDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => VoyageDetailsCubit(
-        ExpensesRepository(),
-      )..getExpensesStreamByVoyageId(voyageModel.id),
+      create: (context) => getIt<VoyageDetailsCubit>()
+        ..getExpensesStreamByVoyageId(voyageModel.id),
       child: BlocBuilder<VoyageDetailsCubit, VoyageDetailsState>(
         builder: (context, state) {
           final expenseModels = state.expenses;

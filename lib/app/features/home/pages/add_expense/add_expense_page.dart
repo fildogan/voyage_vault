@@ -3,8 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel_cost_log/app/data_sources/local_data_sources/expense_category_list.dart';
 import 'package:travel_cost_log/app/features/home/pages/add_expense/cubit/add_expense_cubit.dart';
-import 'package:travel_cost_log/app/repositories/expenses_repository.dart';
-import 'package:travel_cost_log/app/repositories/voyages_repository.dart';
+import 'package:travel_cost_log/app/injection_container.dart';
 
 class AddExpensePage extends StatefulWidget {
   const AddExpensePage({super.key});
@@ -24,11 +23,8 @@ class _AddExpensePageState extends State<AddExpensePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Add an expense')),
-      body: BlocProvider(
-        create: (context) => AddExpenseCubit(
-          ExpensesRepository(),
-          VoyagesRepository(),
-        )..getVoyageTitleStream(),
+      body: BlocProvider<AddExpenseCubit>(
+        create: (context) => getIt<AddExpenseCubit>()..getVoyageTitleStream(),
         child: BlocListener<AddExpenseCubit, AddExpenseState>(
           listener: (context, state) {
             if (state.saved) {
