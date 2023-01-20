@@ -1,12 +1,14 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 import 'package:travel_cost_log/app/models/voyage_model.dart';
 import 'package:travel_cost_log/app/repositories/voyages_repository.dart';
 
 part 'voyages_state.dart';
 
+@injectable
 class VoyagesCubit extends Cubit<VoyagesState> {
   VoyagesCubit(this._voyagesRepository) : super(const VoyagesState());
 

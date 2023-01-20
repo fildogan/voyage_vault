@@ -20,6 +20,7 @@ mixin _$VoyageModel {
   String get title => throw _privateConstructorUsedError;
   DateTime get startDate => throw _privateConstructorUsedError;
   DateTime get endDate => throw _privateConstructorUsedError;
+  String? get location => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $VoyageModelCopyWith<VoyageModel> get copyWith =>
@@ -32,7 +33,12 @@ abstract class $VoyageModelCopyWith<$Res> {
           VoyageModel value, $Res Function(VoyageModel) then) =
       _$VoyageModelCopyWithImpl<$Res, VoyageModel>;
   @useResult
-  $Res call({String id, String title, DateTime startDate, DateTime endDate});
+  $Res call(
+      {String id,
+      String title,
+      DateTime startDate,
+      DateTime endDate,
+      String? location});
 }
 
 /// @nodoc
@@ -52,6 +58,7 @@ class _$VoyageModelCopyWithImpl<$Res, $Val extends VoyageModel>
     Object? title = null,
     Object? startDate = null,
     Object? endDate = null,
+    Object? location = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -70,6 +77,10 @@ class _$VoyageModelCopyWithImpl<$Res, $Val extends VoyageModel>
           ? _value.endDate
           : endDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      location: freezed == location
+          ? _value.location
+          : location // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -82,7 +93,12 @@ abstract class _$$_VoyageModelCopyWith<$Res>
       __$$_VoyageModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String title, DateTime startDate, DateTime endDate});
+  $Res call(
+      {String id,
+      String title,
+      DateTime startDate,
+      DateTime endDate,
+      String? location});
 }
 
 /// @nodoc
@@ -100,6 +116,7 @@ class __$$_VoyageModelCopyWithImpl<$Res>
     Object? title = null,
     Object? startDate = null,
     Object? endDate = null,
+    Object? location = freezed,
   }) {
     return _then(_$_VoyageModel(
       id: null == id
@@ -118,6 +135,10 @@ class __$$_VoyageModelCopyWithImpl<$Res>
           ? _value.endDate
           : endDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      location: freezed == location
+          ? _value.location
+          : location // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -129,7 +150,8 @@ class _$_VoyageModel extends _VoyageModel {
       {required this.id,
       required this.title,
       required this.startDate,
-      required this.endDate})
+      required this.endDate,
+      this.location})
       : super._();
 
   @override
@@ -140,10 +162,12 @@ class _$_VoyageModel extends _VoyageModel {
   final DateTime startDate;
   @override
   final DateTime endDate;
+  @override
+  final String? location;
 
   @override
   String toString() {
-    return 'VoyageModel(id: $id, title: $title, startDate: $startDate, endDate: $endDate)';
+    return 'VoyageModel(id: $id, title: $title, startDate: $startDate, endDate: $endDate, location: $location)';
   }
 
   @override
@@ -155,11 +179,14 @@ class _$_VoyageModel extends _VoyageModel {
             (identical(other.title, title) || other.title == title) &&
             (identical(other.startDate, startDate) ||
                 other.startDate == startDate) &&
-            (identical(other.endDate, endDate) || other.endDate == endDate));
+            (identical(other.endDate, endDate) || other.endDate == endDate) &&
+            (identical(other.location, location) ||
+                other.location == location));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, title, startDate, endDate);
+  int get hashCode =>
+      Object.hash(runtimeType, id, title, startDate, endDate, location);
 
   @JsonKey(ignore: true)
   @override
@@ -173,7 +200,8 @@ abstract class _VoyageModel extends VoyageModel {
       {required final String id,
       required final String title,
       required final DateTime startDate,
-      required final DateTime endDate}) = _$_VoyageModel;
+      required final DateTime endDate,
+      final String? location}) = _$_VoyageModel;
   const _VoyageModel._() : super._();
 
   @override
@@ -184,6 +212,8 @@ abstract class _VoyageModel extends VoyageModel {
   DateTime get startDate;
   @override
   DateTime get endDate;
+  @override
+  String? get location;
   @override
   @JsonKey(ignore: true)
   _$$_VoyageModelCopyWith<_$_VoyageModel> get copyWith =>

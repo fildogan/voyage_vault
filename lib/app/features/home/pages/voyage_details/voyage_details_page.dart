@@ -14,7 +14,7 @@ class VoyageDetailsPage extends StatelessWidget {
     return BlocProvider(
       create: (context) => VoyageDetailsCubit(
         ExpensesRepository(),
-      )..getExpensesStreamByVoyageID(voyageModel.id),
+      )..getExpensesStreamByVoyageId(voyageModel.id),
       child: BlocBuilder<VoyageDetailsCubit, VoyageDetailsState>(
         builder: (context, state) {
           final expenseModels = state.expenses;

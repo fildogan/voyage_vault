@@ -10,6 +10,7 @@ class VoyageModel with _$VoyageModel {
     required String title,
     required DateTime startDate,
     required DateTime endDate,
+    String? location,
   }) = _VoyageModel;
   const VoyageModel._();
 

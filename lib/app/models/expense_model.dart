@@ -6,7 +6,7 @@ part 'expense_model.freezed.dart';
 class ExpenseModel with _$ExpenseModel {
   const factory ExpenseModel({
     required String id,
-    required String voyageID,
+    required String voyageId,
     required String name,
     required String category,
     required double price,

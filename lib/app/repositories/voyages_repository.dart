@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:injectable/injectable.dart';
 import 'package:travel_cost_log/app/models/voyage_model.dart';
 
+@injectable
 class VoyagesRepository {
   Stream<List<VoyageModel>> getVoyagesStream() {
     final userID = FirebaseAuth.instance.currentUser?.uid;
@@ -64,7 +66,7 @@ class VoyagesRepository {
   }
 
   //Returns the id of a voyage by its title
-  Future<String> getVoyageIDByTitle(String title) async {
+  Future<String> getVoyageIdByTitle(String title) async {
     final userID = FirebaseAuth.instance.currentUser?.uid;
     if (userID == null) {
       throw Exception('User is not logged in');
@@ -82,7 +84,7 @@ class VoyagesRepository {
     return doc.id;
   }
 
-  Future<VoyageModel> getVoyageByID(String id) async {
+  Future<VoyageModel> getVoyageById(String id) async {
     final userID = FirebaseAuth.instance.currentUser?.uid;
     if (userID == null) {
       throw Exception('User is not logged in');

@@ -18,7 +18,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
   String? _expenseVoyageTitle;
   double? _expensePrice;
   String? _expenseCategory;
-  String? _voyageID;
+  String? _voyageId;
 
   @override
   Widget build(BuildContext context) {
@@ -63,21 +63,17 @@ class _AddExpensePageState extends State<AddExpensePage> {
                 expenseCategory: _expenseCategory,
                 categoryTitles: expenseCategoryList,
                 voyageTitles: state.voyageTitles,
-                getVoyageID: (title) async {
-                  _voyageID = await context
+                addExpense: (title) async {
+                  _voyageId = await context
                       .read<AddExpenseCubit>()
-                      .getVoyageIDbyTitle(title!);
-
-                  // print(_voyageID);
+                      .getVoyageIdbyTitle(title!);
                   context.read<AddExpenseCubit>().add(
                         _expenseName!,
-                        _voyageID!,
+                        _voyageId!,
                         _expensePrice!,
                         _expenseCategory!,
                       );
                 },
-
-                //FIXME Map voyagetitle to voyageid
               );
             },
           ),
@@ -99,14 +95,14 @@ class _AddExpensePageBody extends StatelessWidget {
     this.expenseCategory,
     required this.categoryTitles,
     required this.voyageTitles,
-    required this.getVoyageID,
+    required this.addExpense,
   });
 
   final Function(String?) onNameChanged;
   final Function(String?) onVoyageTitleChanged;
   final Function(double?) onPriceChanged;
   final Function(String?) onCategoryChanged;
-  final Function(String?) getVoyageID;
+  final Function(String?) addExpense;
 
   final String? expenseName;
   final String? expenseVoyageTitle;
@@ -193,11 +189,11 @@ class _AddExpensePageBody extends StatelessWidget {
                           .error('Please fill all fields');
                     }
                   : () {
-                      getVoyageID(expenseVoyageTitle);
+                      addExpense(expenseVoyageTitle);
 
                       // context.read<AddExpenseCubit>().add(
                       //       expenseName!,
-                      //       expensevoyageID!,
+                      //       expensevoyageId!,
                       //       expensePrice!,
                       //       expenseCategory!,
                       //     );

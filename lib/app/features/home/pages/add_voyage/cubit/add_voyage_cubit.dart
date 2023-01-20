@@ -1,11 +1,13 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 import 'package:travel_cost_log/app/repositories/voyages_repository.dart';
 
 part 'add_voyage_state.dart';
 
+@injectable
 class AddVoyageCubit extends Cubit<AddVoyageState> {
   AddVoyageCubit(this._voyagesRepository) : super(const AddVoyageState());
 

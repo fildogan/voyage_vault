@@ -17,7 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$ExpenseModel {
   String get id => throw _privateConstructorUsedError;
-  String get voyageID => throw _privateConstructorUsedError;
+  String get voyageId => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get category => throw _privateConstructorUsedError;
   double get price => throw _privateConstructorUsedError;
@@ -34,7 +34,7 @@ abstract class $ExpenseModelCopyWith<$Res> {
       _$ExpenseModelCopyWithImpl<$Res, ExpenseModel>;
   @useResult
   $Res call(
-      {String id, String voyageID, String name, String category, double price});
+      {String id, String voyageId, String name, String category, double price});
 }
 
 /// @nodoc
@@ -51,7 +51,7 @@ class _$ExpenseModelCopyWithImpl<$Res, $Val extends ExpenseModel>
   @override
   $Res call({
     Object? id = null,
-    Object? voyageID = null,
+    Object? voyageId = null,
     Object? name = null,
     Object? category = null,
     Object? price = null,
@@ -61,9 +61,9 @@ class _$ExpenseModelCopyWithImpl<$Res, $Val extends ExpenseModel>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      voyageID: null == voyageID
-          ? _value.voyageID
-          : voyageID // ignore: cast_nullable_to_non_nullable
+      voyageId: null == voyageId
+          ? _value.voyageId
+          : voyageId // ignore: cast_nullable_to_non_nullable
               as String,
       name: null == name
           ? _value.name
@@ -90,7 +90,7 @@ abstract class _$$_ExpenseModelCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String id, String voyageID, String name, String category, double price});
+      {String id, String voyageId, String name, String category, double price});
 }
 
 /// @nodoc
@@ -105,7 +105,7 @@ class __$$_ExpenseModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? voyageID = null,
+    Object? voyageId = null,
     Object? name = null,
     Object? category = null,
     Object? price = null,
@@ -115,9 +115,9 @@ class __$$_ExpenseModelCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      voyageID: null == voyageID
-          ? _value.voyageID
-          : voyageID // ignore: cast_nullable_to_non_nullable
+      voyageId: null == voyageId
+          ? _value.voyageId
+          : voyageId // ignore: cast_nullable_to_non_nullable
               as String,
       name: null == name
           ? _value.name
@@ -140,7 +140,7 @@ class __$$_ExpenseModelCopyWithImpl<$Res>
 class _$_ExpenseModel implements _ExpenseModel {
   const _$_ExpenseModel(
       {required this.id,
-      required this.voyageID,
+      required this.voyageId,
       required this.name,
       required this.category,
       required this.price});
@@ -148,7 +148,7 @@ class _$_ExpenseModel implements _ExpenseModel {
   @override
   final String id;
   @override
-  final String voyageID;
+  final String voyageId;
   @override
   final String name;
   @override
@@ -158,7 +158,7 @@ class _$_ExpenseModel implements _ExpenseModel {
 
   @override
   String toString() {
-    return 'ExpenseModel(id: $id, voyageID: $voyageID, name: $name, category: $category, price: $price)';
+    return 'ExpenseModel(id: $id, voyageId: $voyageId, name: $name, category: $category, price: $price)';
   }
 
   @override
@@ -167,8 +167,8 @@ class _$_ExpenseModel implements _ExpenseModel {
         (other.runtimeType == runtimeType &&
             other is _$_ExpenseModel &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.voyageID, voyageID) ||
-                other.voyageID == voyageID) &&
+            (identical(other.voyageId, voyageId) ||
+                other.voyageId == voyageId) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.category, category) ||
                 other.category == category) &&
@@ -177,7 +177,7 @@ class _$_ExpenseModel implements _ExpenseModel {
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, voyageID, name, category, price);
+      Object.hash(runtimeType, id, voyageId, name, category, price);
 
   @JsonKey(ignore: true)
   @override
@@ -189,7 +189,7 @@ class _$_ExpenseModel implements _ExpenseModel {
 abstract class _ExpenseModel implements ExpenseModel {
   const factory _ExpenseModel(
       {required final String id,
-      required final String voyageID,
+      required final String voyageId,
       required final String name,
       required final String category,
       required final double price}) = _$_ExpenseModel;
@@ -197,7 +197,7 @@ abstract class _ExpenseModel implements ExpenseModel {
   @override
   String get id;
   @override
-  String get voyageID;
+  String get voyageId;
   @override
   String get name;
   @override

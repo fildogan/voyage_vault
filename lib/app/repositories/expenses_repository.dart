@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:injectable/injectable.dart';
 import 'package:travel_cost_log/app/models/expense_model.dart';
 
+@injectable
 class ExpensesRepository {
-  Stream<List<ExpenseModel>> getExpensesStreamByVoyageID(String voyageID) {
+  Stream<List<ExpenseModel>> getExpensesStreamByVoyageId(String voyageId) {
     final userID = FirebaseAuth.instance.currentUser?.uid;
     if (userID == null) {
       throw Exception('User is not logged in');
@@ -12,7 +14,7 @@ class ExpensesRepository {
         .collection('users')
         .doc(userID)
         .collection('expenses')
-        .where('voyageid', isEqualTo: voyageID)
+        .where('voyageid', isEqualTo: voyageId)
         .snapshots()
         .map(
       (querySnapshot) {
@@ -20,7 +22,7 @@ class ExpensesRepository {
           return ExpenseModel(
             id: doc.id,
             name: doc['name'].toString(),
-            voyageID: doc['voyageid'].toString(),
+            voyageId: doc['voyageid'].toString(),
             category: doc['category'].toString(),
             price: double.parse(doc['price'].toString()),
           );
@@ -31,7 +33,7 @@ class ExpensesRepository {
 
   Future<void> add(
     String name,
-    String voyageID,
+    String voyageId,
     double price,
     String category,
   ) async {
@@ -45,7 +47,7 @@ class ExpensesRepository {
         .collection('expenses')
         .add({
       'name': name,
-      'voyageid': voyageID,
+      'voyageid': voyageId,
       'price': price,
       'category': category
     });
@@ -69,7 +71,7 @@ class ExpensesRepository {
   //           return ExpenseModel(
   //             id: doc.id,
   //             name: doc['name'].toString(),
-  //             voyageID: doc['voyageid'].toString(),
+  //             voyageId: doc['voyageid'].toString(),
   //             category: doc['category'].toString(),
   //             price: double.parse(doc['price'].toString()),
   //           );

@@ -1,12 +1,14 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 import 'package:travel_cost_log/app/repositories/expenses_repository.dart';
 import 'package:travel_cost_log/app/repositories/voyages_repository.dart';
 
 part 'add_expense_state.dart';
 
+@injectable
 class AddExpenseCubit extends Cubit<AddExpenseState> {
   AddExpenseCubit(
     this._expensesRepository,
@@ -21,12 +23,12 @@ class AddExpenseCubit extends Cubit<AddExpenseState> {
 
   Future<void> add(
     String name,
-    String voyageID,
+    String voyageId,
     double price,
     String category,
   ) async {
     try {
-      await _expensesRepository.add(name, voyageID, price, category);
+      await _expensesRepository.add(name, voyageId, price, category);
       emit(const AddExpenseState(saved: true));
     } catch (error) {
       emit(AddExpenseState(errorMessage: error.toString()));
@@ -48,10 +50,10 @@ class AddExpenseCubit extends Cubit<AddExpenseState> {
       );
   }
 
-  Future<String> getVoyageIDbyTitle(String voyageTitle) async {
-    final voyageID = await _voyagesRepository.getVoyageIDByTitle(voyageTitle);
-    emit(AddExpenseState(voyageID: voyageID));
-    return voyageID;
+  Future<String> getVoyageIdbyTitle(String voyageTitle) async {
+    final voyageId = await _voyagesRepository.getVoyageIdByTitle(voyageTitle);
+    emit(AddExpenseState(voyageId: voyageId));
+    return voyageId;
   }
 
   @override
