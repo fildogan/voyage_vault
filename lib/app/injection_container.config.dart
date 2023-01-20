@@ -35,21 +35,16 @@ extension GetItInjectableX on _i1.GetIt {
     );
     gh.factory<_i3.ExpensesRepository>(() => _i3.ExpensesRepository());
     gh.factory<_i4.VoyageDetailsCubit>(
-      () => _i4.VoyageDetailsCubit(gh<_i3.ExpensesRepository>()),
-    );
+        () => _i4.VoyageDetailsCubit(gh<_i3.ExpensesRepository>()));
     gh.factory<_i5.VoyagesRepository>(() => _i5.VoyagesRepository());
-    gh.factory<_i6.AddExpenseCubit>(
-      () => _i6.AddExpenseCubit(
-        gh<_i3.ExpensesRepository>(),
-        gh<_i5.VoyagesRepository>(),
-      ),
-    );
+    gh.factory<_i6.AddExpenseCubit>(() => _i6.AddExpenseCubit(
+          gh<_i3.ExpensesRepository>(),
+          gh<_i5.VoyagesRepository>(),
+        ));
     gh.factory<_i7.AddVoyageCubit>(
-      () => _i7.AddVoyageCubit(gh<_i5.VoyagesRepository>()),
-    );
+        () => _i7.AddVoyageCubit(gh<_i5.VoyagesRepository>()));
     gh.factory<_i8.VoyagesCubit>(
-      () => _i8.VoyagesCubit(gh<_i5.VoyagesRepository>()),
-    );
+        () => _i8.VoyagesCubit(gh<_i5.VoyagesRepository>()));
     return this;
   }
 }

@@ -18,7 +18,9 @@ class VoyageDetailsPage extends StatelessWidget {
       child: BlocBuilder<VoyageDetailsCubit, VoyageDetailsState>(
         builder: (context, state) {
           final expenseModels = state.expenses;
-
+          // Get sum of all expenses for given voyage
+          final double expenseSum =
+              expenseModels.fold(0, (prev, element) => prev + element.price);
           return Scaffold(
             appBar: AppBar(title: Text(voyageModel.title)),
             floatingActionButton: FloatingActionButton(
@@ -35,12 +37,7 @@ class VoyageDetailsPage extends StatelessWidget {
             body: SafeArea(
               child: Column(
                 children: [
-                  Card(
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: Text(voyageModel.title),
-                    ),
-                  ),
+                  Text('Total expenses spent: € ${expenseSum.toString()}'),
                   Expanded(
                     child: ListView(
                       children: [

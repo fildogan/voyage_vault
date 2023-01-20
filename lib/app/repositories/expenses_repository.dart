@@ -53,6 +53,14 @@ class ExpensesRepository {
     });
   }
 
+  // Stream<double> getTotalPriceByVoyageId(String voyageId) {
+  //   return getExpensesStreamByVoyageId(voyageId).map(
+  //     (expenses) => expenses
+  //         .map((expense) => expense.price)
+  //         .reduce((value, element) => value + element),
+  //   );
+  // }
+
   // Stream<List<ExpenseModel>> getExpensesStream() {
   //   final userID = FirebaseAuth.instance.currentUser?.uid;
   //   if (userID == null) {

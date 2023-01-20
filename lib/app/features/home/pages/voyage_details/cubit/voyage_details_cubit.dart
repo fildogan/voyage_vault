@@ -36,6 +36,17 @@ class VoyageDetailsCubit extends Cubit<VoyageDetailsState> {
       });
   }
 
+  // Future<void> getTotalPriceByVoyageId(String voyageId) async {
+  //   _streamSubscription = _expensesRepository
+  //       .getTotalPriceByVoyageId(voyageId)
+  //       .listen((totalPrice) {
+  //     emit(VoyageDetailsState(totalPrice: totalPrice));
+  //   })
+  //     ..onError((error) {
+  //       emit(const VoyageDetailsState(loadingErrorOccured: true));
+  //     });
+  // }
+
   // Future<void> getExpensesStream() async {
   //   _streamSubscription =
   //       _expensesRepository.getExpensesStream().listen((expenses) {
