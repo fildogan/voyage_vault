@@ -12,8 +12,10 @@ class RemoveVoyageAlertDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Remove voyage?'),
-      content: Text('Voyage: ${voyageModel.title}'),
+      title: Text('Delete voyage ${voyageModel.title}?'),
+      content: const Text(
+        'Deleting this voyage will also permanently delete all of its associated expenses. This action is irreversible.',
+      ),
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(true),

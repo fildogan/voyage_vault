@@ -38,9 +38,14 @@ class VoyagesPageContent extends StatelessWidget {
                     for (final voyageModel in voyageModels)
                       Dismissible(
                         key: ValueKey(voyageModel.id),
-                        onDismissed: (direction) => context
-                            .read<VoyagesCubit>()
-                            .remove(documentID: voyageModel.id),
+                        onDismissed: (direction) {
+                          context.read<VoyagesCubit>().remove(
+                                voyageId: voyageModel.id,
+                              );
+                          context.read<VoyagesCubit>().removeExpensesByVoyageId(
+                                voyageId: voyageModel.id,
+                              );
+                        },
                         confirmDismiss: (direction) {
                           return showDialog(
                             context: context,

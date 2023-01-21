@@ -71,6 +71,7 @@ class AddExpenseCubit extends Cubit<AddExpenseState> {
         .listen(
           (voyageTitles) => emit(
             AddExpenseState(
+              status: Status.success,
               voyageTitles: voyageTitles,
             ),
           ),

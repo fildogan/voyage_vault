@@ -43,8 +43,10 @@ extension GetItInjectableX on _i1.GetIt {
         ));
     gh.factory<_i7.AddVoyageCubit>(
         () => _i7.AddVoyageCubit(gh<_i5.VoyagesRepository>()));
-    gh.factory<_i8.VoyagesCubit>(
-        () => _i8.VoyagesCubit(gh<_i5.VoyagesRepository>()));
+    gh.factory<_i8.VoyagesCubit>(() => _i8.VoyagesCubit(
+          gh<_i5.VoyagesRepository>(),
+          gh<_i3.ExpensesRepository>(),
+        ));
     return this;
   }
 }

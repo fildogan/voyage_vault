@@ -58,9 +58,12 @@ class VoyageDetailsPage extends StatelessWidget {
                                   context: context,
                                   builder: (BuildContext context) {
                                     return AlertDialog(
-                                      title: const Text('Remove expense?'),
-                                      content:
-                                          Text('Voyage: ${expenseModel.name}'),
+                                      title: Text(
+                                        'Delete expense ${expenseModel.name}?',
+                                      ),
+                                      content: const Text(
+                                        'If you continue, this expense will be permanently deleted. This action is irreversible.',
+                                      ),
                                       actions: [
                                         TextButton(
                                           onPressed: () =>

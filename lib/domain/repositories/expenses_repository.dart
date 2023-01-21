@@ -66,6 +66,24 @@ class ExpensesRepository {
         .delete();
   }
 
+  Future<void> removeExpensesByVoyageId({required String voyageId}) async {
+    final userID = FirebaseAuth.instance.currentUser?.uid;
+    if (userID == null) {
+      throw Exception('User is not logged in');
+    }
+
+    final expenses = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userID)
+        .collection('expenses')
+        .where('voyageid', isEqualTo: voyageId)
+        .get();
+
+    for (final expense in expenses.docs) {
+      await expense.reference.delete();
+    }
+  }
+
   // Stream<double> getTotalPriceByVoyageId(String voyageId) {
   //   return getExpensesStreamByVoyageId(voyageId).map(
   //     (expenses) => expenses

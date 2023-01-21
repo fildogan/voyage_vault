@@ -5,15 +5,19 @@ import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 import 'package:travel_cost_log/app/core/enums.dart';
 import 'package:travel_cost_log/domain/models/voyage_model.dart';
+import 'package:travel_cost_log/domain/repositories/expenses_repository.dart';
 import 'package:travel_cost_log/domain/repositories/voyages_repository.dart';
 
 part 'voyages_state.dart';
 
 @injectable
 class VoyagesCubit extends Cubit<VoyagesState> {
-  VoyagesCubit(this._voyagesRepository) : super(const VoyagesState());
+  VoyagesCubit(this._voyagesRepository, this._expensesRepository)
+      : super(const VoyagesState());
 
   final VoyagesRepository _voyagesRepository;
+
+  final ExpensesRepository _expensesRepository;
 
   StreamSubscription? _streamSubscription;
 
@@ -43,7 +47,7 @@ class VoyagesCubit extends Cubit<VoyagesState> {
   }
 
   Future<void> remove({
-    required String documentID,
+    required String voyageId,
   }) async {
     emit(
       const VoyagesState(
@@ -51,7 +55,27 @@ class VoyagesCubit extends Cubit<VoyagesState> {
       ),
     );
     try {
-      await _voyagesRepository.remove(id: documentID);
+      await _voyagesRepository.remove(id: voyageId);
+    } catch (error) {
+      emit(
+        VoyagesState(
+          status: Status.error,
+          errorMessage: error.toString(),
+        ),
+      );
+    }
+  }
+
+  Future<void> removeExpensesByVoyageId({
+    required String voyageId,
+  }) async {
+    emit(
+      const VoyagesState(
+        status: Status.loading,
+      ),
+    );
+    try {
+      await _expensesRepository.removeExpensesByVoyageId(voyageId: voyageId);
     } catch (error) {
       emit(
         VoyagesState(
