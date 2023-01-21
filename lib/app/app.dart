@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:travel_cost_log/app/features/auth/pages/auth_gate.dart';
+import 'package:travel_cost_log/features/auth/pages/auth_gate.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
