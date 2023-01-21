@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:travel_cost_log/app/features/home/pages/voyage_details/voyage_details_page.dart';
-import 'package:travel_cost_log/app/features/home/pages/voyages_page_content/widgets/alert_dialog.dart';
 import 'package:travel_cost_log/app/injection_container.dart';
 import 'package:travel_cost_log/domain/models/voyage_model.dart';
+import 'package:travel_cost_log/features/home/pages/voyage_details/voyage_details_page.dart';
 import 'package:travel_cost_log/features/home/pages/voyages_page_content/cubit/voyages_cubit.dart';
+import 'package:travel_cost_log/features/home/pages/voyages_page_content/widgets/alert_dialog.dart';
 
 class VoyagesPageContent extends StatelessWidget {
   const VoyagesPageContent({super.key});

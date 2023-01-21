@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:travel_cost_log/app/features/home/pages/add_expense/add_expense_page.dart';
 import 'package:travel_cost_log/app/injection_container.dart';
 import 'package:travel_cost_log/domain/models/voyage_model.dart';
+import 'package:travel_cost_log/features/home/pages/add_expense/add_expense_page.dart';
 import 'package:travel_cost_log/features/home/pages/voyage_details/cubit/voyage_details_cubit.dart';
 
 class VoyageDetailsPage extends StatelessWidget {

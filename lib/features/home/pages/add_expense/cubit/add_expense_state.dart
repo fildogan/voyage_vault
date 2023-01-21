@@ -5,7 +5,7 @@ class AddExpenseState {
   const AddExpenseState({
     this.status = Status.initial,
     this.saved = false,
-    this.errorMessage = '',
+    this.errorMessage,
     this.categoryTitles = const [],
     this.loadingErrorOccured = false,
     this.voyageTitles = const [],
@@ -14,7 +14,7 @@ class AddExpenseState {
 
   final Status status;
   final bool saved;
-  final String errorMessage;
+  final String? errorMessage;
   final List<String> categoryTitles;
   final bool loadingErrorOccured;
   final List<String> voyageTitles;

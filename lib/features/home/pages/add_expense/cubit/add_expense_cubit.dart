@@ -28,32 +28,77 @@ class AddExpenseCubit extends Cubit<AddExpenseState> {
     double price,
     String category,
   ) async {
+    emit(
+      const AddExpenseState(
+        status: Status.loading,
+      ),
+    );
     try {
       await _expensesRepository.add(name, voyageId, price, category);
-      emit(const AddExpenseState(saved: true));
+      emit(
+        const AddExpenseState(
+          status: Status.success,
+          saved: true,
+        ),
+      );
     } catch (error) {
-      emit(AddExpenseState(errorMessage: error.toString()));
+      emit(
+        AddExpenseState(
+          status: Status.error,
+          errorMessage: error.toString(),
+        ),
+      );
     }
   }
 
-  Future<void> error(String error) async {
-    emit(AddExpenseState(errorMessage: error));
+  Future<void> error(String errorMessage) async {
+    emit(
+      AddExpenseState(
+        status: Status.error,
+        errorMessage: errorMessage,
+      ),
+    );
   }
 
   Future<void> getVoyageTitleStream() async {
+    emit(
+      const AddExpenseState(
+        status: Status.loading,
+      ),
+    );
     _streamSubscription = _voyagesRepository
         .getVoyagesStream()
         .map((voyages) => voyages.map((voyage) => voyage.title).toList())
         .listen(
-          (voyageTitles) => emit(AddExpenseState(voyageTitles: voyageTitles)),
+          (voyageTitles) => emit(
+            AddExpenseState(
+              status: Status.success,
+              voyageTitles: voyageTitles,
+            ),
+          ),
         )..onError(
-        (error) => emit(const AddExpenseState(loadingErrorOccured: true)),
+        (error) => emit(
+          AddExpenseState(
+            status: Status.error,
+            errorMessage: error.toString(),
+          ),
+        ),
       );
   }
 
   Future<String> getVoyageIdbyTitle(String voyageTitle) async {
+    emit(
+      const AddExpenseState(
+        status: Status.loading,
+      ),
+    );
     final voyageId = await _voyagesRepository.getVoyageIdByTitle(voyageTitle);
-    emit(AddExpenseState(voyageId: voyageId));
+    emit(
+      AddExpenseState(
+        status: Status.success,
+        voyageId: voyageId,
+      ),
+    );
     return voyageId;
   }
 

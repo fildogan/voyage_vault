@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:travel_cost_log/app/features/home/pages/add_expense/add_expense_page.dart';
-import 'package:travel_cost_log/app/features/home/pages/add_voyage/add_voyage_page.dart';
+import 'package:travel_cost_log/features/home/pages/add_expense/add_expense_page.dart';
+import 'package:travel_cost_log/features/home/pages/add_voyage/add_voyage_page.dart';
 
 class AddPageContent extends StatelessWidget {
   const AddPageContent({super.key});

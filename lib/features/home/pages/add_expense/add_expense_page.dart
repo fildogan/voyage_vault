@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:travel_cost_log/app/core/enums.dart';
 import 'package:travel_cost_log/app/injection_container.dart';
 import 'package:travel_cost_log/data/data_sources/local_data_sources/expense_category_list.dart';
 import 'package:travel_cost_log/domain/models/voyage_model.dart';
@@ -36,11 +37,11 @@ class _AddExpensePageState extends State<AddExpensePage> {
             if (state.saved) {
               Navigator.of(context).pop();
             }
-            if (state.errorMessage.isNotEmpty) {
+            if (state.errorMessage != null) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(
-                    state.errorMessage,
+                    state.errorMessage!,
                   ),
                   backgroundColor: Colors.red,
                 ),
@@ -49,35 +50,60 @@ class _AddExpensePageState extends State<AddExpensePage> {
           },
           child: BlocBuilder<AddExpenseCubit, AddExpenseState>(
             builder: (context, state) {
-              return _AddExpensePageBody(
-                onNameChanged: (newValue) =>
-                    setState(() => _expenseName = newValue),
-                expenseName: _expenseName,
-                onVoyageTitleChanged: (newValue) => setState(() {
-                  _expenseVoyageTitle = newValue;
-                }),
-                expenseVoyageTitle: _expenseVoyageTitle,
-                onPriceChanged: (newValue) =>
-                    setState(() => _expensePrice = newValue),
-                expensePrice: _expensePrice,
-                onCategoryChanged: (newValue) =>
-                    setState(() => _expenseCategory = newValue),
-                expenseCategory: _expenseCategory,
-                categoryTitles: expenseCategoryList,
-                voyageTitles: state.voyageTitles,
-                voyageModel: widget.voyageModel,
-                addExpense: (title) async {
-                  _voyageId = await context
-                      .read<AddExpenseCubit>()
-                      .getVoyageIdbyTitle(title!);
-                  context.read<AddExpenseCubit>().add(
-                        _expenseName!,
-                        _voyageId!,
-                        _expensePrice!,
-                        _expenseCategory!,
-                      );
-                },
-              );
+              switch (state.status) {
+                case Status.initial:
+                  return const Center(
+                    child: Text('Initial state'),
+                  );
+                case Status.loading:
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                case Status.success:
+                  if (state.voyageTitles.isEmpty) {
+                    return const Center(
+                      child: Text('No articles found'),
+                    );
+                  }
+                  return _AddExpensePageBody(
+                    onNameChanged: (newValue) =>
+                        setState(() => _expenseName = newValue),
+                    expenseName: _expenseName,
+                    onVoyageTitleChanged: (newValue) => setState(() {
+                      _expenseVoyageTitle = newValue;
+                    }),
+                    expenseVoyageTitle: _expenseVoyageTitle,
+                    onPriceChanged: (newValue) =>
+                        setState(() => _expensePrice = newValue),
+                    expensePrice: _expensePrice,
+                    onCategoryChanged: (newValue) =>
+                        setState(() => _expenseCategory = newValue),
+                    expenseCategory: _expenseCategory,
+                    categoryTitles: expenseCategoryList,
+                    voyageTitles: state.voyageTitles,
+                    voyageModel: widget.voyageModel,
+                    addExpense: (title) async {
+                      _voyageId = await context
+                          .read<AddExpenseCubit>()
+                          .getVoyageIdbyTitle(title!);
+                      context.read<AddExpenseCubit>().add(
+                            _expenseName!,
+                            _voyageId!,
+                            _expensePrice!,
+                            _expenseCategory!,
+                          );
+                    },
+                  );
+                case Status.error:
+                  return Center(
+                    child: Text(
+                      state.errorMessage ?? 'Unknown error',
+                      style: TextStyle(
+                        color: Theme.of(context).errorColor,
+                      ),
+                    ),
+                  );
+              }
             },
           ),
         ),
