@@ -18,22 +18,52 @@ class VoyagesCubit extends Cubit<VoyagesState> {
   StreamSubscription? _streamSubscription;
 
   Future<void> start() async {
+    emit(
+      const VoyagesState(
+        status: Status.loading,
+      ),
+    );
     _streamSubscription =
         _voyagesRepository.getVoyagesStream().listen((voyages) {
-      emit(VoyagesState(voyages: voyages));
+      emit(
+        VoyagesState(
+          status: Status.success,
+          voyages: voyages,
+        ),
+      );
     })
           ..onError((error) {
-            emit(const VoyagesState(loadingErrorOccured: true));
+            emit(
+              VoyagesState(
+                status: Status.error,
+                errorMessage: error.toString(),
+              ),
+            );
           });
   }
 
   Future<void> remove({
     required String documentID,
   }) async {
+    emit(
+      const VoyagesState(
+        status: Status.loading,
+      ),
+    );
     try {
       await _voyagesRepository.remove(id: documentID);
+      emit(
+        const VoyagesState(
+          status: Status.success,
+        ),
+      );
     } catch (error) {
-      emit(const VoyagesState(removingErrorOccured: true));
+      emit(
+        VoyagesState(
+          status: Status.error,
+          errorMessage: error.toString(),
+        ),
+      );
     }
   }
 

@@ -62,7 +62,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
                 case Status.success:
                   if (state.voyageTitles.isEmpty) {
                     return const Center(
-                      child: Text('No articles found'),
+                      child: Text('No voyages found'),
                     );
                   }
                   return _AddExpensePageBody(
@@ -221,6 +221,7 @@ class _AddExpensePageBody extends StatelessWidget {
                       context
                           .read<AddExpenseCubit>()
                           .error('Please fill all fields');
+                      context.read<AddExpenseCubit>().getVoyageTitleStream();
                     }
                   : () {
                       addExpense(expenseVoyageTitle);

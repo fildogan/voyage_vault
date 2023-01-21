@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:travel_cost_log/app/core/enums.dart';
 import 'package:travel_cost_log/app/injection_container.dart';
 import 'package:travel_cost_log/domain/models/voyage_model.dart';
 import 'package:travel_cost_log/features/home/pages/voyage_details/voyage_details_page.dart';
@@ -16,29 +17,54 @@ class VoyagesPageContent extends StatelessWidget {
         create: (context) => getIt<VoyagesCubit>()..start(),
         child: BlocBuilder<VoyagesCubit, VoyagesState>(
           builder: (context, state) {
-            final voyageModels = state.voyages;
-            return ListView(
-              children: [
-                for (final voyageModel in voyageModels)
-                  Dismissible(
-                    key: ValueKey(voyageModel.id),
-                    onDismissed: (direction) => context
-                        .read<VoyagesCubit>()
-                        .remove(documentID: voyageModel.id),
-                    confirmDismiss: (direction) {
-                      return showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return RemoveVoyageAlertDialog(
-                            voyageModel: voyageModel,
+            switch (state.status) {
+              case Status.initial:
+                return const Center(
+                  child: Text('Initial state'),
+                );
+              case Status.loading:
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              case Status.success:
+                if (state.voyages.isEmpty) {
+                  return const Center(
+                    child: Text('No voyages found'),
+                  );
+                }
+                final voyageModels = state.voyages;
+                return ListView(
+                  children: [
+                    for (final voyageModel in voyageModels)
+                      Dismissible(
+                        key: ValueKey(voyageModel.id),
+                        onDismissed: (direction) => context
+                            .read<VoyagesCubit>()
+                            .remove(documentID: voyageModel.id),
+                        confirmDismiss: (direction) {
+                          return showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return RemoveVoyageAlertDialog(
+                                voyageModel: voyageModel,
+                              );
+                            },
                           );
                         },
-                      );
-                    },
-                    child: _ListViewItem(voyageModel: voyageModel),
-                  )
-              ],
-            );
+                        child: _ListViewItem(voyageModel: voyageModel),
+                      )
+                  ],
+                );
+              case Status.error:
+                return Center(
+                  child: Text(
+                    state.errorMessage ?? 'Unknown error',
+                    style: TextStyle(
+                      color: Theme.of(context).errorColor,
+                    ),
+                  ),
+                );
+            }
           },
         ),
       ),
