@@ -52,11 +52,6 @@ class VoyagesCubit extends Cubit<VoyagesState> {
     );
     try {
       await _voyagesRepository.remove(id: documentID);
-      emit(
-        const VoyagesState(
-          status: Status.success,
-        ),
-      );
     } catch (error) {
       emit(
         VoyagesState(

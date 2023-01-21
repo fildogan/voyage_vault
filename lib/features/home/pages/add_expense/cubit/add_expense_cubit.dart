@@ -37,7 +37,6 @@ class AddExpenseCubit extends Cubit<AddExpenseState> {
       await _expensesRepository.add(name, voyageId, price, category);
       emit(
         const AddExpenseState(
-          status: Status.success,
           saved: true,
         ),
       );
@@ -72,7 +71,6 @@ class AddExpenseCubit extends Cubit<AddExpenseState> {
         .listen(
           (voyageTitles) => emit(
             AddExpenseState(
-              status: Status.success,
               voyageTitles: voyageTitles,
             ),
           ),

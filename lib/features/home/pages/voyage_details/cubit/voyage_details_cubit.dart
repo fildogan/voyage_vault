@@ -33,8 +33,32 @@ class VoyageDetailsCubit extends Cubit<VoyageDetailsState> {
       emit(VoyageDetailsState(expenses: expenses));
     })
       ..onError((error) {
-        emit(const VoyageDetailsState(loadingErrorOccured: true));
+        emit(
+          const VoyageDetailsState(
+            status: Status.error,
+          ),
+        );
       });
+  }
+
+  Future<void> remove({
+    required String expenseId,
+  }) async {
+    emit(
+      const VoyageDetailsState(
+        status: Status.loading,
+      ),
+    );
+    try {
+      await _expensesRepository.remove(id: expenseId);
+    } catch (error) {
+      emit(
+        VoyageDetailsState(
+          status: Status.error,
+          errorMessage: error.toString(),
+        ),
+      );
+    }
   }
 
   // Future<void> getTotalPriceByVoyageId(String voyageId) async {

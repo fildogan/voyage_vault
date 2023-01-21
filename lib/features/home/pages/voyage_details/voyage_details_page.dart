@@ -48,6 +48,35 @@ class VoyageDetailsPage extends StatelessWidget {
                           for (final expenseModel in expenseModels)
                             Dismissible(
                               key: ValueKey(expenseModel.id),
+                              onDismissed: (direction) {
+                                context.read<VoyageDetailsCubit>().remove(
+                                      expenseId: expenseModel.id,
+                                    );
+                              },
+                              confirmDismiss: (direction) {
+                                return showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: const Text('Remove expense?'),
+                                      content:
+                                          Text('Voyage: ${expenseModel.name}'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.of(context).pop(true),
+                                          child: const Text('Yes'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.of(context).pop(false),
+                                          child: const Text('No'),
+                                        )
+                                      ],
+                                    );
+                                  },
+                                );
+                              },
                               child: Card(
                                 child: Column(
                                   children: [
