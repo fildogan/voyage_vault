@@ -45,6 +45,10 @@ class VoyageDetailsPage extends StatelessWidget {
                   Text('Voyage budget: ${voyageModel.budget}'),
                   Text('Total expenses spent: € ${expenseSum.toString()}'),
                   Text('Percentage spent: $percentBudgetSpentFormatted %'),
+                  percentBudgetSpent > 1.0
+                      ? Text(
+                          'You have spent €${(expenseSum - voyageModel.budget!).toStringAsFixed(2)} over the budget')
+                      : const SizedBox(),
                   Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: LinearPercentIndicator(
