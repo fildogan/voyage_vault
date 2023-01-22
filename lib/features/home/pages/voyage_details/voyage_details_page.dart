@@ -116,12 +116,18 @@ class VoyageDetailsPage extends StatelessWidget {
                               },
                               child: SizedBox(
                                 width: double.infinity,
-                                child: Card(
+                                child: Container(
+                                  width: double.infinity,
+                                  color: Colors.black12,
                                   child: Column(
                                     children: [
                                       Text(expenseModel.name),
                                       Text(expenseModel.price.toString()),
                                       Text(expenseModel.category),
+                                      const Divider(
+                                        height: 0,
+                                        thickness: 1,
+                                      ),
                                     ],
                                   ),
                                 ),
