@@ -50,9 +50,7 @@ class VoyagesCubit extends Cubit<VoyagesState> {
     required String voyageId,
   }) async {
     emit(
-      const VoyagesState(
-        status: Status.loading,
-      ),
+      const VoyagesState(),
     );
     try {
       await _voyagesRepository.remove(id: voyageId);
@@ -70,9 +68,7 @@ class VoyagesCubit extends Cubit<VoyagesState> {
     required String voyageId,
   }) async {
     emit(
-      const VoyagesState(
-        status: Status.loading,
-      ),
+      const VoyagesState(),
     );
     try {
       await _expensesRepository.removeExpensesByVoyageId(voyageId: voyageId);

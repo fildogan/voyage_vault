@@ -29,9 +29,7 @@ class AddExpenseCubit extends Cubit<AddExpenseState> {
     String category,
   ) async {
     emit(
-      const AddExpenseState(
-        status: Status.loading,
-      ),
+      const AddExpenseState(),
     );
     try {
       await _expensesRepository.add(name, voyageId, price, category);
@@ -92,9 +90,7 @@ class AddExpenseCubit extends Cubit<AddExpenseState> {
     String category,
   ) async {
     emit(
-      const AddExpenseState(
-        status: Status.loading,
-      ),
+      const AddExpenseState(),
     );
     final voyageId = await _voyagesRepository.getVoyageIdByTitle(voyageTitle);
     emit(

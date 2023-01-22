@@ -34,8 +34,9 @@ class VoyageDetailsCubit extends Cubit<VoyageDetailsState> {
     })
       ..onError((error) {
         emit(
-          const VoyageDetailsState(
+          VoyageDetailsState(
             status: Status.error,
+            errorMessage: error.toString(),
           ),
         );
       });
@@ -45,9 +46,7 @@ class VoyageDetailsCubit extends Cubit<VoyageDetailsState> {
     required String expenseId,
   }) async {
     emit(
-      const VoyageDetailsState(
-        status: Status.loading,
-      ),
+      const VoyageDetailsState(),
     );
     try {
       await _expensesRepository.remove(id: expenseId);
@@ -68,7 +67,8 @@ class VoyageDetailsCubit extends Cubit<VoyageDetailsState> {
   //     emit(VoyageDetailsState(totalPrice: totalPrice));
   //   })
   //     ..onError((error) {
-  //       emit(const VoyageDetailsState(loadingErrorOccured: true));
+  //       emit( VoyageDetailsState(status: Status.error,
+  // errorMessage: error.toString(),));
   //     });
   // }
 
@@ -78,7 +78,8 @@ class VoyageDetailsCubit extends Cubit<VoyageDetailsState> {
   //     emit(VoyageDetailsState(expenses: expenses));
   //   })
   //         ..onError((error) {
-  //           emit(const VoyageDetailsState(loadingErrorOccured: true));
+  //           emit( VoyageDetailsState(status: Status.error,
+  // errorMessage: error.toString(),));
   //         });
   // }
 

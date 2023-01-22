@@ -26,7 +26,12 @@ class AddVoyageCubit extends Cubit<AddVoyageState> {
       await _voyagesRepository.add(title, budget, startDate, endDate);
       emit(const AddVoyageState(saved: true));
     } catch (error) {
-      emit(AddVoyageState(errorMessage: error.toString()));
+      emit(
+        AddVoyageState(
+          status: Status.error,
+          errorMessage: error.toString(),
+        ),
+      );
     }
   }
 
@@ -44,7 +49,12 @@ class AddVoyageCubit extends Cubit<AddVoyageState> {
         .listen(
           (voyageTitles) => emit(AddVoyageState(voyageTitles: voyageTitles)),
         )..onError(
-        (error) => emit(const AddVoyageState(loadingErrorOccured: true)),
+        (error) => emit(
+          AddVoyageState(
+            status: Status.error,
+            errorMessage: error.toString(),
+          ),
+        ),
       );
   }
 
