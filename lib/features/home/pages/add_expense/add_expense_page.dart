@@ -21,7 +21,6 @@ class _AddExpensePageState extends State<AddExpensePage> {
   String? _expenseVoyageTitle;
   double? _expensePrice;
   String? _expenseCategory;
-  late String? _voyageId;
 
   @override
   Widget build(BuildContext context) {
@@ -82,13 +81,10 @@ class _AddExpensePageState extends State<AddExpensePage> {
                     categoryTitles: expenseCategoryList,
                     voyageTitles: state.voyageTitles,
                     voyageModel: widget.voyageModel,
-                    addExpense: (title) async {
-                      _voyageId = await context
-                          .read<AddExpenseCubit>()
-                          .getVoyageIdbyTitle(title!);
-                      context.read<AddExpenseCubit>().add(
+                    addExpense: (title) {
+                      context.read<AddExpenseCubit>().addExpenseByVoyageTitle(
                             _expenseName!,
-                            _voyageId!,
+                            title!,
                             _expensePrice!,
                             _expenseCategory!,
                           );

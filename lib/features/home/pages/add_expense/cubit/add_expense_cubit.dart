@@ -85,7 +85,12 @@ class AddExpenseCubit extends Cubit<AddExpenseState> {
       );
   }
 
-  Future<String> getVoyageIdbyTitle(String voyageTitle) async {
+  Future<void> addExpenseByVoyageTitle(
+    String name,
+    String voyageTitle,
+    double price,
+    String category,
+  ) async {
     emit(
       const AddExpenseState(
         status: Status.loading,
@@ -98,7 +103,7 @@ class AddExpenseCubit extends Cubit<AddExpenseState> {
         voyageId: voyageId,
       ),
     );
-    return voyageId;
+    add(name, voyageId, price, category);
   }
 
   @override

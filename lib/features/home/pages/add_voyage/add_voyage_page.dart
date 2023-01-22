@@ -188,7 +188,6 @@ class _AddVoyagePageBody extends StatelessWidget {
                   context
                       .read<AddVoyageCubit>()
                       .error('Voyage start date should be before end date');
-                  //TODO: fix check, does voyage exist in collection
                 } else if (voyageTitles
                     .map((i) => i.toLowerCase())
                     .contains(voyageTitle!.toLowerCase())) {

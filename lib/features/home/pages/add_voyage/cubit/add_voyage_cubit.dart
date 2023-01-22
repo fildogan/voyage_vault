@@ -31,7 +31,10 @@ class AddVoyageCubit extends Cubit<AddVoyageState> {
   }
 
   Future<void> error(String error) async {
-    emit(AddVoyageState(errorMessage: error));
+    emit(AddVoyageState(
+      errorMessage: error,
+      voyageTitles: state.voyageTitles,
+    ));
   }
 
   Future<void> getVoyageTitleStream() async {
