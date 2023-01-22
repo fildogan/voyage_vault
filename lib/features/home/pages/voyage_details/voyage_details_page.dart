@@ -52,9 +52,12 @@ class VoyageDetailsPage extends StatelessWidget {
                       // animation: true,
                       lineHeight: 20.0,
                       // animationDuration: 2000,
-                      percent: percentBudgetSpent,
+                      percent:
+                          percentBudgetSpent > 1.0 ? 1.0 : percentBudgetSpent,
                       center: Text("$percentBudgetSpentFormatted%"),
-                      progressColor: Colors.green.shade800,
+                      progressColor: percentBudgetSpent > 1.0
+                          ? Colors.red
+                          : Colors.green.shade800,
                       backgroundColor: Colors.transparent,
                     ),
                   ),
