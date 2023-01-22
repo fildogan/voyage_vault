@@ -53,6 +53,14 @@ class VoyageDetailsPage extends StatelessWidget {
                                       expenseId: expenseModel.id,
                                     );
                               },
+                              direction: DismissDirection.endToStart,
+                              background: Container(
+                                alignment: Alignment.centerRight,
+                                padding: const EdgeInsets.only(right: 20),
+                                color: Colors.red,
+                                child: const Icon(Icons.delete,
+                                    color: Colors.white),
+                              ),
                               confirmDismiss: (direction) {
                                 return showDialog(
                                   context: context,
@@ -80,13 +88,16 @@ class VoyageDetailsPage extends StatelessWidget {
                                   },
                                 );
                               },
-                              child: Card(
-                                child: Column(
-                                  children: [
-                                    Text(expenseModel.name),
-                                    Text(expenseModel.price.toString()),
-                                    Text(expenseModel.category),
-                                  ],
+                              child: SizedBox(
+                                width: double.infinity,
+                                child: Card(
+                                  child: Column(
+                                    children: [
+                                      Text(expenseModel.name),
+                                      Text(expenseModel.price.toString()),
+                                      Text(expenseModel.category),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),

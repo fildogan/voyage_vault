@@ -46,6 +46,13 @@ class VoyagesPageContent extends StatelessWidget {
                                 voyageId: voyageModel.id,
                               );
                         },
+                        direction: DismissDirection.endToStart,
+                        background: Container(
+                          alignment: Alignment.centerRight,
+                          padding: const EdgeInsets.only(right: 20),
+                          color: Colors.red,
+                          child: const Icon(Icons.delete, color: Colors.white),
+                        ),
                         confirmDismiss: (direction) {
                           return showDialog(
                             context: context,
