@@ -4,6 +4,7 @@ import 'package:travel_cost_log/app/injection_container.dart';
 import 'package:travel_cost_log/domain/models/voyage_model.dart';
 import 'package:travel_cost_log/features/home/pages/add_expense/add_expense_page.dart';
 import 'package:travel_cost_log/features/home/pages/voyage_details/cubit/voyage_details_cubit.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
 class VoyageDetailsPage extends StatelessWidget {
   const VoyageDetailsPage({super.key, required this.voyageModel});
@@ -22,7 +23,9 @@ class VoyageDetailsPage extends StatelessWidget {
           final double expenseSum =
               expenseModels.fold(0, (prev, element) => prev + element.price);
           final double percentBudgetSpent =
-              (expenseSum / (voyageModel.budget ?? 1)) * 100;
+              (expenseSum / (voyageModel.budget ?? 1));
+          final String percentBudgetSpentFormatted =
+              (percentBudgetSpent * 100).toStringAsFixed(2);
           return Scaffold(
             appBar: AppBar(title: Text(voyageModel.title)),
             floatingActionButton: FloatingActionButton(
@@ -41,7 +44,20 @@ class VoyageDetailsPage extends StatelessWidget {
                 children: [
                   Text('Voyage budget: ${voyageModel.budget}'),
                   Text('Total expenses spent: € ${expenseSum.toString()}'),
-                  Text('Percentage spent: ${percentBudgetSpent.toString()} %'),
+                  Text('Percentage spent: $percentBudgetSpentFormatted %'),
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: LinearPercentIndicator(
+                      width: MediaQuery.of(context).size.width - 50,
+                      // animation: true,
+                      lineHeight: 20.0,
+                      // animationDuration: 2000,
+                      percent: percentBudgetSpent,
+                      center: Text("$percentBudgetSpentFormatted%"),
+                      progressColor: Colors.green.shade800,
+                      backgroundColor: Colors.transparent,
+                    ),
+                  ),
                   Expanded(
                     child: ListView(
                       children: [
