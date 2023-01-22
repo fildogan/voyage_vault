@@ -21,6 +21,8 @@ class VoyageDetailsPage extends StatelessWidget {
           // Get sum of all expenses for given voyage
           final double expenseSum =
               expenseModels.fold(0, (prev, element) => prev + element.price);
+          final double percentBudgetSpent =
+              (expenseSum / (voyageModel.budget ?? 1)) * 100;
           return Scaffold(
             appBar: AppBar(title: Text(voyageModel.title)),
             floatingActionButton: FloatingActionButton(
@@ -39,6 +41,7 @@ class VoyageDetailsPage extends StatelessWidget {
                 children: [
                   Text('Voyage budget: ${voyageModel.budget}'),
                   Text('Total expenses spent: € ${expenseSum.toString()}'),
+                  Text('Percentage spent: ${percentBudgetSpent.toString()} %'),
                   Expanded(
                     child: ListView(
                       children: [
