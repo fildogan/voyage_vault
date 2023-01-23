@@ -33,7 +33,8 @@ class _HomePageState extends State<HomePage> {
         ),
         currentIndex: _currentIndex,
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.luggage), label: 'Voyages'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.airplanemode_active), label: 'Voyages'),
           BottomNavigationBarItem(icon: Icon(Icons.add), label: 'Add'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Account')
         ],

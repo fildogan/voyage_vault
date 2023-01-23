@@ -20,31 +20,63 @@ class _AddVoyagePageState extends State<AddVoyagePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Add a voyage'),
-      ),
-      body: BlocProvider<AddVoyageCubit>(
-        create: (context) => getIt<AddVoyageCubit>()..getVoyageTitleStream(),
-        child: BlocListener<AddVoyageCubit, AddVoyageState>(
-          listener: (context, state) {
-            if (state.saved) {
-              Navigator.of(context).pop();
-            }
-            if (state.errorMessage.isNotEmpty) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(
-                    state.errorMessage,
-                  ),
-                  backgroundColor: Colors.red,
+    return BlocProvider<AddVoyageCubit>(
+      create: (context) => getIt<AddVoyageCubit>()..getVoyageTitleStream(),
+      child: BlocListener<AddVoyageCubit, AddVoyageState>(
+        listener: (context, state) {
+          if (state.saved) {
+            Navigator.of(context).pop();
+          }
+          if (state.errorMessage.isNotEmpty) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  state.errorMessage,
                 ),
-              );
-            }
-          },
-          child: BlocBuilder<AddVoyageCubit, AddVoyageState>(
-            builder: (context, state) {
-              return _AddVoyagePageBody(
+                backgroundColor: Colors.red,
+              ),
+            );
+          }
+        },
+        child: BlocBuilder<AddVoyageCubit, AddVoyageState>(
+          builder: (context, state) {
+            return Scaffold(
+              appBar: AppBar(
+                title: const Text('Create Voyage'),
+                actions: [
+                  TextButton(
+                      onPressed: (() {
+                        if (_voyageTitle == null ||
+                            _voyageBudget == null ||
+                            _voyageStartDate == null ||
+                            _voyageEndDate == null) {
+                          context
+                              .read<AddVoyageCubit>()
+                              .error('Please fill all fields');
+                        } else if (_voyageEndDate!
+                            .isBefore(_voyageStartDate!)) {
+                          context.read<AddVoyageCubit>().error(
+                              'Voyage start date should be before end date');
+                        } else if (state.voyageTitles
+                            .map((i) => i.toLowerCase())
+                            .contains(_voyageTitle!.toLowerCase())) {
+                          context
+                              .read<AddVoyageCubit>()
+                              .error('Voyage title already exists');
+                        } else {
+                          context.read<AddVoyageCubit>().add(
+                                _voyageTitle!,
+                                _voyageBudget!,
+                                _voyageStartDate!,
+                                _voyageEndDate!,
+                              );
+                        }
+                      }),
+                      child: const Text('Save')),
+                ],
+                // automaticallyImplyLeading: false,
+              ),
+              body: _AddVoyagePageBody(
                 onTitleChanged: (newValue) =>
                     setState(() => _voyageTitle = newValue),
                 onBudgetChanged: (newValue) =>
@@ -55,18 +87,18 @@ class _AddVoyagePageState extends State<AddVoyagePage> {
                     setState(() => _voyageEndDate = newValue),
                 startDateFormated: _voyageStartDate == null
                     ? null
-                    : 'Selected start date: ${_voyageStartDate == null ? null : DateFormat.yMd().format(_voyageStartDate!)}',
+                    : 'Selected start date: ${DateFormat.yMd().format(_voyageStartDate!)}',
                 endDateFormated: _voyageEndDate == null
                     ? null
-                    : 'Selected end date: ${_voyageEndDate == null ? null : DateFormat.yMd().format(_voyageEndDate!)}',
+                    : 'Selected end date: ${DateFormat.yMd().format(_voyageEndDate!)}',
                 voyageTitle: _voyageTitle,
                 voyageBudget: _voyageBudget,
                 voyageStartDate: _voyageStartDate,
                 voyageEndDate: _voyageEndDate,
                 voyageTitles: state.voyageTitles,
-              );
-            },
-          ),
+              ),
+            );
+          },
         ),
       ),
     );
