@@ -16,14 +16,23 @@ class AddVoyageCubit extends Cubit<AddVoyageState> {
 
   StreamSubscription? _streamSubscription;
 
-  Future<void> add(
-    String title,
-    double budget,
-    DateTime startDate,
-    DateTime endDate,
-  ) async {
+  Future<void> add({
+    required String title,
+    required double budget,
+    required DateTime startDate,
+    required DateTime endDate,
+    required String location,
+    String? description,
+  }) async {
     try {
-      await _voyagesRepository.add(title, budget, startDate, endDate);
+      await _voyagesRepository.add(
+        title: title,
+        budget: budget,
+        startDate: startDate,
+        endDate: endDate,
+        location: location,
+        description: description,
+      );
       emit(const AddVoyageState(saved: true));
     } catch (error) {
       emit(

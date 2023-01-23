@@ -23,9 +23,17 @@ class VoyagesRepository {
             return VoyageModel(
               id: doc.id,
               title: doc['title'].toString(),
-              budget: double.parse(doc['budget'].toString()),
+              budget: doc.data().toString().contains('budget')
+                  ? double.parse(doc['budget'].toString())
+                  : 0.00,
               startDate: (doc['startdate'] as Timestamp).toDate(),
               endDate: (doc['enddate'] as Timestamp).toDate(),
+              location: doc.data().toString().contains('location')
+                  ? doc['location'].toString()
+                  : '',
+              description: doc.data().toString().contains('description')
+                  ? doc['description'].toString()
+                  : '',
             );
           },
         ).toList();
@@ -33,12 +41,16 @@ class VoyagesRepository {
     );
   }
 
-  Future<void> add(
-    String title,
-    double budget,
-    DateTime startDate,
-    DateTime endDate,
-  ) async {
+  // amount: doc.data().toString().contains('amount') ? doc.get('amount') : 0,
+
+  Future<void> add({
+    required String title,
+    double? budget,
+    required DateTime startDate,
+    required DateTime endDate,
+    String? location,
+    String? description,
+  }) async {
     final userID = FirebaseAuth.instance.currentUser?.uid;
     if (userID == null) {
       throw Exception('User is not logged in');
@@ -52,6 +64,8 @@ class VoyagesRepository {
       'budget': budget,
       'startdate': startDate,
       'enddate': endDate,
+      'location': location,
+      'description': description,
     });
   }
 
@@ -104,6 +118,8 @@ class VoyagesRepository {
       budget: double.parse(doc['budget'].toString()),
       startDate: (doc['startdate'] as Timestamp).toDate(),
       endDate: (doc['enddate'] as Timestamp).toDate(),
+      location: doc['location'].toString(),
+      description: doc['description'].toString(),
     );
   }
 

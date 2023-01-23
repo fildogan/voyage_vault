@@ -17,6 +17,8 @@ class _AddVoyagePageState extends State<AddVoyagePage> {
   double? _voyageBudget;
   DateTime? _voyageStartDate;
   DateTime? _voyageEndDate;
+  String? _voyageLocation;
+  String? _voyageDescription;
 
   @override
   Widget build(BuildContext context) {
@@ -66,10 +68,12 @@ class _AddVoyagePageState extends State<AddVoyagePage> {
                               .error('Voyage title already exists');
                         } else {
                           context.read<AddVoyageCubit>().add(
-                                _voyageTitle!,
-                                _voyageBudget!,
-                                _voyageStartDate!,
-                                _voyageEndDate!,
+                                title: _voyageTitle!,
+                                budget: _voyageBudget!,
+                                startDate: _voyageStartDate!,
+                                endDate: _voyageEndDate!,
+                                location: _voyageLocation ?? '',
+                                description: _voyageDescription ?? '',
                               );
                         }
                       }),
@@ -86,6 +90,10 @@ class _AddVoyagePageState extends State<AddVoyagePage> {
                     setState(() => _voyageStartDate = newValue),
                 onEndDateChanged: (newValue) =>
                     setState(() => _voyageEndDate = newValue),
+                onLocationChanged: (newValue) =>
+                    setState(() => _voyageLocation = newValue),
+                onDescriptionChanged: (newValue) =>
+                    setState(() => _voyageDescription = newValue),
                 startDateFormated: _voyageStartDate == null
                     ? null
                     : DateFormat.yMd().format(_voyageStartDate!),
@@ -97,6 +105,8 @@ class _AddVoyagePageState extends State<AddVoyagePage> {
                 voyageStartDate: _voyageStartDate,
                 voyageEndDate: _voyageEndDate,
                 voyageTitles: state.voyageTitles,
+                voyageLocation: _voyageLocation,
+                voyageDescription: _voyageDescription,
               ),
             );
           },
@@ -111,6 +121,8 @@ class _AddVoyagePageBody extends StatelessWidget {
     required this.onTitleChanged,
     required this.onBudgetChanged,
     required this.onStartDateChanged,
+    required this.onLocationChanged,
+    required this.onDescriptionChanged,
     this.startDateFormated,
     required this.onEndDateChanged,
     this.endDateFormated,
@@ -119,9 +131,13 @@ class _AddVoyagePageBody extends StatelessWidget {
     this.voyageStartDate,
     this.voyageEndDate,
     required this.voyageTitles,
+    this.voyageLocation,
+    this.voyageDescription,
   });
 
   final Function(String?) onTitleChanged;
+  final Function(String?) onLocationChanged;
+  final Function(String?) onDescriptionChanged;
 
   final Function(double?) onBudgetChanged;
 
@@ -135,6 +151,8 @@ class _AddVoyagePageBody extends StatelessWidget {
   final double? voyageBudget;
   final DateTime? voyageStartDate;
   final DateTime? voyageEndDate;
+  final String? voyageLocation;
+  final String? voyageDescription;
 
   final List<String> voyageTitles;
 
@@ -155,7 +173,7 @@ class _AddVoyagePageBody extends StatelessWidget {
               ),
             ),
             TextField(
-              onChanged: (value) {},
+              onChanged: onLocationChanged,
               decoration: const InputDecoration(
                 border: UnderlineInputBorder(),
                 labelText: 'Destination',
@@ -265,7 +283,7 @@ class _AddVoyagePageBody extends StatelessWidget {
             //   child: Text(endDateFormated ?? 'Choose voyage end date'),
             // ),
             TextField(
-              onChanged: (value) {},
+              onChanged: onDescriptionChanged,
               maxLines: null,
               minLines: 3,
               keyboardType: TextInputType.multiline,

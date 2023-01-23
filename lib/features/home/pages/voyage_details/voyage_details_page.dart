@@ -42,6 +42,9 @@ class VoyageDetailsPage extends StatelessWidget {
             body: SafeArea(
               child: Column(
                 children: [
+                  voyageModel.description == ''
+                      ? const SizedBox.shrink()
+                      : Text('Description: ${voyageModel.description}'),
                   Text('Voyage budget: ${voyageModel.budget}'),
                   Text('Total expenses spent: € ${expenseSum.toString()}'),
                   Text('Percentage spent: $percentBudgetSpentFormatted %'),

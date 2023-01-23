@@ -3,6 +3,8 @@ import 'package:intl/intl.dart';
 
 part 'voyage_model.freezed.dart';
 
+// RUN IN TERMINAL: flutter packages pub run build_runner build
+
 @freezed
 class VoyageModel with _$VoyageModel {
   const factory VoyageModel({
@@ -11,6 +13,7 @@ class VoyageModel with _$VoyageModel {
     required DateTime startDate,
     required DateTime endDate,
     String? location,
+    String? description,
     double? budget,
   }) = _VoyageModel;
   const VoyageModel._();

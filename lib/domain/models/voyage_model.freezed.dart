@@ -21,6 +21,7 @@ mixin _$VoyageModel {
   DateTime get startDate => throw _privateConstructorUsedError;
   DateTime get endDate => throw _privateConstructorUsedError;
   String? get location => throw _privateConstructorUsedError;
+  String? get description => throw _privateConstructorUsedError;
   double? get budget => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -40,6 +41,7 @@ abstract class $VoyageModelCopyWith<$Res> {
       DateTime startDate,
       DateTime endDate,
       String? location,
+      String? description,
       double? budget});
 }
 
@@ -61,6 +63,7 @@ class _$VoyageModelCopyWithImpl<$Res, $Val extends VoyageModel>
     Object? startDate = null,
     Object? endDate = null,
     Object? location = freezed,
+    Object? description = freezed,
     Object? budget = freezed,
   }) {
     return _then(_value.copyWith(
@@ -84,6 +87,10 @@ class _$VoyageModelCopyWithImpl<$Res, $Val extends VoyageModel>
           ? _value.location
           : location // ignore: cast_nullable_to_non_nullable
               as String?,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
       budget: freezed == budget
           ? _value.budget
           : budget // ignore: cast_nullable_to_non_nullable
@@ -106,6 +113,7 @@ abstract class _$$_VoyageModelCopyWith<$Res>
       DateTime startDate,
       DateTime endDate,
       String? location,
+      String? description,
       double? budget});
 }
 
@@ -125,6 +133,7 @@ class __$$_VoyageModelCopyWithImpl<$Res>
     Object? startDate = null,
     Object? endDate = null,
     Object? location = freezed,
+    Object? description = freezed,
     Object? budget = freezed,
   }) {
     return _then(_$_VoyageModel(
@@ -148,6 +157,10 @@ class __$$_VoyageModelCopyWithImpl<$Res>
           ? _value.location
           : location // ignore: cast_nullable_to_non_nullable
               as String?,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
       budget: freezed == budget
           ? _value.budget
           : budget // ignore: cast_nullable_to_non_nullable
@@ -165,6 +178,7 @@ class _$_VoyageModel extends _VoyageModel {
       required this.startDate,
       required this.endDate,
       this.location,
+      this.description,
       this.budget})
       : super._();
 
@@ -179,11 +193,13 @@ class _$_VoyageModel extends _VoyageModel {
   @override
   final String? location;
   @override
+  final String? description;
+  @override
   final double? budget;
 
   @override
   String toString() {
-    return 'VoyageModel(id: $id, title: $title, startDate: $startDate, endDate: $endDate, location: $location, budget: $budget)';
+    return 'VoyageModel(id: $id, title: $title, startDate: $startDate, endDate: $endDate, location: $location, description: $description, budget: $budget)';
   }
 
   @override
@@ -198,12 +214,14 @@ class _$_VoyageModel extends _VoyageModel {
             (identical(other.endDate, endDate) || other.endDate == endDate) &&
             (identical(other.location, location) ||
                 other.location == location) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
             (identical(other.budget, budget) || other.budget == budget));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, title, startDate, endDate, location, budget);
+  int get hashCode => Object.hash(runtimeType, id, title, startDate, endDate,
+      location, description, budget);
 
   @JsonKey(ignore: true)
   @override
@@ -219,6 +237,7 @@ abstract class _VoyageModel extends VoyageModel {
       required final DateTime startDate,
       required final DateTime endDate,
       final String? location,
+      final String? description,
       final double? budget}) = _$_VoyageModel;
   const _VoyageModel._() : super._();
 
@@ -232,6 +251,8 @@ abstract class _VoyageModel extends VoyageModel {
   DateTime get endDate;
   @override
   String? get location;
+  @override
+  String? get description;
   @override
   double? get budget;
   @override

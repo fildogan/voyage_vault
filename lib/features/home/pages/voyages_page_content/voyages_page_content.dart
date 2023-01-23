@@ -119,6 +119,14 @@ class _ListViewItem extends StatelessWidget {
                       fontSize: 15,
                     ),
                   ),
+                  voyageModel.location == ''
+                      ? const SizedBox.shrink()
+                      : Text(
+                          voyageModel.location!,
+                          style: const TextStyle(
+                            fontSize: 12,
+                          ),
+                        ),
                   const SizedBox(
                     height: 10,
                   ),
