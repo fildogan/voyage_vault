@@ -42,6 +42,7 @@ class _AddVoyagePageState extends State<AddVoyagePage> {
           builder: (context, state) {
             return Scaffold(
               appBar: AppBar(
+                backgroundColor: Colors.transparent,
                 title: const Text('Create Voyage'),
                 actions: [
                   TextButton(
@@ -140,157 +141,172 @@ class _AddVoyagePageBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Column(
-        // mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          TextField(
-            onChanged: onTitleChanged,
-            decoration: const InputDecoration(
-              border: UnderlineInputBorder(),
-              labelText: 'Voyage name',
-              contentPadding: EdgeInsets.all(10),
-            ),
-          ),
-          TextField(
-            onChanged: (value) {},
-            decoration: const InputDecoration(
-              border: UnderlineInputBorder(),
-              labelText: 'Destination',
-              contentPadding: EdgeInsets.all(10),
-            ),
-          ),
-          TextField(
-            textAlign: TextAlign.end,
-            decoration: const InputDecoration(
-              border: UnderlineInputBorder(),
-              labelText: 'Budget',
-              contentPadding: EdgeInsets.all(10),
-            ),
-            inputFormatters: [
-              FilteringTextInputFormatter.allow(
-                RegExp(r'^\d*\.?\d{0,2}'),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ListView(
+          // mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextField(
+              onChanged: onTitleChanged,
+              decoration: const InputDecoration(
+                border: UnderlineInputBorder(),
+                labelText: 'Voyage name',
+                contentPadding: EdgeInsets.all(10),
               ),
-            ],
-            keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            onChanged: (value) {
-              final budget = double.tryParse(value);
-              if (budget != null) {
-                onBudgetChanged(budget);
-              }
-            },
-          ),
-          Row(
-            children: [
-              Flexible(
-                child: TextField(
-                    controller: TextEditingController(text: startDateFormated),
-                    decoration: const InputDecoration(
-                      icon: Icon(Icons.calendar_today),
-                      labelText: "Start Date",
-                      contentPadding: EdgeInsets.all(10),
-                    ),
-                    readOnly: true, // when true user cannot edit text
-                    onTap: () async {
-                      final selectedDate = await showDatePicker(
-                        context: context,
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime(2020),
-                        lastDate: DateTime.now().add(
-                          const Duration(days: 365 * 10),
-                        ),
-                      );
-                      onStartDateChanged(selectedDate);
-                    }),
+            ),
+            TextField(
+              onChanged: (value) {},
+              decoration: const InputDecoration(
+                border: UnderlineInputBorder(),
+                labelText: 'Destination',
+                contentPadding: EdgeInsets.all(10),
               ),
-              Flexible(
-                child: TextField(
-                    controller: TextEditingController(text: endDateFormated),
-                    decoration: const InputDecoration(
-                      icon: Icon(Icons.calendar_today),
-                      labelText: "End Date",
-                      contentPadding: EdgeInsets.all(10),
-                    ),
-                    readOnly: true, // when true user cannot edit text
-                    onTap: () async {
-                      final selectedDate = await showDatePicker(
-                        context: context,
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime(2020),
-                        lastDate: DateTime.now().add(
-                          const Duration(days: 365 * 10),
-                        ),
-                      );
-                      onEndDateChanged(selectedDate);
-                    }),
+            ),
+            TextField(
+              textAlign: TextAlign.end,
+              decoration: const InputDecoration(
+                border: UnderlineInputBorder(),
+                labelText: 'Budget',
+                contentPadding: EdgeInsets.all(10),
               ),
-            ],
-          ),
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(
+                  RegExp(r'^\d*\.?\d{0,2}'),
+                ),
+              ],
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
+              onChanged: (value) {
+                final budget = double.tryParse(value);
+                if (budget != null) {
+                  onBudgetChanged(budget);
+                }
+              },
+            ),
+            Row(
+              children: [
+                Flexible(
+                  child: TextField(
+                      controller:
+                          TextEditingController(text: startDateFormated),
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        icon: Icon(Icons.calendar_today),
+                        labelText: "Start Date",
+                        contentPadding: EdgeInsets.all(10),
+                      ),
+                      readOnly: true, // when true user cannot edit text
+                      onTap: () async {
+                        final selectedDate = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(2020),
+                          lastDate: DateTime.now().add(
+                            const Duration(days: 365 * 10),
+                          ),
+                        );
+                        onStartDateChanged(selectedDate);
+                      }),
+                ),
+                const SizedBox(
+                  width: 30,
+                ),
+                Flexible(
+                  child: TextField(
+                      controller: TextEditingController(text: endDateFormated),
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        icon: Icon(Icons.calendar_today),
+                        labelText: "End Date",
+                        contentPadding: EdgeInsets.all(10),
+                      ),
+                      readOnly: true, // when true user cannot edit text
+                      onTap: () async {
+                        final selectedDate = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(2020),
+                          lastDate: DateTime.now().add(
+                            const Duration(days: 365 * 10),
+                          ),
+                        );
+                        onEndDateChanged(selectedDate);
+                      }),
+                ),
+              ],
+            ),
 
-          // ElevatedButton(
-          //   onPressed: () async {
-          //     final selectedDate = await showDatePicker(
-          //       context: context,
-          //       initialDate: DateTime.now(),
-          //       firstDate: DateTime(2020),
-          //       lastDate: DateTime.now().add(
-          //         const Duration(days: 365 * 10),
-          //       ),
-          //     );
-          //     onStartDateChanged(selectedDate);
-          //   },
-          //   child: Text(startDateFormated ?? 'Choose voyage start date'),
-          // ),
-          // ElevatedButton(
-          //   onPressed: () async {
-          //     final selectedDate = await showDatePicker(
-          //       context: context,
-          //       initialDate: DateTime.now(),
-          //       firstDate: DateTime(2020),
-          //       lastDate: DateTime.now().add(
-          //         const Duration(days: 365 * 10),
-          //       ),
-          //     );
-          //     onEndDateChanged(selectedDate);
-          //   },
-          //   child: Text(endDateFormated ?? 'Choose voyage end date'),
-          // ),
-          TextField(
-            onChanged: (value) {},
-            decoration: const InputDecoration(
-              border: UnderlineInputBorder(),
-              labelText: 'Description',
-              contentPadding: EdgeInsets.all(10),
+            // ElevatedButton(
+            //   onPressed: () async {
+            //     final selectedDate = await showDatePicker(
+            //       context: context,
+            //       initialDate: DateTime.now(),
+            //       firstDate: DateTime(2020),
+            //       lastDate: DateTime.now().add(
+            //         const Duration(days: 365 * 10),
+            //       ),
+            //     );
+            //     onStartDateChanged(selectedDate);
+            //   },
+            //   child: Text(startDateFormated ?? 'Choose voyage start date'),
+            // ),
+            // ElevatedButton(
+            //   onPressed: () async {
+            //     final selectedDate = await showDatePicker(
+            //       context: context,
+            //       initialDate: DateTime.now(),
+            //       firstDate: DateTime(2020),
+            //       lastDate: DateTime.now().add(
+            //         const Duration(days: 365 * 10),
+            //       ),
+            //     );
+            //     onEndDateChanged(selectedDate);
+            //   },
+            //   child: Text(endDateFormated ?? 'Choose voyage end date'),
+            // ),
+            TextField(
+              onChanged: (value) {},
+              maxLines: null,
+              minLines: 3,
+              keyboardType: TextInputType.multiline,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Description',
+                labelStyle: TextStyle(),
+                alignLabelWithHint: true,
+                contentPadding: EdgeInsets.all(10),
+              ),
             ),
-          ),
-          // ElevatedButton(
-          //   onPressed: () {
-          //     if (voyageTitle == null ||
-          //         voyageBudget == null ||
-          //         voyageStartDate == null ||
-          //         voyageEndDate == null) {
-          //       context.read<AddVoyageCubit>().error('Please fill all fields');
-          //     } else if (voyageEndDate!.isBefore(voyageStartDate!)) {
-          //       context
-          //           .read<AddVoyageCubit>()
-          //           .error('Voyage start date should be before end date');
-          //     } else if (voyageTitles
-          //         .map((i) => i.toLowerCase())
-          //         .contains(voyageTitle!.toLowerCase())) {
-          //       context
-          //           .read<AddVoyageCubit>()
-          //           .error('Voyage title already exists');
-          //     } else {
-          //       context.read<AddVoyageCubit>().add(
-          //             voyageTitle!,
-          //             voyageBudget!,
-          //             voyageStartDate!,
-          //             voyageEndDate!,
-          //           );
-          //     }
-          //   },
-          //   child: const Text('Add Voyage'),
-          // )
-        ],
+            // ElevatedButton(
+            //   onPressed: () {
+            //     if (voyageTitle == null ||
+            //         voyageBudget == null ||
+            //         voyageStartDate == null ||
+            //         voyageEndDate == null) {
+            //       context.read<AddVoyageCubit>().error('Please fill all fields');
+            //     } else if (voyageEndDate!.isBefore(voyageStartDate!)) {
+            //       context
+            //           .read<AddVoyageCubit>()
+            //           .error('Voyage start date should be before end date');
+            //     } else if (voyageTitles
+            //         .map((i) => i.toLowerCase())
+            //         .contains(voyageTitle!.toLowerCase())) {
+            //       context
+            //           .read<AddVoyageCubit>()
+            //           .error('Voyage title already exists');
+            //     } else {
+            //       context.read<AddVoyageCubit>().add(
+            //             voyageTitle!,
+            //             voyageBudget!,
+            //             voyageStartDate!,
+            //             voyageEndDate!,
+            //           );
+            //     }
+            //   },
+            //   child: const Text('Add Voyage'),
+            // )
+          ],
+        ),
       ),
     );
   }
