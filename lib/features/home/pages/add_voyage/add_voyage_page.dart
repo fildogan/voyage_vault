@@ -87,10 +87,10 @@ class _AddVoyagePageState extends State<AddVoyagePage> {
                     setState(() => _voyageEndDate = newValue),
                 startDateFormated: _voyageStartDate == null
                     ? null
-                    : 'Selected start date: ${DateFormat.yMd().format(_voyageStartDate!)}',
+                    : DateFormat.yMd().format(_voyageStartDate!),
                 endDateFormated: _voyageEndDate == null
                     ? null
-                    : 'Selected end date: ${DateFormat.yMd().format(_voyageEndDate!)}',
+                    : DateFormat.yMd().format(_voyageEndDate!),
                 voyageTitle: _voyageTitle,
                 voyageBudget: _voyageBudget,
                 voyageStartDate: _voyageStartDate,
@@ -140,105 +140,157 @@ class _AddVoyagePageBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Row(
-              children: [
-                const Text('Title: '),
-                SizedBox(
-                  width: 200,
-                  child: TextField(
-                    onChanged: onTitleChanged,
-                  ),
-                ),
-              ],
+      child: Column(
+        // mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          TextField(
+            onChanged: onTitleChanged,
+            decoration: const InputDecoration(
+              border: UnderlineInputBorder(),
+              labelText: 'Voyage name',
+              contentPadding: EdgeInsets.all(10),
             ),
-            Row(
-              children: [
-                const Text('Budget: '),
-                SizedBox(
-                  width: 200,
-                  child: TextField(
-                    textAlign: TextAlign.end,
-                    inputFormatters: [
-                      FilteringTextInputFormatter.allow(
-                        RegExp(r'^\d*\.?\d{0,2}'),
-                      ),
-                    ],
-                    keyboardType:
-                        const TextInputType.numberWithOptions(decimal: true),
-                    onChanged: (value) {
-                      final budget = double.tryParse(value);
-                      if (budget != null) {
-                        onBudgetChanged(budget);
-                      }
-                    },
-                  ),
-                ),
-              ],
+          ),
+          TextField(
+            onChanged: (value) {},
+            decoration: const InputDecoration(
+              border: UnderlineInputBorder(),
+              labelText: 'Destination',
+              contentPadding: EdgeInsets.all(10),
             ),
-            ElevatedButton(
-              onPressed: () async {
-                final selectedDate = await showDatePicker(
-                  context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime(2020),
-                  lastDate: DateTime.now().add(
-                    const Duration(days: 365 * 10),
-                  ),
-                );
-                onStartDateChanged(selectedDate);
-              },
-              child: Text(startDateFormated ?? 'Choose voyage start date'),
+          ),
+          TextField(
+            textAlign: TextAlign.end,
+            decoration: const InputDecoration(
+              border: UnderlineInputBorder(),
+              labelText: 'Budget',
+              contentPadding: EdgeInsets.all(10),
             ),
-            ElevatedButton(
-              onPressed: () async {
-                final selectedDate = await showDatePicker(
-                  context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime(2020),
-                  lastDate: DateTime.now().add(
-                    const Duration(days: 365 * 10),
-                  ),
-                );
-                onEndDateChanged(selectedDate);
-              },
-              child: Text(endDateFormated ?? 'Choose voyage end date'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                if (voyageTitle == null ||
-                    voyageBudget == null ||
-                    voyageStartDate == null ||
-                    voyageEndDate == null) {
-                  context
-                      .read<AddVoyageCubit>()
-                      .error('Please fill all fields');
-                } else if (voyageEndDate!.isBefore(voyageStartDate!)) {
-                  context
-                      .read<AddVoyageCubit>()
-                      .error('Voyage start date should be before end date');
-                } else if (voyageTitles
-                    .map((i) => i.toLowerCase())
-                    .contains(voyageTitle!.toLowerCase())) {
-                  context
-                      .read<AddVoyageCubit>()
-                      .error('Voyage title already exists');
-                } else {
-                  context.read<AddVoyageCubit>().add(
-                        voyageTitle!,
-                        voyageBudget!,
-                        voyageStartDate!,
-                        voyageEndDate!,
+            inputFormatters: [
+              FilteringTextInputFormatter.allow(
+                RegExp(r'^\d*\.?\d{0,2}'),
+              ),
+            ],
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            onChanged: (value) {
+              final budget = double.tryParse(value);
+              if (budget != null) {
+                onBudgetChanged(budget);
+              }
+            },
+          ),
+          Row(
+            children: [
+              Flexible(
+                child: TextField(
+                    controller: TextEditingController(text: startDateFormated),
+                    decoration: const InputDecoration(
+                      icon: Icon(Icons.calendar_today),
+                      labelText: "Start Date",
+                      contentPadding: EdgeInsets.all(10),
+                    ),
+                    readOnly: true, // when true user cannot edit text
+                    onTap: () async {
+                      final selectedDate = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(2020),
+                        lastDate: DateTime.now().add(
+                          const Duration(days: 365 * 10),
+                        ),
                       );
-                }
-              },
-              child: const Text('Add Voyage'),
-            )
-          ],
-        ),
+                      onStartDateChanged(selectedDate);
+                    }),
+              ),
+              Flexible(
+                child: TextField(
+                    controller: TextEditingController(text: endDateFormated),
+                    decoration: const InputDecoration(
+                      icon: Icon(Icons.calendar_today),
+                      labelText: "End Date",
+                      contentPadding: EdgeInsets.all(10),
+                    ),
+                    readOnly: true, // when true user cannot edit text
+                    onTap: () async {
+                      final selectedDate = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(2020),
+                        lastDate: DateTime.now().add(
+                          const Duration(days: 365 * 10),
+                        ),
+                      );
+                      onEndDateChanged(selectedDate);
+                    }),
+              ),
+            ],
+          ),
+
+          // ElevatedButton(
+          //   onPressed: () async {
+          //     final selectedDate = await showDatePicker(
+          //       context: context,
+          //       initialDate: DateTime.now(),
+          //       firstDate: DateTime(2020),
+          //       lastDate: DateTime.now().add(
+          //         const Duration(days: 365 * 10),
+          //       ),
+          //     );
+          //     onStartDateChanged(selectedDate);
+          //   },
+          //   child: Text(startDateFormated ?? 'Choose voyage start date'),
+          // ),
+          // ElevatedButton(
+          //   onPressed: () async {
+          //     final selectedDate = await showDatePicker(
+          //       context: context,
+          //       initialDate: DateTime.now(),
+          //       firstDate: DateTime(2020),
+          //       lastDate: DateTime.now().add(
+          //         const Duration(days: 365 * 10),
+          //       ),
+          //     );
+          //     onEndDateChanged(selectedDate);
+          //   },
+          //   child: Text(endDateFormated ?? 'Choose voyage end date'),
+          // ),
+          TextField(
+            onChanged: (value) {},
+            decoration: const InputDecoration(
+              border: UnderlineInputBorder(),
+              labelText: 'Description',
+              contentPadding: EdgeInsets.all(10),
+            ),
+          ),
+          // ElevatedButton(
+          //   onPressed: () {
+          //     if (voyageTitle == null ||
+          //         voyageBudget == null ||
+          //         voyageStartDate == null ||
+          //         voyageEndDate == null) {
+          //       context.read<AddVoyageCubit>().error('Please fill all fields');
+          //     } else if (voyageEndDate!.isBefore(voyageStartDate!)) {
+          //       context
+          //           .read<AddVoyageCubit>()
+          //           .error('Voyage start date should be before end date');
+          //     } else if (voyageTitles
+          //         .map((i) => i.toLowerCase())
+          //         .contains(voyageTitle!.toLowerCase())) {
+          //       context
+          //           .read<AddVoyageCubit>()
+          //           .error('Voyage title already exists');
+          //     } else {
+          //       context.read<AddVoyageCubit>().add(
+          //             voyageTitle!,
+          //             voyageBudget!,
+          //             voyageStartDate!,
+          //             voyageEndDate!,
+          //           );
+          //     }
+          //   },
+          //   child: const Text('Add Voyage'),
+          // )
+        ],
       ),
     );
   }
