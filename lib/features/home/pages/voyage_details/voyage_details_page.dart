@@ -71,8 +71,23 @@ class VoyageDetailsPage extends StatelessWidget {
                   Expanded(
                     child: ListView(
                       children: [
+                        Container(
+                          decoration: const BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(color: Colors.black),
+                            ),
+                          ),
+                        ),
                         if (expenseModels.isEmpty)
-                          const Center(child: Text('No expenses added yet.'))
+                          Center(
+                              child: Column(
+                            children: const [
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Text('No expenses added yet.'),
+                            ],
+                          ))
                         else
                           for (final expenseModel in expenseModels)
                             Dismissible(
@@ -124,12 +139,23 @@ class VoyageDetailsPage extends StatelessWidget {
                                   color: Colors.black12,
                                   child: Column(
                                     children: [
-                                      Text(expenseModel.name),
-                                      Text(expenseModel.price.toString()),
-                                      Text(expenseModel.category),
-                                      const Divider(
-                                        height: 0,
-                                        thickness: 1,
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Column(
+                                          children: [
+                                            Text(expenseModel.name),
+                                            Text(expenseModel.price.toString()),
+                                            Text(expenseModel.category),
+                                          ],
+                                        ),
+                                      ),
+                                      Container(
+                                        decoration: const BoxDecoration(
+                                          border: Border(
+                                            bottom:
+                                                BorderSide(color: Colors.black),
+                                          ),
+                                        ),
                                       ),
                                     ],
                                   ),

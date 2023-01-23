@@ -28,7 +28,9 @@ class _AddExpensePageState extends State<AddExpensePage> {
       _expenseVoyageTitle = widget.voyageModel!.title;
     }
     return Scaffold(
-      appBar: AppBar(title: const Text('Add an expense')),
+      appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          title: const Text('Add an expense')),
       body: BlocProvider<AddExpenseCubit>(
         create: (context) => getIt<AddExpenseCubit>()..getVoyageTitleStream(),
         child: BlocListener<AddExpenseCubit, AddExpenseState>(
