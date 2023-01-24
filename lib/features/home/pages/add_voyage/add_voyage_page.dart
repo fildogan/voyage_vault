@@ -68,8 +68,8 @@ class _AddVoyagePageState extends State<AddVoyagePage> {
                               .error('Voyage title already exists');
                         } else {
                           context.read<AddVoyageCubit>().add(
-                                title: _voyageTitle!,
-                                budget: _voyageBudget!,
+                                title: _voyageTitle ?? '',
+                                budget: _voyageBudget ?? 0.00,
                                 startDate: _voyageStartDate!,
                                 endDate: _voyageEndDate!,
                                 location: _voyageLocation ?? '',

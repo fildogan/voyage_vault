@@ -25,86 +25,118 @@ class _AddExpensePageState extends State<AddExpensePage> {
   @override
   Widget build(BuildContext context) {
     if (widget.voyageModel != null) {
-      _expenseVoyageTitle = widget.voyageModel!.title;
+      _expenseVoyageTitle = widget.voyageModel?.title ?? '';
     }
-    return Scaffold(
-      appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          title: const Text('Add an expense')),
-      body: BlocProvider<AddExpenseCubit>(
-        create: (context) => getIt<AddExpenseCubit>()..getVoyageTitleStream(),
-        child: BlocListener<AddExpenseCubit, AddExpenseState>(
-          listener: (context, state) {
-            if (state.saved) {
-              Navigator.of(context).pop();
-            }
-            if (state.errorMessage != null) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(
-                    state.errorMessage!,
-                  ),
-                  backgroundColor: Colors.red,
+    return BlocProvider<AddExpenseCubit>(
+      create: (context) => getIt<AddExpenseCubit>()..getVoyageTitleStream(),
+      child: BlocListener<AddExpenseCubit, AddExpenseState>(
+        listener: (context, state) {
+          if (state.saved) {
+            Navigator.of(context).pop();
+          }
+          if (state.errorMessage != null) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  state.errorMessage ?? 'Unknown error',
                 ),
-              );
-            }
-          },
-          child: BlocBuilder<AddExpenseCubit, AddExpenseState>(
+                backgroundColor: Colors.red,
+              ),
+            );
+          }
+        },
+        child: BlocBuilder<AddExpenseCubit, AddExpenseState>(
             builder: (context, state) {
-              switch (state.status) {
-                case Status.initial:
-                  return const Center(
-                    child: Text('Initial state'),
-                  );
-                case Status.loading:
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                case Status.success:
-                  if (state.voyageTitles.isEmpty) {
-                    return const Center(
-                      child: Text('No voyages found'),
-                    );
-                  }
-                  return _AddExpensePageBody(
-                    onNameChanged: (newValue) =>
-                        setState(() => _expenseName = newValue),
-                    expenseName: _expenseName,
-                    onVoyageTitleChanged: (newValue) => setState(() {
-                      _expenseVoyageTitle = newValue;
-                    }),
-                    expenseVoyageTitle: _expenseVoyageTitle,
-                    onPriceChanged: (newValue) =>
-                        setState(() => _expensePrice = newValue),
-                    expensePrice: _expensePrice,
-                    onCategoryChanged: (newValue) =>
-                        setState(() => _expenseCategory = newValue),
-                    expenseCategory: _expenseCategory,
-                    categoryTitles: expenseCategoryList,
-                    voyageTitles: state.voyageTitles,
-                    voyageModel: widget.voyageModel,
-                    addExpense: (title) {
-                      context.read<AddExpenseCubit>().addExpenseByVoyageTitle(
-                            _expenseName!,
-                            title!,
-                            _expensePrice!,
-                            _expenseCategory!,
-                          );
-                    },
-                  );
-                case Status.error:
-                  return Center(
-                    child: Text(
-                      state.errorMessage ?? 'Unknown error',
-                      style: TextStyle(
-                        color: Theme.of(context).errorColor,
+          return Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.transparent,
+              title: const Text('Add an expense'),
+              actions: [
+                TextButton(
+                    onPressed: _expenseName == null ||
+                            _expenseVoyageTitle == null ||
+                            _expensePrice == null ||
+                            _expenseCategory == null
+                        ? () {
+                            context
+                                .read<AddExpenseCubit>()
+                                .error('Please fill all fields');
+                            // context
+                            //     .read<AddExpenseCubit>()
+                            //     .getVoyageTitleStream();
+                          }
+                        : () {
+                            context
+                                .read<AddExpenseCubit>()
+                                .addExpenseByVoyageTitle(
+                                  _expenseName ?? '',
+                                  _expenseVoyageTitle ?? '',
+                                  _expensePrice ?? 0.00,
+                                  _expenseCategory ?? 'miscellaneous',
+                                );
+                          },
+                    child: const Text('Save'))
+              ],
+            ),
+            body: Builder(
+              builder: (context) {
+                switch (state.status) {
+                  case Status.initial:
+                    return const Scaffold(
+                      body: Center(
+                        child: Text('Initial state'),
                       ),
-                    ),
-                  );
-              }
-            },
-          ),
-        ),
+                    );
+                  case Status.loading:
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  case Status.success:
+                    if (state.voyageTitles.isEmpty) {
+                      return const Center(
+                        child: Text('No voyages found'),
+                      );
+                    }
+                    return _AddExpensePageBody(
+                      onNameChanged: (newValue) =>
+                          setState(() => _expenseName = newValue),
+                      expenseName: _expenseName,
+                      onVoyageTitleChanged: (newValue) => setState(() {
+                        _expenseVoyageTitle = newValue;
+                      }),
+                      expenseVoyageTitle: _expenseVoyageTitle,
+                      onPriceChanged: (newValue) =>
+                          setState(() => _expensePrice = newValue),
+                      expensePrice: _expensePrice,
+                      onCategoryChanged: (newValue) =>
+                          setState(() => _expenseCategory = newValue),
+                      expenseCategory: _expenseCategory,
+                      categoryTitles: expenseCategoryList,
+                      voyageTitles: state.voyageTitles,
+                      voyageModel: widget.voyageModel,
+                      addExpense: (title) {
+                        context.read<AddExpenseCubit>().addExpenseByVoyageTitle(
+                              _expenseName!,
+                              title!,
+                              _expensePrice!,
+                              _expenseCategory!,
+                            );
+                      },
+                    );
+                  case Status.error:
+                    return Center(
+                      child: Text(
+                        state.errorMessage ?? 'Unknown error',
+                        style: TextStyle(
+                          color: Theme.of(context).errorColor,
+                        ),
+                      ),
+                    );
+                }
+              },
+            ),
+          );
+        }),
       ),
     );
   }
@@ -144,40 +176,51 @@ class _AddExpensePageBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ListView(
           children: [
-            SizedBox(
-              width: 200,
-              child: TextField(
-                onChanged: onNameChanged,
+            TextField(
+              onChanged: onNameChanged,
+              decoration: const InputDecoration(
+                border: UnderlineInputBorder(),
+                labelText: 'Expense name',
+                contentPadding: EdgeInsets.all(10),
               ),
             ),
-            SizedBox(
-              width: 200,
-              child: TextField(
-                textAlign: TextAlign.end,
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
-                ],
-                keyboardType:
-                    const TextInputType.numberWithOptions(decimal: true),
-                onChanged: (value) {
-                  final price = double.tryParse(value);
-                  if (price != null) {
-                    onPriceChanged(price);
-                  }
-                },
+            TextField(
+              textAlign: TextAlign.end,
+              decoration: const InputDecoration(
+                border: UnderlineInputBorder(),
+                labelText: 'Price',
+                contentPadding: EdgeInsets.all(10),
               ),
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(
+                  RegExp(r'^\d*\.?\d{0,2}'),
+                ),
+              ],
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
+              onChanged: (value) {
+                final price = double.tryParse(value);
+                if (price != null) {
+                  onPriceChanged(price);
+                }
+              },
             ),
-            DropdownButton<String>(
+            DropdownButtonFormField<String>(
               value: expenseCategory,
+              decoration: const InputDecoration(
+                border: UnderlineInputBorder(),
+                labelText: 'Category',
+                contentPadding: EdgeInsets.all(10),
+              ),
               items: [
-                if (expenseCategory == null)
-                  const DropdownMenuItem(
-                    child: Text('Choose category from list'),
-                  ),
+                // if (expenseCategory == null)
+                //   const DropdownMenuItem(
+                //     child: Text('Choose from list'),
+                //   ),
                 ...categoryTitles.map((String category) {
                   return DropdownMenuItem(
                     value: category,
@@ -190,13 +233,18 @@ class _AddExpensePageBody extends StatelessWidget {
               onChanged: onCategoryChanged,
             ),
             if (voyageModel == null)
-              DropdownButton<String>(
+              DropdownButtonFormField<String>(
                 value: expenseVoyageTitle,
+                decoration: const InputDecoration(
+                  border: UnderlineInputBorder(),
+                  labelText: 'Voyage',
+                  contentPadding: EdgeInsets.all(10),
+                ),
                 items: [
-                  if (expenseVoyageTitle == null)
-                    const DropdownMenuItem(
-                      child: Text('Choose voyage from list'),
-                    ),
+                  // if (expenseVoyageTitle == null)
+                  //   const DropdownMenuItem(
+                  //     child: Text('Choose voyage from list'),
+                  //   ),
                   ...voyageTitles.map((String voyage) {
                     return DropdownMenuItem(
                       value: voyage,
@@ -210,29 +258,29 @@ class _AddExpensePageBody extends StatelessWidget {
               )
             else
               Text(voyageModel!.title),
-            ElevatedButton(
-              onPressed: expenseName == null ||
-                      expenseVoyageTitle == null ||
-                      expensePrice == null ||
-                      expenseCategory == null
-                  ? () {
-                      context
-                          .read<AddExpenseCubit>()
-                          .error('Please fill all fields');
-                      context.read<AddExpenseCubit>().getVoyageTitleStream();
-                    }
-                  : () {
-                      addExpense(expenseVoyageTitle);
+            // ElevatedButton(
+            //   onPressed: expenseName == null ||
+            //           expenseVoyageTitle == null ||
+            //           expensePrice == null ||
+            //           expenseCategory == null
+            //       ? () {
+            //           context
+            //               .read<AddExpenseCubit>()
+            //               .error('Please fill all fields');
+            //           context.read<AddExpenseCubit>().getVoyageTitleStream();
+            //         }
+            //       : () {
+            //           addExpense(expenseVoyageTitle);
 
-                      // context.read<AddExpenseCubit>().add(
-                      //       expenseName!,
-                      //       expensevoyageId!,
-                      //       expensePrice!,
-                      //       expenseCategory!,
-                      //     );
-                    },
-              child: const Text('Add Expense'),
-            )
+            //           // context.read<AddExpenseCubit>().add(
+            //           //       expenseName!,
+            //           //       expensevoyageId!,
+            //           //       expensePrice!,
+            //           //       expenseCategory!,
+            //           //     );
+            //         },
+            //   child: const Text('Add Expense'),
+            // )
           ],
         ),
       ),

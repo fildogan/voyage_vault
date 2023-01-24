@@ -51,8 +51,9 @@ class AddExpenseCubit extends Cubit<AddExpenseState> {
   Future<void> error(String errorMessage) async {
     emit(
       AddExpenseState(
-        status: Status.error,
         errorMessage: errorMessage,
+        status: state.status,
+        voyageTitles: state.voyageTitles,
       ),
     );
   }
@@ -95,7 +96,6 @@ class AddExpenseCubit extends Cubit<AddExpenseState> {
     final voyageId = await _voyagesRepository.getVoyageIdByTitle(voyageTitle);
     emit(
       AddExpenseState(
-        status: Status.success,
         voyageId: voyageId,
       ),
     );
