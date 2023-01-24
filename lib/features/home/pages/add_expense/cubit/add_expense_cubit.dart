@@ -23,12 +23,12 @@ class AddExpenseCubit extends Cubit<AddExpenseState> {
 
   StreamSubscription? _streamSubscription;
 
-  Future<void> add(
-    String name,
-    String voyageId,
-    double price,
-    String category,
-  ) async {
+  Future<void> add({
+    required String name,
+    required String voyageId,
+    required double price,
+    required String category,
+  }) async {
     emit(
       AddExpenseState(),
     );
@@ -53,7 +53,7 @@ class AddExpenseCubit extends Cubit<AddExpenseState> {
     emit(
       AddExpenseState(
         errorMessage: errorMessage,
-        status: state.status,
+        // status: state.status,
         voyageTitles: state.voyageTitles,
       ),
     );
@@ -85,22 +85,42 @@ class AddExpenseCubit extends Cubit<AddExpenseState> {
       );
   }
 
-  Future<void> addExpenseByVoyageTitle(
-    String name,
-    String voyageTitle,
-    double price,
-    String category,
-  ) async {
-    emit(
-      AddExpenseState(),
-    );
+  Future<void> addExpenseByVoyageTitle({
+    required String name,
+    required String voyageTitle,
+    required double price,
+    required String category,
+  }) async {
+    // emit(
+    //   AddExpenseState(),
+    // );
     final voyageId = await _voyagesRepository.getVoyageIdByTitle(voyageTitle);
     emit(
       AddExpenseState(
         voyageId: voyageId,
       ),
     );
-    add(name, voyageId, price, category);
+    add(name: name, voyageId: voyageId, price: price, category: category);
+  }
+
+  Future<void> addExpenseAndCheck({
+    String? name,
+    String? voyageTitle,
+    double? price,
+    String? category,
+  }) async {
+    if (name == null ||
+        voyageTitle == null ||
+        price == null ||
+        category == null) {
+      error('Please fill all fields');
+    } else {
+      addExpenseByVoyageTitle(
+          name: name,
+          voyageTitle: voyageTitle,
+          price: price,
+          category: category);
+    }
   }
 
   @override

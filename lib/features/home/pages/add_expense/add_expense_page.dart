@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:travel_cost_log/app/core/enums.dart';
 import 'package:travel_cost_log/app/injection_container.dart';
 import 'package:travel_cost_log/data/data_sources/local_data_sources/expense_category_list.dart';
 import 'package:travel_cost_log/domain/models/voyage_model.dart';
@@ -48,94 +47,70 @@ class _AddExpensePageState extends State<AddExpensePage> {
         child: BlocBuilder<AddExpenseCubit, AddExpenseState>(
             builder: (context, state) {
           return Scaffold(
-            appBar: AppBar(
-              backgroundColor: Colors.transparent,
-              title: const Text('Add an expense'),
-              actions: [
-                TextButton(
-                    onPressed: _expenseName == null ||
-                            _expenseVoyageTitle == null ||
-                            _expensePrice == null ||
-                            _expenseCategory == null
-                        ? () {
-                            context
-                                .read<AddExpenseCubit>()
-                                .error('Please fill all fields');
-                            // context
-                            //     .read<AddExpenseCubit>()
-                            //     .getVoyageTitleStream();
-                          }
-                        : () {
-                            context
-                                .read<AddExpenseCubit>()
-                                .addExpenseByVoyageTitle(
-                                  _expenseName ?? '',
-                                  _expenseVoyageTitle ?? '',
-                                  _expensePrice ?? 0.00,
-                                  _expenseCategory ?? 'miscellaneous',
-                                );
-                          },
-                    child: const Text('Save'))
-              ],
-            ),
-            body: Builder(
-              builder: (context) {
-                switch (state.status) {
-                  case Status.initial:
-                    return const Scaffold(
-                      body: Center(
-                        child: Text('Initial state'),
-                      ),
-                    );
-                  case Status.loading:
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  case Status.success:
-                    if (state.voyageTitles.isEmpty) {
-                      return const Center(
-                        child: Text('No voyages found'),
-                      );
-                    }
-                    return _AddExpensePageBody(
-                      onNameChanged: (newValue) =>
-                          setState(() => _expenseName = newValue),
-                      expenseName: _expenseName,
-                      onVoyageTitleChanged: (newValue) => setState(() {
-                        _expenseVoyageTitle = newValue;
+              appBar: AppBar(
+                backgroundColor: Colors.transparent,
+                title: const Text('Add an expense'),
+                actions: [
+                  TextButton(
+                      onPressed: (() {
+                        context.read<AddExpenseCubit>().addExpenseAndCheck(
+                            name: _expenseName,
+                            voyageTitle: _expenseVoyageTitle,
+                            price: _expensePrice,
+                            category: _expenseCategory);
                       }),
-                      expenseVoyageTitle: _expenseVoyageTitle,
-                      onPriceChanged: (newValue) =>
-                          setState(() => _expensePrice = newValue),
-                      expensePrice: _expensePrice,
-                      onCategoryChanged: (newValue) =>
-                          setState(() => _expenseCategory = newValue),
-                      expenseCategory: _expenseCategory,
-                      categoryTitles: expenseCategoryList,
-                      voyageTitles: state.voyageTitles,
-                      voyageModel: widget.voyageModel,
-                      addExpense: (title) {
-                        context.read<AddExpenseCubit>().addExpenseByVoyageTitle(
-                              _expenseName!,
-                              title!,
-                              _expensePrice!,
-                              _expenseCategory!,
-                            );
-                      },
-                    );
-                  case Status.error:
-                    return Center(
-                      child: Text(
-                        state.errorMessage ?? 'Unknown error',
-                        style: TextStyle(
-                          color: Theme.of(context).errorColor,
-                        ),
-                      ),
-                    );
-                }
-              },
-            ),
-          );
+                      // onPressed: _expenseName == null ||
+                      //         _expenseVoyageTitle == null ||
+                      //         _expensePrice == null ||
+                      //         _expenseCategory == null
+                      //     ? () {
+                      //         context
+                      //             .read<AddExpenseCubit>()
+                      //             .error('Please fill all fields');
+                      //         // context
+                      //         //     .read<AddExpenseCubit>()
+                      //         //     .getVoyageTitleStream();
+                      //       }
+                      //     : () {
+                      //         context
+                      //             .read<AddExpenseCubit>()
+                      //             .addExpenseByVoyageTitle(
+                      //               _expenseName ?? '',
+                      //               _expenseVoyageTitle ?? '',
+                      //               _expensePrice ?? 0.00,
+                      //               _expenseCategory ?? 'miscellaneous',
+                      //             );
+                      //       }
+
+                      child: const Text('Save'))
+                ],
+              ),
+              body: _AddExpensePageBody(
+                onNameChanged: (newValue) =>
+                    setState(() => _expenseName = newValue),
+                expenseName: _expenseName,
+                onVoyageTitleChanged: (newValue) => setState(() {
+                  _expenseVoyageTitle = newValue;
+                }),
+                expenseVoyageTitle: _expenseVoyageTitle,
+                onPriceChanged: (newValue) =>
+                    setState(() => _expensePrice = newValue),
+                expensePrice: _expensePrice,
+                onCategoryChanged: (newValue) =>
+                    setState(() => _expenseCategory = newValue),
+                expenseCategory: _expenseCategory,
+                categoryTitles: expenseCategoryList,
+                voyageTitles: state.voyageTitles,
+                voyageModel: widget.voyageModel,
+                // addExpense: (title) {
+                //   context.read<AddExpenseCubit>().addExpenseByVoyageTitle(
+                //         _expenseName!,
+                //         title!,
+                //         _expensePrice!,
+                //         _expenseCategory!,
+                //       );
+                // },
+              ));
         }),
       ),
     );
@@ -154,7 +129,7 @@ class _AddExpensePageBody extends StatelessWidget {
     this.expenseCategory,
     required this.categoryTitles,
     required this.voyageTitles,
-    required this.addExpense,
+    // required this.addExpense,
     this.voyageModel,
   });
 
@@ -162,7 +137,7 @@ class _AddExpensePageBody extends StatelessWidget {
   final Function(String?) onVoyageTitleChanged;
   final Function(double?) onPriceChanged;
   final Function(String?) onCategoryChanged;
-  final Function(String?) addExpense;
+  // final Function(String?) addExpense;
 
   final String? expenseName;
   final String? expenseVoyageTitle;
