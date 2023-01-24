@@ -1,20 +1,21 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
-import 'package:meta/meta.dart';
 import 'package:travel_cost_log/app/core/enums.dart';
 import 'package:travel_cost_log/domain/repositories/expenses_repository.dart';
 import 'package:travel_cost_log/domain/repositories/voyages_repository.dart';
 
 part 'add_expense_state.dart';
+part 'add_expense_cubit.freezed.dart';
 
 @injectable
 class AddExpenseCubit extends Cubit<AddExpenseState> {
   AddExpenseCubit(
     this._expensesRepository,
     this._voyagesRepository,
-  ) : super(const AddExpenseState());
+  ) : super(AddExpenseState());
 
   final ExpensesRepository _expensesRepository;
 
@@ -29,12 +30,12 @@ class AddExpenseCubit extends Cubit<AddExpenseState> {
     String category,
   ) async {
     emit(
-      const AddExpenseState(),
+      AddExpenseState(),
     );
     try {
       await _expensesRepository.add(name, voyageId, price, category);
       emit(
-        const AddExpenseState(
+        AddExpenseState(
           saved: true,
         ),
       );
@@ -60,7 +61,7 @@ class AddExpenseCubit extends Cubit<AddExpenseState> {
 
   Future<void> getVoyageTitleStream() async {
     emit(
-      const AddExpenseState(
+      AddExpenseState(
         status: Status.loading,
       ),
     );
@@ -91,7 +92,7 @@ class AddExpenseCubit extends Cubit<AddExpenseState> {
     String category,
   ) async {
     emit(
-      const AddExpenseState(),
+      AddExpenseState(),
     );
     final voyageId = await _voyagesRepository.getVoyageIdByTitle(voyageTitle);
     emit(
