@@ -232,32 +232,37 @@ class _AddExpensePageBody extends StatelessWidget {
               ],
               onChanged: onCategoryChanged,
             ),
-            if (voyageModel == null)
-              DropdownButtonFormField<String>(
-                value: expenseVoyageTitle,
-                decoration: const InputDecoration(
-                  border: UnderlineInputBorder(),
-                  labelText: 'Voyage',
-                  contentPadding: EdgeInsets.all(10),
-                ),
-                items: [
-                  // if (expenseVoyageTitle == null)
-                  //   const DropdownMenuItem(
-                  //     child: Text('Choose voyage from list'),
-                  //   ),
-                  ...voyageTitles.map((String voyage) {
-                    return DropdownMenuItem(
-                      value: voyage,
-                      child: Text(
-                        voyage[0].toUpperCase() + voyage.substring(1),
-                      ),
-                    );
-                  }),
-                ],
-                onChanged: onVoyageTitleChanged,
-              )
-            else
-              Text(voyageModel!.title),
+            // if (voyageModel == null)
+            DropdownButtonFormField<String>(
+              value: expenseVoyageTitle,
+              decoration: const InputDecoration(
+                border: UnderlineInputBorder(),
+                labelText: 'Voyage',
+                contentPadding: EdgeInsets.all(10),
+              ),
+              items: [
+                // if (voyageModel == null)
+                // if (expenseVoyageTitle == null)
+                //   const DropdownMenuItem(
+                //     child: Text('Choose voyage from list'),
+                //   ),
+                ...voyageTitles.map((String voyage) {
+                  return DropdownMenuItem(
+                    value: voyage,
+                    child: Text(
+                      voyage[0].toUpperCase() + voyage.substring(1),
+                    ),
+                  );
+                })
+                // else
+                //   DropdownMenuItem(
+                //     child: Text(voyageModel!.title),
+                //   )
+              ],
+              onChanged: onVoyageTitleChanged,
+            )
+            // else
+            //   Text(voyageModel!.title),
             // ElevatedButton(
             //   onPressed: expenseName == null ||
             //           expenseVoyageTitle == null ||
