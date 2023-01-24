@@ -29,11 +29,11 @@ class _AddVoyagePageState extends State<AddVoyagePage> {
           if (state.saved) {
             Navigator.of(context).pop();
           }
-          if (state.errorMessage.isNotEmpty) {
+          if (state.errorMessage != null) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(
-                  state.errorMessage,
+                  state.errorMessage ?? 'Unknown error',
                 ),
                 backgroundColor: Colors.red,
               ),
