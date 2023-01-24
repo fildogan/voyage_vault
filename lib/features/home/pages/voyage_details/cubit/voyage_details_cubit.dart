@@ -1,19 +1,19 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
-import 'package:meta/meta.dart';
 import 'package:travel_cost_log/app/core/enums.dart';
 import 'package:travel_cost_log/domain/models/expense_model.dart';
 import 'package:travel_cost_log/domain/models/voyage_model.dart';
 import 'package:travel_cost_log/domain/repositories/expenses_repository.dart';
 
 part 'voyage_details_state.dart';
+part 'voyage_details_cubit.freezed.dart';
 
 @injectable
 class VoyageDetailsCubit extends Cubit<VoyageDetailsState> {
-  VoyageDetailsCubit(this._expensesRepository)
-      : super(const VoyageDetailsState());
+  VoyageDetailsCubit(this._expensesRepository) : super(VoyageDetailsState());
 
   // final VoyagesRepository _voyagesRepository;
 
@@ -46,7 +46,7 @@ class VoyageDetailsCubit extends Cubit<VoyageDetailsState> {
     required String expenseId,
   }) async {
     emit(
-      const VoyageDetailsState(),
+      VoyageDetailsState(),
     );
     try {
       await _expensesRepository.remove(id: expenseId);
