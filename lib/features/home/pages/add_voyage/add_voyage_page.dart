@@ -49,33 +49,41 @@ class _AddVoyagePageState extends State<AddVoyagePage> {
                 actions: [
                   TextButton(
                       onPressed: (() {
-                        if (_voyageTitle == null ||
-                            _voyageBudget == null ||
-                            _voyageStartDate == null ||
-                            _voyageEndDate == null) {
-                          context
-                              .read<AddVoyageCubit>()
-                              .error('Please fill all fields');
-                        } else if (_voyageEndDate!
-                            .isBefore(_voyageStartDate!)) {
-                          context.read<AddVoyageCubit>().error(
-                              'Voyage start date should be before end date');
-                        } else if (state.voyageTitles
-                            .map((i) => i.toLowerCase())
-                            .contains(_voyageTitle!.toLowerCase())) {
-                          context
-                              .read<AddVoyageCubit>()
-                              .error('Voyage title already exists');
-                        } else {
-                          context.read<AddVoyageCubit>().add(
-                                title: _voyageTitle ?? '',
-                                budget: _voyageBudget ?? 0.00,
-                                startDate: _voyageStartDate!,
-                                endDate: _voyageEndDate!,
-                                location: _voyageLocation ?? '',
-                                description: _voyageDescription ?? '',
-                              );
-                        }
+                        // if (_voyageTitle == null ||
+                        //     _voyageBudget == null ||
+                        //     _voyageStartDate == null ||
+                        //     _voyageEndDate == null) {
+                        //   context
+                        //       .read<AddVoyageCubit>()
+                        //       .error('Please fill all fields');
+                        // } else if (_voyageEndDate!
+                        //     .isBefore(_voyageStartDate!)) {
+                        //   context.read<AddVoyageCubit>().error(
+                        //       'Voyage start date should be before end date');
+                        // } else if (state.voyageTitles
+                        //     .map((i) => i.toLowerCase())
+                        //     .contains(_voyageTitle!.toLowerCase())) {
+                        //   context
+                        //       .read<AddVoyageCubit>()
+                        //       .error('Voyage title already exists');
+                        // } else {
+                        //   context.read<AddVoyageCubit>().add(
+                        //         title: _voyageTitle ?? '',
+                        //         budget: _voyageBudget ?? 0.00,
+                        //         startDate: _voyageStartDate!,
+                        //         endDate: _voyageEndDate!,
+                        //         location: _voyageLocation ?? '',
+                        //         description: _voyageDescription ?? '',
+                        //       );
+                        // }
+                        context.read<AddVoyageCubit>().addVoyageAndCheck(
+                              title: _voyageTitle,
+                              budget: _voyageBudget,
+                              startDate: _voyageStartDate,
+                              endDate: _voyageEndDate,
+                              location: _voyageLocation,
+                              description: _voyageDescription,
+                            );
                       }),
                       child: const Text('Save')),
                 ],

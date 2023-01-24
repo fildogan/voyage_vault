@@ -45,11 +45,11 @@ class VoyagesRepository {
 
   Future<void> add({
     required String title,
-    double? budget,
+    required double budget,
     required DateTime startDate,
     required DateTime endDate,
-    String? location,
-    String? description,
+    required String location,
+    required String description,
   }) async {
     final userID = FirebaseAuth.instance.currentUser?.uid;
     if (userID == null) {

@@ -23,7 +23,7 @@ class AddVoyageCubit extends Cubit<AddVoyageState> {
     required DateTime startDate,
     required DateTime endDate,
     required String location,
-    String? description,
+    required String description,
   }) async {
     try {
       await _voyagesRepository.add(
@@ -45,10 +45,40 @@ class AddVoyageCubit extends Cubit<AddVoyageState> {
     }
   }
 
+  Future<void> addVoyageAndCheck({
+    String? title,
+    double? budget,
+    DateTime? startDate,
+    DateTime? endDate,
+    String? location,
+    String? description,
+  }) async {
+    if (title == null ||
+        budget == null ||
+        startDate == null ||
+        endDate == null) {
+      error('Please fill all fields');
+    } else if (endDate.isBefore(startDate)) {
+      error('Voyage start date should be before end date');
+    } else if (state.voyageTitles
+        .map((i) => i.toLowerCase())
+        .contains(title.toLowerCase())) {
+      error('Voyage title already exists');
+    } else {
+      add(
+          title: title,
+          budget: budget,
+          startDate: startDate,
+          endDate: endDate,
+          location: location ?? '',
+          description: description ?? '');
+    }
+  }
+
   Future<void> error(String error) async {
     emit(AddVoyageState(
       errorMessage: error,
-      voyageTitles: state.voyageTitles,
+      // voyageTitles: state.voyageTitles,
     ));
   }
 
