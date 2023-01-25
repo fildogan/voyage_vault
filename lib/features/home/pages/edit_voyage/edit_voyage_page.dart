@@ -7,26 +7,20 @@ import 'package:travel_cost_log/domain/models/voyage_model.dart';
 import 'package:travel_cost_log/features/home/pages/edit_voyage/cubit/edit_voyage_cubit.dart';
 
 class EditVoyagePage extends StatefulWidget {
-  const EditVoyagePage({super.key, this.voyageModel});
+  const EditVoyagePage({super.key, required this.voyageModel});
 
-  final VoyageModel? voyageModel;
+  final VoyageModel voyageModel;
 
   @override
   State<EditVoyagePage> createState() => _EditVoyagePageState();
 }
 
 class _EditVoyagePageState extends State<EditVoyagePage> {
-  String? _voyageTitle;
-  double? _voyageBudget;
-  DateTime? _voyageStartDate;
-  DateTime? _voyageEndDate;
-  String? _voyageLocation;
-  String? _voyageDescription;
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider<EditVoyageCubit>(
-      create: (context) => getIt<EditVoyageCubit>()..getVoyageTitleStream(),
+      create: (context) =>
+          getIt<EditVoyageCubit>()..start(voyageModel: widget.voyageModel),
       child: BlocListener<EditVoyageCubit, EditVoyageState>(
         listener: (context, state) {
           if (state.saved) {
@@ -71,25 +65,15 @@ class _EditVoyagePageState extends State<EditVoyagePage> {
                   TextButton(
                       onPressed: (() {
                         context.read<EditVoyageCubit>().update(
-                              voyageId: widget.voyageModel!.id,
-                              title: _voyageTitle ??
-                                  widget.voyageModel?.title ??
-                                  '',
-                              budget: _voyageBudget ??
-                                  widget.voyageModel?.budget ??
-                                  0.00,
-                              startDate: _voyageStartDate ??
-                                  widget.voyageModel?.startDate ??
-                                  DateTime(2000),
-                              endDate: _voyageEndDate ??
-                                  widget.voyageModel?.endDate ??
-                                  DateTime(2001),
-                              location: _voyageLocation ??
-                                  widget.voyageModel?.location ??
-                                  '',
-                              description: _voyageDescription ??
-                                  widget.voyageModel?.description ??
-                                  '',
+                              voyageId: widget.voyageModel.id,
+                              title: state.title ?? '',
+                              budget: state.budget ?? 0.00,
+                              startDate: state.startDate ??
+                                  widget.voyageModel.startDate,
+                              endDate:
+                                  state.endDate ?? widget.voyageModel.endDate,
+                              location: state.location ?? '',
+                              description: state.description ?? '',
                             );
                       }),
                       child: const Text('Save')),
@@ -97,42 +81,29 @@ class _EditVoyagePageState extends State<EditVoyagePage> {
                 // automaticallyImplyLeading: false,
               ),
               body: _EditVoyagePageBody(
-                onTitleChanged: (newValue) =>
-                    setState(() => _voyageTitle = newValue),
-                onBudgetChanged: (newValue) =>
-                    setState(() => _voyageBudget = newValue),
-                onStartDateChanged: (newValue) =>
-                    setState(() => _voyageStartDate = newValue),
-                onEndDateChanged: (newValue) =>
-                    setState(() => _voyageEndDate = newValue),
-                onLocationChanged: (newValue) =>
-                    setState(() => _voyageLocation = newValue),
-                onDescriptionChanged: (newValue) =>
-                    setState(() => _voyageDescription = newValue),
                 startDateFormated: DateFormat.yMd().format(
-                  _voyageStartDate ??
-                      widget.voyageModel?.startDate ??
-                      DateTime(2000),
+                  state.startDate ?? widget.voyageModel.startDate,
                 ),
-                endDateFormated: DateFormat.yMd().format(
-                  _voyageEndDate ??
-                      widget.voyageModel?.endDate ??
-                      DateTime(2000),
+                endDateFormated: DateFormat?.yMd().format(
+                  state.endDate ?? widget.voyageModel.endDate,
                 ),
-                voyageTitle: _voyageTitle ?? widget.voyageModel?.title ?? '',
-                voyageBudget:
-                    _voyageBudget ?? widget.voyageModel?.budget ?? 0.00,
-                voyageStartDate: _voyageStartDate ??
-                    widget.voyageModel?.startDate ??
-                    DateTime(2000),
-                voyageEndDate: _voyageEndDate ??
-                    widget.voyageModel?.endDate ??
-                    DateTime(2001),
+                voyageTitle: state.title,
+                voyageBudget: state.budget,
+                voyageStartDate: state.startDate,
+                voyageEndDate: state.endDate,
                 voyageTitles: state.voyageTitles,
-                voyageLocation:
-                    _voyageLocation ?? widget.voyageModel?.location ?? '',
-                voyageDescription:
-                    _voyageDescription ?? widget.voyageModel?.description ?? '',
+                voyageLocation: state.location,
+                voyageDescription: state.description,
+                onEndDateChanged: ((endDate) {
+                  context
+                      .read<EditVoyageCubit>()
+                      .changeStateValue(endDate: endDate);
+                }),
+                onStartDateChanged: ((startDate) {
+                  context
+                      .read<EditVoyageCubit>()
+                      .changeStateValue(startDate: startDate);
+                }),
               ),
             );
           },
@@ -144,11 +115,8 @@ class _EditVoyagePageState extends State<EditVoyagePage> {
 
 class _EditVoyagePageBody extends StatelessWidget {
   const _EditVoyagePageBody({
-    required this.onTitleChanged,
-    required this.onBudgetChanged,
+    // required this.onBudgetChanged,
     required this.onStartDateChanged,
-    required this.onLocationChanged,
-    required this.onDescriptionChanged,
     this.startDateFormated,
     required this.onEndDateChanged,
     this.endDateFormated,
@@ -160,12 +128,6 @@ class _EditVoyagePageBody extends StatelessWidget {
     this.voyageLocation,
     this.voyageDescription,
   });
-
-  final Function(String?) onTitleChanged;
-  final Function(String?) onLocationChanged;
-  final Function(String?) onDescriptionChanged;
-
-  final Function(double?) onBudgetChanged;
 
   final Function(DateTime?) onStartDateChanged;
   final Function(DateTime?) onEndDateChanged;
@@ -191,7 +153,9 @@ class _EditVoyagePageBody extends StatelessWidget {
           children: [
             TextFormField(
               initialValue: voyageTitle,
-              onChanged: onTitleChanged,
+              onChanged: ((value) {
+                context.read<EditVoyageCubit>().changeStateValue(title: value);
+              }),
               decoration: const InputDecoration(
                 border: UnderlineInputBorder(),
                 labelText: 'Voyage name',
@@ -200,7 +164,11 @@ class _EditVoyagePageBody extends StatelessWidget {
             ),
             TextFormField(
               initialValue: voyageLocation,
-              onChanged: onLocationChanged,
+              onChanged: ((value) {
+                context
+                    .read<EditVoyageCubit>()
+                    .changeStateValue(location: value);
+              }),
               decoration: const InputDecoration(
                 border: UnderlineInputBorder(),
                 labelText: 'Destination',
@@ -225,7 +193,9 @@ class _EditVoyagePageBody extends StatelessWidget {
               onChanged: (value) {
                 final budget = double.tryParse(value);
                 if (budget != null) {
-                  onBudgetChanged(budget);
+                  context
+                      .read<EditVoyageCubit>()
+                      .changeStateValue(budget: budget);
                 }
               },
             ),
@@ -283,7 +253,11 @@ class _EditVoyagePageBody extends StatelessWidget {
             ),
             TextFormField(
               initialValue: voyageDescription,
-              onChanged: onDescriptionChanged,
+              onChanged: ((value) {
+                context
+                    .read<EditVoyageCubit>()
+                    .changeStateValue(description: value);
+              }),
               maxLines: null,
               minLines: 3,
               keyboardType: TextInputType.multiline,
