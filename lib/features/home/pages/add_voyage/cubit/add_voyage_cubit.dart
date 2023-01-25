@@ -72,12 +72,22 @@ class AddVoyageCubit extends Cubit<AddVoyageState> {
           endDate: endDate,
           location: location ?? '',
           description: description ?? '');
+      final String capitalizedTitle =
+          title[0].toUpperCase() + title.substring(1);
+      success('$capitalizedTitle added succesfully');
     }
   }
 
   Future<void> error(String error) async {
     emit(AddVoyageState(
       errorMessage: error,
+      // voyageTitles: state.voyageTitles,
+    ));
+  }
+
+  Future<void> success(String success) async {
+    emit(AddVoyageState(
+      successMessage: success,
       // voyageTitles: state.voyageTitles,
     ));
   }

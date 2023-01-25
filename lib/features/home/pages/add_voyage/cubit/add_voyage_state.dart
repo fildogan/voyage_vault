@@ -6,6 +6,7 @@ class AddVoyageState with _$AddVoyageState {
     @Default(Status.initial) Status status,
     @Default(false) bool saved,
     String? errorMessage,
+    String? successMessage,
     @Default([]) List<String> voyageTitles,
   }) = _AddVoyageState;
 }

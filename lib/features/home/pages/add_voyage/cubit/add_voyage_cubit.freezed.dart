@@ -19,6 +19,7 @@ mixin _$AddVoyageState {
   Status get status => throw _privateConstructorUsedError;
   bool get saved => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
+  String? get successMessage => throw _privateConstructorUsedError;
   List<String> get voyageTitles => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -36,6 +37,7 @@ abstract class $AddVoyageStateCopyWith<$Res> {
       {Status status,
       bool saved,
       String? errorMessage,
+      String? successMessage,
       List<String> voyageTitles});
 }
 
@@ -55,6 +57,7 @@ class _$AddVoyageStateCopyWithImpl<$Res, $Val extends AddVoyageState>
     Object? status = null,
     Object? saved = null,
     Object? errorMessage = freezed,
+    Object? successMessage = freezed,
     Object? voyageTitles = null,
   }) {
     return _then(_value.copyWith(
@@ -69,6 +72,10 @@ class _$AddVoyageStateCopyWithImpl<$Res, $Val extends AddVoyageState>
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
+      successMessage: freezed == successMessage
+          ? _value.successMessage
+          : successMessage // ignore: cast_nullable_to_non_nullable
               as String?,
       voyageTitles: null == voyageTitles
           ? _value.voyageTitles
@@ -90,6 +97,7 @@ abstract class _$$_AddVoyageStateCopyWith<$Res>
       {Status status,
       bool saved,
       String? errorMessage,
+      String? successMessage,
       List<String> voyageTitles});
 }
 
@@ -107,6 +115,7 @@ class __$$_AddVoyageStateCopyWithImpl<$Res>
     Object? status = null,
     Object? saved = null,
     Object? errorMessage = freezed,
+    Object? successMessage = freezed,
     Object? voyageTitles = null,
   }) {
     return _then(_$_AddVoyageState(
@@ -121,6 +130,10 @@ class __$$_AddVoyageStateCopyWithImpl<$Res>
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
+      successMessage: freezed == successMessage
+          ? _value.successMessage
+          : successMessage // ignore: cast_nullable_to_non_nullable
               as String?,
       voyageTitles: null == voyageTitles
           ? _value._voyageTitles
@@ -137,6 +150,7 @@ class _$_AddVoyageState implements _AddVoyageState {
       {this.status = Status.initial,
       this.saved = false,
       this.errorMessage,
+      this.successMessage,
       final List<String> voyageTitles = const []})
       : _voyageTitles = voyageTitles;
 
@@ -148,6 +162,8 @@ class _$_AddVoyageState implements _AddVoyageState {
   final bool saved;
   @override
   final String? errorMessage;
+  @override
+  final String? successMessage;
   final List<String> _voyageTitles;
   @override
   @JsonKey()
@@ -159,7 +175,7 @@ class _$_AddVoyageState implements _AddVoyageState {
 
   @override
   String toString() {
-    return 'AddVoyageState(status: $status, saved: $saved, errorMessage: $errorMessage, voyageTitles: $voyageTitles)';
+    return 'AddVoyageState(status: $status, saved: $saved, errorMessage: $errorMessage, successMessage: $successMessage, voyageTitles: $voyageTitles)';
   }
 
   @override
@@ -171,13 +187,15 @@ class _$_AddVoyageState implements _AddVoyageState {
             (identical(other.saved, saved) || other.saved == saved) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage) &&
+            (identical(other.successMessage, successMessage) ||
+                other.successMessage == successMessage) &&
             const DeepCollectionEquality()
                 .equals(other._voyageTitles, _voyageTitles));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, status, saved, errorMessage,
-      const DeepCollectionEquality().hash(_voyageTitles));
+      successMessage, const DeepCollectionEquality().hash(_voyageTitles));
 
   @JsonKey(ignore: true)
   @override
@@ -191,6 +209,7 @@ abstract class _AddVoyageState implements AddVoyageState {
       {final Status status,
       final bool saved,
       final String? errorMessage,
+      final String? successMessage,
       final List<String> voyageTitles}) = _$_AddVoyageState;
 
   @override
@@ -199,6 +218,8 @@ abstract class _AddVoyageState implements AddVoyageState {
   bool get saved;
   @override
   String? get errorMessage;
+  @override
+  String? get successMessage;
   @override
   List<String> get voyageTitles;
   @override

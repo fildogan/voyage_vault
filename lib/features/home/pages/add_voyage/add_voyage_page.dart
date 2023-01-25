@@ -39,6 +39,24 @@ class _AddVoyagePageState extends State<AddVoyagePage> {
               ),
             );
           }
+          if (state.successMessage != null) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Row(
+                  children: [
+                    const Icon(Icons.done),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      state.successMessage ?? 'Success',
+                    ),
+                  ],
+                ),
+                backgroundColor: Colors.green,
+              ),
+            );
+          }
         },
         child: BlocBuilder<AddVoyageCubit, AddVoyageState>(
           builder: (context, state) {
