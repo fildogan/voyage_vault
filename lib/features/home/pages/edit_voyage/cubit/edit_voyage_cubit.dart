@@ -48,11 +48,11 @@ class EditVoyageCubit extends Cubit<EditVoyageState> {
     emit(
       EditVoyageState(
         title: voyageModel.title,
-        budget: voyageModel.budget,
+        budget: voyageModel.budget ?? 0.00,
         startDate: voyageModel.startDate,
         endDate: voyageModel.endDate,
-        location: voyageModel.location,
-        description: voyageModel.description,
+        location: voyageModel.location ?? '',
+        description: voyageModel.description ?? '',
       ),
     );
   }
@@ -79,7 +79,14 @@ class EditVoyageCubit extends Cubit<EditVoyageState> {
     required String description,
   }) async {
     emit(
-      EditVoyageState(),
+      EditVoyageState(
+        title: title,
+        budget: budget,
+        startDate: startDate,
+        endDate: endDate,
+        location: location,
+        description: description,
+      ),
     );
     try {
       await _voyagesRepository.update(
