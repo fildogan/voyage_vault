@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel_cost_log/app/injection_container.dart';
 import 'package:travel_cost_log/domain/models/voyage_model.dart';
 import 'package:travel_cost_log/features/home/pages/add_expense/add_expense_page.dart';
+import 'package:travel_cost_log/features/home/pages/edit_voyage/edit_voyage_page.dart';
 import 'package:travel_cost_log/features/home/pages/voyage_details/cubit/voyage_details_cubit.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
@@ -27,7 +28,19 @@ class VoyageDetailsPage extends StatelessWidget {
           final String percentBudgetSpentFormatted =
               (percentBudgetSpent * 100).toStringAsFixed(2);
           return Scaffold(
-            appBar: AppBar(title: Text(voyageModel.title)),
+            appBar: AppBar(
+              title: Text(voyageModel.title),
+              actions: [
+                TextButton(
+                    onPressed: (() {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) =>
+                            EditVoyagePage(voyageModel: voyageModel),
+                      ));
+                    }),
+                    child: const Text('Edit'))
+              ],
+            ),
             floatingActionButton: FloatingActionButton(
               onPressed: () => Navigator.of(context).push(
                 MaterialPageRoute(

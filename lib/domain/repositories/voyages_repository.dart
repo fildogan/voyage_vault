@@ -69,6 +69,34 @@ class VoyagesRepository {
     });
   }
 
+  Future<void> update({
+    required String id,
+    required String title,
+    required double budget,
+    required DateTime startDate,
+    required DateTime endDate,
+    required String location,
+    required String description,
+  }) async {
+    final userID = FirebaseAuth.instance.currentUser?.uid;
+    if (userID == null) {
+      throw Exception('User is not logged in');
+    }
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userID)
+        .collection('voyages')
+        .doc(id)
+        .update({
+      'title': title,
+      'budget': budget,
+      'startdate': startDate,
+      'enddate': endDate,
+      'location': location,
+      'description': description,
+    });
+  }
+
   Future<void> remove({required String id}) async {
     final userID = FirebaseAuth.instance.currentUser?.uid;
     if (userID == null) {
