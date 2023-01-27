@@ -20,7 +20,9 @@ class EditVoyageCubit extends Cubit<EditVoyageState> {
 
   Future<void> start({required VoyageModel voyageModel}) async {
     getVoyageTitleStream();
-    setValues(voyageModel: voyageModel);
+    setValues(
+      voyageModel: voyageModel,
+    );
   }
 
   Future<void> getVoyageTitleStream() async {

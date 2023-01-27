@@ -24,7 +24,7 @@ class _EditVoyagePageState extends State<EditVoyagePage> {
       child: BlocListener<EditVoyageCubit, EditVoyageState>(
         listener: (context, state) {
           if (state.saved) {
-            Navigator.of(context).pop(widget.voyageModel);
+            Navigator.of(context).pop();
           }
           if (state.errorMessage != null) {
             ScaffoldMessenger.of(context).showSnackBar(

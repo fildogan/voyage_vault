@@ -15,8 +15,8 @@ class VoyageDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => getIt<VoyageDetailsCubit>()
-        ..getExpensesStreamByVoyageId(voyageModel.id),
+      create: (context) =>
+          getIt<VoyageDetailsCubit>()..refreshVoyage(voyageModel.id),
       child: BlocBuilder<VoyageDetailsCubit, VoyageDetailsState>(
         builder: (context, state) {
           final expenseModels = state.expenses;
@@ -35,10 +35,14 @@ class VoyageDetailsPage extends StatelessWidget {
               actions: [
                 TextButton(
                     onPressed: (() {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) =>
-                            EditVoyagePage(voyageModel: currentVoyageModel),
-                      ));
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(
+                            builder: (context) =>
+                                EditVoyagePage(voyageModel: currentVoyageModel),
+                          ))
+                          .then((value) => context
+                              .read<VoyageDetailsCubit>()
+                              .refreshVoyage(currentVoyageModel.id));
                     }),
                     child: const Text('Edit'))
               ],
@@ -108,9 +112,14 @@ class VoyageDetailsPage extends StatelessWidget {
                             Dismissible(
                               key: ValueKey(expenseModel.id),
                               onDismissed: (direction) {
-                                context.read<VoyageDetailsCubit>().remove(
+                                context
+                                    .read<VoyageDetailsCubit>()
+                                    .remove(
                                       expenseId: expenseModel.id,
-                                    );
+                                    )
+                                    .then((value) => context
+                                        .read<VoyageDetailsCubit>()
+                                        .refreshVoyage(currentVoyageModel.id));
                               },
                               direction: DismissDirection.endToStart,
                               background: Container(
