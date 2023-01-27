@@ -20,21 +20,24 @@ class VoyageDetailsPage extends StatelessWidget {
       child: BlocBuilder<VoyageDetailsCubit, VoyageDetailsState>(
         builder: (context, state) {
           final expenseModels = state.expenses;
+          final VoyageModel currentVoyageModel =
+              state.voyageModel ?? voyageModel;
           // Get sum of all expenses for given voyage
           final double expenseSum =
               expenseModels.fold(0, (prev, element) => prev + element.price);
-          final double percentBudgetSpent = (expenseSum / (voyageModel.budget));
+          final double percentBudgetSpent =
+              (expenseSum / (currentVoyageModel.budget));
           final String percentBudgetSpentFormatted =
               (percentBudgetSpent * 100).toStringAsFixed(2);
           return Scaffold(
             appBar: AppBar(
-              title: Text(voyageModel.title),
+              title: Text(currentVoyageModel.title),
               actions: [
                 TextButton(
                     onPressed: (() {
                       Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) =>
-                            EditVoyagePage(voyageModel: voyageModel),
+                            EditVoyagePage(voyageModel: currentVoyageModel),
                       ));
                     }),
                     child: const Text('Edit'))
@@ -44,7 +47,7 @@ class VoyageDetailsPage extends StatelessWidget {
               onPressed: () => Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => AddExpensePage(
-                    voyageModel: voyageModel,
+                    voyageModel: currentVoyageModel,
                   ),
                   fullscreenDialog: true,
                 ),
@@ -54,15 +57,15 @@ class VoyageDetailsPage extends StatelessWidget {
             body: SafeArea(
               child: Column(
                 children: [
-                  voyageModel.description == ''
+                  currentVoyageModel.description == ''
                       ? const SizedBox.shrink()
-                      : Text('Description: ${voyageModel.description}'),
-                  Text('Voyage budget: ${voyageModel.budget}'),
+                      : Text('Description: ${currentVoyageModel.description}'),
+                  Text('Voyage budget: ${currentVoyageModel.budget}'),
                   Text('Total expenses spent: € ${expenseSum.toString()}'),
                   Text('Percentage spent: $percentBudgetSpentFormatted %'),
                   percentBudgetSpent > 1.0
                       ? Text(
-                          'You have spent €${(expenseSum - voyageModel.budget).toStringAsFixed(2)} over the budget')
+                          'You have spent €${(expenseSum - currentVoyageModel.budget).toStringAsFixed(2)} over the budget')
                       : const SizedBox(),
                   Padding(
                     padding: const EdgeInsets.all(15.0),
