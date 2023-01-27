@@ -48,11 +48,11 @@ class EditVoyageCubit extends Cubit<EditVoyageState> {
     emit(
       EditVoyageState(
         title: voyageModel.title,
-        budget: voyageModel.budget ?? 0.00,
+        budget: voyageModel.budget,
         startDate: voyageModel.startDate,
         endDate: voyageModel.endDate,
-        location: voyageModel.location ?? '',
-        description: voyageModel.description ?? '',
+        location: voyageModel.location,
+        description: voyageModel.description,
       ),
     );
   }

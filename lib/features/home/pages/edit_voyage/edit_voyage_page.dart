@@ -67,19 +67,15 @@ class _EditVoyagePageState extends State<EditVoyagePage> {
                         context.read<EditVoyageCubit>().update(
                               voyageId: widget.voyageModel.id,
                               title: state.title ?? widget.voyageModel.title,
-                              budget: state.budget ??
-                                  widget.voyageModel.budget ??
-                                  0.00,
+                              budget: state.budget ?? widget.voyageModel.budget,
                               startDate: state.startDate ??
                                   widget.voyageModel.startDate,
                               endDate:
                                   state.endDate ?? widget.voyageModel.endDate,
-                              location: state.location ??
-                                  widget.voyageModel.location ??
-                                  '',
+                              location:
+                                  state.location ?? widget.voyageModel.location,
                               description: state.description ??
-                                  widget.voyageModel.description ??
-                                  '',
+                                  widget.voyageModel.description,
                             );
                       }),
                       child: const Text('Save')),

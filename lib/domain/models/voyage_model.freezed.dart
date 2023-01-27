@@ -20,9 +20,9 @@ mixin _$VoyageModel {
   String get title => throw _privateConstructorUsedError;
   DateTime get startDate => throw _privateConstructorUsedError;
   DateTime get endDate => throw _privateConstructorUsedError;
-  String? get location => throw _privateConstructorUsedError;
-  String? get description => throw _privateConstructorUsedError;
-  double? get budget => throw _privateConstructorUsedError;
+  String get location => throw _privateConstructorUsedError;
+  String get description => throw _privateConstructorUsedError;
+  double get budget => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $VoyageModelCopyWith<VoyageModel> get copyWith =>
@@ -40,9 +40,9 @@ abstract class $VoyageModelCopyWith<$Res> {
       String title,
       DateTime startDate,
       DateTime endDate,
-      String? location,
-      String? description,
-      double? budget});
+      String location,
+      String description,
+      double budget});
 }
 
 /// @nodoc
@@ -62,9 +62,9 @@ class _$VoyageModelCopyWithImpl<$Res, $Val extends VoyageModel>
     Object? title = null,
     Object? startDate = null,
     Object? endDate = null,
-    Object? location = freezed,
-    Object? description = freezed,
-    Object? budget = freezed,
+    Object? location = null,
+    Object? description = null,
+    Object? budget = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -83,18 +83,18 @@ class _$VoyageModelCopyWithImpl<$Res, $Val extends VoyageModel>
           ? _value.endDate
           : endDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      location: freezed == location
+      location: null == location
           ? _value.location
           : location // ignore: cast_nullable_to_non_nullable
-              as String?,
-      description: freezed == description
+              as String,
+      description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
-              as String?,
-      budget: freezed == budget
+              as String,
+      budget: null == budget
           ? _value.budget
           : budget // ignore: cast_nullable_to_non_nullable
-              as double?,
+              as double,
     ) as $Val);
   }
 }
@@ -112,9 +112,9 @@ abstract class _$$_VoyageModelCopyWith<$Res>
       String title,
       DateTime startDate,
       DateTime endDate,
-      String? location,
-      String? description,
-      double? budget});
+      String location,
+      String description,
+      double budget});
 }
 
 /// @nodoc
@@ -132,9 +132,9 @@ class __$$_VoyageModelCopyWithImpl<$Res>
     Object? title = null,
     Object? startDate = null,
     Object? endDate = null,
-    Object? location = freezed,
-    Object? description = freezed,
-    Object? budget = freezed,
+    Object? location = null,
+    Object? description = null,
+    Object? budget = null,
   }) {
     return _then(_$_VoyageModel(
       id: null == id
@@ -153,18 +153,18 @@ class __$$_VoyageModelCopyWithImpl<$Res>
           ? _value.endDate
           : endDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      location: freezed == location
+      location: null == location
           ? _value.location
           : location // ignore: cast_nullable_to_non_nullable
-              as String?,
-      description: freezed == description
+              as String,
+      description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
-              as String?,
-      budget: freezed == budget
+              as String,
+      budget: null == budget
           ? _value.budget
           : budget // ignore: cast_nullable_to_non_nullable
-              as double?,
+              as double,
     ));
   }
 }
@@ -177,9 +177,9 @@ class _$_VoyageModel extends _VoyageModel {
       required this.title,
       required this.startDate,
       required this.endDate,
-      this.location,
-      this.description,
-      this.budget})
+      required this.location,
+      required this.description,
+      required this.budget})
       : super._();
 
   @override
@@ -191,11 +191,11 @@ class _$_VoyageModel extends _VoyageModel {
   @override
   final DateTime endDate;
   @override
-  final String? location;
+  final String location;
   @override
-  final String? description;
+  final String description;
   @override
-  final double? budget;
+  final double budget;
 
   @override
   String toString() {
@@ -236,9 +236,9 @@ abstract class _VoyageModel extends VoyageModel {
       required final String title,
       required final DateTime startDate,
       required final DateTime endDate,
-      final String? location,
-      final String? description,
-      final double? budget}) = _$_VoyageModel;
+      required final String location,
+      required final String description,
+      required final double budget}) = _$_VoyageModel;
   const _VoyageModel._() : super._();
 
   @override
@@ -250,11 +250,11 @@ abstract class _VoyageModel extends VoyageModel {
   @override
   DateTime get endDate;
   @override
-  String? get location;
+  String get location;
   @override
-  String? get description;
+  String get description;
   @override
-  double? get budget;
+  double get budget;
   @override
   @JsonKey(ignore: true)
   _$$_VoyageModelCopyWith<_$_VoyageModel> get copyWith =>

@@ -72,7 +72,7 @@ class VoyagesPageContent extends StatelessWidget {
                   child: Text(
                     state.errorMessage ?? 'Unknown error',
                     style: TextStyle(
-                      color: Theme.of(context).errorColor,
+                      color: Theme.of(context).colorScheme.error,
                     ),
                   ),
                 );
@@ -122,7 +122,7 @@ class _ListViewItem extends StatelessWidget {
                   voyageModel.location == ''
                       ? const SizedBox.shrink()
                       : Text(
-                          voyageModel.location!,
+                          voyageModel.location,
                           style: const TextStyle(
                             fontSize: 12,
                           ),

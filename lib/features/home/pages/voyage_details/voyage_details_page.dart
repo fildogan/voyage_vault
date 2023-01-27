@@ -23,8 +23,7 @@ class VoyageDetailsPage extends StatelessWidget {
           // Get sum of all expenses for given voyage
           final double expenseSum =
               expenseModels.fold(0, (prev, element) => prev + element.price);
-          final double percentBudgetSpent =
-              (expenseSum / (voyageModel.budget ?? 1));
+          final double percentBudgetSpent = (expenseSum / (voyageModel.budget));
           final String percentBudgetSpentFormatted =
               (percentBudgetSpent * 100).toStringAsFixed(2);
           return Scaffold(
@@ -63,7 +62,7 @@ class VoyageDetailsPage extends StatelessWidget {
                   Text('Percentage spent: $percentBudgetSpentFormatted %'),
                   percentBudgetSpent > 1.0
                       ? Text(
-                          'You have spent €${(expenseSum - voyageModel.budget!).toStringAsFixed(2)} over the budget')
+                          'You have spent €${(expenseSum - voyageModel.budget).toStringAsFixed(2)} over the budget')
                       : const SizedBox(),
                   Padding(
                     padding: const EdgeInsets.all(15.0),
