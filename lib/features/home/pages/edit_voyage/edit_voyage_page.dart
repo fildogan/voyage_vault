@@ -64,7 +64,7 @@ class _EditVoyagePageState extends State<EditVoyagePage> {
                 actions: [
                   TextButton(
                       onPressed: (() {
-                        context.read<EditVoyageCubit>().update(
+                        context.read<EditVoyageCubit>().updateVoyageAndCheck(
                               voyageId: widget.voyageModel.id,
                               title: state.title ?? widget.voyageModel.title,
                               budget: state.budget ?? widget.voyageModel.budget,

@@ -71,6 +71,41 @@ class EditVoyageCubit extends Cubit<EditVoyageState> {
     ));
   }
 
+  Future<void> updateVoyageAndCheck({
+    required String voyageId,
+    String? title,
+    double? budget,
+    DateTime? startDate,
+    DateTime? endDate,
+    String? location,
+    String? description,
+  }) async {
+    if (title == null ||
+        budget == null ||
+        startDate == null ||
+        endDate == null) {
+      error('Please fill all fields');
+    } else if (endDate.isBefore(startDate)) {
+      error('Voyage start date should be before end date');
+    } else if (state.voyageTitles
+        .map((i) => i.toLowerCase())
+        .contains(title.toLowerCase())) {
+      error('Voyage title already exists');
+    } else {
+      update(
+          voyageId: voyageId,
+          title: title,
+          budget: budget,
+          startDate: startDate,
+          endDate: endDate,
+          location: location ?? '',
+          description: description ?? '');
+      final String capitalizedTitle =
+          title[0].toUpperCase() + title.substring(1);
+      success('$capitalizedTitle updated succesfully');
+    }
+  }
+
   Future<void> update({
     required String voyageId,
     required String title,
