@@ -10,8 +10,14 @@ class AddPageContent extends StatelessWidget {
     return SafeArea(
       child: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            const SizedBox(height: 50),
+            Image.asset(
+              'images/logo1.png',
+              height: 300,
+            ),
+            const SizedBox(height: 50),
             ElevatedButton(
               onPressed: () => Navigator.of(context).push(
                 MaterialPageRoute(
