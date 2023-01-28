@@ -54,7 +54,10 @@ class AddVoyageCubit extends Cubit<AddVoyageState> {
     String? description,
   }) async {
     if (title == null ||
+        title == '' ||
         budget == null ||
+        budget == 0 ||
+        budget.isNaN ||
         startDate == null ||
         endDate == null) {
       error('Please fill all fields');
@@ -81,7 +84,7 @@ class AddVoyageCubit extends Cubit<AddVoyageState> {
   Future<void> error(String error) async {
     emit(AddVoyageState(
       errorMessage: error,
-      // voyageTitles: state.voyageTitles,
+      voyageTitles: state.voyageTitles,
     ));
   }
 

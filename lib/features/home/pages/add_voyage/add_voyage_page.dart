@@ -195,9 +195,7 @@ class _AddVoyagePageBody extends StatelessWidget {
                   const TextInputType.numberWithOptions(decimal: true),
               onChanged: (value) {
                 final budget = double.tryParse(value);
-                if (budget != null) {
-                  onBudgetChanged(budget);
-                }
+                onBudgetChanged(budget);
               },
             ),
             Row(

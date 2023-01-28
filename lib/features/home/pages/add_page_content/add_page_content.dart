@@ -27,6 +27,9 @@ class AddPageContent extends StatelessWidget {
               ),
               child: const Text('Add Voyage'),
             ),
+            const SizedBox(
+              height: 10,
+            ),
             ElevatedButton(
               onPressed: () => Navigator.of(context).push(
                 MaterialPageRoute(
