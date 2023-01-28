@@ -60,40 +60,54 @@ class VoyageDetailsPage extends StatelessWidget {
             ),
             body: SafeArea(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  currentVoyageModel.description == ''
-                      ? const SizedBox.shrink()
-                      : Text('Description: ${currentVoyageModel.description}'),
-                  Text('Voyage budget: ${currentVoyageModel.budget}'),
-                  Text('Total expenses spent: € ${expenseSum.toString()}'),
-                  Text('Percentage spent: $percentBudgetSpentFormatted %'),
-                  percentBudgetSpent > 1.0
-                      ? Text(
-                          'You have spent €${(expenseSum - currentVoyageModel.budget).toStringAsFixed(2)} over the budget')
-                      : const SizedBox(),
                   Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: LinearPercentIndicator(
-                      width: MediaQuery.of(context).size.width - 50,
-                      // animation: true,
-                      lineHeight: 20.0,
-                      // animationDuration: 2000,
-                      percent:
-                          percentBudgetSpent > 1.0 ? 1.0 : percentBudgetSpent,
-                      center: Text("$percentBudgetSpentFormatted%"),
-                      progressColor: percentBudgetSpent > 1.0
-                          ? Colors.red
-                          : Colors.green.shade800,
-                      backgroundColor: Colors.transparent,
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        currentVoyageModel.description == ''
+                            ? const SizedBox.shrink()
+                            : Text(
+                                'Description: ${currentVoyageModel.description}'),
+                        Text('Voyage budget: ${currentVoyageModel.budget}'),
+                        Text(
+                            'Total expenses spent: € ${expenseSum.toString()}'),
+                        Text(
+                            'Percentage spent: $percentBudgetSpentFormatted %'),
+                        percentBudgetSpent > 1.0
+                            ? Text(
+                                'You have spent €${(expenseSum - currentVoyageModel.budget).toStringAsFixed(2)} over the budget')
+                            : const SizedBox(),
+                        LinearPercentIndicator(
+                          padding: const EdgeInsets.all(0),
+                          width: MediaQuery.of(context).size.width - 30,
+                          // animation: true,
+                          lineHeight: 20.0,
+                          // animationDuration: 2000,
+                          percent: percentBudgetSpent > 1.0
+                              ? 1.0
+                              : percentBudgetSpent,
+                          center: Text("$percentBudgetSpentFormatted%"),
+                          progressColor: percentBudgetSpent > 1.0
+                              ? Colors.red
+                              : Colors.green.shade800,
+                          backgroundColor: Colors.transparent,
+                        ),
+                      ],
                     ),
                   ),
                   Expanded(
                     child: ListView(
                       children: [
-                        Container(
-                          decoration: const BoxDecoration(
-                            border: Border(
-                              bottom: BorderSide(color: Colors.black),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          child: Container(
+                            decoration: const BoxDecoration(
+                              border: Border(
+                                bottom: BorderSide(color: Colors.black38),
+                              ),
                             ),
                           ),
                         ),
@@ -158,26 +172,38 @@ class VoyageDetailsPage extends StatelessWidget {
                               },
                               child: SizedBox(
                                 width: double.infinity,
-                                child: Container(
+                                child: SizedBox(
                                   width: double.infinity,
-                                  color: Colors.black12,
+                                  // color: Colors.black12,
                                   child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Padding(
-                                        padding: const EdgeInsets.all(8.0),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 15, vertical: 8),
                                         child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
-                                            Text(expenseModel.name),
-                                            Text(expenseModel.price.toString()),
-                                            Text(expenseModel.category),
+                                            Text(
+                                                'Expense: ${expenseModel.name}'),
+                                            Text(
+                                                'Amount: ${expenseModel.price.toString()}'),
+                                            Text(
+                                                'Category: ${expenseModel.category}'),
                                           ],
                                         ),
                                       ),
-                                      Container(
-                                        decoration: const BoxDecoration(
-                                          border: Border(
-                                            bottom:
-                                                BorderSide(color: Colors.black),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 15),
+                                        child: Container(
+                                          decoration: const BoxDecoration(
+                                            border: Border(
+                                              bottom: BorderSide(
+                                                  color: Colors.black38),
+                                            ),
                                           ),
                                         ),
                                       ),
