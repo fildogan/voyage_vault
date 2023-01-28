@@ -21,6 +21,7 @@ mixin _$ExpenseModel {
   String get name => throw _privateConstructorUsedError;
   String get category => throw _privateConstructorUsedError;
   double get price => throw _privateConstructorUsedError;
+  DateTime get dateAdded => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ExpenseModelCopyWith<ExpenseModel> get copyWith =>
@@ -34,7 +35,12 @@ abstract class $ExpenseModelCopyWith<$Res> {
       _$ExpenseModelCopyWithImpl<$Res, ExpenseModel>;
   @useResult
   $Res call(
-      {String id, String voyageId, String name, String category, double price});
+      {String id,
+      String voyageId,
+      String name,
+      String category,
+      double price,
+      DateTime dateAdded});
 }
 
 /// @nodoc
@@ -55,6 +61,7 @@ class _$ExpenseModelCopyWithImpl<$Res, $Val extends ExpenseModel>
     Object? name = null,
     Object? category = null,
     Object? price = null,
+    Object? dateAdded = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -77,6 +84,10 @@ class _$ExpenseModelCopyWithImpl<$Res, $Val extends ExpenseModel>
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as double,
+      dateAdded: null == dateAdded
+          ? _value.dateAdded
+          : dateAdded // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ) as $Val);
   }
 }
@@ -90,7 +101,12 @@ abstract class _$$_ExpenseModelCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String id, String voyageId, String name, String category, double price});
+      {String id,
+      String voyageId,
+      String name,
+      String category,
+      double price,
+      DateTime dateAdded});
 }
 
 /// @nodoc
@@ -109,6 +125,7 @@ class __$$_ExpenseModelCopyWithImpl<$Res>
     Object? name = null,
     Object? category = null,
     Object? price = null,
+    Object? dateAdded = null,
   }) {
     return _then(_$_ExpenseModel(
       id: null == id
@@ -131,19 +148,25 @@ class __$$_ExpenseModelCopyWithImpl<$Res>
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as double,
+      dateAdded: null == dateAdded
+          ? _value.dateAdded
+          : dateAdded // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ));
   }
 }
 
 /// @nodoc
 
-class _$_ExpenseModel implements _ExpenseModel {
+class _$_ExpenseModel extends _ExpenseModel {
   const _$_ExpenseModel(
       {required this.id,
       required this.voyageId,
       required this.name,
       required this.category,
-      required this.price});
+      required this.price,
+      required this.dateAdded})
+      : super._();
 
   @override
   final String id;
@@ -155,10 +178,12 @@ class _$_ExpenseModel implements _ExpenseModel {
   final String category;
   @override
   final double price;
+  @override
+  final DateTime dateAdded;
 
   @override
   String toString() {
-    return 'ExpenseModel(id: $id, voyageId: $voyageId, name: $name, category: $category, price: $price)';
+    return 'ExpenseModel(id: $id, voyageId: $voyageId, name: $name, category: $category, price: $price, dateAdded: $dateAdded)';
   }
 
   @override
@@ -172,12 +197,14 @@ class _$_ExpenseModel implements _ExpenseModel {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.category, category) ||
                 other.category == category) &&
-            (identical(other.price, price) || other.price == price));
+            (identical(other.price, price) || other.price == price) &&
+            (identical(other.dateAdded, dateAdded) ||
+                other.dateAdded == dateAdded));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, voyageId, name, category, price);
+      Object.hash(runtimeType, id, voyageId, name, category, price, dateAdded);
 
   @JsonKey(ignore: true)
   @override
@@ -186,13 +213,15 @@ class _$_ExpenseModel implements _ExpenseModel {
       __$$_ExpenseModelCopyWithImpl<_$_ExpenseModel>(this, _$identity);
 }
 
-abstract class _ExpenseModel implements ExpenseModel {
+abstract class _ExpenseModel extends ExpenseModel {
   const factory _ExpenseModel(
       {required final String id,
       required final String voyageId,
       required final String name,
       required final String category,
-      required final double price}) = _$_ExpenseModel;
+      required final double price,
+      required final DateTime dateAdded}) = _$_ExpenseModel;
+  const _ExpenseModel._() : super._();
 
   @override
   String get id;
@@ -204,6 +233,8 @@ abstract class _ExpenseModel implements ExpenseModel {
   String get category;
   @override
   double get price;
+  @override
+  DateTime get dateAdded;
   @override
   @JsonKey(ignore: true)
   _$$_ExpenseModelCopyWith<_$_ExpenseModel> get copyWith =>

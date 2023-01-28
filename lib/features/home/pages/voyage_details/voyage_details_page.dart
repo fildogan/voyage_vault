@@ -192,6 +192,8 @@ class VoyageDetailsPage extends StatelessWidget {
                                                 'Amount: ${expenseModel.price.toString()}'),
                                             Text(
                                                 'Category: ${expenseModel.category}'),
+                                            Text(
+                                                'Date Added: ${expenseModel.dateAddedFormated()}'),
                                           ],
                                         ),
                                       ),

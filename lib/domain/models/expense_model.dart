@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:intl/intl.dart';
 
 part 'expense_model.freezed.dart';
 
@@ -12,5 +13,9 @@ class ExpenseModel with _$ExpenseModel {
     required String name,
     required String category,
     required double price,
+    required DateTime dateAdded,
   }) = _ExpenseModel;
+  const ExpenseModel._();
+
+  String dateAddedFormated() => DateFormat.yMMMd().format(dateAdded);
 }

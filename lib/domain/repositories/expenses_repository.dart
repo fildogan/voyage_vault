@@ -25,6 +25,7 @@ class ExpensesRepository {
             voyageId: doc['voyageid'].toString(),
             category: doc['category'].toString(),
             price: double.parse(doc['price'].toString()),
+            dateAdded: (doc['dateadded'] as Timestamp).toDate(),
           );
         }).toList();
       },
@@ -49,7 +50,8 @@ class ExpensesRepository {
       'name': name,
       'voyageid': voyageId,
       'price': price,
-      'category': category
+      'category': category,
+      'dateadded': DateTime.now(),
     });
   }
 
