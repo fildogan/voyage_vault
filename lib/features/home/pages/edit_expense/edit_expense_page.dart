@@ -54,7 +54,7 @@ class EditExpensePage extends StatelessWidget {
             return Scaffold(
               appBar: AppBar(
                 backgroundColor: Colors.transparent,
-                title: const Text('Edit Voyage'),
+                title: const Text('Edit Expense'),
                 actions: [
                   TextButton(
                       onPressed: (() {

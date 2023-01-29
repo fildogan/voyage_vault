@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel_cost_log/app/injection_container.dart';
 import 'package:travel_cost_log/domain/models/voyage_model.dart';
 import 'package:travel_cost_log/features/home/pages/add_expense/add_expense_page.dart';
+import 'package:travel_cost_log/features/home/pages/edit_expense/edit_expense_page.dart';
 import 'package:travel_cost_log/features/home/pages/edit_voyage/edit_voyage_page.dart';
 import 'package:travel_cost_log/features/home/pages/voyage_details/cubit/voyage_details_cubit.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -123,93 +124,106 @@ class VoyageDetailsPage extends StatelessWidget {
                           ))
                         else
                           for (final expenseModel in expenseModels)
-                            Dismissible(
-                              key: ValueKey(expenseModel.id),
-                              onDismissed: (direction) {
-                                context
-                                    .read<VoyageDetailsCubit>()
-                                    .remove(
-                                      expenseId: expenseModel.id,
-                                    )
+                            InkWell(
+                              onTap: () {
+                                Navigator.of(context)
+                                    .push(MaterialPageRoute(
+                                        builder: (context) => EditExpensePage(
+                                            voyageModel: voyageModel)))
                                     .then((value) => context
                                         .read<VoyageDetailsCubit>()
                                         .refreshVoyage(currentVoyageModel.id));
                               },
-                              direction: DismissDirection.endToStart,
-                              background: Container(
-                                alignment: Alignment.centerRight,
-                                padding: const EdgeInsets.only(right: 20),
-                                color: Colors.red,
-                                child: const Icon(Icons.delete,
-                                    color: Colors.white),
-                              ),
-                              confirmDismiss: (direction) {
-                                return showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      title: Text(
-                                        'Delete expense ${expenseModel.name}?',
-                                      ),
-                                      content: const Text(
-                                        'If you continue, this expense will be permanently deleted. This action is irreversible.',
-                                      ),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () =>
-                                              Navigator.of(context).pop(true),
-                                          child: const Text('Yes'),
+                              child: Dismissible(
+                                key: ValueKey(expenseModel.id),
+                                onDismissed: (direction) {
+                                  context
+                                      .read<VoyageDetailsCubit>()
+                                      .remove(
+                                        expenseId: expenseModel.id,
+                                      )
+                                      .then((value) => context
+                                          .read<VoyageDetailsCubit>()
+                                          .refreshVoyage(
+                                              currentVoyageModel.id));
+                                },
+                                direction: DismissDirection.endToStart,
+                                background: Container(
+                                  alignment: Alignment.centerRight,
+                                  padding: const EdgeInsets.only(right: 20),
+                                  color: Colors.red,
+                                  child: const Icon(Icons.delete,
+                                      color: Colors.white),
+                                ),
+                                confirmDismiss: (direction) {
+                                  return showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: Text(
+                                          'Delete expense ${expenseModel.name}?',
                                         ),
-                                        TextButton(
-                                          onPressed: () =>
-                                              Navigator.of(context).pop(false),
-                                          child: const Text('No'),
-                                        )
-                                      ],
-                                    );
-                                  },
-                                );
-                              },
-                              child: SizedBox(
-                                width: double.infinity,
+                                        content: const Text(
+                                          'If you continue, this expense will be permanently deleted. This action is irreversible.',
+                                        ),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () =>
+                                                Navigator.of(context).pop(true),
+                                            child: const Text('Yes'),
+                                          ),
+                                          TextButton(
+                                            onPressed: () =>
+                                                Navigator.of(context)
+                                                    .pop(false),
+                                            child: const Text('No'),
+                                          )
+                                        ],
+                                      );
+                                    },
+                                  );
+                                },
                                 child: SizedBox(
                                   width: double.infinity,
-                                  // color: Colors.black12,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 15, vertical: 8),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                                'Expense: ${expenseModel.name}'),
-                                            Text(
-                                                'Amount: ${expenseModel.price.toString()}'),
-                                            Text(
-                                                'Category: ${expenseModel.category}'),
-                                            Text(
-                                                'Date Added: ${expenseModel.dateAddedFormated()}'),
-                                          ],
+                                  child: SizedBox(
+                                    width: double.infinity,
+                                    // color: Colors.black12,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 15, vertical: 8),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                  'Expense: ${expenseModel.name}'),
+                                              Text(
+                                                  'Amount: ${expenseModel.price.toString()}'),
+                                              Text(
+                                                  'Category: ${expenseModel.category}'),
+                                              Text(
+                                                  'Date Added: ${expenseModel.dateAddedFormated()}'),
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 15),
-                                        child: Container(
-                                          decoration: const BoxDecoration(
-                                            border: Border(
-                                              bottom: BorderSide(
-                                                  color: Colors.black38),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 15),
+                                          child: Container(
+                                            decoration: const BoxDecoration(
+                                              border: Border(
+                                                bottom: BorderSide(
+                                                    color: Colors.black38),
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
