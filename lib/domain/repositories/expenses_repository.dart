@@ -86,6 +86,32 @@ class ExpensesRepository {
     }
   }
 
+  Future<void> update({
+    required String id,
+    required String name,
+    required double price,
+    required DateTime dateAdded,
+    required String category,
+    required String voyageId,
+  }) async {
+    final userID = FirebaseAuth.instance.currentUser?.uid;
+    if (userID == null) {
+      throw Exception('User is not logged in');
+    }
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userID)
+        .collection('expenses')
+        .doc(id)
+        .update({
+      'name': name,
+      'price': price,
+      'dateadded': dateAdded,
+      'category': category,
+      'voyageid': voyageId,
+    });
+  }
+
   // Stream<double> getTotalPriceByVoyageId(String voyageId) {
   //   return getExpensesStreamByVoyageId(voyageId).map(
   //     (expenses) => expenses
