@@ -12,12 +12,12 @@ class AddPageContent extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            const SizedBox(height: 50),
+            const Spacer(),
             Image.asset(
               'images/logo1.png',
               height: 300,
             ),
-            const SizedBox(height: 50),
+            const Spacer(),
             ElevatedButton(
               onPressed: () => Navigator.of(context).push(
                 MaterialPageRoute(
@@ -38,6 +38,9 @@ class AddPageContent extends StatelessWidget {
                 ),
               ),
               child: const Text('Add Expense'),
+            ),
+            const Spacer(
+              flex: 2,
             ),
           ],
         ),
