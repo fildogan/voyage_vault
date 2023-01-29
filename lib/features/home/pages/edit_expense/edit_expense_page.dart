@@ -145,33 +145,22 @@ class _EditExpensePageBody extends StatelessWidget {
         child: ListView(
           children: [
             TextFormField(
-              initialValue: 'voyageTitle',
+              initialValue: 'Name',
               onChanged: ((value) {
                 // context.read<EditExpenseCubit>().changeTitleValue(value);
               }),
               decoration: const InputDecoration(
                 border: UnderlineInputBorder(),
-                labelText: 'Voyage name',
+                labelText: 'Expense name',
                 contentPadding: EdgeInsets.all(10),
               ),
             ),
             TextFormField(
-              initialValue: 'voyageLocation',
-              onChanged: ((value) {
-                // context.read<EditExpenseCubit>().changeLocationValue(value);
-              }),
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(),
-                labelText: 'Destination',
-                contentPadding: EdgeInsets.all(10),
-              ),
-            ),
-            TextFormField(
-              initialValue: 'voyageBudget'.toString(),
+              initialValue: 'Price'.toString(),
               textAlign: TextAlign.start,
               decoration: const InputDecoration(
                 border: UnderlineInputBorder(),
-                labelText: 'Budget',
+                labelText: 'Price',
                 contentPadding: EdgeInsets.all(10),
               ),
               inputFormatters: [
@@ -187,77 +176,83 @@ class _EditExpensePageBody extends StatelessWidget {
                 // context.read<EditExpenseCubit>().changeBudgetValue(budget);
               },
             ),
-            Row(
-              children: [
-                Flexible(
-                  child: TextField(
-                      // controller: TextEditingController(
-                      //     text: voyageStartDate != null
-                      //         ? startDateFormated
-                      //         : null),
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        icon: Icon(Icons.calendar_today),
-                        labelText: "Start Date",
-                        contentPadding: EdgeInsets.all(10),
-                      ),
-                      readOnly: true, // when true user cannot edit text
-                      onTap: () async {
-                        final selectedDate = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(2020),
-                          lastDate: DateTime.now().add(
-                            const Duration(days: 365 * 10),
-                          ),
-                        );
-                        // onStartDateChanged(selectedDate);
-                      }),
+            TextField(
+                // controller: TextEditingController(
+                // text: voyageEndDate != null ? endDateFormated : null),
+                decoration: const InputDecoration(
+                  border: UnderlineInputBorder(),
+                  icon: Icon(
+                    Icons.calendar_today,
+                  ),
+                  labelText: "Spent Date",
+                  contentPadding: EdgeInsets.all(10),
                 ),
-                const SizedBox(
-                  width: 30,
+                readOnly: true, // when true user cannot edit text
+                onTap: () async {
+                  final selectedDate = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(2020),
+                    lastDate: DateTime.now().add(
+                      const Duration(days: 365 * 10),
+                    ),
+                  );
+                  // onEndDateChanged(selectedDate);
+                }),
+            DropdownButtonFormField<String>(
+                value: 'expenseCategory',
+                decoration: const InputDecoration(
+                  border: UnderlineInputBorder(),
+                  labelText: 'Category',
+                  contentPadding: EdgeInsets.all(10),
                 ),
-                Flexible(
-                  child: TextField(
-                      // controller: TextEditingController(
-                      // text: voyageEndDate != null ? endDateFormated : null),
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        icon: Icon(Icons.calendar_today),
-                        labelText: "End Date",
-                        contentPadding: EdgeInsets.all(10),
-                      ),
-                      readOnly: true, // when true user cannot edit text
-                      onTap: () async {
-                        final selectedDate = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(2020),
-                          lastDate: DateTime.now().add(
-                            const Duration(days: 365 * 10),
-                          ),
-                        );
-                        // onEndDateChanged(selectedDate);
-                      }),
+                items: [
+                  // if (expenseCategory == null)
+                  //   const DropdownMenuItem(
+                  //     child: Text('Choose from list'),
+                  //   ),
+                  // ...categoryTitles.map((String category) {
+                  //   return DropdownMenuItem(
+                  //     value: category,
+                  //     child: Text(
+                  //       category[0].toUpperCase() + category.substring(1),
+                  //     ),
+                  //   );
+                  // }),
+                ],
+                onChanged: (t) {}
+                //  onCategoryChanged,
                 ),
-              ],
-            ),
-            TextFormField(
-              initialValue: 'voyageDescription',
-              onChanged: ((value) {
-                // context.read<EditExpenseCubit>().changeDescriptionValue(value);
-              }),
-              maxLines: null,
-              minLines: 3,
-              keyboardType: TextInputType.multiline,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Description',
-                labelStyle: TextStyle(),
-                alignLabelWithHint: true,
-                contentPadding: EdgeInsets.all(10),
-              ),
-            ),
+            // if (voyageModel == null)
+            DropdownButtonFormField<String>(
+                value: 'expenseVoyageTitle',
+                decoration: const InputDecoration(
+                  border: UnderlineInputBorder(),
+                  labelText: 'Voyage',
+                  contentPadding: EdgeInsets.all(10),
+                ),
+                items: [
+                  // if (voyageModel == null)
+                  // if (expenseVoyageTitle == null)
+                  //   const DropdownMenuItem(
+                  //     child: Text('Choose voyage from list'),
+                  //   ),
+                  // ...voyageTitles.map((String voyage) {
+                  //   return DropdownMenuItem(
+                  //     value: voyage,
+                  //     child: Text(
+                  //       voyage[0].toUpperCase() + voyage.substring(1),
+                  //     ),
+                  //   );
+                  // })
+                  // else
+                  //   DropdownMenuItem(
+                  //     child: Text(voyageModel!.title),
+                  //   )
+                ],
+                onChanged: (t) {}
+                // onVoyageTitleChanged,
+                )
           ],
         ),
       ),

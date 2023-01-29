@@ -26,7 +26,7 @@ mixin _$EditExpenseState {
   String? get name => throw _privateConstructorUsedError;
   String? get category => throw _privateConstructorUsedError;
   double? get price => throw _privateConstructorUsedError;
-  DateTime? get startDate => throw _privateConstructorUsedError;
+  DateTime? get dateAdded => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $EditExpenseStateCopyWith<EditExpenseState> get copyWith =>
@@ -50,7 +50,7 @@ abstract class $EditExpenseStateCopyWith<$Res> {
       String? name,
       String? category,
       double? price,
-      DateTime? startDate});
+      DateTime? dateAdded});
 }
 
 /// @nodoc
@@ -76,7 +76,7 @@ class _$EditExpenseStateCopyWithImpl<$Res, $Val extends EditExpenseState>
     Object? name = freezed,
     Object? category = freezed,
     Object? price = freezed,
-    Object? startDate = freezed,
+    Object? dateAdded = freezed,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -119,9 +119,9 @@ class _$EditExpenseStateCopyWithImpl<$Res, $Val extends EditExpenseState>
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as double?,
-      startDate: freezed == startDate
-          ? _value.startDate
-          : startDate // ignore: cast_nullable_to_non_nullable
+      dateAdded: freezed == dateAdded
+          ? _value.dateAdded
+          : dateAdded // ignore: cast_nullable_to_non_nullable
               as DateTime?,
     ) as $Val);
   }
@@ -146,7 +146,7 @@ abstract class _$$_EditExpenseStateCopyWith<$Res>
       String? name,
       String? category,
       double? price,
-      DateTime? startDate});
+      DateTime? dateAdded});
 }
 
 /// @nodoc
@@ -170,7 +170,7 @@ class __$$_EditExpenseStateCopyWithImpl<$Res>
     Object? name = freezed,
     Object? category = freezed,
     Object? price = freezed,
-    Object? startDate = freezed,
+    Object? dateAdded = freezed,
   }) {
     return _then(_$_EditExpenseState(
       status: null == status
@@ -213,9 +213,9 @@ class __$$_EditExpenseStateCopyWithImpl<$Res>
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as double?,
-      startDate: freezed == startDate
-          ? _value.startDate
-          : startDate // ignore: cast_nullable_to_non_nullable
+      dateAdded: freezed == dateAdded
+          ? _value.dateAdded
+          : dateAdded // ignore: cast_nullable_to_non_nullable
               as DateTime?,
     ));
   }
@@ -235,7 +235,7 @@ class _$_EditExpenseState implements _EditExpenseState {
       this.name,
       this.category,
       this.price,
-      this.startDate})
+      this.dateAdded})
       : _categoryTitles = categoryTitles,
         _voyageTitles = voyageTitles;
 
@@ -277,11 +277,11 @@ class _$_EditExpenseState implements _EditExpenseState {
   @override
   final double? price;
   @override
-  final DateTime? startDate;
+  final DateTime? dateAdded;
 
   @override
   String toString() {
-    return 'EditExpenseState(status: $status, saved: $saved, errorMessage: $errorMessage, successMessage: $successMessage, categoryTitles: $categoryTitles, voyageTitles: $voyageTitles, voyageId: $voyageId, name: $name, category: $category, price: $price, startDate: $startDate)';
+    return 'EditExpenseState(status: $status, saved: $saved, errorMessage: $errorMessage, successMessage: $successMessage, categoryTitles: $categoryTitles, voyageTitles: $voyageTitles, voyageId: $voyageId, name: $name, category: $category, price: $price, dateAdded: $dateAdded)';
   }
 
   @override
@@ -305,8 +305,8 @@ class _$_EditExpenseState implements _EditExpenseState {
             (identical(other.category, category) ||
                 other.category == category) &&
             (identical(other.price, price) || other.price == price) &&
-            (identical(other.startDate, startDate) ||
-                other.startDate == startDate));
+            (identical(other.dateAdded, dateAdded) ||
+                other.dateAdded == dateAdded));
   }
 
   @override
@@ -322,7 +322,7 @@ class _$_EditExpenseState implements _EditExpenseState {
       name,
       category,
       price,
-      startDate);
+      dateAdded);
 
   @JsonKey(ignore: true)
   @override
@@ -343,7 +343,7 @@ abstract class _EditExpenseState implements EditExpenseState {
       final String? name,
       final String? category,
       final double? price,
-      final DateTime? startDate}) = _$_EditExpenseState;
+      final DateTime? dateAdded}) = _$_EditExpenseState;
 
   @override
   Status get status;
@@ -366,7 +366,7 @@ abstract class _EditExpenseState implements EditExpenseState {
   @override
   double? get price;
   @override
-  DateTime? get startDate;
+  DateTime? get dateAdded;
   @override
   @JsonKey(ignore: true)
   _$$_EditExpenseStateCopyWith<_$_EditExpenseState> get copyWith =>

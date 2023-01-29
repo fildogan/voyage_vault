@@ -13,6 +13,6 @@ class EditExpenseState with _$EditExpenseState {
     String? name,
     String? category,
     double? price,
-    DateTime? startDate,
+    DateTime? dateAdded,
   }) = _EditExpenseState;
 }
