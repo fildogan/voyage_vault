@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:travel_cost_log/app/core/enums.dart';
 import 'package:travel_cost_log/domain/repositories/voyages_repository.dart';
@@ -11,9 +12,10 @@ part 'add_voyage_cubit.freezed.dart';
 
 @injectable
 class AddVoyageCubit extends Cubit<AddVoyageState> {
-  AddVoyageCubit(this._voyagesRepository) : super(AddVoyageState());
+  AddVoyageCubit() : super(AddVoyageState());
 
-  final VoyagesRepository _voyagesRepository;
+  final VoyagesRepository _voyagesRepository =
+      GetIt.instance<VoyagesRepository>();
 
   StreamSubscription? _streamSubscription;
 

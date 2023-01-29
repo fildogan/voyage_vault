@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:travel_cost_log/app/core/enums.dart';
 import 'package:travel_cost_log/domain/models/voyage_model.dart';
@@ -12,9 +13,10 @@ part 'edit_voyage_cubit.freezed.dart';
 
 @injectable
 class EditVoyageCubit extends Cubit<EditVoyageState> {
-  EditVoyageCubit(this._voyagesRepository) : super(EditVoyageState());
+  EditVoyageCubit() : super(EditVoyageState());
 
-  final VoyagesRepository _voyagesRepository;
+  final VoyagesRepository _voyagesRepository =
+      GetIt.instance<VoyagesRepository>();
 
   StreamSubscription? _streamSubscription;
 
