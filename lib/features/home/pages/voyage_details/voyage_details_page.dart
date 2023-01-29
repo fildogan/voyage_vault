@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:travel_cost_log/app/injection_container.dart';
 import 'package:travel_cost_log/domain/models/voyage_model.dart';
 import 'package:travel_cost_log/features/home/pages/add_expense/add_expense_page.dart';
@@ -125,64 +126,109 @@ class VoyageDetailsPage extends StatelessWidget {
                         else
                           for (final expenseModel in expenseModels)
                             InkWell(
-                              onTap: () {
-                                Navigator.of(context)
-                                    .push(MaterialPageRoute(
-                                        builder: (context) => EditExpensePage(
-                                            voyageModel: voyageModel)))
-                                    .then((value) => context
-                                        .read<VoyageDetailsCubit>()
-                                        .refreshVoyage(currentVoyageModel.id));
-                              },
-                              child: Dismissible(
+                              // onTap: () {
+                              //   Navigator.of(context)
+                              //       .push(MaterialPageRoute(
+                              //           builder: (context) => EditExpensePage(
+                              //               voyageModel: voyageModel)))
+                              //       .then((value) => context
+                              //           .read<VoyageDetailsCubit>()
+                              //           .refreshVoyage(currentVoyageModel.id));
+                              // },
+                              child: Slidable(
                                 key: ValueKey(expenseModel.id),
-                                onDismissed: (direction) {
-                                  context
-                                      .read<VoyageDetailsCubit>()
-                                      .remove(
-                                        expenseId: expenseModel.id,
-                                      )
-                                      .then((value) => context
+                                endActionPane: ActionPane(
+                                  // A motion is a widget used to control how the pane animates.
+                                  motion: const StretchMotion(),
+
+                                  // A pane can dismiss the Slidable.
+                                  dismissible: DismissiblePane(
+                                    onDismissed: () {
+                                      context
                                           .read<VoyageDetailsCubit>()
-                                          .refreshVoyage(
-                                              currentVoyageModel.id));
-                                },
-                                direction: DismissDirection.endToStart,
-                                background: Container(
-                                  alignment: Alignment.centerRight,
-                                  padding: const EdgeInsets.only(right: 20),
-                                  color: Colors.red,
-                                  child: const Icon(Icons.delete,
-                                      color: Colors.white),
-                                ),
-                                confirmDismiss: (direction) {
-                                  return showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        title: Text(
-                                          'Delete expense ${expenseModel.name}?',
-                                        ),
-                                        content: const Text(
-                                          'If you continue, this expense will be permanently deleted. This action is irreversible.',
-                                        ),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () =>
-                                                Navigator.of(context).pop(true),
-                                            child: const Text('Yes'),
-                                          ),
-                                          TextButton(
-                                            onPressed: () =>
-                                                Navigator.of(context)
-                                                    .pop(false),
-                                            child: const Text('No'),
+                                          .remove(
+                                            expenseId: expenseModel.id,
                                           )
-                                        ],
-                                      );
+                                          .then((value) => context
+                                              .read<VoyageDetailsCubit>()
+                                              .refreshVoyage(
+                                                  currentVoyageModel.id));
                                     },
-                                  );
-                                },
+                                    closeOnCancel: true,
+                                    confirmDismiss: () async {
+                                      bool result = await showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: Text(
+                                              'Delete expense ${expenseModel.name}?',
+                                            ),
+                                            content: const Text(
+                                              'If you continue, this expense will be permanently deleted. This action is irreversible.',
+                                            ),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () =>
+                                                    Navigator.of(context)
+                                                        .pop(true),
+                                                child: const Text('Yes'),
+                                              ),
+                                              TextButton(
+                                                onPressed: () =>
+                                                    Navigator.of(context)
+                                                        .pop(false),
+                                                child: const Text('No'),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+
+                                      return result;
+                                    },
+                                  ),
+
+                                  // All actions are defined in the children parameter.
+                                  children: [
+                                    // A SlidableAction can have an icon and/or a label.
+
+                                    SlidableAction(
+                                      onPressed: (context) {
+                                        Navigator.of(context)
+                                            .push(MaterialPageRoute(
+                                                builder: (context) =>
+                                                    EditExpensePage(
+                                                        voyageModel:
+                                                            voyageModel)))
+                                            .then((value) => context
+                                                .read<VoyageDetailsCubit>()
+                                                .refreshVoyage(
+                                                    currentVoyageModel.id));
+                                      },
+                                      backgroundColor: const Color(0xFF21B7CA),
+                                      foregroundColor: Colors.white,
+                                      icon: Icons.edit,
+                                      label: 'Edit',
+                                    ),
+                                    SlidableAction(
+                                      onPressed: (context) {
+                                        context
+                                            .read<VoyageDetailsCubit>()
+                                            .remove(
+                                              expenseId: expenseModel.id,
+                                            )
+                                            .then((value) => context
+                                                .read<VoyageDetailsCubit>()
+                                                .refreshVoyage(
+                                                    currentVoyageModel.id));
+                                      },
+                                      backgroundColor: const Color(0xFFFE4A49),
+                                      foregroundColor: Colors.white,
+                                      icon: Icons.delete,
+                                      label: 'Delete',
+                                    ),
+                                  ],
+                                ),
                                 child: SizedBox(
                                   width: double.infinity,
                                   child: SizedBox(
