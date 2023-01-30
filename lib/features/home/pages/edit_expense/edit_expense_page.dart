@@ -21,6 +21,7 @@ class _EditExpensePageState extends State<EditExpensePage> {
 
   @override
   Widget build(BuildContext context) {
+    _expenseName = widget.expenseModel.name;
     return BlocProvider<EditExpenseCubit>(
       create: (context) => getIt<EditExpenseCubit>(),
       child: BlocListener<EditExpenseCubit, EditExpenseState>(
@@ -85,6 +86,8 @@ class _EditExpensePageState extends State<EditExpensePage> {
               ),
               body: _EditExpensePageBody(
                 expenseName: _expenseName,
+                onNameChanged: (newValue) =>
+                    setState(() => _expenseName = newValue),
                 // startDateFormated: DateFormat.yMd().format(
                 //   state.startDate ?? DateTime(2020),
                 // ),
@@ -123,6 +126,7 @@ class _EditExpensePageBody extends StatelessWidget {
     // required this.onEndDateChanged,
     // this.endDateFormated,
     this.expenseName,
+    required this.onNameChanged,
     // this.voyageBudget,
     // this.voyageStartDate,
     // this.voyageEndDate,
@@ -131,6 +135,7 @@ class _EditExpensePageBody extends StatelessWidget {
     // this.voyageDescription,
   });
 
+  final Function(String?) onNameChanged;
   // final Function(DateTime?) onStartDateChanged;
   // final Function(DateTime?) onEndDateChanged;
 
@@ -154,10 +159,8 @@ class _EditExpensePageBody extends StatelessWidget {
         child: ListView(
           children: [
             TextFormField(
-              initialValue: 'Name',
-              onChanged: ((value) {
-                // context.read<EditExpenseCubit>().changeTitleValue(value);
-              }),
+              initialValue: expenseName,
+              onChanged: onNameChanged,
               decoration: const InputDecoration(
                 border: UnderlineInputBorder(),
                 labelText: 'Expense name',
