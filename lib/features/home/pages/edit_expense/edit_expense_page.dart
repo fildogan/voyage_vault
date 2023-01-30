@@ -3,13 +3,21 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:travel_cost_log/app/injection_container.dart';
+import 'package:travel_cost_log/domain/models/expense_model.dart';
 import 'package:travel_cost_log/domain/models/voyage_model.dart';
 import 'package:travel_cost_log/features/home/pages/edit_expense/cubit/edit_expense_cubit.dart';
 
-class EditExpensePage extends StatelessWidget {
-  const EditExpensePage({super.key, required this.voyageModel});
+class EditExpensePage extends StatefulWidget {
+  const EditExpensePage({super.key, required this.expenseModel});
 
-  final VoyageModel voyageModel;
+  final ExpenseModel expenseModel;
+
+  @override
+  State<EditExpensePage> createState() => _EditExpensePageState();
+}
+
+class _EditExpensePageState extends State<EditExpensePage> {
+  String? _expenseName;
 
   @override
   Widget build(BuildContext context) {
@@ -76,28 +84,29 @@ class EditExpensePage extends StatelessWidget {
                 // automaticallyImplyLeading: false,
               ),
               body: _EditExpensePageBody(
-                  // startDateFormated: DateFormat.yMd().format(
-                  //   state.startDate ?? DateTime(2020),
-                  // ),
-                  // endDateFormated: DateFormat?.yMd().format(
-                  //   state.endDate ?? DateTime(2020),
-                  // ),
-                  // voyageTitle: state.title,
-                  // voyageBudget: state.budget,
-                  // voyageStartDate: state.startDate,
-                  // voyageEndDate: state.endDate,
-                  // voyageTitles: state.voyageTitles,
-                  // voyageLocation: state.location,
-                  // voyageDescription: state.description,
-                  // onEndDateChanged: ((endDate) {
-                  //   context.read<EditExpenseCubit>().changeEndDateValue(endDate);
-                  // }),
-                  // onStartDateChanged: ((startDate) {
-                  //   context
-                  //       .read<EditExpenseCubit>()
-                  //       .changeStartDateValue(startDate);
-                  // }),
-                  ),
+                expenseName: _expenseName,
+                // startDateFormated: DateFormat.yMd().format(
+                //   state.startDate ?? DateTime(2020),
+                // ),
+                // endDateFormated: DateFormat?.yMd().format(
+                //   state.endDate ?? DateTime(2020),
+                // ),
+                // voyageTitle: state.title,
+                // voyageBudget: state.budget,
+                // voyageStartDate: state.startDate,
+                // voyageEndDate: state.endDate,
+                // voyageTitles: state.voyageTitles,
+                // voyageLocation: state.location,
+                // voyageDescription: state.description,
+                // onEndDateChanged: ((endDate) {
+                //   context.read<EditExpenseCubit>().changeEndDateValue(endDate);
+                // }),
+                // onStartDateChanged: ((startDate) {
+                //   context
+                //       .read<EditExpenseCubit>()
+                //       .changeStartDateValue(startDate);
+                // }),
+              ),
             );
           },
         ),
@@ -107,20 +116,20 @@ class EditExpensePage extends StatelessWidget {
 }
 
 class _EditExpensePageBody extends StatelessWidget {
-  const _EditExpensePageBody(
-      // required this.onBudgetChanged,
-      // required this.onStartDateChanged,
-      // this.startDateFormated,
-      // required this.onEndDateChanged,
-      // this.endDateFormated,
-      // this.voyageTitle,
-      // this.voyageBudget,
-      // this.voyageStartDate,
-      // this.voyageEndDate,
-      // required this.voyageTitles,
-      // this.voyageLocation,
-      // this.voyageDescription,
-      );
+  const _EditExpensePageBody({
+    // required this.onBudgetChanged,
+    // required this.onStartDateChanged,
+    // this.startDateFormated,
+    // required this.onEndDateChanged,
+    // this.endDateFormated,
+    this.expenseName,
+    // this.voyageBudget,
+    // this.voyageStartDate,
+    // this.voyageEndDate,
+    // required this.voyageTitles,
+    // this.voyageLocation,
+    // this.voyageDescription,
+  });
 
   // final Function(DateTime?) onStartDateChanged;
   // final Function(DateTime?) onEndDateChanged;
@@ -128,7 +137,7 @@ class _EditExpensePageBody extends StatelessWidget {
   // final String? startDateFormated;
   // final String? endDateFormated;
 
-  // final String? voyageTitle;
+  final String? expenseName;
   // final double? voyageBudget;
   // final DateTime? voyageStartDate;
   // final DateTime? voyageEndDate;
