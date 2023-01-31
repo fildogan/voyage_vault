@@ -198,8 +198,11 @@ class VoyageDetailsPage extends StatelessWidget {
                                             .push(MaterialPageRoute(
                                                 builder: (context) =>
                                                     EditExpensePage(
-                                                        expenseModel:
-                                                            expenseModel)))
+                                                      expenseModel:
+                                                          expenseModel,
+                                                      voyageModel:
+                                                          currentVoyageModel,
+                                                    )))
                                             .then((value) => context
                                                 .read<VoyageDetailsCubit>()
                                                 .refreshVoyage(

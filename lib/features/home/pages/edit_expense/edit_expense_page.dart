@@ -9,9 +9,11 @@ import 'package:travel_cost_log/domain/models/voyage_model.dart';
 import 'package:travel_cost_log/features/home/pages/edit_expense/cubit/edit_expense_cubit.dart';
 
 class EditExpensePage extends StatefulWidget {
-  const EditExpensePage({super.key, required this.expenseModel});
+  const EditExpensePage(
+      {super.key, required this.expenseModel, required this.voyageModel});
 
   final ExpenseModel expenseModel;
+  final VoyageModel voyageModel;
 
   @override
   State<EditExpensePage> createState() => _EditExpensePageState();
@@ -26,6 +28,7 @@ class _EditExpensePageState extends State<EditExpensePage> {
 
   @override
   Widget build(BuildContext context) {
+    _expenseVoyageTitle = widget.voyageModel.title;
     return BlocProvider<EditExpenseCubit>(
       create: (context) => getIt<EditExpenseCubit>(),
       child: BlocListener<EditExpenseCubit, EditExpenseState>(
@@ -105,7 +108,6 @@ class _EditExpensePageState extends State<EditExpensePage> {
                 expenseCategory: _expenseCategory,
                 categoryTitles: expenseCategoryList,
                 voyageTitles: state.voyageTitles,
-                voyageModel: null,
                 dateAddedFormated: DateFormat.yMd().format(
                   _dateAdded ?? widget.expenseModel.dateAdded,
                 ),
@@ -122,10 +124,8 @@ class _EditExpensePageState extends State<EditExpensePage> {
                 // onEndDateChanged: ((endDate) {
                 //   context.read<EditExpenseCubit>().changeEndDateValue(endDate);
                 // }),
-                onDateAddedChanged: ((dateAdded) {
-                  // context
-                  //     .read<EditExpenseCubit>()
-                  //     .changeStartDateValue(startDate);
+                onDateAddedChanged: ((selectedDate) {
+                  setState(() => _dateAdded = selectedDate);
                 }),
               ),
             );
@@ -155,7 +155,6 @@ class _EditExpensePageBody extends StatelessWidget {
     required this.categoryTitles,
     required this.voyageTitles,
     this.dateAdded,
-    this.voyageModel,
   });
 
   final Function(String?) onNameChanged;
@@ -171,7 +170,6 @@ class _EditExpensePageBody extends StatelessWidget {
   final String? expenseVoyageTitle;
   final double? expensePrice;
   final String? expenseCategory;
-  final VoyageModel? voyageModel;
 
   final List<String> categoryTitles;
   final List<String> voyageTitles;
@@ -209,9 +207,10 @@ class _EditExpensePageBody extends StatelessWidget {
               keyboardType:
                   const TextInputType.numberWithOptions(decimal: true),
               onChanged: (value) {
-                // final budget = double.tryParse(value);
-
-                // context.read<EditExpenseCubit>().changeBudgetValue(budget);
+                final price = double.tryParse(value);
+                if (price != null) {
+                  onPriceChanged(price);
+                }
               },
             ),
             TextField(
@@ -234,10 +233,10 @@ class _EditExpensePageBody extends StatelessWidget {
                       const Duration(days: 365 * 10),
                     ),
                   );
-                  // onEndDateChanged(selectedDate);
+                  onDateAddedChanged(selectedDate);
                 }),
             DropdownButtonFormField<String>(
-                value: expenseCategory,
+                value: expenseModel.category,
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
                   labelText: 'Category',
@@ -248,14 +247,14 @@ class _EditExpensePageBody extends StatelessWidget {
                   //   const DropdownMenuItem(
                   //     child: Text('Choose from list'),
                   //   ),
-                  // ...categoryTitles.map((String category) {
-                  //   return DropdownMenuItem(
-                  //     value: category,
-                  //     child: Text(
-                  //       category[0].toUpperCase() + category.substring(1),
-                  //     ),
-                  //   );
-                  // }),
+                  ...categoryTitles.map((String category) {
+                    return DropdownMenuItem(
+                      value: category,
+                      child: Text(
+                        category[0].toUpperCase() + category.substring(1),
+                      ),
+                    );
+                  }),
                 ],
                 onChanged: (t) {}
                 //  onCategoryChanged,
@@ -274,14 +273,14 @@ class _EditExpensePageBody extends StatelessWidget {
                   //   const DropdownMenuItem(
                   //     child: Text('Choose voyage from list'),
                   //   ),
-                  // ...voyageTitles.map((String voyage) {
-                  //   return DropdownMenuItem(
-                  //     value: voyage,
-                  //     child: Text(
-                  //       voyage[0].toUpperCase() + voyage.substring(1),
-                  //     ),
-                  //   );
-                  // })
+                  ...voyageTitles.map((String voyage) {
+                    return DropdownMenuItem(
+                      value: voyage,
+                      child: Text(
+                        voyage[0].toUpperCase() + voyage.substring(1),
+                      ),
+                    );
+                  })
                   // else
                   //   DropdownMenuItem(
                   //     child: Text(voyageModel!.title),
