@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:travel_cost_log/app/injection_container.dart';
+import 'package:travel_cost_log/data/data_sources/local_data_sources/expense_category_list.dart';
 import 'package:travel_cost_log/domain/models/expense_model.dart';
 import 'package:travel_cost_log/domain/models/voyage_model.dart';
 import 'package:travel_cost_log/features/home/pages/edit_expense/cubit/edit_expense_cubit.dart';
@@ -18,6 +19,10 @@ class EditExpensePage extends StatefulWidget {
 
 class _EditExpensePageState extends State<EditExpensePage> {
   String? _expenseName;
+  String? _expenseVoyageTitle;
+  double? _expensePrice;
+  String? _expenseCategory;
+  DateTime? _dateAdded;
 
   @override
   Widget build(BuildContext context) {
@@ -88,9 +93,22 @@ class _EditExpensePageState extends State<EditExpensePage> {
                 expenseName: _expenseName,
                 onNameChanged: (newValue) =>
                     setState(() => _expenseName = newValue),
-                // startDateFormated: DateFormat.yMd().format(
-                //   state.startDate ?? DateTime(2020),
-                // ),
+                onVoyageTitleChanged: (newValue) => setState(() {
+                  _expenseVoyageTitle = newValue;
+                }),
+                expenseVoyageTitle: _expenseVoyageTitle,
+                onPriceChanged: (newValue) =>
+                    setState(() => _expensePrice = newValue),
+                expensePrice: _expensePrice,
+                onCategoryChanged: (newValue) =>
+                    setState(() => _expenseCategory = newValue),
+                expenseCategory: _expenseCategory,
+                categoryTitles: expenseCategoryList,
+                voyageTitles: state.voyageTitles,
+                voyageModel: null,
+                dateAddedFormated: DateFormat.yMd().format(
+                  _dateAdded ?? widget.expenseModel.dateAdded,
+                ),
                 // endDateFormated: DateFormat?.yMd().format(
                 //   state.endDate ?? DateTime(2020),
                 // ),
@@ -104,11 +122,11 @@ class _EditExpensePageState extends State<EditExpensePage> {
                 // onEndDateChanged: ((endDate) {
                 //   context.read<EditExpenseCubit>().changeEndDateValue(endDate);
                 // }),
-                // onStartDateChanged: ((startDate) {
-                //   context
-                //       .read<EditExpenseCubit>()
-                //       .changeStartDateValue(startDate);
-                // }),
+                onDateAddedChanged: ((dateAdded) {
+                  // context
+                  //     .read<EditExpenseCubit>()
+                  //     .changeStartDateValue(startDate);
+                }),
               ),
             );
           },
@@ -122,36 +140,42 @@ class _EditExpensePageBody extends StatelessWidget {
   const _EditExpensePageBody({
     required this.expenseModel,
     // required this.onBudgetChanged,
-    // required this.onStartDateChanged,
-    // this.startDateFormated,
+    required this.onDateAddedChanged,
+    this.dateAddedFormated,
     // required this.onEndDateChanged,
     // this.endDateFormated,
     this.expenseName,
     required this.onNameChanged,
-    // this.voyageBudget,
-    // this.voyageStartDate,
-    // this.voyageEndDate,
-    // required this.voyageTitles,
-    // this.voyageLocation,
-    // this.voyageDescription,
+    required this.onVoyageTitleChanged,
+    this.expenseVoyageTitle,
+    required this.onPriceChanged,
+    this.expensePrice,
+    required this.onCategoryChanged,
+    this.expenseCategory,
+    required this.categoryTitles,
+    required this.voyageTitles,
+    this.dateAdded,
+    this.voyageModel,
   });
 
   final Function(String?) onNameChanged;
-  // final Function(DateTime?) onStartDateChanged;
-  // final Function(DateTime?) onEndDateChanged;
+  final Function(String?) onVoyageTitleChanged;
+  final Function(double?) onPriceChanged;
+  final Function(String?) onCategoryChanged;
+  final Function(DateTime?) onDateAddedChanged;
 
-  // final String? startDateFormated;
-  // final String? endDateFormated;
+  final String? dateAddedFormated;
 
   final ExpenseModel expenseModel;
   final String? expenseName;
-  // final double? voyageBudget;
-  // final DateTime? voyageStartDate;
-  // final DateTime? voyageEndDate;
-  // final String? voyageLocation;
-  // final String? voyageDescription;
+  final String? expenseVoyageTitle;
+  final double? expensePrice;
+  final String? expenseCategory;
+  final VoyageModel? voyageModel;
 
-  // final List<String> voyageTitles;
+  final List<String> categoryTitles;
+  final List<String> voyageTitles;
+  final DateTime? dateAdded;
 
   @override
   Widget build(BuildContext context) {
@@ -170,7 +194,7 @@ class _EditExpensePageBody extends StatelessWidget {
               ),
             ),
             TextFormField(
-              initialValue: 'Price'.toString(),
+              initialValue: expenseModel.price.toString(),
               textAlign: TextAlign.start,
               decoration: const InputDecoration(
                 border: UnderlineInputBorder(),
@@ -191,8 +215,7 @@ class _EditExpensePageBody extends StatelessWidget {
               },
             ),
             TextField(
-                // controller: TextEditingController(
-                // text: voyageEndDate != null ? endDateFormated : null),
+                controller: TextEditingController(text: dateAddedFormated),
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
                   icon: Icon(
@@ -214,7 +237,7 @@ class _EditExpensePageBody extends StatelessWidget {
                   // onEndDateChanged(selectedDate);
                 }),
             DropdownButtonFormField<String>(
-                value: 'expenseCategory',
+                value: expenseCategory,
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
                   labelText: 'Category',
@@ -239,7 +262,7 @@ class _EditExpensePageBody extends StatelessWidget {
                 ),
             // if (voyageModel == null)
             DropdownButtonFormField<String>(
-                value: 'expenseVoyageTitle',
+                value: expenseVoyageTitle,
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
                   labelText: 'Voyage',
