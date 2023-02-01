@@ -10,7 +10,7 @@ import 'package:injectable/injectable.dart' as _i2;
 import 'package:travel_cost_log/domain/repositories/expenses_repository.dart'
     as _i7;
 import 'package:travel_cost_log/domain/repositories/voyages_repository.dart'
-    as _i10;
+    as _i9;
 import 'package:travel_cost_log/features/home/pages/add_expense/cubit/add_expense_cubit.dart'
     as _i3;
 import 'package:travel_cost_log/features/home/pages/add_voyage/cubit/add_voyage_cubit.dart'
@@ -22,7 +22,7 @@ import 'package:travel_cost_log/features/home/pages/edit_voyage/cubit/edit_voyag
 import 'package:travel_cost_log/features/home/pages/voyage_details/cubit/voyage_details_cubit.dart'
     as _i8;
 import 'package:travel_cost_log/features/home/pages/voyages_page_content/cubit/voyages_cubit.dart'
-    as _i9;
+    as _i10;
 
 /// ignore_for_file: unnecessary_lambdas
 /// ignore_for_file: lines_longer_than_80_chars
@@ -43,8 +43,11 @@ extension GetItInjectableX on _i1.GetIt {
     gh.factory<_i6.EditVoyageCubit>(() => _i6.EditVoyageCubit());
     gh.factory<_i7.ExpensesRepository>(() => _i7.ExpensesRepository());
     gh.factory<_i8.VoyageDetailsCubit>(() => _i8.VoyageDetailsCubit());
-    gh.factory<_i9.VoyagesCubit>(() => _i9.VoyagesCubit());
-    gh.factory<_i10.VoyagesRepository>(() => _i10.VoyagesRepository());
+    gh.factory<_i9.VoyagesRepository>(() => _i9.VoyagesRepository());
+    gh.factory<_i10.VoyagesCubit>(() => _i10.VoyagesCubit(
+          gh<_i9.VoyagesRepository>(),
+          gh<_i7.ExpensesRepository>(),
+        ));
     return this;
   }
 }

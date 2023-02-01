@@ -1,7 +1,6 @@
 part of 'voyages_cubit.dart';
 
 @freezed
-@freezed
 class VoyagesState with _$VoyagesState {
   factory VoyagesState({
     @Default(Status.initial) Status status,
