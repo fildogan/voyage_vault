@@ -172,7 +172,7 @@ class MyAccountPageContent extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               Image.asset(
-                'images/logo1.png',
+                'assets/images/logo1.png',
                 height: 100,
               ),
               const SizedBox(height: 20),

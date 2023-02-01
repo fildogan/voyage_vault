@@ -14,7 +14,7 @@ class AddPageContent extends StatelessWidget {
           children: [
             const Spacer(),
             Image.asset(
-              'images/logo1.png',
+              'assets/images/logo1.png',
               height: 300,
             ),
             const Spacer(),

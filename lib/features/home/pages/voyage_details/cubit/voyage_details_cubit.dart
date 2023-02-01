@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:travel_cost_log/app/core/enums.dart';
 import 'package:travel_cost_log/domain/models/expense_model.dart';
@@ -15,33 +14,59 @@ part 'voyage_details_cubit.freezed.dart';
 
 @injectable
 class VoyageDetailsCubit extends Cubit<VoyageDetailsState> {
-  VoyageDetailsCubit() : super(VoyageDetailsState());
+  VoyageDetailsCubit(this._voyagesRepository, this._expensesRepository)
+      : super(VoyageDetailsState());
 
-  final VoyagesRepository _voyagesRepository =
-      GetIt.instance<VoyagesRepository>();
+  final VoyagesRepository _voyagesRepository;
 
-  final ExpensesRepository _expensesRepository =
-      GetIt.instance<ExpensesRepository>();
+  final ExpensesRepository _expensesRepository;
 
   StreamSubscription? _streamSubscription;
 
   Future<void> refreshVoyage(String voyageId) async {
-    await getVoyageWithId(voyageId);
-
-    await getExpensesStreamByVoyageId(voyageId);
+    getVoyageWithId(voyageId);
+    getExpensesStreamByVoyageId(voyageId);
   }
 
   Future<void> getVoyageWithId(String voyageId) async {
-    final voyageModel = await _voyagesRepository.getVoyageById(voyageId);
-    emit(VoyageDetailsState(voyageModel: voyageModel));
+    emit(
+      VoyageDetailsState(
+        status: Status.loading,
+        expenses: state.expenses,
+        voyageModel: state.voyageModel,
+      ),
+    );
+    try {
+      final voyageModel = await _voyagesRepository.getVoyageById(voyageId);
+      emit(VoyageDetailsState(
+          status: Status.success,
+          voyageModel: voyageModel,
+          expenses: state.expenses));
+    } catch (error) {
+      emit(
+        VoyageDetailsState(
+          status: Status.error,
+          errorMessage: error.toString(),
+        ),
+      );
+    }
   }
 
   Future<void> getExpensesStreamByVoyageId(String voyageId) async {
+    emit(
+      VoyageDetailsState(
+        status: Status.loading,
+        expenses: state.expenses,
+        voyageModel: state.voyageModel,
+      ),
+    );
     _streamSubscription = _expensesRepository
         .getExpensesStreamByVoyageId(voyageId)
         .listen((expenses) {
       emit(VoyageDetailsState(
-          expenses: expenses, voyageModel: state.voyageModel));
+          expenses: expenses,
+          voyageModel: state.voyageModel,
+          status: Status.success));
     })
       ..onError((error) {
         emit(
@@ -56,9 +81,6 @@ class VoyageDetailsCubit extends Cubit<VoyageDetailsState> {
   Future<void> remove({
     required String expenseId,
   }) async {
-    emit(
-      VoyageDetailsState(),
-    );
     try {
       await _expensesRepository.remove(id: expenseId);
     } catch (error) {
