@@ -26,7 +26,6 @@ class VoyagesCubit extends Cubit<VoyagesState> {
     emit(
       VoyagesState(
         status: Status.loading,
-        // voyages: state.voyages,
       ),
     );
     _streamSubscription =
@@ -51,9 +50,6 @@ class VoyagesCubit extends Cubit<VoyagesState> {
   Future<void> remove({
     required String voyageId,
   }) async {
-    emit(
-      VoyagesState(),
-    );
     try {
       await _voyagesRepository.remove(id: voyageId);
     } catch (error) {
@@ -69,9 +65,6 @@ class VoyagesCubit extends Cubit<VoyagesState> {
   Future<void> removeExpensesByVoyageId({
     required String voyageId,
   }) async {
-    emit(
-      VoyagesState(),
-    );
     try {
       await _expensesRepository.removeExpensesByVoyageId(voyageId: voyageId);
     } catch (error) {

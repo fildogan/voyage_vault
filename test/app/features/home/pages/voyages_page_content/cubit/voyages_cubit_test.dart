@@ -146,4 +146,83 @@ void main() {
       // );
     },
   );
+  group(
+    'remove',
+    () {
+      blocTest<VoyagesCubit, VoyagesState>(
+        'should call remove from repository when remove is called',
+        build: () => sut,
+        act: (cubit) async => cubit.remove(voyageId: 'voyageId'),
+        verify: (_) async {
+          // Verify if getVoyagesStream is called
+          verify(voyagesRepository.remove(id: 'voyageId')).called(1);
+        },
+      );
+      group(
+        'failure',
+        () {
+          final exception = Exception('oops');
+          setUp(
+            () {
+              when(voyagesRepository.remove(id: 'voyageId'))
+                  .thenThrow(exception);
+            },
+          );
+          blocTest<VoyagesCubit, VoyagesState>(
+            'emits Status.initial then Status.error with message',
+            build: () => sut,
+            act: (cubit) => cubit.remove(voyageId: 'voyageId'),
+            expect: () => <VoyagesState>[
+              VoyagesState(
+                status: Status.error,
+                errorMessage: exception.toString(),
+              ),
+            ],
+          );
+        },
+      );
+    },
+  );
+  group(
+    'removeExpensesByVoyageId',
+    () {
+      blocTest<VoyagesCubit, VoyagesState>(
+        'should call removeExpensesByVoyageId from repository when removeExpensesByVoyageId is called',
+        build: () => sut,
+        act: (cubit) async =>
+            cubit.removeExpensesByVoyageId(voyageId: 'voyageId'),
+        verify: (_) async {
+          // Verify if getVoyagesStream is called
+          verify(expensesRepository.removeExpensesByVoyageId(
+                  voyageId: 'voyageId'))
+              .called(1);
+        },
+      );
+      group(
+        'failure',
+        () {
+          final exception = Exception('oops');
+          setUp(
+            () {
+              when(expensesRepository.removeExpensesByVoyageId(
+                      voyageId: 'voyageId'))
+                  .thenThrow(exception);
+            },
+          );
+          blocTest<VoyagesCubit, VoyagesState>(
+            'emits Status.initial then Status.error with message',
+            build: () => sut,
+            act: (cubit) =>
+                cubit.removeExpensesByVoyageId(voyageId: 'voyageId'),
+            expect: () => <VoyagesState>[
+              VoyagesState(
+                status: Status.error,
+                errorMessage: exception.toString(),
+              ),
+            ],
+          );
+        },
+      );
+    },
+  );
 }
