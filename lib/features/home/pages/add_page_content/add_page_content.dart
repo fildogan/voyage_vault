@@ -32,19 +32,27 @@ class AddPageContent extends StatelessWidget {
                   ),
                   Visibility(
                     visible: state.chosenQuote != null ? true : false,
-                    child: Column(
-                      children: state.chosenQuote == null
-                          ? []
-                          : [
-                              AutoSizeText(
-                                (state.chosenQuote!.title),
-                                maxLines: 2,
-                              ),
-                              AutoSizeText(
-                                (state.chosenQuote!.author),
-                                maxLines: 2,
-                              ),
-                            ],
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: state.chosenQuote == null
+                            ? []
+                            : [
+                                AutoSizeText(
+                                  '"${state.chosenQuote!.title}"',
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                      fontStyle: FontStyle.italic),
+                                  maxLines: 2,
+                                ),
+                                AutoSizeText(
+                                  '- ${state.chosenQuote!.author}',
+                                  textAlign: TextAlign.end,
+                                  maxLines: 1,
+                                ),
+                              ],
+                      ),
                     ),
                   ),
                   const Spacer(

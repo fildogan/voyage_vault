@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
@@ -20,14 +22,14 @@ class AddPageContentCubit extends Cubit<AddPageContentState> {
         status: Status.loading,
       ),
     );
-    await Future.delayed(const Duration(seconds: 1));
     try {
       final quotes = await _quotesRepository.getQuoteModels();
+      final intValue = Random().nextInt(quotes.length - 1);
       emit(
         AddPageContentState(
           status: Status.success,
           quotes: quotes,
-          chosenQuote: quotes[0],
+          chosenQuote: quotes[intValue],
         ),
       );
     } catch (error) {
