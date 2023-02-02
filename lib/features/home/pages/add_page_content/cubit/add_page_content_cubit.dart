@@ -27,6 +27,7 @@ class AddPageContentCubit extends Cubit<AddPageContentState> {
         AddPageContentState(
           status: Status.success,
           quotes: quotes,
+          chosenQuote: quotes[0],
         ),
       );
     } catch (error) {

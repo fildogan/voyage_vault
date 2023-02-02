@@ -19,6 +19,7 @@ mixin _$AddPageContentState {
   Status get status => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
   List<QuoteModel> get quotes => throw _privateConstructorUsedError;
+  QuoteModel? get chosenQuote => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AddPageContentStateCopyWith<AddPageContentState> get copyWith =>
@@ -31,7 +32,11 @@ abstract class $AddPageContentStateCopyWith<$Res> {
           AddPageContentState value, $Res Function(AddPageContentState) then) =
       _$AddPageContentStateCopyWithImpl<$Res, AddPageContentState>;
   @useResult
-  $Res call({Status status, String? errorMessage, List<QuoteModel> quotes});
+  $Res call(
+      {Status status,
+      String? errorMessage,
+      List<QuoteModel> quotes,
+      QuoteModel? chosenQuote});
 }
 
 /// @nodoc
@@ -50,6 +55,7 @@ class _$AddPageContentStateCopyWithImpl<$Res, $Val extends AddPageContentState>
     Object? status = null,
     Object? errorMessage = freezed,
     Object? quotes = null,
+    Object? chosenQuote = freezed,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -64,6 +70,10 @@ class _$AddPageContentStateCopyWithImpl<$Res, $Val extends AddPageContentState>
           ? _value.quotes
           : quotes // ignore: cast_nullable_to_non_nullable
               as List<QuoteModel>,
+      chosenQuote: freezed == chosenQuote
+          ? _value.chosenQuote
+          : chosenQuote // ignore: cast_nullable_to_non_nullable
+              as QuoteModel?,
     ) as $Val);
   }
 }
@@ -76,7 +86,11 @@ abstract class _$$_AddPageContentStateCopyWith<$Res>
       __$$_AddPageContentStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Status status, String? errorMessage, List<QuoteModel> quotes});
+  $Res call(
+      {Status status,
+      String? errorMessage,
+      List<QuoteModel> quotes,
+      QuoteModel? chosenQuote});
 }
 
 /// @nodoc
@@ -93,6 +107,7 @@ class __$$_AddPageContentStateCopyWithImpl<$Res>
     Object? status = null,
     Object? errorMessage = freezed,
     Object? quotes = null,
+    Object? chosenQuote = freezed,
   }) {
     return _then(_$_AddPageContentState(
       status: null == status
@@ -107,6 +122,10 @@ class __$$_AddPageContentStateCopyWithImpl<$Res>
           ? _value._quotes
           : quotes // ignore: cast_nullable_to_non_nullable
               as List<QuoteModel>,
+      chosenQuote: freezed == chosenQuote
+          ? _value.chosenQuote
+          : chosenQuote // ignore: cast_nullable_to_non_nullable
+              as QuoteModel?,
     ));
   }
 }
@@ -117,7 +136,8 @@ class _$_AddPageContentState implements _AddPageContentState {
   _$_AddPageContentState(
       {this.status = Status.initial,
       this.errorMessage,
-      final List<QuoteModel> quotes = const []})
+      final List<QuoteModel> quotes = const [],
+      this.chosenQuote})
       : _quotes = quotes;
 
   @override
@@ -135,8 +155,11 @@ class _$_AddPageContentState implements _AddPageContentState {
   }
 
   @override
+  final QuoteModel? chosenQuote;
+
+  @override
   String toString() {
-    return 'AddPageContentState(status: $status, errorMessage: $errorMessage, quotes: $quotes)';
+    return 'AddPageContentState(status: $status, errorMessage: $errorMessage, quotes: $quotes, chosenQuote: $chosenQuote)';
   }
 
   @override
@@ -147,12 +170,14 @@ class _$_AddPageContentState implements _AddPageContentState {
             (identical(other.status, status) || other.status == status) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage) &&
-            const DeepCollectionEquality().equals(other._quotes, _quotes));
+            const DeepCollectionEquality().equals(other._quotes, _quotes) &&
+            (identical(other.chosenQuote, chosenQuote) ||
+                other.chosenQuote == chosenQuote));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, status, errorMessage,
-      const DeepCollectionEquality().hash(_quotes));
+      const DeepCollectionEquality().hash(_quotes), chosenQuote);
 
   @JsonKey(ignore: true)
   @override
@@ -166,7 +191,8 @@ abstract class _AddPageContentState implements AddPageContentState {
   factory _AddPageContentState(
       {final Status status,
       final String? errorMessage,
-      final List<QuoteModel> quotes}) = _$_AddPageContentState;
+      final List<QuoteModel> quotes,
+      final QuoteModel? chosenQuote}) = _$_AddPageContentState;
 
   @override
   Status get status;
@@ -174,6 +200,8 @@ abstract class _AddPageContentState implements AddPageContentState {
   String? get errorMessage;
   @override
   List<QuoteModel> get quotes;
+  @override
+  QuoteModel? get chosenQuote;
   @override
   @JsonKey(ignore: true)
   _$$_AddPageContentStateCopyWith<_$_AddPageContentState> get copyWith =>

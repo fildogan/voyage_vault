@@ -1,5 +1,9 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:travel_cost_log/app/injection_container.dart';
 import 'package:travel_cost_log/features/home/pages/add_expense/add_expense_page.dart';
+import 'package:travel_cost_log/features/home/pages/add_page_content/cubit/add_page_content_cubit.dart';
 import 'package:travel_cost_log/features/home/pages/add_voyage/add_voyage_page.dart';
 
 class AddPageContent extends StatelessWidget {
@@ -7,43 +11,74 @@ class AddPageContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const Spacer(),
-            Image.asset(
-              'assets/images/logo1.png',
-              height: 300,
-            ),
-            const Spacer(),
-            ElevatedButton(
-              onPressed: () => Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const AddVoyagePage(),
-                  fullscreenDialog: true,
-                ),
+    return BlocProvider<AddPageContentCubit>(
+      create: (context) => getIt<AddPageContentCubit>()..start(),
+      child: BlocBuilder<AddPageContentCubit, AddPageContentState>(
+        builder: (context, state) {
+          return SafeArea(
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  const Spacer(
+                    flex: 2,
+                  ),
+                  Image.asset(
+                    'assets/images/logo1.png',
+                    height: 300,
+                  ),
+                  const Spacer(
+                    flex: 1,
+                  ),
+                  Visibility(
+                    visible: state.chosenQuote != null ? true : false,
+                    child: Column(
+                      children: state.chosenQuote == null
+                          ? []
+                          : [
+                              AutoSizeText(
+                                (state.chosenQuote!.title),
+                                maxLines: 2,
+                              ),
+                              AutoSizeText(
+                                (state.chosenQuote!.author),
+                                maxLines: 2,
+                              ),
+                            ],
+                    ),
+                  ),
+                  const Spacer(
+                    flex: 1,
+                  ),
+                  ElevatedButton(
+                    onPressed: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const AddVoyagePage(),
+                        fullscreenDialog: true,
+                      ),
+                    ),
+                    child: const Text('Add Voyage'),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  ElevatedButton(
+                    onPressed: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const AddExpensePage(),
+                        fullscreenDialog: true,
+                      ),
+                    ),
+                    child: const Text('Add Expense'),
+                  ),
+                  const Spacer(
+                    flex: 4,
+                  ),
+                ],
               ),
-              child: const Text('Add Voyage'),
             ),
-            const SizedBox(
-              height: 10,
-            ),
-            ElevatedButton(
-              onPressed: () => Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const AddExpensePage(),
-                  fullscreenDialog: true,
-                ),
-              ),
-              child: const Text('Add Expense'),
-            ),
-            const Spacer(
-              flex: 2,
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

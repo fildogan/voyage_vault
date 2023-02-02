@@ -6,5 +6,6 @@ class AddPageContentState with _$AddPageContentState {
     @Default(Status.initial) Status status,
     String? errorMessage,
     @Default([]) List<QuoteModel> quotes,
+    QuoteModel? chosenQuote,
   }) = _AddPageContentState;
 }
