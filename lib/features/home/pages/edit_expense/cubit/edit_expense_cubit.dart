@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
@@ -13,9 +15,42 @@ class EditExpenseCubit extends Cubit<EditExpenseState> {
   EditExpenseCubit(this._voyagesRepository, this._expensesRepository)
       : super(EditExpenseState());
 
-  // ignore: unused_field
   final VoyagesRepository _voyagesRepository;
 
   // ignore: unused_field
   final ExpensesRepository _expensesRepository;
+
+  StreamSubscription? _streamSubscription;
+
+  Future<void> getVoyageTitleStream() async {
+    emit(
+      EditExpenseState(
+        status: Status.loading,
+      ),
+    );
+    _streamSubscription = _voyagesRepository
+        .getVoyagesStream()
+        .map((voyages) => voyages.map((voyage) => voyage.title).toList())
+        .listen(
+          (voyageTitles) => emit(
+            EditExpenseState(
+              status: Status.success,
+              voyageTitles: voyageTitles,
+            ),
+          ),
+        )..onError(
+        (error) => emit(
+          EditExpenseState(
+            status: Status.error,
+            errorMessage: error.toString(),
+          ),
+        ),
+      );
+  }
+
+  @override
+  Future<void> close() {
+    _streamSubscription?.cancel();
+    return super.close();
+  }
 }
