@@ -50,13 +50,14 @@ class EditExpenseCubit extends Cubit<EditExpenseState> {
 
   Future<void> update({
     required String expenseId,
-    required String voyageId,
     String? name,
-    String? voyageTitle,
+    required String voyageTitle,
     double? price,
     required String category,
     required DateTime dateAdded,
   }) async {
+    final voyageId = await _voyagesRepository.getVoyageIdByTitle(voyageTitle);
+
     emit(
       EditExpenseState(
         name: name,

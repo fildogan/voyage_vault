@@ -24,7 +24,19 @@ class _EditExpensePageState extends State<EditExpensePage> {
   String? _expenseVoyageTitle;
   double? _expensePrice;
   String? _expenseCategory;
-  DateTime? _dateAdded;
+  late DateTime _dateAdded;
+
+  @override
+  void initState() {
+    setState(() {
+      _expenseName = widget.expenseModel.name;
+      _expenseVoyageTitle = widget.voyageModel.title;
+      _expensePrice = widget.expenseModel.price;
+      _expenseCategory = widget.expenseModel.category;
+      _dateAdded = widget.expenseModel.dateAdded;
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +86,15 @@ class _EditExpensePageState extends State<EditExpensePage> {
                 actions: [
                   TextButton(
                       onPressed: (() {
+                        context.read<EditExpenseCubit>().update(
+                            expenseId: widget.expenseModel.id,
+                            name: _expenseName,
+                            voyageTitle: _expenseVoyageTitle ?? 'title',
+                            price: _expensePrice,
+                            category: _expenseCategory ?? 'tickets',
+                            dateAdded: _dateAdded
+                            // voyageId: widget.voyageModel.id
+                            );
                         // context.read<EditExpenseCubit>().updateVoyageAndCheck(
                         //       voyageId: voyageModel.id,
                         //       initialTitle: voyageModel.title,
@@ -108,9 +129,7 @@ class _EditExpensePageState extends State<EditExpensePage> {
                 expenseCategory: _expenseCategory,
                 categoryTitles: expenseCategoryList,
                 voyageTitles: state.voyageTitles,
-                dateAddedFormated: DateFormat.yMd().format(
-                  _dateAdded ?? widget.expenseModel.dateAdded,
-                ),
+                dateAddedFormated: DateFormat.yMd().format(_dateAdded),
                 // endDateFormated: DateFormat?.yMd().format(
                 //   state.endDate ?? DateTime(2020),
                 // ),
@@ -125,7 +144,7 @@ class _EditExpensePageState extends State<EditExpensePage> {
                 //   context.read<EditExpenseCubit>().changeEndDateValue(endDate);
                 // }),
                 onDateAddedChanged: ((selectedDate) {
-                  setState(() => _dateAdded = selectedDate);
+                  setState(() => _dateAdded = selectedDate!);
                 }),
               ),
             );
