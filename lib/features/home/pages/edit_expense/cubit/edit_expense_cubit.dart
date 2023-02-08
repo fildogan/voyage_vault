@@ -48,6 +48,48 @@ class EditExpenseCubit extends Cubit<EditExpenseState> {
       );
   }
 
+  Future<void> update({
+    required String expenseId,
+    required String voyageId,
+    String? name,
+    String? voyageTitle,
+    double? price,
+    required String category,
+    required DateTime dateAdded,
+  }) async {
+    emit(
+      EditExpenseState(
+        name: name,
+        price: price,
+        dateAdded: dateAdded,
+        category: category,
+        voyageId: voyageId,
+      ),
+    );
+    try {
+      await _expensesRepository.update(
+        id: expenseId,
+        name: name ?? '',
+        price: price ?? 0.00,
+        dateAdded: dateAdded,
+        category: category,
+        voyageId: voyageId,
+      );
+      emit(
+        EditExpenseState(
+          saved: true,
+        ),
+      );
+    } catch (error) {
+      emit(
+        EditExpenseState(
+          status: Status.error,
+          errorMessage: error.toString(),
+        ),
+      );
+    }
+  }
+
   @override
   Future<void> close() {
     _streamSubscription?.cancel();
