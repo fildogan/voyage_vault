@@ -30,7 +30,7 @@ class _EditExpensePageState extends State<EditExpensePage> {
   Widget build(BuildContext context) {
     _expenseVoyageTitle = widget.voyageModel.title;
     return BlocProvider<EditExpenseCubit>(
-      create: (context) => getIt<EditExpenseCubit>(),
+      create: (context) => getIt<EditExpenseCubit>()..getVoyageTitleStream(),
       child: BlocListener<EditExpenseCubit, EditExpenseState>(
         listener: (context, state) {
           if (state.saved) {
