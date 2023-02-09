@@ -59,29 +59,6 @@ class _AddExpensePageState extends State<AddExpensePage> {
                             price: _expensePrice,
                             category: _expenseCategory);
                       }),
-                      // onPressed: _expenseName == null ||
-                      //         _expenseVoyageTitle == null ||
-                      //         _expensePrice == null ||
-                      //         _expenseCategory == null
-                      //     ? () {
-                      //         context
-                      //             .read<AddExpenseCubit>()
-                      //             .error('Please fill all fields');
-                      //         // context
-                      //         //     .read<AddExpenseCubit>()
-                      //         //     .getVoyageTitleStream();
-                      //       }
-                      //     : () {
-                      //         context
-                      //             .read<AddExpenseCubit>()
-                      //             .addExpenseByVoyageTitle(
-                      //               _expenseName ?? '',
-                      //               _expenseVoyageTitle ?? '',
-                      //               _expensePrice ?? 0.00,
-                      //               _expenseCategory ?? 'miscellaneous',
-                      //             );
-                      //       }
-
                       child: const Text('Save'))
                 ],
               ),
