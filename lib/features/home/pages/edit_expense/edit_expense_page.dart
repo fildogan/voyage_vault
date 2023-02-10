@@ -155,104 +155,123 @@ class _EditExpensePageBody extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: ListView(
           children: [
-            TextFormField(
-              initialValue: expenseModel.name,
-              onChanged: onNameChanged,
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(),
-                labelText: 'Expense name',
-                contentPadding: EdgeInsets.all(10),
-              ),
-            ),
-            TextFormField(
-              initialValue: expenseModel.price.toString(),
-              textAlign: TextAlign.start,
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(),
-                labelText: 'Price',
-                contentPadding: EdgeInsets.all(10),
-              ),
-              inputFormatters: [
-                FilteringTextInputFormatter.allow(
-                  RegExp(r'^\d*\.?\d{0,2}'),
-                ),
-              ],
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-              onChanged: (value) {
-                final price = double.tryParse(value);
-                if (price != null) {
-                  onPriceChanged(price);
-                }
-              },
-            ),
-            TextField(
-              controller: TextEditingController(text: dateAddedFormated),
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(),
-                icon: Icon(
-                  Icons.calendar_today,
-                ),
-                labelText: "Spent Date",
-                contentPadding: EdgeInsets.all(10),
-              ),
-              readOnly: true, // when true user cannot edit text
-              onTap: () async {
-                final selectedDate = await showDatePicker(
-                  context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime(2020),
-                  lastDate: DateTime.now().add(
-                    const Duration(days: 365 * 10),
-                  ),
-                );
-                onDateAddedChanged(selectedDate);
-              },
-            ),
-            DropdownButtonFormField<String>(
-              value: expenseModel.category,
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(),
-                labelText: 'Category',
-                contentPadding: EdgeInsets.all(10),
-              ),
-              items: [
-                ...categoryTitles.map(
-                  (String category) {
-                    return DropdownMenuItem(
-                      value: category,
-                      child: Text(
-                        category[0].toUpperCase() + category.substring(1),
-                      ),
-                    );
-                  },
-                ),
-              ],
-              onChanged: onCategoryChanged,
-            ),
-            DropdownButtonFormField<String>(
-              value: expenseVoyageTitle,
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(),
-                labelText: 'Voyage',
-                contentPadding: EdgeInsets.all(10),
-              ),
-              items: [
-                ...voyageTitles.map(
-                  (String voyage) {
-                    return DropdownMenuItem(
-                      value: voyage,
-                      child: Text(
-                        voyage[0].toUpperCase() + voyage.substring(1),
-                      ),
-                    );
-                  },
-                )
-              ],
-              onChanged: onVoyageTitleChanged,
-            )
+            _nameField(),
+            _priceField(),
+            _dateField(context),
+            _categoryField(),
+            _voyageField()
           ],
         ),
+      ),
+    );
+  }
+
+  DropdownButtonFormField<String> _voyageField() {
+    return DropdownButtonFormField<String>(
+      value: expenseVoyageTitle,
+      decoration: const InputDecoration(
+        border: UnderlineInputBorder(),
+        labelText: 'Voyage',
+        contentPadding: EdgeInsets.all(10),
+      ),
+      items: [
+        ...voyageTitles.map(
+          (String voyage) {
+            return DropdownMenuItem(
+              value: voyage,
+              child: Text(
+                voyage[0].toUpperCase() + voyage.substring(1),
+              ),
+            );
+          },
+        )
+      ],
+      onChanged: onVoyageTitleChanged,
+    );
+  }
+
+  TextField _dateField(BuildContext context) {
+    return TextField(
+      controller: TextEditingController(text: dateAddedFormated),
+      decoration: const InputDecoration(
+        border: UnderlineInputBorder(),
+        icon: Icon(
+          Icons.calendar_today,
+        ),
+        labelText: "Spent Date",
+        contentPadding: EdgeInsets.all(10),
+      ),
+      readOnly: true, // when true user cannot edit text
+      onTap: () async {
+        final selectedDate = await showDatePicker(
+          context: context,
+          initialDate: DateTime.now(),
+          firstDate: DateTime(2020),
+          lastDate: DateTime.now().add(
+            const Duration(days: 365 * 10),
+          ),
+        );
+        onDateAddedChanged(selectedDate);
+      },
+    );
+  }
+
+  DropdownButtonFormField<String> _categoryField() {
+    return DropdownButtonFormField<String>(
+      value: expenseModel.category,
+      decoration: const InputDecoration(
+        border: UnderlineInputBorder(),
+        labelText: 'Category',
+        contentPadding: EdgeInsets.all(10),
+      ),
+      items: [
+        ...categoryTitles.map(
+          (String category) {
+            return DropdownMenuItem(
+              value: category,
+              child: Text(
+                category[0].toUpperCase() + category.substring(1),
+              ),
+            );
+          },
+        ),
+      ],
+      onChanged: onCategoryChanged,
+    );
+  }
+
+  TextFormField _priceField() {
+    return TextFormField(
+      initialValue: expenseModel.price.toString(),
+      textAlign: TextAlign.start,
+      decoration: const InputDecoration(
+        border: UnderlineInputBorder(),
+        labelText: 'Price',
+        contentPadding: EdgeInsets.all(10),
+      ),
+      inputFormatters: [
+        FilteringTextInputFormatter.allow(
+          RegExp(r'^\d*\.?\d{0,2}'),
+        ),
+      ],
+      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+      onChanged: (value) {
+        final price = double.tryParse(value);
+        if (price != null) {
+          onPriceChanged(price);
+        }
+      },
+    );
+  }
+
+  TextFormField _nameField() {
+    return TextFormField(
+      initialValue: expenseModel.name,
+      onChanged: onNameChanged,
+      decoration: const InputDecoration(
+        border: UnderlineInputBorder(),
+        labelText: 'Expense name',
+        contentPadding: EdgeInsets.all(10),
       ),
     );
   }
