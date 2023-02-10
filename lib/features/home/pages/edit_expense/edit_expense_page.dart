@@ -113,7 +113,7 @@ class _EditExpensePageState extends State<EditExpensePage> {
 }
 
 class _EditExpensePageBody extends StatelessWidget {
-  const _EditExpensePageBody({
+  _EditExpensePageBody({
     required this.expenseModel,
     required this.onDateAddedChanged,
     this.dateAddedFormated,
@@ -130,6 +130,7 @@ class _EditExpensePageBody extends StatelessWidget {
     this.dateAdded,
   });
 
+  final _formKey = GlobalKey<FormState>();
   final Function(String?) onNameChanged;
   final Function(String?) onVoyageTitleChanged;
   final Function(double?) onPriceChanged;
@@ -151,16 +152,19 @@ class _EditExpensePageBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ListView(
-          children: [
-            _nameField(),
-            _priceField(),
-            _dateField(context),
-            _categoryField(),
-            _voyageField()
-          ],
+      child: Form(
+        key: _formKey,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ListView(
+            children: [
+              _nameField(),
+              _priceField(),
+              _dateField(context),
+              _categoryField(),
+              _voyageField()
+            ],
+          ),
         ),
       ),
     );
@@ -187,11 +191,12 @@ class _EditExpensePageBody extends StatelessWidget {
         )
       ],
       onChanged: onVoyageTitleChanged,
+      validator: (value) => null,
     );
   }
 
-  TextField _dateField(BuildContext context) {
-    return TextField(
+  TextFormField _dateField(BuildContext context) {
+    return TextFormField(
       controller: TextEditingController(text: dateAddedFormated),
       decoration: const InputDecoration(
         border: UnderlineInputBorder(),
@@ -213,6 +218,7 @@ class _EditExpensePageBody extends StatelessWidget {
         );
         onDateAddedChanged(selectedDate);
       },
+      validator: (value) => null,
     );
   }
 
@@ -237,6 +243,7 @@ class _EditExpensePageBody extends StatelessWidget {
         ),
       ],
       onChanged: onCategoryChanged,
+      validator: (value) => null,
     );
   }
 
@@ -261,6 +268,7 @@ class _EditExpensePageBody extends StatelessWidget {
           onPriceChanged(price);
         }
       },
+      validator: (value) => null,
     );
   }
 
@@ -273,6 +281,7 @@ class _EditExpensePageBody extends StatelessWidget {
         labelText: 'Expense name',
         contentPadding: EdgeInsets.all(10),
       ),
+      validator: (value) => null,
     );
   }
 }
