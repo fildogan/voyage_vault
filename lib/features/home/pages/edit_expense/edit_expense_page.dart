@@ -7,6 +7,7 @@ import 'package:travel_cost_log/data/data_sources/local_data_sources/expense_cat
 import 'package:travel_cost_log/domain/models/expense_model.dart';
 import 'package:travel_cost_log/domain/models/voyage_model.dart';
 import 'package:travel_cost_log/features/home/pages/edit_expense/cubit/edit_expense_cubit.dart';
+import 'package:travel_cost_log/widgets/messages/snackbars.dart';
 
 class EditExpensePage extends StatefulWidget {
   const EditExpensePage(
@@ -48,31 +49,15 @@ class _EditExpensePageState extends State<EditExpensePage> {
             Navigator.of(context).pop();
           }
           if (state.errorMessage != null) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  state.errorMessage ?? 'Unknown error',
-                ),
-                backgroundColor: Colors.red,
-              ),
-            );
+            ScaffoldMessenger.of(context).showSnackBar(ErrorSnackbar(
+              text: state.successMessage ?? 'Success',
+            ) as SnackBar);
           }
           if (state.successMessage != null) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Row(
-                  children: [
-                    const Icon(Icons.done),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      state.successMessage ?? 'Success',
-                    ),
-                  ],
-                ),
-                backgroundColor: Colors.blue,
-              ),
+              SuccessSnackbarr(
+                text: state.successMessage ?? 'Success',
+              ) as SnackBar,
             );
           }
         },
