@@ -194,19 +194,15 @@ class VoyageDetailsPage extends StatelessWidget {
 
                                     SlidableAction(
                                       onPressed: (context) {
-                                        Navigator.of(context)
-                                            .push(MaterialPageRoute(
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
                                                 builder: (context) =>
                                                     EditExpensePage(
                                                       expenseModel:
                                                           expenseModel,
                                                       voyageModel:
                                                           currentVoyageModel,
-                                                    )))
-                                            .then((value) => context
-                                                .read<VoyageDetailsCubit>()
-                                                .refreshVoyage(
-                                                    currentVoyageModel.id));
+                                                    )));
                                       },
                                       backgroundColor: const Color(0xFF21B7CA),
                                       foregroundColor: Colors.white,
