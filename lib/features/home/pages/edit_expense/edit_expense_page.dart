@@ -40,7 +40,6 @@ class _EditExpensePageState extends State<EditExpensePage> {
 
   @override
   Widget build(BuildContext context) {
-    _expenseVoyageTitle = widget.voyageModel.title;
     return BlocProvider<EditExpenseCubit>(
       create: (context) => getIt<EditExpenseCubit>()..getVoyageTitleStream(),
       child: BlocListener<EditExpenseCubit, EditExpenseState>(
@@ -72,7 +71,7 @@ class _EditExpensePageState extends State<EditExpensePage> {
                     ),
                   ],
                 ),
-                backgroundColor: Colors.green,
+                backgroundColor: Colors.blue,
               ),
             );
           }
@@ -89,24 +88,11 @@ class _EditExpensePageState extends State<EditExpensePage> {
                         context.read<EditExpenseCubit>().update(
                             expenseId: widget.expenseModel.id,
                             name: _expenseName,
-                            voyageTitle: _expenseVoyageTitle ?? 'title',
+                            voyageTitle:
+                                _expenseVoyageTitle ?? widget.voyageModel.title,
                             price: _expensePrice,
                             category: _expenseCategory ?? 'tickets',
-                            dateAdded: _dateAdded
-                            // voyageId: widget.voyageModel.id
-                            );
-                        // context.read<EditExpenseCubit>().updateVoyageAndCheck(
-                        //       voyageId: voyageModel.id,
-                        //       initialTitle: voyageModel.title,
-                        //       title: state.title,
-                        //       budget: state.budget,
-                        //       startDate:
-                        //           state.startDate ?? voyageModel.startDate,
-                        //       endDate: state.endDate ?? voyageModel.endDate,
-                        //       location: state.location ?? voyageModel.location,
-                        //       description:
-                        //           state.description ?? voyageModel.description,
-                        //     );
+                            dateAdded: _dateAdded);
                       }),
                       child: const Text('Save')),
                 ],
@@ -117,9 +103,8 @@ class _EditExpensePageState extends State<EditExpensePage> {
                 expenseName: _expenseName,
                 onNameChanged: (newValue) =>
                     setState(() => _expenseName = newValue),
-                onVoyageTitleChanged: (newValue) => setState(() {
-                  _expenseVoyageTitle = newValue;
-                }),
+                onVoyageTitleChanged: (newValue) =>
+                    setState(() => _expenseVoyageTitle = newValue),
                 expenseVoyageTitle: _expenseVoyageTitle,
                 onPriceChanged: (newValue) =>
                     setState(() => _expensePrice = newValue),
@@ -130,19 +115,6 @@ class _EditExpensePageState extends State<EditExpensePage> {
                 categoryTitles: expenseCategoryList,
                 voyageTitles: state.voyageTitles,
                 dateAddedFormated: DateFormat.yMd().format(_dateAdded),
-                // endDateFormated: DateFormat?.yMd().format(
-                //   state.endDate ?? DateTime(2020),
-                // ),
-                // voyageTitle: state.title,
-                // voyageBudget: state.budget,
-                // voyageStartDate: state.startDate,
-                // voyageEndDate: state.endDate,
-                // voyageTitles: state.voyageTitles,
-                // voyageLocation: state.location,
-                // voyageDescription: state.description,
-                // onEndDateChanged: ((endDate) {
-                //   context.read<EditExpenseCubit>().changeEndDateValue(endDate);
-                // }),
                 onDateAddedChanged: ((selectedDate) {
                   setState(() => _dateAdded = selectedDate!);
                 }),
@@ -158,11 +130,8 @@ class _EditExpensePageState extends State<EditExpensePage> {
 class _EditExpensePageBody extends StatelessWidget {
   const _EditExpensePageBody({
     required this.expenseModel,
-    // required this.onBudgetChanged,
     required this.onDateAddedChanged,
     this.dateAddedFormated,
-    // required this.onEndDateChanged,
-    // this.endDateFormated,
     this.expenseName,
     required this.onNameChanged,
     required this.onVoyageTitleChanged,
@@ -233,81 +202,70 @@ class _EditExpensePageBody extends StatelessWidget {
               },
             ),
             TextField(
-                controller: TextEditingController(text: dateAddedFormated),
-                decoration: const InputDecoration(
-                  border: UnderlineInputBorder(),
-                  icon: Icon(
-                    Icons.calendar_today,
+              controller: TextEditingController(text: dateAddedFormated),
+              decoration: const InputDecoration(
+                border: UnderlineInputBorder(),
+                icon: Icon(
+                  Icons.calendar_today,
+                ),
+                labelText: "Spent Date",
+                contentPadding: EdgeInsets.all(10),
+              ),
+              readOnly: true, // when true user cannot edit text
+              onTap: () async {
+                final selectedDate = await showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(2020),
+                  lastDate: DateTime.now().add(
+                    const Duration(days: 365 * 10),
                   ),
-                  labelText: "Spent Date",
-                  contentPadding: EdgeInsets.all(10),
-                ),
-                readOnly: true, // when true user cannot edit text
-                onTap: () async {
-                  final selectedDate = await showDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime(2020),
-                    lastDate: DateTime.now().add(
-                      const Duration(days: 365 * 10),
-                    ),
-                  );
-                  onDateAddedChanged(selectedDate);
-                }),
+                );
+                onDateAddedChanged(selectedDate);
+              },
+            ),
             DropdownButtonFormField<String>(
-                value: expenseModel.category,
-                decoration: const InputDecoration(
-                  border: UnderlineInputBorder(),
-                  labelText: 'Category',
-                  contentPadding: EdgeInsets.all(10),
-                ),
-                items: [
-                  // if (expenseCategory == null)
-                  //   const DropdownMenuItem(
-                  //     child: Text('Choose from list'),
-                  //   ),
-                  ...categoryTitles.map((String category) {
+              value: expenseModel.category,
+              decoration: const InputDecoration(
+                border: UnderlineInputBorder(),
+                labelText: 'Category',
+                contentPadding: EdgeInsets.all(10),
+              ),
+              items: [
+                ...categoryTitles.map(
+                  (String category) {
                     return DropdownMenuItem(
                       value: category,
                       child: Text(
                         category[0].toUpperCase() + category.substring(1),
                       ),
                     );
-                  }),
-                ],
-                onChanged: (t) {}
-                //  onCategoryChanged,
+                  },
                 ),
-            // if (voyageModel == null)
+              ],
+              onChanged: onCategoryChanged,
+            ),
             DropdownButtonFormField<String>(
-                value: expenseVoyageTitle,
-                decoration: const InputDecoration(
-                  border: UnderlineInputBorder(),
-                  labelText: 'Voyage',
-                  contentPadding: EdgeInsets.all(10),
-                ),
-                items: [
-                  // if (voyageModel == null)
-                  // if (expenseVoyageTitle == null)
-                  //   const DropdownMenuItem(
-                  //     child: Text('Choose voyage from list'),
-                  //   ),
-                  ...voyageTitles.map((String voyage) {
+              value: expenseVoyageTitle,
+              decoration: const InputDecoration(
+                border: UnderlineInputBorder(),
+                labelText: 'Voyage',
+                contentPadding: EdgeInsets.all(10),
+              ),
+              items: [
+                ...voyageTitles.map(
+                  (String voyage) {
                     return DropdownMenuItem(
                       value: voyage,
                       child: Text(
                         voyage[0].toUpperCase() + voyage.substring(1),
                       ),
                     );
-                  })
-                  // else
-                  //   DropdownMenuItem(
-                  //     child: Text(voyageModel!.title),
-                  //   )
-                ],
-                onChanged: (t) {}
-                // onVoyageTitleChanged,
+                  },
                 )
+              ],
+              onChanged: onVoyageTitleChanged,
+            )
           ],
         ),
       ),

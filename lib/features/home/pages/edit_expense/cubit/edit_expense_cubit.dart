@@ -58,15 +58,15 @@ class EditExpenseCubit extends Cubit<EditExpenseState> {
   }) async {
     final voyageId = await _voyagesRepository.getVoyageIdByTitle(voyageTitle);
 
-    emit(
-      EditExpenseState(
-        name: name,
-        price: price,
-        dateAdded: dateAdded,
-        category: category,
-        voyageId: voyageId,
-      ),
-    );
+    // emit(
+    //   EditExpenseState(
+    //     name: name,
+    //     price: price,
+    //     dateAdded: dateAdded,
+    //     category: category,
+    //     voyageId: voyageId,
+    //   ),
+    // );
     try {
       await _expensesRepository.update(
         id: expenseId,
