@@ -141,10 +141,10 @@ class _ListViewItem extends StatelessWidget {
                 ],
               ),
               Column(
-                children: const [
+                children: [
                   Text(
-                    '€ 500',
-                    style: TextStyle(fontSize: 20),
+                    '€ ${voyageModel.budget.toStringAsFixed(0)}',
+                    // style: const TextStyle(fontSize: 20),
                   ),
                 ],
               )
