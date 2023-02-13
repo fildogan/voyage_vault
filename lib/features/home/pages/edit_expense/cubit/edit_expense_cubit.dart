@@ -50,9 +50,9 @@ class EditExpenseCubit extends Cubit<EditExpenseState> {
 
   Future<void> update({
     required String expenseId,
-    String? name,
+    // String? name,
     required String voyageTitle,
-    double? price,
+    // double? price,
     required String category,
     required DateTime dateAdded,
   }) async {
@@ -70,8 +70,8 @@ class EditExpenseCubit extends Cubit<EditExpenseState> {
     try {
       await _expensesRepository.update(
         id: expenseId,
-        name: name ?? '',
-        price: price ?? 0.00,
+        name: state.name,
+        price: state.price,
         dateAdded: dateAdded,
         category: category,
         voyageId: voyageId,
@@ -89,6 +89,24 @@ class EditExpenseCubit extends Cubit<EditExpenseState> {
         ),
       );
     }
+  }
+
+  Future<void> changeName({
+    required String name,
+  }) async {
+    emit(
+      EditExpenseState(
+          name: name, voyageTitles: state.voyageTitles, price: state.price),
+    );
+  }
+
+  Future<void> changePrice({
+    required double price,
+  }) async {
+    emit(
+      EditExpenseState(
+          name: state.name, voyageTitles: state.voyageTitles, price: price),
+    );
   }
 
   @override

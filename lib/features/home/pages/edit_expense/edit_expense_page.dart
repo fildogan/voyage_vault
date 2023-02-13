@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:travel_cost_log/app/core/enums.dart';
 import 'package:travel_cost_log/app/injection_container.dart';
 import 'package:travel_cost_log/data/data_sources/local_data_sources/expense_category_list.dart';
 import 'package:travel_cost_log/domain/models/expense_model.dart';
@@ -26,6 +27,7 @@ class _EditExpensePageState extends State<EditExpensePage> {
   double? _expensePrice;
   String? _expenseCategory;
   late DateTime _dateAdded;
+  final formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -68,31 +70,17 @@ class _EditExpensePageState extends State<EditExpensePage> {
                 backgroundColor: Colors.transparent,
                 title: const Text('Edit Expense'),
                 actions: [
-                  TextButton(
-                      onPressed: (() {
-                        context.read<EditExpenseCubit>().update(
-                            expenseId: widget.expenseModel.id,
-                            name: _expenseName,
-                            voyageTitle:
-                                _expenseVoyageTitle ?? widget.voyageModel.title,
-                            price: _expensePrice,
-                            category: _expenseCategory ?? 'tickets',
-                            dateAdded: _dateAdded);
-                      }),
-                      child: const Text('Save')),
+                  _saveButton(context),
                 ],
                 // automaticallyImplyLeading: false,
               ),
               body: _EditExpensePageBody(
+                formKey: formKey,
                 expenseModel: widget.expenseModel,
                 expenseName: _expenseName,
-                onNameChanged: (newValue) =>
-                    setState(() => _expenseName = newValue),
                 onVoyageTitleChanged: (newValue) =>
                     setState(() => _expenseVoyageTitle = newValue),
                 expenseVoyageTitle: _expenseVoyageTitle,
-                onPriceChanged: (newValue) =>
-                    setState(() => _expensePrice = newValue),
                 expensePrice: _expensePrice,
                 onCategoryChanged: (newValue) =>
                     setState(() => _expenseCategory = newValue),
@@ -110,18 +98,40 @@ class _EditExpensePageState extends State<EditExpensePage> {
       ),
     );
   }
+
+  Widget _saveButton(BuildContext context) {
+    return BlocBuilder<EditExpenseCubit, EditExpenseState>(
+      builder: (context, state) {
+        return state.formStatus == FormStatus.submitting
+            ? const CircularProgressIndicator()
+            : TextButton(
+                onPressed: () {
+                  if (formKey.currentState!.validate()) {
+                    context.read<EditExpenseCubit>().update(
+                        expenseId: widget.expenseModel.id,
+                        // name: state.name,
+                        voyageTitle:
+                            _expenseVoyageTitle ?? widget.voyageModel.title,
+                        // price: state.price,
+                        category: _expenseCategory ?? 'tickets',
+                        dateAdded: _dateAdded);
+                  }
+                },
+                child: const Text('Save'));
+      },
+    );
+  }
 }
 
 class _EditExpensePageBody extends StatelessWidget {
-  _EditExpensePageBody({
+  const _EditExpensePageBody({
+    required this.formKey,
     required this.expenseModel,
     required this.onDateAddedChanged,
     this.dateAddedFormated,
     this.expenseName,
-    required this.onNameChanged,
     required this.onVoyageTitleChanged,
     this.expenseVoyageTitle,
-    required this.onPriceChanged,
     this.expensePrice,
     required this.onCategoryChanged,
     this.expenseCategory,
@@ -130,10 +140,10 @@ class _EditExpensePageBody extends StatelessWidget {
     this.dateAdded,
   });
 
-  final _formKey = GlobalKey<FormState>();
-  final Function(String?) onNameChanged;
+  final GlobalKey formKey;
+
   final Function(String?) onVoyageTitleChanged;
-  final Function(double?) onPriceChanged;
+
   final Function(String?) onCategoryChanged;
   final Function(DateTime?) onDateAddedChanged;
 
@@ -153,7 +163,7 @@ class _EditExpensePageBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Form(
-        key: _formKey,
+        key: formKey,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: ListView(
@@ -247,41 +257,51 @@ class _EditExpensePageBody extends StatelessWidget {
     );
   }
 
-  TextFormField _priceField() {
-    return TextFormField(
-      initialValue: expenseModel.price.toString(),
-      textAlign: TextAlign.start,
-      decoration: const InputDecoration(
-        border: UnderlineInputBorder(),
-        labelText: 'Price',
-        contentPadding: EdgeInsets.all(10),
-      ),
-      inputFormatters: [
-        FilteringTextInputFormatter.allow(
-          RegExp(r'^\d*\.?\d{0,2}'),
-        ),
-      ],
-      keyboardType: const TextInputType.numberWithOptions(decimal: true),
-      onChanged: (value) {
-        final price = double.tryParse(value);
-        if (price != null) {
-          onPriceChanged(price);
-        }
+  Widget _priceField() {
+    return BlocBuilder<EditExpenseCubit, EditExpenseState>(
+      builder: (context, state) {
+        return TextFormField(
+          initialValue: expenseModel.price.toString(),
+          textAlign: TextAlign.start,
+          decoration: const InputDecoration(
+            border: UnderlineInputBorder(),
+            labelText: 'Price',
+            contentPadding: EdgeInsets.all(10),
+          ),
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(
+              RegExp(r'^\d*\.?\d{0,2}'),
+            ),
+          ],
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          onChanged: (value) {
+            final price = double.tryParse(value);
+            context.read<EditExpenseCubit>().changePrice(price: price ?? 0);
+          },
+          validator: (value) =>
+              state.isPriceValid ? null : 'Please enter expense amount',
+        );
       },
-      validator: (value) => null,
     );
   }
 
-  TextFormField _nameField() {
-    return TextFormField(
-      initialValue: expenseModel.name,
-      onChanged: onNameChanged,
-      decoration: const InputDecoration(
-        border: UnderlineInputBorder(),
-        labelText: 'Expense name',
-        contentPadding: EdgeInsets.all(10),
-      ),
-      validator: (value) => null,
+  Widget _nameField() {
+    return BlocBuilder<EditExpenseCubit, EditExpenseState>(
+      builder: (context, state) {
+        return TextFormField(
+          initialValue: expenseModel.name,
+          onChanged: ((value) {
+            context.read<EditExpenseCubit>().changeName(name: value);
+          }),
+          decoration: const InputDecoration(
+            border: UnderlineInputBorder(),
+            labelText: 'Expense name',
+            contentPadding: EdgeInsets.all(10),
+          ),
+          validator: (value) =>
+              state.isNameValid ? null : 'Please enter expense name',
+        );
+      },
     );
   }
 }
