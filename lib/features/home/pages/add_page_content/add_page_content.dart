@@ -76,7 +76,7 @@ class AddPageContent extends StatelessWidget {
                   ElevatedButton(
                     onPressed: () => Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => const AddExpensePage(),
+                        builder: (context) => AddExpensePage(),
                         fullscreenDialog: true,
                       ),
                     ),

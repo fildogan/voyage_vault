@@ -246,9 +246,9 @@ class _EditExpensePageBody extends StatelessWidget {
       builder: (context, state) {
         return TextFormField(
           initialValue: expenseModel.name,
-          onChanged: ((value) {
+          onChanged: (value) {
             context.read<EditExpenseCubit>().changeName(name: value);
-          }),
+          },
           decoration: const InputDecoration(
             border: UnderlineInputBorder(),
             labelText: 'Expense name',
