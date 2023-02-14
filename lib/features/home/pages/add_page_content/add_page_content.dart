@@ -30,28 +30,31 @@ class AddPageContent extends StatelessWidget {
                   const Spacer(
                     flex: 1,
                   ),
-                  Visibility(
-                    visible: state.chosenQuote != null ? true : false,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: state.chosenQuote == null
-                            ? []
-                            : [
-                                AutoSizeText(
-                                  '"${state.chosenQuote!.title}"',
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                      fontStyle: FontStyle.italic),
-                                  maxLines: 2,
-                                ),
-                                AutoSizeText(
-                                  '- ${state.chosenQuote!.author}',
-                                  textAlign: TextAlign.end,
-                                  maxLines: 1,
-                                ),
-                              ],
+                  SizedBox(
+                    height: 80,
+                    child: Visibility(
+                      visible: state.chosenQuote != null ? true : false,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: state.chosenQuote == null
+                              ? []
+                              : [
+                                  AutoSizeText(
+                                    '"${state.chosenQuote!.title}"',
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                        fontStyle: FontStyle.italic),
+                                    maxLines: 2,
+                                  ),
+                                  AutoSizeText(
+                                    '- ${state.chosenQuote!.author}',
+                                    textAlign: TextAlign.end,
+                                    maxLines: 1,
+                                  ),
+                                ],
+                        ),
                       ),
                     ),
                   ),
