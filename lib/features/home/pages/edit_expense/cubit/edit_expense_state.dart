@@ -5,21 +5,23 @@ class EditExpenseState with _$EditExpenseState {
   factory EditExpenseState({
     @Default(Status.initial) Status status,
     @Default(FormStatus.initial) FormStatus formStatus,
-    @Default(false) bool saved,
     String? errorMessage,
     String? successMessage,
-    @Default([]) List<String> categoryTitles,
+    @Default(expenseCategoryList) List<String> categoryTitles,
     @Default([]) List<String> voyageTitles,
     @Default('') String voyageId,
+    @Default('') String expenseId,
     @Default('') String name,
-    String? category,
+    @Default('') String category,
     @Default(0) double price,
+    @Default('') String voyageTitle,
     DateTime? dateAdded,
   }) = _EditExpenseState;
   const EditExpenseState._();
 
   bool get isNameValid => name.isNotEmpty;
   bool get isPriceValid => price > 0;
+  String get dateAddedFormated => DateFormat.yMd().format(dateAdded!);
 
   // EditExpenseState copyWith({
   //   String? name,

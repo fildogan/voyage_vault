@@ -18,15 +18,16 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$EditExpenseState {
   Status get status => throw _privateConstructorUsedError;
   FormStatus get formStatus => throw _privateConstructorUsedError;
-  bool get saved => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
   String? get successMessage => throw _privateConstructorUsedError;
   List<String> get categoryTitles => throw _privateConstructorUsedError;
   List<String> get voyageTitles => throw _privateConstructorUsedError;
   String get voyageId => throw _privateConstructorUsedError;
+  String get expenseId => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  String? get category => throw _privateConstructorUsedError;
+  String get category => throw _privateConstructorUsedError;
   double get price => throw _privateConstructorUsedError;
+  String get voyageTitle => throw _privateConstructorUsedError;
   DateTime? get dateAdded => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -43,15 +44,16 @@ abstract class $EditExpenseStateCopyWith<$Res> {
   $Res call(
       {Status status,
       FormStatus formStatus,
-      bool saved,
       String? errorMessage,
       String? successMessage,
       List<String> categoryTitles,
       List<String> voyageTitles,
       String voyageId,
+      String expenseId,
       String name,
-      String? category,
+      String category,
       double price,
+      String voyageTitle,
       DateTime? dateAdded});
 }
 
@@ -70,15 +72,16 @@ class _$EditExpenseStateCopyWithImpl<$Res, $Val extends EditExpenseState>
   $Res call({
     Object? status = null,
     Object? formStatus = null,
-    Object? saved = null,
     Object? errorMessage = freezed,
     Object? successMessage = freezed,
     Object? categoryTitles = null,
     Object? voyageTitles = null,
     Object? voyageId = null,
+    Object? expenseId = null,
     Object? name = null,
-    Object? category = freezed,
+    Object? category = null,
     Object? price = null,
+    Object? voyageTitle = null,
     Object? dateAdded = freezed,
   }) {
     return _then(_value.copyWith(
@@ -90,10 +93,6 @@ class _$EditExpenseStateCopyWithImpl<$Res, $Val extends EditExpenseState>
           ? _value.formStatus
           : formStatus // ignore: cast_nullable_to_non_nullable
               as FormStatus,
-      saved: null == saved
-          ? _value.saved
-          : saved // ignore: cast_nullable_to_non_nullable
-              as bool,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
@@ -114,18 +113,26 @@ class _$EditExpenseStateCopyWithImpl<$Res, $Val extends EditExpenseState>
           ? _value.voyageId
           : voyageId // ignore: cast_nullable_to_non_nullable
               as String,
+      expenseId: null == expenseId
+          ? _value.expenseId
+          : expenseId // ignore: cast_nullable_to_non_nullable
+              as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      category: freezed == category
+      category: null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       price: null == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as double,
+      voyageTitle: null == voyageTitle
+          ? _value.voyageTitle
+          : voyageTitle // ignore: cast_nullable_to_non_nullable
+              as String,
       dateAdded: freezed == dateAdded
           ? _value.dateAdded
           : dateAdded // ignore: cast_nullable_to_non_nullable
@@ -145,15 +152,16 @@ abstract class _$$_EditExpenseStateCopyWith<$Res>
   $Res call(
       {Status status,
       FormStatus formStatus,
-      bool saved,
       String? errorMessage,
       String? successMessage,
       List<String> categoryTitles,
       List<String> voyageTitles,
       String voyageId,
+      String expenseId,
       String name,
-      String? category,
+      String category,
       double price,
+      String voyageTitle,
       DateTime? dateAdded});
 }
 
@@ -170,15 +178,16 @@ class __$$_EditExpenseStateCopyWithImpl<$Res>
   $Res call({
     Object? status = null,
     Object? formStatus = null,
-    Object? saved = null,
     Object? errorMessage = freezed,
     Object? successMessage = freezed,
     Object? categoryTitles = null,
     Object? voyageTitles = null,
     Object? voyageId = null,
+    Object? expenseId = null,
     Object? name = null,
-    Object? category = freezed,
+    Object? category = null,
     Object? price = null,
+    Object? voyageTitle = null,
     Object? dateAdded = freezed,
   }) {
     return _then(_$_EditExpenseState(
@@ -190,10 +199,6 @@ class __$$_EditExpenseStateCopyWithImpl<$Res>
           ? _value.formStatus
           : formStatus // ignore: cast_nullable_to_non_nullable
               as FormStatus,
-      saved: null == saved
-          ? _value.saved
-          : saved // ignore: cast_nullable_to_non_nullable
-              as bool,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
@@ -214,18 +219,26 @@ class __$$_EditExpenseStateCopyWithImpl<$Res>
           ? _value.voyageId
           : voyageId // ignore: cast_nullable_to_non_nullable
               as String,
+      expenseId: null == expenseId
+          ? _value.expenseId
+          : expenseId // ignore: cast_nullable_to_non_nullable
+              as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      category: freezed == category
+      category: null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       price: null == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as double,
+      voyageTitle: null == voyageTitle
+          ? _value.voyageTitle
+          : voyageTitle // ignore: cast_nullable_to_non_nullable
+              as String,
       dateAdded: freezed == dateAdded
           ? _value.dateAdded
           : dateAdded // ignore: cast_nullable_to_non_nullable
@@ -240,15 +253,16 @@ class _$_EditExpenseState extends _EditExpenseState {
   _$_EditExpenseState(
       {this.status = Status.initial,
       this.formStatus = FormStatus.initial,
-      this.saved = false,
       this.errorMessage,
       this.successMessage,
-      final List<String> categoryTitles = const [],
+      final List<String> categoryTitles = expenseCategoryList,
       final List<String> voyageTitles = const [],
       this.voyageId = '',
+      this.expenseId = '',
       this.name = '',
-      this.category,
+      this.category = '',
       this.price = 0,
+      this.voyageTitle = '',
       this.dateAdded})
       : _categoryTitles = categoryTitles,
         _voyageTitles = voyageTitles,
@@ -260,9 +274,6 @@ class _$_EditExpenseState extends _EditExpenseState {
   @override
   @JsonKey()
   final FormStatus formStatus;
-  @override
-  @JsonKey()
-  final bool saved;
   @override
   final String? errorMessage;
   @override
@@ -290,18 +301,25 @@ class _$_EditExpenseState extends _EditExpenseState {
   final String voyageId;
   @override
   @JsonKey()
+  final String expenseId;
+  @override
+  @JsonKey()
   final String name;
   @override
-  final String? category;
+  @JsonKey()
+  final String category;
   @override
   @JsonKey()
   final double price;
+  @override
+  @JsonKey()
+  final String voyageTitle;
   @override
   final DateTime? dateAdded;
 
   @override
   String toString() {
-    return 'EditExpenseState(status: $status, formStatus: $formStatus, saved: $saved, errorMessage: $errorMessage, successMessage: $successMessage, categoryTitles: $categoryTitles, voyageTitles: $voyageTitles, voyageId: $voyageId, name: $name, category: $category, price: $price, dateAdded: $dateAdded)';
+    return 'EditExpenseState(status: $status, formStatus: $formStatus, errorMessage: $errorMessage, successMessage: $successMessage, categoryTitles: $categoryTitles, voyageTitles: $voyageTitles, voyageId: $voyageId, expenseId: $expenseId, name: $name, category: $category, price: $price, voyageTitle: $voyageTitle, dateAdded: $dateAdded)';
   }
 
   @override
@@ -312,7 +330,6 @@ class _$_EditExpenseState extends _EditExpenseState {
             (identical(other.status, status) || other.status == status) &&
             (identical(other.formStatus, formStatus) ||
                 other.formStatus == formStatus) &&
-            (identical(other.saved, saved) || other.saved == saved) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage) &&
             (identical(other.successMessage, successMessage) ||
@@ -323,10 +340,14 @@ class _$_EditExpenseState extends _EditExpenseState {
                 .equals(other._voyageTitles, _voyageTitles) &&
             (identical(other.voyageId, voyageId) ||
                 other.voyageId == voyageId) &&
+            (identical(other.expenseId, expenseId) ||
+                other.expenseId == expenseId) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.category, category) ||
                 other.category == category) &&
             (identical(other.price, price) || other.price == price) &&
+            (identical(other.voyageTitle, voyageTitle) ||
+                other.voyageTitle == voyageTitle) &&
             (identical(other.dateAdded, dateAdded) ||
                 other.dateAdded == dateAdded));
   }
@@ -336,15 +357,16 @@ class _$_EditExpenseState extends _EditExpenseState {
       runtimeType,
       status,
       formStatus,
-      saved,
       errorMessage,
       successMessage,
       const DeepCollectionEquality().hash(_categoryTitles),
       const DeepCollectionEquality().hash(_voyageTitles),
       voyageId,
+      expenseId,
       name,
       category,
       price,
+      voyageTitle,
       dateAdded);
 
   @JsonKey(ignore: true)
@@ -358,15 +380,16 @@ abstract class _EditExpenseState extends EditExpenseState {
   factory _EditExpenseState(
       {final Status status,
       final FormStatus formStatus,
-      final bool saved,
       final String? errorMessage,
       final String? successMessage,
       final List<String> categoryTitles,
       final List<String> voyageTitles,
       final String voyageId,
+      final String expenseId,
       final String name,
-      final String? category,
+      final String category,
       final double price,
+      final String voyageTitle,
       final DateTime? dateAdded}) = _$_EditExpenseState;
   _EditExpenseState._() : super._();
 
@@ -374,8 +397,6 @@ abstract class _EditExpenseState extends EditExpenseState {
   Status get status;
   @override
   FormStatus get formStatus;
-  @override
-  bool get saved;
   @override
   String? get errorMessage;
   @override
@@ -387,11 +408,15 @@ abstract class _EditExpenseState extends EditExpenseState {
   @override
   String get voyageId;
   @override
+  String get expenseId;
+  @override
   String get name;
   @override
-  String? get category;
+  String get category;
   @override
   double get price;
+  @override
+  String get voyageTitle;
   @override
   DateTime? get dateAdded;
   @override
