@@ -1,5 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:travel_cost_log/app/cubit/root_cubit.dart';
 import 'package:travel_cost_log/features/auth/pages/user_profile.dart';
 
 class MyAccountPageContent extends StatelessWidget {
@@ -66,7 +68,9 @@ class MyAccountPageContent extends StatelessWidget {
                           borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(10),
                               topRight: Radius.circular(10))),
-                      onTap: () {},
+                      onTap: () {
+                        context.read<RootCubit>().setThemeDark();
+                      },
                       title: const Text('Theme'),
                       trailing: const Icon(Icons.chevron_right),
                     ),
@@ -76,7 +80,9 @@ class MyAccountPageContent extends StatelessWidget {
                           borderRadius: BorderRadius.only(
                               bottomLeft: Radius.circular(10),
                               bottomRight: Radius.circular(10))),
-                      onTap: () {},
+                      onTap: () {
+                        context.read<RootCubit>().setThemeLight();
+                      },
                       title: const Text('Language'),
                       trailing: const Icon(Icons.chevron_right),
                     ),
