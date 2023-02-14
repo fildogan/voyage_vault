@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel_cost_log/app/cubit/root_cubit.dart';
 import 'package:travel_cost_log/features/auth/pages/user_profile.dart';
+import 'package:travel_cost_log/features/home/pages/settings/pages/theme_selection.dart';
 
 class MyAccountPageContent extends StatelessWidget {
   const MyAccountPageContent({super.key});
@@ -69,7 +70,11 @@ class MyAccountPageContent extends StatelessWidget {
                               topLeft: Radius.circular(10),
                               topRight: Radius.circular(10))),
                       onTap: () {
-                        context.read<RootCubit>().setThemeDark();
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const ThemeSelectionPage(),
+                          ),
+                        );
                       },
                       title: const Text('Theme'),
                       trailing: const Icon(Icons.chevron_right),
@@ -80,9 +85,7 @@ class MyAccountPageContent extends StatelessWidget {
                           borderRadius: BorderRadius.only(
                               bottomLeft: Radius.circular(10),
                               bottomRight: Radius.circular(10))),
-                      onTap: () {
-                        context.read<RootCubit>().setThemeLight();
-                      },
+                      onTap: () {},
                       title: const Text('Language'),
                       trailing: const Icon(Icons.chevron_right),
                     ),
