@@ -17,6 +17,9 @@ class AddPageContentCubit extends Cubit<AddPageContentState> {
   final QuotesRepository _quotesRepository;
 
   Future<void> start() async {
+    if (state.closed) {
+      return;
+    }
     emit(
       AddPageContentState(
         status: Status.loading,
@@ -25,20 +28,30 @@ class AddPageContentCubit extends Cubit<AddPageContentState> {
     try {
       final quotes = await _quotesRepository.getQuoteModels();
       final intValue = Random().nextInt(quotes.length - 1);
-      emit(
-        AddPageContentState(
-          status: Status.success,
-          quotes: quotes,
-          chosenQuote: quotes[intValue],
-        ),
-      );
+      if (!state.closed) {
+        emit(
+          AddPageContentState(
+            status: Status.success,
+            quotes: quotes,
+            chosenQuote: quotes[intValue],
+          ),
+        );
+      }
     } catch (error) {
-      emit(
-        AddPageContentState(
-          status: Status.error,
-          errorMessage: error.toString(),
-        ),
-      );
+      if (!state.closed) {
+        emit(
+          AddPageContentState(
+            status: Status.error,
+            errorMessage: error.toString(),
+          ),
+        );
+      }
     }
+  }
+
+  @override
+  Future<void> close() {
+    emit(state.copyWith(closed: true));
+    return super.close();
   }
 }

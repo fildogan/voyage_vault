@@ -16,7 +16,9 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$RootState {
+  Status get status => throw _privateConstructorUsedError;
   ThemeMode get currentTheme => throw _privateConstructorUsedError;
+  PackageInfo? get packageInfo => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $RootStateCopyWith<RootState> get copyWith =>
@@ -28,7 +30,7 @@ abstract class $RootStateCopyWith<$Res> {
   factory $RootStateCopyWith(RootState value, $Res Function(RootState) then) =
       _$RootStateCopyWithImpl<$Res, RootState>;
   @useResult
-  $Res call({ThemeMode currentTheme});
+  $Res call({Status status, ThemeMode currentTheme, PackageInfo? packageInfo});
 }
 
 /// @nodoc
@@ -44,13 +46,23 @@ class _$RootStateCopyWithImpl<$Res, $Val extends RootState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? status = null,
     Object? currentTheme = null,
+    Object? packageInfo = freezed,
   }) {
     return _then(_value.copyWith(
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as Status,
       currentTheme: null == currentTheme
           ? _value.currentTheme
           : currentTheme // ignore: cast_nullable_to_non_nullable
               as ThemeMode,
+      packageInfo: freezed == packageInfo
+          ? _value.packageInfo
+          : packageInfo // ignore: cast_nullable_to_non_nullable
+              as PackageInfo?,
     ) as $Val);
   }
 }
@@ -62,7 +74,7 @@ abstract class _$$_RootStateCopyWith<$Res> implements $RootStateCopyWith<$Res> {
       __$$_RootStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({ThemeMode currentTheme});
+  $Res call({Status status, ThemeMode currentTheme, PackageInfo? packageInfo});
 }
 
 /// @nodoc
@@ -76,13 +88,23 @@ class __$$_RootStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? status = null,
     Object? currentTheme = null,
+    Object? packageInfo = freezed,
   }) {
     return _then(_$_RootState(
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as Status,
       currentTheme: null == currentTheme
           ? _value.currentTheme
           : currentTheme // ignore: cast_nullable_to_non_nullable
               as ThemeMode,
+      packageInfo: freezed == packageInfo
+          ? _value.packageInfo
+          : packageInfo // ignore: cast_nullable_to_non_nullable
+              as PackageInfo?,
     ));
   }
 }
@@ -90,15 +112,24 @@ class __$$_RootStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_RootState extends _RootState {
-  _$_RootState({this.currentTheme = ThemeMode.system}) : super._();
+  _$_RootState(
+      {this.status = Status.initial,
+      this.currentTheme = ThemeMode.system,
+      this.packageInfo})
+      : super._();
 
   @override
   @JsonKey()
+  final Status status;
+  @override
+  @JsonKey()
   final ThemeMode currentTheme;
+  @override
+  final PackageInfo? packageInfo;
 
   @override
   String toString() {
-    return 'RootState(currentTheme: $currentTheme)';
+    return 'RootState(status: $status, currentTheme: $currentTheme, packageInfo: $packageInfo)';
   }
 
   @override
@@ -106,12 +137,16 @@ class _$_RootState extends _RootState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_RootState &&
+            (identical(other.status, status) || other.status == status) &&
             (identical(other.currentTheme, currentTheme) ||
-                other.currentTheme == currentTheme));
+                other.currentTheme == currentTheme) &&
+            (identical(other.packageInfo, packageInfo) ||
+                other.packageInfo == packageInfo));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, currentTheme);
+  int get hashCode =>
+      Object.hash(runtimeType, status, currentTheme, packageInfo);
 
   @JsonKey(ignore: true)
   @override
@@ -121,11 +156,18 @@ class _$_RootState extends _RootState {
 }
 
 abstract class _RootState extends RootState {
-  factory _RootState({final ThemeMode currentTheme}) = _$_RootState;
+  factory _RootState(
+      {final Status status,
+      final ThemeMode currentTheme,
+      final PackageInfo? packageInfo}) = _$_RootState;
   _RootState._() : super._();
 
   @override
+  Status get status;
+  @override
   ThemeMode get currentTheme;
+  @override
+  PackageInfo? get packageInfo;
   @override
   @JsonKey(ignore: true)
   _$$_RootStateCopyWith<_$_RootState> get copyWith =>
