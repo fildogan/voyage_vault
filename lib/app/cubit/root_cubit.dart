@@ -34,4 +34,40 @@ class RootCubit extends Cubit<RootState> {
       currentTheme: ThemeMode.system,
     ));
   }
+
+  Future<void> setLanguageSystem() async {
+    emit(state.copyWith(
+      selectedLanguage: SelectedLanguage.system,
+    ));
+  }
+
+  Future<void> setLanguageEnglish() async {
+    emit(state.copyWith(
+      selectedLanguage: SelectedLanguage.english,
+    ));
+  }
+
+  Future<void> setLanguageSpanish() async {
+    emit(state.copyWith(
+      selectedLanguage: SelectedLanguage.spanish,
+    ));
+  }
+
+  Future<void> setLanguageFrench() async {
+    emit(state.copyWith(
+      selectedLanguage: SelectedLanguage.french,
+    ));
+  }
+
+  Future<void> setLanguageItalian() async {
+    emit(state.copyWith(
+      selectedLanguage: SelectedLanguage.italian,
+    ));
+  }
+
+  Future<void> setLanguagePolish() async {
+    emit(state.copyWith(
+      selectedLanguage: SelectedLanguage.polish,
+    ));
+  }
 }

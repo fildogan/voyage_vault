@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:voyage_vault/app/cubit/root_cubit.dart';
 import 'package:voyage_vault/features/auth/pages/user_profile.dart';
+import 'package:voyage_vault/features/home/pages/settings/pages/language_selection.dart';
 import 'package:voyage_vault/features/home/pages/settings/pages/theme_selection.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -97,7 +98,14 @@ class MyAccountPageContent extends StatelessWidget {
                               borderRadius: BorderRadius.only(
                                   bottomLeft: Radius.circular(10),
                                   bottomRight: Radius.circular(10))),
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    const LanguageSelectionPage(),
+                              ),
+                            );
+                          },
                           title: const Text('Language'),
                           trailing: const Icon(Icons.chevron_right),
                         ),

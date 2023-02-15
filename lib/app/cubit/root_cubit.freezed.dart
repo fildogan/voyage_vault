@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$RootState {
   Status get status => throw _privateConstructorUsedError;
+  SelectedLanguage get selectedLanguage => throw _privateConstructorUsedError;
   ThemeMode get currentTheme => throw _privateConstructorUsedError;
   PackageInfo? get packageInfo => throw _privateConstructorUsedError;
 
@@ -30,7 +31,11 @@ abstract class $RootStateCopyWith<$Res> {
   factory $RootStateCopyWith(RootState value, $Res Function(RootState) then) =
       _$RootStateCopyWithImpl<$Res, RootState>;
   @useResult
-  $Res call({Status status, ThemeMode currentTheme, PackageInfo? packageInfo});
+  $Res call(
+      {Status status,
+      SelectedLanguage selectedLanguage,
+      ThemeMode currentTheme,
+      PackageInfo? packageInfo});
 }
 
 /// @nodoc
@@ -47,6 +52,7 @@ class _$RootStateCopyWithImpl<$Res, $Val extends RootState>
   @override
   $Res call({
     Object? status = null,
+    Object? selectedLanguage = null,
     Object? currentTheme = null,
     Object? packageInfo = freezed,
   }) {
@@ -55,6 +61,10 @@ class _$RootStateCopyWithImpl<$Res, $Val extends RootState>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as Status,
+      selectedLanguage: null == selectedLanguage
+          ? _value.selectedLanguage
+          : selectedLanguage // ignore: cast_nullable_to_non_nullable
+              as SelectedLanguage,
       currentTheme: null == currentTheme
           ? _value.currentTheme
           : currentTheme // ignore: cast_nullable_to_non_nullable
@@ -74,7 +84,11 @@ abstract class _$$_RootStateCopyWith<$Res> implements $RootStateCopyWith<$Res> {
       __$$_RootStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Status status, ThemeMode currentTheme, PackageInfo? packageInfo});
+  $Res call(
+      {Status status,
+      SelectedLanguage selectedLanguage,
+      ThemeMode currentTheme,
+      PackageInfo? packageInfo});
 }
 
 /// @nodoc
@@ -89,6 +103,7 @@ class __$$_RootStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? status = null,
+    Object? selectedLanguage = null,
     Object? currentTheme = null,
     Object? packageInfo = freezed,
   }) {
@@ -97,6 +112,10 @@ class __$$_RootStateCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as Status,
+      selectedLanguage: null == selectedLanguage
+          ? _value.selectedLanguage
+          : selectedLanguage // ignore: cast_nullable_to_non_nullable
+              as SelectedLanguage,
       currentTheme: null == currentTheme
           ? _value.currentTheme
           : currentTheme // ignore: cast_nullable_to_non_nullable
@@ -114,6 +133,7 @@ class __$$_RootStateCopyWithImpl<$Res>
 class _$_RootState extends _RootState {
   _$_RootState(
       {this.status = Status.initial,
+      this.selectedLanguage = SelectedLanguage.system,
       this.currentTheme = ThemeMode.system,
       this.packageInfo})
       : super._();
@@ -123,13 +143,16 @@ class _$_RootState extends _RootState {
   final Status status;
   @override
   @JsonKey()
+  final SelectedLanguage selectedLanguage;
+  @override
+  @JsonKey()
   final ThemeMode currentTheme;
   @override
   final PackageInfo? packageInfo;
 
   @override
   String toString() {
-    return 'RootState(status: $status, currentTheme: $currentTheme, packageInfo: $packageInfo)';
+    return 'RootState(status: $status, selectedLanguage: $selectedLanguage, currentTheme: $currentTheme, packageInfo: $packageInfo)';
   }
 
   @override
@@ -138,6 +161,8 @@ class _$_RootState extends _RootState {
         (other.runtimeType == runtimeType &&
             other is _$_RootState &&
             (identical(other.status, status) || other.status == status) &&
+            (identical(other.selectedLanguage, selectedLanguage) ||
+                other.selectedLanguage == selectedLanguage) &&
             (identical(other.currentTheme, currentTheme) ||
                 other.currentTheme == currentTheme) &&
             (identical(other.packageInfo, packageInfo) ||
@@ -145,8 +170,8 @@ class _$_RootState extends _RootState {
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, status, currentTheme, packageInfo);
+  int get hashCode => Object.hash(
+      runtimeType, status, selectedLanguage, currentTheme, packageInfo);
 
   @JsonKey(ignore: true)
   @override
@@ -158,12 +183,15 @@ class _$_RootState extends _RootState {
 abstract class _RootState extends RootState {
   factory _RootState(
       {final Status status,
+      final SelectedLanguage selectedLanguage,
       final ThemeMode currentTheme,
       final PackageInfo? packageInfo}) = _$_RootState;
   _RootState._() : super._();
 
   @override
   Status get status;
+  @override
+  SelectedLanguage get selectedLanguage;
   @override
   ThemeMode get currentTheme;
   @override

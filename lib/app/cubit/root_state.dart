@@ -4,6 +4,7 @@ part of 'root_cubit.dart';
 class RootState with _$RootState {
   factory RootState({
     @Default(Status.initial) Status status,
+    @Default(SelectedLanguage.system) SelectedLanguage selectedLanguage,
     @Default(ThemeMode.system) ThemeMode currentTheme,
     PackageInfo? packageInfo,
   }) = _RootState;
