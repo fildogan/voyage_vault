@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.filipdoganowski" "\0"
-            VALUE "FileDescription", "travel_cost_log" "\0"
+            VALUE "FileDescription", "voyage_vault" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "travel_cost_log" "\0"
+            VALUE "InternalName", "voyage_vault" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2023 com.filipdoganowski. All rights reserved." "\0"
-            VALUE "OriginalFilename", "travel_cost_log.exe" "\0"
-            VALUE "ProductName", "travel_cost_log" "\0"
+            VALUE "OriginalFilename", "voyage_vault.exe" "\0"
+            VALUE "ProductName", "voyage_vault" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

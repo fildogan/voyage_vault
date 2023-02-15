@@ -20,6 +20,7 @@ mixin _$AddPageContentState {
   String? get errorMessage => throw _privateConstructorUsedError;
   List<QuoteModel> get quotes => throw _privateConstructorUsedError;
   QuoteModel? get chosenQuote => throw _privateConstructorUsedError;
+  bool get closed => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AddPageContentStateCopyWith<AddPageContentState> get copyWith =>
@@ -36,7 +37,8 @@ abstract class $AddPageContentStateCopyWith<$Res> {
       {Status status,
       String? errorMessage,
       List<QuoteModel> quotes,
-      QuoteModel? chosenQuote});
+      QuoteModel? chosenQuote,
+      bool closed});
 }
 
 /// @nodoc
@@ -56,6 +58,7 @@ class _$AddPageContentStateCopyWithImpl<$Res, $Val extends AddPageContentState>
     Object? errorMessage = freezed,
     Object? quotes = null,
     Object? chosenQuote = freezed,
+    Object? closed = null,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -74,6 +77,10 @@ class _$AddPageContentStateCopyWithImpl<$Res, $Val extends AddPageContentState>
           ? _value.chosenQuote
           : chosenQuote // ignore: cast_nullable_to_non_nullable
               as QuoteModel?,
+      closed: null == closed
+          ? _value.closed
+          : closed // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -90,7 +97,8 @@ abstract class _$$_AddPageContentStateCopyWith<$Res>
       {Status status,
       String? errorMessage,
       List<QuoteModel> quotes,
-      QuoteModel? chosenQuote});
+      QuoteModel? chosenQuote,
+      bool closed});
 }
 
 /// @nodoc
@@ -108,6 +116,7 @@ class __$$_AddPageContentStateCopyWithImpl<$Res>
     Object? errorMessage = freezed,
     Object? quotes = null,
     Object? chosenQuote = freezed,
+    Object? closed = null,
   }) {
     return _then(_$_AddPageContentState(
       status: null == status
@@ -126,6 +135,10 @@ class __$$_AddPageContentStateCopyWithImpl<$Res>
           ? _value.chosenQuote
           : chosenQuote // ignore: cast_nullable_to_non_nullable
               as QuoteModel?,
+      closed: null == closed
+          ? _value.closed
+          : closed // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -137,7 +150,8 @@ class _$_AddPageContentState implements _AddPageContentState {
       {this.status = Status.initial,
       this.errorMessage,
       final List<QuoteModel> quotes = const [],
-      this.chosenQuote})
+      this.chosenQuote,
+      this.closed = false})
       : _quotes = quotes;
 
   @override
@@ -156,10 +170,13 @@ class _$_AddPageContentState implements _AddPageContentState {
 
   @override
   final QuoteModel? chosenQuote;
+  @override
+  @JsonKey()
+  final bool closed;
 
   @override
   String toString() {
-    return 'AddPageContentState(status: $status, errorMessage: $errorMessage, quotes: $quotes, chosenQuote: $chosenQuote)';
+    return 'AddPageContentState(status: $status, errorMessage: $errorMessage, quotes: $quotes, chosenQuote: $chosenQuote, closed: $closed)';
   }
 
   @override
@@ -172,12 +189,13 @@ class _$_AddPageContentState implements _AddPageContentState {
                 other.errorMessage == errorMessage) &&
             const DeepCollectionEquality().equals(other._quotes, _quotes) &&
             (identical(other.chosenQuote, chosenQuote) ||
-                other.chosenQuote == chosenQuote));
+                other.chosenQuote == chosenQuote) &&
+            (identical(other.closed, closed) || other.closed == closed));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, status, errorMessage,
-      const DeepCollectionEquality().hash(_quotes), chosenQuote);
+      const DeepCollectionEquality().hash(_quotes), chosenQuote, closed);
 
   @JsonKey(ignore: true)
   @override
@@ -192,7 +210,8 @@ abstract class _AddPageContentState implements AddPageContentState {
       {final Status status,
       final String? errorMessage,
       final List<QuoteModel> quotes,
-      final QuoteModel? chosenQuote}) = _$_AddPageContentState;
+      final QuoteModel? chosenQuote,
+      final bool closed}) = _$_AddPageContentState;
 
   @override
   Status get status;
@@ -202,6 +221,8 @@ abstract class _AddPageContentState implements AddPageContentState {
   List<QuoteModel> get quotes;
   @override
   QuoteModel? get chosenQuote;
+  @override
+  bool get closed;
   @override
   @JsonKey(ignore: true)
   _$$_AddPageContentStateCopyWith<_$_AddPageContentState> get copyWith =>

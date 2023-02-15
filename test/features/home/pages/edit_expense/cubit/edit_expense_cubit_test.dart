@@ -1,11 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:bloc_test/bloc_test.dart';
-import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:travel_cost_log/domain/repositories/voyages_repository.dart';
-import 'package:travel_cost_log/domain/repositories/expenses_repository.dart';
-import 'package:travel_cost_log/features/home/pages/edit_expense/cubit/edit_expense_cubit.dart';
+import 'package:voyage_vault/domain/repositories/voyages_repository.dart';
+import 'package:voyage_vault/domain/repositories/expenses_repository.dart';
+import 'package:voyage_vault/features/home/pages/edit_expense/cubit/edit_expense_cubit.dart';
 
 @GenerateNiceMocks([MockSpec<VoyagesRepository>()])
 @GenerateNiceMocks([MockSpec<ExpensesRepository>()])

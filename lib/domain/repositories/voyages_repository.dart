@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
-import 'package:travel_cost_log/domain/models/voyage_model.dart';
+import 'package:voyage_vault/domain/models/voyage_model.dart';
 
 @injectable
 class VoyagesRepository {

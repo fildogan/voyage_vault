@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:travel_cost_log/app/injection_container.dart';
-import 'package:travel_cost_log/domain/models/voyage_model.dart';
-import 'package:travel_cost_log/features/home/pages/add_expense/add_expense_page.dart';
-import 'package:travel_cost_log/features/home/pages/edit_expense/edit_expense_page.dart';
-import 'package:travel_cost_log/features/home/pages/edit_voyage/edit_voyage_page.dart';
-import 'package:travel_cost_log/features/home/pages/voyage_details/cubit/voyage_details_cubit.dart';
+import 'package:voyage_vault/app/injection_container.dart';
+import 'package:voyage_vault/domain/models/voyage_model.dart';
+import 'package:voyage_vault/features/home/pages/add_expense/add_expense_page.dart';
+import 'package:voyage_vault/features/home/pages/edit_expense/edit_expense_page.dart';
+import 'package:voyage_vault/features/home/pages/edit_voyage/edit_voyage_page.dart';
+import 'package:voyage_vault/features/home/pages/voyage_details/cubit/voyage_details_cubit.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 class VoyageDetailsPage extends StatelessWidget {
@@ -194,19 +194,15 @@ class VoyageDetailsPage extends StatelessWidget {
 
                                     SlidableAction(
                                       onPressed: (context) {
-                                        Navigator.of(context)
-                                            .push(MaterialPageRoute(
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
                                                 builder: (context) =>
                                                     EditExpensePage(
                                                       expenseModel:
                                                           expenseModel,
                                                       voyageModel:
                                                           currentVoyageModel,
-                                                    )))
-                                            .then((value) => context
-                                                .read<VoyageDetailsCubit>()
-                                                .refreshVoyage(
-                                                    currentVoyageModel.id));
+                                                    )));
                                       },
                                       backgroundColor: const Color(0xFF21B7CA),
                                       foregroundColor: Colors.white,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:travel_cost_log/domain/models/voyage_model.dart';
+import 'package:voyage_vault/domain/models/voyage_model.dart';
 
 class RemoveVoyageAlertDialog extends StatelessWidget {
   const RemoveVoyageAlertDialog({

@@ -3,9 +3,11 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
-import 'package:travel_cost_log/app/core/enums.dart';
-import 'package:travel_cost_log/domain/repositories/expenses_repository.dart';
-import 'package:travel_cost_log/domain/repositories/voyages_repository.dart';
+import 'package:voyage_vault/app/core/enums.dart';
+import 'package:voyage_vault/data/data_sources/local_data_sources/expense_category_list.dart';
+import 'package:voyage_vault/domain/models/voyage_model.dart';
+import 'package:voyage_vault/domain/repositories/expenses_repository.dart';
+import 'package:voyage_vault/domain/repositories/voyages_repository.dart';
 
 part 'add_expense_state.dart';
 part 'add_expense_cubit.freezed.dart';
@@ -21,22 +23,22 @@ class AddExpenseCubit extends Cubit<AddExpenseState> {
 
   StreamSubscription? _streamSubscription;
 
-  Future<void> add({
-    required String name,
-    required String voyageId,
-    required double price,
-    required String category,
-  }) async {
-    emit(
-      AddExpenseState(),
-    );
+  Future<void> start(VoyageModel? voyageModel) async {
+    emit(state.copyWith(voyageTitle: voyageModel?.title));
+    await getVoyageTitleStream();
+    emit(state.copyWith(status: Status.success));
+  }
+
+  Future<void> add() async {
+    final voyageId =
+        await _voyagesRepository.getVoyageIdByTitle(state.voyageTitle!);
+    emit(state.copyWith(formStatus: FormStatus.submitting));
     try {
-      await _expensesRepository.add(name, voyageId, price, category);
-      emit(
-        AddExpenseState(
-          saved: true,
-        ),
-      );
+      await _expensesRepository.add(
+          state.name, voyageId, state.price, state.category!);
+      emit(state.copyWith(
+          formStatus: FormStatus.success,
+          successMessage: '${state.name} added'));
     } catch (error) {
       emit(
         AddExpenseState(
@@ -49,7 +51,7 @@ class AddExpenseCubit extends Cubit<AddExpenseState> {
 
   Future<void> error(String errorMessage) async {
     emit(
-      AddExpenseState(
+      state.copyWith(
         errorMessage: errorMessage,
         status: state.status,
         voyageTitles: state.voyageTitles,
@@ -59,7 +61,7 @@ class AddExpenseCubit extends Cubit<AddExpenseState> {
 
   Future<void> getVoyageTitleStream() async {
     emit(
-      AddExpenseState(
+      state.copyWith(
         status: Status.loading,
       ),
     );
@@ -68,7 +70,7 @@ class AddExpenseCubit extends Cubit<AddExpenseState> {
         .map((voyages) => voyages.map((voyage) => voyage.title).toList())
         .listen(
           (voyageTitles) => emit(
-            AddExpenseState(
+            state.copyWith(
               status: Status.success,
               voyageTitles: voyageTitles,
             ),
@@ -83,42 +85,28 @@ class AddExpenseCubit extends Cubit<AddExpenseState> {
       );
   }
 
-  Future<void> addExpenseByVoyageTitle({
+  Future<void> changeName({
     required String name,
-    required String voyageTitle,
-    required double price,
-    required String category,
   }) async {
-    // emit(
-    //   AddExpenseState(),
-    // );
-    final voyageId = await _voyagesRepository.getVoyageIdByTitle(voyageTitle);
-    emit(
-      AddExpenseState(
-        voyageId: voyageId,
-      ),
-    );
-    add(name: name, voyageId: voyageId, price: price, category: category);
+    emit(state.copyWith(name: name));
   }
 
-  Future<void> addExpenseAndCheck({
-    String? name,
-    String? voyageTitle,
-    double? price,
-    String? category,
+  Future<void> changePrice({
+    required double price,
   }) async {
-    if (name == null ||
-        voyageTitle == null ||
-        price == null ||
-        category == null) {
-      error('Please fill all fields');
-    } else {
-      addExpenseByVoyageTitle(
-          name: name,
-          voyageTitle: voyageTitle,
-          price: price,
-          category: category);
-    }
+    emit(state.copyWith(price: price));
+  }
+
+  Future<void> changeCategory({
+    required String category,
+  }) async {
+    emit(state.copyWith(category: category));
+  }
+
+  Future<void> changeVoyageTitle({
+    required String voyageTitle,
+  }) async {
+    emit(state.copyWith(voyageTitle: voyageTitle));
   }
 
   @override

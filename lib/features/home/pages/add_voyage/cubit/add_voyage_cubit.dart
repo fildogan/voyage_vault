@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
-import 'package:travel_cost_log/app/core/enums.dart';
-import 'package:travel_cost_log/domain/repositories/voyages_repository.dart';
+import 'package:voyage_vault/app/core/enums.dart';
+import 'package:voyage_vault/domain/repositories/voyages_repository.dart';
 
 part 'add_voyage_state.dart';
 part 'add_voyage_cubit.freezed.dart';

@@ -17,11 +17,18 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$AddExpenseState {
   Status get status => throw _privateConstructorUsedError;
-  bool get saved => throw _privateConstructorUsedError;
+  FormStatus get formStatus => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
+  String? get successMessage => throw _privateConstructorUsedError;
   List<String> get categoryTitles => throw _privateConstructorUsedError;
   List<String> get voyageTitles => throw _privateConstructorUsedError;
   String get voyageId => throw _privateConstructorUsedError;
+  String get expenseId => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+  String? get category => throw _privateConstructorUsedError;
+  double get price => throw _privateConstructorUsedError;
+  String? get voyageTitle => throw _privateConstructorUsedError;
+  DateTime? get dateAdded => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AddExpenseStateCopyWith<AddExpenseState> get copyWith =>
@@ -36,11 +43,18 @@ abstract class $AddExpenseStateCopyWith<$Res> {
   @useResult
   $Res call(
       {Status status,
-      bool saved,
+      FormStatus formStatus,
       String? errorMessage,
+      String? successMessage,
       List<String> categoryTitles,
       List<String> voyageTitles,
-      String voyageId});
+      String voyageId,
+      String expenseId,
+      String name,
+      String? category,
+      double price,
+      String? voyageTitle,
+      DateTime? dateAdded});
 }
 
 /// @nodoc
@@ -57,24 +71,35 @@ class _$AddExpenseStateCopyWithImpl<$Res, $Val extends AddExpenseState>
   @override
   $Res call({
     Object? status = null,
-    Object? saved = null,
+    Object? formStatus = null,
     Object? errorMessage = freezed,
+    Object? successMessage = freezed,
     Object? categoryTitles = null,
     Object? voyageTitles = null,
     Object? voyageId = null,
+    Object? expenseId = null,
+    Object? name = null,
+    Object? category = freezed,
+    Object? price = null,
+    Object? voyageTitle = freezed,
+    Object? dateAdded = freezed,
   }) {
     return _then(_value.copyWith(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as Status,
-      saved: null == saved
-          ? _value.saved
-          : saved // ignore: cast_nullable_to_non_nullable
-              as bool,
+      formStatus: null == formStatus
+          ? _value.formStatus
+          : formStatus // ignore: cast_nullable_to_non_nullable
+              as FormStatus,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
+      successMessage: freezed == successMessage
+          ? _value.successMessage
+          : successMessage // ignore: cast_nullable_to_non_nullable
               as String?,
       categoryTitles: null == categoryTitles
           ? _value.categoryTitles
@@ -88,6 +113,30 @@ class _$AddExpenseStateCopyWithImpl<$Res, $Val extends AddExpenseState>
           ? _value.voyageId
           : voyageId // ignore: cast_nullable_to_non_nullable
               as String,
+      expenseId: null == expenseId
+          ? _value.expenseId
+          : expenseId // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      category: freezed == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as String?,
+      price: null == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as double,
+      voyageTitle: freezed == voyageTitle
+          ? _value.voyageTitle
+          : voyageTitle // ignore: cast_nullable_to_non_nullable
+              as String?,
+      dateAdded: freezed == dateAdded
+          ? _value.dateAdded
+          : dateAdded // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ) as $Val);
   }
 }
@@ -102,11 +151,18 @@ abstract class _$$_AddExpenseStateCopyWith<$Res>
   @useResult
   $Res call(
       {Status status,
-      bool saved,
+      FormStatus formStatus,
       String? errorMessage,
+      String? successMessage,
       List<String> categoryTitles,
       List<String> voyageTitles,
-      String voyageId});
+      String voyageId,
+      String expenseId,
+      String name,
+      String? category,
+      double price,
+      String? voyageTitle,
+      DateTime? dateAdded});
 }
 
 /// @nodoc
@@ -121,24 +177,35 @@ class __$$_AddExpenseStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? status = null,
-    Object? saved = null,
+    Object? formStatus = null,
     Object? errorMessage = freezed,
+    Object? successMessage = freezed,
     Object? categoryTitles = null,
     Object? voyageTitles = null,
     Object? voyageId = null,
+    Object? expenseId = null,
+    Object? name = null,
+    Object? category = freezed,
+    Object? price = null,
+    Object? voyageTitle = freezed,
+    Object? dateAdded = freezed,
   }) {
     return _then(_$_AddExpenseState(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as Status,
-      saved: null == saved
-          ? _value.saved
-          : saved // ignore: cast_nullable_to_non_nullable
-              as bool,
+      formStatus: null == formStatus
+          ? _value.formStatus
+          : formStatus // ignore: cast_nullable_to_non_nullable
+              as FormStatus,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
+      successMessage: freezed == successMessage
+          ? _value.successMessage
+          : successMessage // ignore: cast_nullable_to_non_nullable
               as String?,
       categoryTitles: null == categoryTitles
           ? _value._categoryTitles
@@ -152,31 +219,65 @@ class __$$_AddExpenseStateCopyWithImpl<$Res>
           ? _value.voyageId
           : voyageId // ignore: cast_nullable_to_non_nullable
               as String,
+      expenseId: null == expenseId
+          ? _value.expenseId
+          : expenseId // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      category: freezed == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as String?,
+      price: null == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as double,
+      voyageTitle: freezed == voyageTitle
+          ? _value.voyageTitle
+          : voyageTitle // ignore: cast_nullable_to_non_nullable
+              as String?,
+      dateAdded: freezed == dateAdded
+          ? _value.dateAdded
+          : dateAdded // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
 
 /// @nodoc
 
-class _$_AddExpenseState implements _AddExpenseState {
+class _$_AddExpenseState extends _AddExpenseState {
   _$_AddExpenseState(
       {this.status = Status.initial,
-      this.saved = false,
+      this.formStatus = FormStatus.initial,
       this.errorMessage,
-      final List<String> categoryTitles = const [],
+      this.successMessage,
+      final List<String> categoryTitles = expenseCategoryList,
       final List<String> voyageTitles = const [],
-      this.voyageId = ''})
+      this.voyageId = '',
+      this.expenseId = '',
+      this.name = '',
+      this.category,
+      this.price = 0,
+      this.voyageTitle,
+      this.dateAdded})
       : _categoryTitles = categoryTitles,
-        _voyageTitles = voyageTitles;
+        _voyageTitles = voyageTitles,
+        super._();
 
   @override
   @JsonKey()
   final Status status;
   @override
   @JsonKey()
-  final bool saved;
+  final FormStatus formStatus;
   @override
   final String? errorMessage;
+  @override
+  final String? successMessage;
   final List<String> _categoryTitles;
   @override
   @JsonKey()
@@ -198,10 +299,25 @@ class _$_AddExpenseState implements _AddExpenseState {
   @override
   @JsonKey()
   final String voyageId;
+  @override
+  @JsonKey()
+  final String expenseId;
+  @override
+  @JsonKey()
+  final String name;
+  @override
+  final String? category;
+  @override
+  @JsonKey()
+  final double price;
+  @override
+  final String? voyageTitle;
+  @override
+  final DateTime? dateAdded;
 
   @override
   String toString() {
-    return 'AddExpenseState(status: $status, saved: $saved, errorMessage: $errorMessage, categoryTitles: $categoryTitles, voyageTitles: $voyageTitles, voyageId: $voyageId)';
+    return 'AddExpenseState(status: $status, formStatus: $formStatus, errorMessage: $errorMessage, successMessage: $successMessage, categoryTitles: $categoryTitles, voyageTitles: $voyageTitles, voyageId: $voyageId, expenseId: $expenseId, name: $name, category: $category, price: $price, voyageTitle: $voyageTitle, dateAdded: $dateAdded)';
   }
 
   @override
@@ -210,26 +326,46 @@ class _$_AddExpenseState implements _AddExpenseState {
         (other.runtimeType == runtimeType &&
             other is _$_AddExpenseState &&
             (identical(other.status, status) || other.status == status) &&
-            (identical(other.saved, saved) || other.saved == saved) &&
+            (identical(other.formStatus, formStatus) ||
+                other.formStatus == formStatus) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage) &&
+            (identical(other.successMessage, successMessage) ||
+                other.successMessage == successMessage) &&
             const DeepCollectionEquality()
                 .equals(other._categoryTitles, _categoryTitles) &&
             const DeepCollectionEquality()
                 .equals(other._voyageTitles, _voyageTitles) &&
             (identical(other.voyageId, voyageId) ||
-                other.voyageId == voyageId));
+                other.voyageId == voyageId) &&
+            (identical(other.expenseId, expenseId) ||
+                other.expenseId == expenseId) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.category, category) ||
+                other.category == category) &&
+            (identical(other.price, price) || other.price == price) &&
+            (identical(other.voyageTitle, voyageTitle) ||
+                other.voyageTitle == voyageTitle) &&
+            (identical(other.dateAdded, dateAdded) ||
+                other.dateAdded == dateAdded));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       status,
-      saved,
+      formStatus,
       errorMessage,
+      successMessage,
       const DeepCollectionEquality().hash(_categoryTitles),
       const DeepCollectionEquality().hash(_voyageTitles),
-      voyageId);
+      voyageId,
+      expenseId,
+      name,
+      category,
+      price,
+      voyageTitle,
+      dateAdded);
 
   @JsonKey(ignore: true)
   @override
@@ -238,27 +374,49 @@ class _$_AddExpenseState implements _AddExpenseState {
       __$$_AddExpenseStateCopyWithImpl<_$_AddExpenseState>(this, _$identity);
 }
 
-abstract class _AddExpenseState implements AddExpenseState {
+abstract class _AddExpenseState extends AddExpenseState {
   factory _AddExpenseState(
       {final Status status,
-      final bool saved,
+      final FormStatus formStatus,
       final String? errorMessage,
+      final String? successMessage,
       final List<String> categoryTitles,
       final List<String> voyageTitles,
-      final String voyageId}) = _$_AddExpenseState;
+      final String voyageId,
+      final String expenseId,
+      final String name,
+      final String? category,
+      final double price,
+      final String? voyageTitle,
+      final DateTime? dateAdded}) = _$_AddExpenseState;
+  _AddExpenseState._() : super._();
 
   @override
   Status get status;
   @override
-  bool get saved;
+  FormStatus get formStatus;
   @override
   String? get errorMessage;
+  @override
+  String? get successMessage;
   @override
   List<String> get categoryTitles;
   @override
   List<String> get voyageTitles;
   @override
   String get voyageId;
+  @override
+  String get expenseId;
+  @override
+  String get name;
+  @override
+  String? get category;
+  @override
+  double get price;
+  @override
+  String? get voyageTitle;
+  @override
+  DateTime? get dateAdded;
   @override
   @JsonKey(ignore: true)
   _$$_AddExpenseStateCopyWith<_$_AddExpenseState> get copyWith =>

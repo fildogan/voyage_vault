@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:travel_cost_log/app/injection_container.dart';
-import 'package:travel_cost_log/domain/models/voyage_model.dart';
-import 'package:travel_cost_log/features/home/pages/edit_voyage/cubit/edit_voyage_cubit.dart';
+import 'package:voyage_vault/app/injection_container.dart';
+import 'package:voyage_vault/domain/models/voyage_model.dart';
+import 'package:voyage_vault/features/home/pages/edit_voyage/cubit/edit_voyage_cubit.dart';
 
 class EditVoyagePage extends StatelessWidget {
   const EditVoyagePage({super.key, required this.voyageModel});

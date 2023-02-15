@@ -3,9 +3,9 @@ import 'dart:math';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
-import 'package:travel_cost_log/app/core/enums.dart';
-import 'package:travel_cost_log/domain/models/quote_model.dart';
-import 'package:travel_cost_log/domain/repositories/quotes_repository.dart';
+import 'package:voyage_vault/app/core/enums.dart';
+import 'package:voyage_vault/domain/models/quote_model.dart';
+import 'package:voyage_vault/domain/repositories/quotes_repository.dart';
 
 part 'add_page_content_state.dart';
 part 'add_page_content_cubit.freezed.dart';
@@ -17,6 +17,9 @@ class AddPageContentCubit extends Cubit<AddPageContentState> {
   final QuotesRepository _quotesRepository;
 
   Future<void> start() async {
+    if (state.closed) {
+      return;
+    }
     emit(
       AddPageContentState(
         status: Status.loading,
@@ -25,20 +28,30 @@ class AddPageContentCubit extends Cubit<AddPageContentState> {
     try {
       final quotes = await _quotesRepository.getQuoteModels();
       final intValue = Random().nextInt(quotes.length - 1);
-      emit(
-        AddPageContentState(
-          status: Status.success,
-          quotes: quotes,
-          chosenQuote: quotes[intValue],
-        ),
-      );
+      if (!state.closed) {
+        emit(
+          AddPageContentState(
+            status: Status.success,
+            quotes: quotes,
+            chosenQuote: quotes[intValue],
+          ),
+        );
+      }
     } catch (error) {
-      emit(
-        AddPageContentState(
-          status: Status.error,
-          errorMessage: error.toString(),
-        ),
-      );
+      if (!state.closed) {
+        emit(
+          AddPageContentState(
+            status: Status.error,
+            errorMessage: error.toString(),
+          ),
+        );
+      }
     }
+  }
+
+  @override
+  Future<void> close() {
+    emit(state.copyWith(closed: true));
+    return super.close();
   }
 }
