@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:travel_cost_log/app/core/enums.dart';
-import 'package:travel_cost_log/app/injection_container.dart';
-import 'package:travel_cost_log/domain/models/voyage_model.dart';
-import 'package:travel_cost_log/features/home/pages/add_expense/cubit/add_expense_cubit.dart';
+import 'package:voyage_vault/app/core/enums.dart';
+import 'package:voyage_vault/app/injection_container.dart';
+import 'package:voyage_vault/domain/models/voyage_model.dart';
+import 'package:voyage_vault/features/home/pages/add_expense/cubit/add_expense_cubit.dart';
 
 class AddExpensePage extends StatelessWidget {
   AddExpensePage({super.key, this.voyageModel});

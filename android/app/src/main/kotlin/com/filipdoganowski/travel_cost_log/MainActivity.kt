@@ -1,4 +1,4 @@
-package com.filipdoganowski.travel_cost_log
+package com.filipdoganowski.voyage_vault
 
 import io.flutter.embedding.android.FlutterActivity
 

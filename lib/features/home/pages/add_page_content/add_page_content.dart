@@ -1,10 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:travel_cost_log/app/injection_container.dart';
-import 'package:travel_cost_log/features/home/pages/add_expense/add_expense_page.dart';
-import 'package:travel_cost_log/features/home/pages/add_page_content/cubit/add_page_content_cubit.dart';
-import 'package:travel_cost_log/features/home/pages/add_voyage/add_voyage_page.dart';
+import 'package:voyage_vault/app/injection_container.dart';
+import 'package:voyage_vault/features/home/pages/add_expense/add_expense_page.dart';
+import 'package:voyage_vault/features/home/pages/add_page_content/cubit/add_page_content_cubit.dart';
+import 'package:voyage_vault/features/home/pages/add_voyage/add_voyage_page.dart';
 
 class AddPageContent extends StatelessWidget {
   const AddPageContent({super.key});

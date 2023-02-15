@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:travel_cost_log/app/core/config.dart';
-import 'package:travel_cost_log/app/cubit/root_cubit.dart';
-import 'package:travel_cost_log/features/auth/pages/auth_gate.dart';
+import 'package:voyage_vault/app/core/config.dart';
+import 'package:voyage_vault/app/cubit/root_cubit.dart';
+import 'package:voyage_vault/features/auth/pages/auth_gate.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) => BlocProvider(
-        create: (context) => RootCubit(),
+        create: (context) => RootCubit()..setPackageInfo(),
         child: BlocBuilder<RootCubit, RootState>(
           builder: (context, state) {
             return MaterialApp(

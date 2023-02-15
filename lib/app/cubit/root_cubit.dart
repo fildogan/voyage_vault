@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:travel_cost_log/app/core/enums.dart';
+import 'package:voyage_vault/app/core/enums.dart';
 part 'root_state.dart';
 part 'root_cubit.freezed.dart';
 

@@ -1,6 +1,6 @@
 {
-    "name": "travel_cost_log",
-    "short_name": "travel_cost_log",
+    "name": "voyage_vault",
+    "short_name": "voyage_vault",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#hexcode",

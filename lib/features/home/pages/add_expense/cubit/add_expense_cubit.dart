@@ -3,11 +3,11 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
-import 'package:travel_cost_log/app/core/enums.dart';
-import 'package:travel_cost_log/data/data_sources/local_data_sources/expense_category_list.dart';
-import 'package:travel_cost_log/domain/models/voyage_model.dart';
-import 'package:travel_cost_log/domain/repositories/expenses_repository.dart';
-import 'package:travel_cost_log/domain/repositories/voyages_repository.dart';
+import 'package:voyage_vault/app/core/enums.dart';
+import 'package:voyage_vault/data/data_sources/local_data_sources/expense_category_list.dart';
+import 'package:voyage_vault/domain/models/voyage_model.dart';
+import 'package:voyage_vault/domain/repositories/expenses_repository.dart';
+import 'package:voyage_vault/domain/repositories/voyages_repository.dart';
 
 part 'add_expense_state.dart';
 part 'add_expense_cubit.freezed.dart';

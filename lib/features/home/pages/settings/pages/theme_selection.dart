@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:travel_cost_log/app/cubit/root_cubit.dart';
+import 'package:voyage_vault/app/cubit/root_cubit.dart';
 
 class ThemeSelectionPage extends StatelessWidget {
   const ThemeSelectionPage({super.key});

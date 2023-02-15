@@ -7,28 +7,27 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
-import 'package:travel_cost_log/app/cubit/root_cubit.dart' as _i6;
-import 'package:travel_cost_log/data/data_sources/remote_data_sources/quotes_remote_data_source.dart'
+import 'package:voyage_vault/app/cubit/root_cubit.dart' as _i6;
+import 'package:voyage_vault/data/data_sources/remote_data_sources/quotes_remote_data_source.dart'
     as _i4;
-import 'package:travel_cost_log/domain/repositories/expenses_repository.dart'
+import 'package:voyage_vault/domain/repositories/expenses_repository.dart'
     as _i3;
-import 'package:travel_cost_log/domain/repositories/quotes_repository.dart'
-    as _i5;
-import 'package:travel_cost_log/domain/repositories/voyages_repository.dart'
+import 'package:voyage_vault/domain/repositories/quotes_repository.dart' as _i5;
+import 'package:voyage_vault/domain/repositories/voyages_repository.dart'
     as _i7;
-import 'package:travel_cost_log/features/home/pages/add_expense/cubit/add_expense_cubit.dart'
+import 'package:voyage_vault/features/home/pages/add_expense/cubit/add_expense_cubit.dart'
     as _i8;
-import 'package:travel_cost_log/features/home/pages/add_page_content/cubit/add_page_content_cubit.dart'
+import 'package:voyage_vault/features/home/pages/add_page_content/cubit/add_page_content_cubit.dart'
     as _i9;
-import 'package:travel_cost_log/features/home/pages/add_voyage/cubit/add_voyage_cubit.dart'
+import 'package:voyage_vault/features/home/pages/add_voyage/cubit/add_voyage_cubit.dart'
     as _i10;
-import 'package:travel_cost_log/features/home/pages/edit_expense/cubit/edit_expense_cubit.dart'
+import 'package:voyage_vault/features/home/pages/edit_expense/cubit/edit_expense_cubit.dart'
     as _i11;
-import 'package:travel_cost_log/features/home/pages/edit_voyage/cubit/edit_voyage_cubit.dart'
+import 'package:voyage_vault/features/home/pages/edit_voyage/cubit/edit_voyage_cubit.dart'
     as _i12;
-import 'package:travel_cost_log/features/home/pages/voyage_details/cubit/voyage_details_cubit.dart'
+import 'package:voyage_vault/features/home/pages/voyage_details/cubit/voyage_details_cubit.dart'
     as _i13;
-import 'package:travel_cost_log/features/home/pages/voyages_page_content/cubit/voyages_cubit.dart'
+import 'package:voyage_vault/features/home/pages/voyages_page_content/cubit/voyages_cubit.dart'
     as _i14;
 
 /// ignore_for_file: unnecessary_lambdas

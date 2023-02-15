@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:travel_cost_log/app/injection_container.dart';
-import 'package:travel_cost_log/features/home/pages/add_voyage/cubit/add_voyage_cubit.dart';
+import 'package:voyage_vault/app/injection_container.dart';
+import 'package:voyage_vault/features/home/pages/add_voyage/cubit/add_voyage_cubit.dart';
 
 class AddVoyagePage extends StatefulWidget {
   const AddVoyagePage({super.key});
