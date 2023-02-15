@@ -1,3 +1,10 @@
 {
-  "voyageVault": "Voyage Vault"
+  "voyageVault": "Voyage Vault",
+  "addVoyage": "Add Voyage", 
+  "addExpense": "Add Expense",
+  "voyages": "Voyages",
+  "add": "Add",
+  "account": "Account"
+
+
 }

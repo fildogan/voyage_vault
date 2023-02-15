@@ -4,6 +4,7 @@ import 'package:voyage_vault/app/core/config.dart';
 import 'package:voyage_vault/app/cubit/root_cubit.dart';
 import 'package:voyage_vault/features/auth/pages/auth_gate.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
               darkTheme: ThemeData.dark(useMaterial3: true),
               themeMode: state.currentTheme,
               localizationsDelegates: const [
+                AppLocalizations.delegate,
                 GlobalMaterialLocalizations.delegate,
                 GlobalWidgetsLocalizations.delegate,
                 GlobalCupertinoLocalizations.delegate,

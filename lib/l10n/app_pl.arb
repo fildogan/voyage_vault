@@ -1,3 +1,8 @@
 {
-  "voyageVault": "Skarbiec Podróży"
+  "voyageVault": "Skarbiec Podróży",
+  "addVoyage": "Dodaj podróż",
+  "addExpense": "Dodaj wydatek",
+  "voyages": "Podróże",
+  "add": "Dodaj",
+  "account": "Konto"
 }

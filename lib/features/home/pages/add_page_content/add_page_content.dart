@@ -5,6 +5,7 @@ import 'package:voyage_vault/app/injection_container.dart';
 import 'package:voyage_vault/features/home/pages/add_expense/add_expense_page.dart';
 import 'package:voyage_vault/features/home/pages/add_page_content/cubit/add_page_content_cubit.dart';
 import 'package:voyage_vault/features/home/pages/add_voyage/add_voyage_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddPageContent extends StatelessWidget {
   const AddPageContent({super.key});
@@ -68,7 +69,7 @@ class AddPageContent extends StatelessWidget {
                         fullscreenDialog: true,
                       ),
                     ),
-                    child: const Text('Add Voyage'),
+                    child: Text(AppLocalizations.of(context).addVoyage),
                   ),
                   const SizedBox(
                     height: 10,
@@ -80,7 +81,7 @@ class AddPageContent extends StatelessWidget {
                         fullscreenDialog: true,
                       ),
                     ),
-                    child: const Text('Add Expense'),
+                    child: Text(AppLocalizations.of(context).addExpense),
                   ),
                   const Spacer(
                     flex: 4,

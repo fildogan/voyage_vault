@@ -1,3 +1,6 @@
 {
-  "voyageVault": "Voûte de Voyage"
+  "voyageVault": "Voûte de Voyage",
+  "addVoyage": "Ajouter un Voyage",
+  "addExpense": "Ajouter une Dépense",
+  "voyages": "Voyages"
 }

@@ -5,6 +5,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:voyage_vault/app/cubit/root_cubit.dart';
 import 'package:voyage_vault/features/auth/pages/user_profile.dart';
 import 'package:voyage_vault/features/home/pages/settings/pages/theme_selection.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MyAccountPageContent extends StatelessWidget {
   const MyAccountPageContent({super.key});
@@ -199,7 +200,7 @@ class MyAccountPageContent extends StatelessWidget {
                   const SizedBox(height: 20),
                   Center(
                     child: AutoSizeText(
-                      'VoyageVault ${packageinfo.version} (${packageinfo.buildNumber})',
+                      '${AppLocalizations.of(context).voyageVault} ${packageinfo.version} (${packageinfo.buildNumber})',
                       maxLines: 1,
                     ),
                   ),

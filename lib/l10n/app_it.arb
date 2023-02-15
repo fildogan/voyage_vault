@@ -1,3 +1,7 @@
 {
-  "voyageVault": "Caveau di Viaggio"
+  "voyageVault": "Cofanetto del viaggiatore",
+  "addVoyage": "Aggiungi viaggio",
+  "addExpense": "Aggiungi spesa",
+  "voyages": "Viaggi"
+
 }

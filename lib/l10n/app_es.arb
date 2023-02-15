@@ -1,3 +1,6 @@
 {
-  "voyageVault": "Bóveda de Viaje"
+  "voyageVault": "Bóveda de Viaje",
+  "addVoyage": "Agregar Viaje",
+  "addExpense": "Agregar Gasto",
+  "voyages": "Viajes"
 }
