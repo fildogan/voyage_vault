@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:voyage_vault/app/cubit/root_cubit.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ThemeSelectionPage extends StatelessWidget {
   const ThemeSelectionPage({super.key});
@@ -12,7 +13,8 @@ class ThemeSelectionPage extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.transparent,
-            title: const Text('Choose Theme'),
+            title: Text(
+                '${AppLocalizations.of(context).choose} ${AppLocalizations.of(context).theme}'),
           ),
           body: SafeArea(
             child: Center(

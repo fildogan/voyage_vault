@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:voyage_vault/app/injection_container.dart';
 import 'package:voyage_vault/domain/models/voyage_model.dart';
 import 'package:voyage_vault/features/home/pages/edit_voyage/cubit/edit_voyage_cubit.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class EditVoyagePage extends StatelessWidget {
   const EditVoyagePage({super.key, required this.voyageModel});
@@ -72,7 +73,7 @@ class EditVoyagePage extends StatelessWidget {
                                   state.description ?? voyageModel.description,
                             );
                       }),
-                      child: const Text('Save')),
+                      child: Text(AppLocalizations.of(context).save)),
                 ],
                 // automaticallyImplyLeading: false,
               ),
@@ -161,10 +162,10 @@ class _EditVoyagePageBody extends StatelessWidget {
               onChanged: ((value) {
                 context.read<EditVoyageCubit>().changeLocationValue(value);
               }),
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(),
-                labelText: 'Destination',
-                contentPadding: EdgeInsets.all(10),
+              decoration: InputDecoration(
+                border: const UnderlineInputBorder(),
+                labelText: AppLocalizations.of(context).destination,
+                contentPadding: const EdgeInsets.all(10),
               ),
             ),
             TextFormField(
@@ -251,12 +252,12 @@ class _EditVoyagePageBody extends StatelessWidget {
               maxLines: null,
               minLines: 3,
               keyboardType: TextInputType.multiline,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Description',
-                labelStyle: TextStyle(),
+              decoration: InputDecoration(
+                border: const OutlineInputBorder(),
+                labelText: AppLocalizations.of(context).description,
+                labelStyle: const TextStyle(),
                 alignLabelWithHint: true,
-                contentPadding: EdgeInsets.all(10),
+                contentPadding: const EdgeInsets.all(10),
               ),
             ),
           ],

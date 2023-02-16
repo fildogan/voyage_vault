@@ -14,7 +14,8 @@ class LanguageSelectionPage extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.transparent,
-            title: Text('Choose ${AppLocalizations.of(context).language}'),
+            title: Text(
+                '${AppLocalizations.of(context).choose} ${AppLocalizations.of(context).language}'),
           ),
           body: SafeArea(
             child: Center(

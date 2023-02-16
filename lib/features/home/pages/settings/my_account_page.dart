@@ -29,7 +29,7 @@ class MyAccountPageContent extends StatelessWidget {
                 // mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const SizedBox(height: 20),
-                  const Text('Account'),
+                  Text(AppLocalizations.of(context).account),
                   const SizedBox(height: 10),
                   Container(
                     decoration: BoxDecoration(
@@ -48,7 +48,8 @@ class MyAccountPageContent extends StatelessWidget {
                               ),
                             );
                           },
-                          title: const Text('Account settings'),
+                          title: Text(
+                              AppLocalizations.of(context).accountSettings),
                           trailing: const Icon(Icons.chevron_right),
                         ),
                         // Padding(
@@ -89,7 +90,7 @@ class MyAccountPageContent extends StatelessWidget {
                               ),
                             );
                           },
-                          title: const Text('Theme'),
+                          title: Text(AppLocalizations.of(context).theme),
                           trailing: const Icon(Icons.chevron_right),
                         ),
                         const Seperator(),
