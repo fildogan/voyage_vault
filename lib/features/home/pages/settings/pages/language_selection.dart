@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:voyage_vault/app/core/enums.dart';
 import 'package:voyage_vault/app/cubit/root_cubit.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LanguageSelectionPage extends StatelessWidget {
   const LanguageSelectionPage({super.key});
@@ -13,7 +14,7 @@ class LanguageSelectionPage extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.transparent,
-            title: const Text('Choose Language'),
+            title: Text('Choose ${AppLocalizations.of(context).language}'),
           ),
           body: SafeArea(
             child: Center(

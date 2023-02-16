@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:voyage_vault/app/core/constants.dart';
 import 'package:voyage_vault/app/core/enums.dart';
 part 'root_state.dart';
 part 'root_cubit.freezed.dart';
@@ -38,36 +39,42 @@ class RootCubit extends Cubit<RootState> {
   Future<void> setLanguageSystem() async {
     emit(state.copyWith(
       selectedLanguage: SelectedLanguage.system,
+      locale: null,
     ));
   }
 
   Future<void> setLanguageEnglish() async {
     emit(state.copyWith(
       selectedLanguage: SelectedLanguage.english,
+      locale: localeList[0],
     ));
   }
 
   Future<void> setLanguageSpanish() async {
     emit(state.copyWith(
       selectedLanguage: SelectedLanguage.spanish,
+      locale: localeList[1],
     ));
   }
 
   Future<void> setLanguageFrench() async {
     emit(state.copyWith(
       selectedLanguage: SelectedLanguage.french,
+      locale: localeList[2],
     ));
   }
 
   Future<void> setLanguageItalian() async {
     emit(state.copyWith(
       selectedLanguage: SelectedLanguage.italian,
+      locale: localeList[3],
     ));
   }
 
   Future<void> setLanguagePolish() async {
     emit(state.copyWith(
       selectedLanguage: SelectedLanguage.polish,
+      locale: localeList[4],
     ));
   }
 }

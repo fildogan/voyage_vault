@@ -4,7 +4,8 @@
   "addExpense": "Add Expense",
   "voyages": "Voyages",
   "add": "Add",
-  "account": "Account"
+  "account": "Account",
+  "language" : "Language"
 
 
 }

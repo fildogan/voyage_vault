@@ -4,5 +4,7 @@
   "addExpense": "Dodaj wydatek",
   "voyages": "Podróże",
   "add": "Dodaj",
-  "account": "Konto"
+  "account": "Konto",
+    "language" : "Język"
+
 }

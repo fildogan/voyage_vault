@@ -2,5 +2,7 @@
   "voyageVault": "Voûte de Voyage",
   "addVoyage": "Ajouter un Voyage",
   "addExpense": "Ajouter une Dépense",
-  "voyages": "Voyages"
+  "voyages": "Voyages",
+    "language" : "Langue"
+
 }

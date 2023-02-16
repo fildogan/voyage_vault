@@ -2,5 +2,7 @@
   "voyageVault": "Bóveda de Viaje",
   "addVoyage": "Agregar Viaje",
   "addExpense": "Agregar Gasto",
-  "voyages": "Viajes"
+  "voyages": "Viajes",
+    "language" : "idioma"
+
 }
