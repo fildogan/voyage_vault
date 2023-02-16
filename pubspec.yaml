@@ -58,6 +58,7 @@ dependencies:
   package_info_plus: ^3.0.3
   flutter_localizations:
     sdk: flutter
+  url_launcher: ^6.1.9
 
 
   # flutterfire_ui: ^0.4.3+20
