@@ -3,7 +3,20 @@
   "addVoyage": "Aggiungi viaggio",
   "addExpense": "Aggiungi spesa",
   "voyages": "Viaggi",
-    "language" : "Lingua"
-
-
+  "add": "Aggiungi",
+  "account": "Account",
+  "language" : "Lingua",
+  "choose": "Scegliere",
+  "theme": "Tema",
+  "accountSettings": "Impostazioni account",
+  "edit": "Modifica",
+  "save": "Salva",
+  "expense": "Spesa",
+  "amount": "Importo",
+  "category": "Categoria",
+  "dateAdded": "Data di aggiunta",
+  "spentDate": "Data di spesa",
+  "delete": "Elimina",
+  "destination": "Destinazione",
+  "description": "Descrizione"
 }

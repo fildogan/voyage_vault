@@ -5,7 +5,18 @@
   "voyages": "Voyages",
   "add": "Add",
   "account": "Account",
-  "language" : "Language"
-
-
+  "language" : "Language",
+  "choose" : "Choose",
+  "theme" : "Theme",
+  "accountSettings" : "Account settings",
+  "edit" : "Edit",
+  "save" : "Save",
+  "expense" : "Expense",
+  "amount" : "Amount",
+  "category" : "Category",
+  "dateAdded" : "Date Added",
+  "spentDate" : "spent Date",
+  "delete" : "Delete",
+  "destination" : "Destination",
+  "description" : "Description"
 }

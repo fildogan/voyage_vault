@@ -3,6 +3,20 @@
   "addVoyage": "Ajouter un Voyage",
   "addExpense": "Ajouter une Dépense",
   "voyages": "Voyages",
-    "language" : "Langue"
-
+  "add": "Ajouter",
+  "account": "Compte",
+  "language" : "Langue",
+  "choose": "Choisir",
+  "theme": "Thème",
+  "accountSettings": "Paramètres du compte",
+  "edit": "Modifier",
+  "save": "Enregistrer",
+  "expense": "Dépense",
+  "amount": "Montant",
+  "category": "Catégorie",
+  "dateAdded": "Date d'ajout",
+  "spentDate": "Date de dépense",
+  "delete": "Supprimer",
+  "destination": "Destination",
+  "description": "Description"
 }

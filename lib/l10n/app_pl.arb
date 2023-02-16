@@ -5,6 +5,19 @@
   "voyages": "Podróże",
   "add": "Dodaj",
   "account": "Konto",
-    "language" : "Język"
+  "language" : "Język",
+  "choose": "Wybierz",
+  "theme": "Motyw",
+  "accountSettings": "Ustawienia konta",
+  "edit": "Edytuj",
+  "save": "Zapisz",
+  "expense": "Wydatek",
+  "amount": "Kwota",
+  "category": "Kategoria",
+  "dateAdded": "Data dodania",
+  "spentDate": "Data wydatku",
+  "delete": "Usuń",
+  "destination": "Cel podróży",
+  "description": "Opis"
 
 }

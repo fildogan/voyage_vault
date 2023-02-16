@@ -106,7 +106,7 @@ class MyAccountPageContent extends StatelessWidget {
                               ),
                             );
                           },
-                          title: const Text('Language'),
+                          title: Text(AppLocalizations.of(context).language),
                           trailing: const Icon(Icons.chevron_right),
                         ),
                       ],
