@@ -19,5 +19,16 @@
   "spentDate": "Date de dépense",
   "delete": "Supprimer",
   "destination": "Destination",
-  "description": "Description"
+  "description": "Description",
+
+  "nDays": "{count, plural, =0{0 jours} =1{1 jour} other{{count} jours}}",
+  "@nDays": {
+    "description": "A plural message",
+    "placeholders": {
+        "count": {
+        "type": "num",
+        "format": "compact"
+     }
+    }
+  }   
 }

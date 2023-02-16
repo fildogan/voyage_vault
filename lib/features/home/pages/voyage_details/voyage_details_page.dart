@@ -247,11 +247,11 @@ class VoyageDetailsPage extends StatelessWidget {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                  'Expense: ${expenseModel.name}'),
+                                                  '${AppLocalizations.of(context).expense}: ${expenseModel.name}'),
                                               Text(
                                                   'Amount: ${expenseModel.price.toString()}'),
                                               Text(
-                                                  'Category: ${expenseModel.category}'),
+                                                  '${AppLocalizations.of(context).category}: ${expenseModel.category}'),
                                               Text(
                                                   'Date Added: ${expenseModel.dateAddedFormated()}'),
                                             ],

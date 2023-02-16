@@ -19,6 +19,17 @@
   "spentDate": "Data wydatku",
   "delete": "Usuń",
   "destination": "Cel podróży",
-  "description": "Opis"
+  "description": "Opis",
+
+  "nDays": "{count, plural, =0{0 dni} =1{1 dzień} other{{count} dni}}",
+  "@nDays": {
+    "description": "A plural message",
+    "placeholders": {
+        "count": {
+        "type": "num",
+        "format": "compact"
+     }
+    }
+  }    
 
 }
