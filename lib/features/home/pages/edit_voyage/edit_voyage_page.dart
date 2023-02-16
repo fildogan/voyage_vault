@@ -56,7 +56,8 @@ class EditVoyagePage extends StatelessWidget {
             return Scaffold(
               appBar: AppBar(
                 backgroundColor: Colors.transparent,
-                title: const Text('Edit Voyage'),
+                title: Text(
+                    '${AppLocalizations.of(context).edit} ${AppLocalizations.of(context).voyage}'),
                 actions: [
                   TextButton(
                       onPressed: (() async {

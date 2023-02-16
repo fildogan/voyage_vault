@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:voyage_vault/app/cubit/root_cubit.dart';
 import 'package:voyage_vault/features/auth/pages/user_profile.dart';
 import 'package:voyage_vault/features/home/pages/settings/pages/language_selection.dart';
@@ -163,7 +164,9 @@ class MyAccountPageContent extends StatelessWidget {
                               borderRadius: BorderRadius.only(
                                   bottomLeft: Radius.circular(10),
                                   bottomRight: Radius.circular(10))),
-                          onTap: () {},
+                          onTap: () {
+                            launchEmail();
+                          },
                           title: const Text('Contact us'),
                           trailing: const Icon(Icons.email),
                         ),
@@ -222,6 +225,77 @@ class MyAccountPageContent extends StatelessWidget {
       },
     );
   }
+
+  Future launchEmail() async {
+    String email = Uri.encodeComponent("filip.doganowski@gmail.com");
+    String subject = Uri.encodeComponent("Feedback");
+    String body = Uri.encodeComponent("Hi!\nHere is my feedback:\n");
+    print(subject); //output: Hello%20Flutter
+    Uri mail = Uri.parse("mailto:$email?subject=$subject&body=$body");
+    try {
+      if (await launchUrl(mail)) {
+        //email app opened
+      } else {
+        //email app is not opened
+        throw 'Could not launch email app';
+      }
+    } on Exception catch (e) {
+      print('Error launching email: $e');
+      // Handle the error here, such as showing an error message to the user
+    }
+
+    // Future<void> launchEmail() async {
+    //   final email = 'mail@fluttercampus.com';
+    //   final subject = 'Hello Flutter';
+    //   final body = 'Hi! I\'m a Flutter Developer';
+    //   final uri = Uri(
+    //     scheme: 'mailto',
+    //     path: email,
+    //     queryParameters: {
+    //       'subject': subject,
+    //       'body': body,
+    //     },
+    //   );
+    //   try {
+    //     final success = await launch(uri.toString());
+    //     if (!success) {
+    //       throw 'Could not launch email app';
+    //     }
+    //   } on Exception catch (e) {
+    //     print('Error launching email: $e');
+    //     // Handle the error here, such as showing an error message to the user
+    //   }
+
+    // final Uri emailLaunchUri = Uri(
+    //   scheme: 'mailto',
+    //   path: 'filip.doganowski@gmail.com',
+    //   queryParameters: {
+    //     'subject': 'Help',
+    //     'body': 'Please help',
+    //   },
+    // );
+
+    // final urlString = emailLaunchUri.toString();
+    // if (await canLaunch(urlString)) {
+    //   await launch(urlString);
+    //   print('jjj');
+    // }
+
+    print('object');
+  }
+
+  // Future launchEmail() async {
+  //   const url =
+  //       'mailto:filip.doganowski@gmail.com?subject=Help&body=Please help';
+
+  //   // if (await canLaunch(url)) {
+  //   //   await launch(url);
+  //   //   print('jjj');
+  //   // }
+  //   await canLaunch(url) ? await launch(url) : print('ggg');
+
+  //   print('object');
+  // }
 }
 
 class Seperator extends StatelessWidget {

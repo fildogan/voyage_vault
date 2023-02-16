@@ -56,7 +56,8 @@ class EditExpensePage extends StatelessWidget {
             return Scaffold(
               appBar: AppBar(
                 backgroundColor: Colors.transparent,
-                title: const Text('Edit Expense'),
+                title: Text(
+                    '${AppLocalizations.of(context).edit} ${AppLocalizations.of(context).expense}'),
                 actions: [
                   _saveButton(context),
                 ],

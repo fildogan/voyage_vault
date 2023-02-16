@@ -64,7 +64,7 @@ class _AddVoyagePageState extends State<AddVoyagePage> {
             return Scaffold(
               appBar: AppBar(
                 backgroundColor: Colors.transparent,
-                title: const Text('Create Voyage'),
+                title: Text('Create ${AppLocalizations.of(context).voyage}'),
                 actions: [
                   TextButton(
                       onPressed: (() {
