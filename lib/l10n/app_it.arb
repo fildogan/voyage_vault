@@ -1,0 +1,35 @@
+{
+  "voyageVault": "Cofanetto del viaggiatore",
+  "addVoyage": "Aggiungi viaggio",
+  "addExpense": "Aggiungi spesa",
+  "expense": "Expense",
+  "voyages": "Viaggi",
+  "voyage": "Viaggio",
+  "add": "Aggiungi",
+  "account": "Account",
+  "language" : "Lingua",
+  "choose": "Scegliere",
+  "theme": "Tema",
+  "accountSettings": "Impostazioni account",
+  "edit": "Modifica",
+  "save": "Salva",
+  "expense": "Spesa",
+  "amount": "Importo",
+  "category": "Categoria",
+  "dateAdded": "Data di aggiunta",
+  "spentDate": "Data di spesa",
+  "delete": "Elimina",
+  "destination": "Destinazione",
+  "description": "Descrizione",
+
+  "nDays": "{count, plural, =0{0 giorni} =1{1 giorno} other{{count} giorni}}",
+  "@nDays": {
+    "description": "A plural message",
+    "placeholders": {
+        "count": {
+        "type": "num",
+        "format": "compact"
+     }
+    }
+  }    
+}

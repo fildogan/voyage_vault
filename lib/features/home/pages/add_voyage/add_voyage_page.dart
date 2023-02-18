@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:voyage_vault/app/injection_container.dart';
 import 'package:voyage_vault/features/home/pages/add_voyage/cubit/add_voyage_cubit.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddVoyagePage extends StatefulWidget {
   const AddVoyagePage({super.key});
@@ -63,7 +64,7 @@ class _AddVoyagePageState extends State<AddVoyagePage> {
             return Scaffold(
               appBar: AppBar(
                 backgroundColor: Colors.transparent,
-                title: const Text('Create Voyage'),
+                title: Text('Create ${AppLocalizations.of(context).voyage}'),
                 actions: [
                   TextButton(
                       onPressed: (() {
@@ -76,7 +77,7 @@ class _AddVoyagePageState extends State<AddVoyagePage> {
                               description: _voyageDescription,
                             );
                       }),
-                      child: const Text('Save')),
+                      child: Text(AppLocalizations.of(context).save)),
                 ],
                 // automaticallyImplyLeading: false,
               ),
@@ -173,10 +174,10 @@ class _AddVoyagePageBody extends StatelessWidget {
             ),
             TextField(
               onChanged: onLocationChanged,
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(),
-                labelText: 'Destination',
-                contentPadding: EdgeInsets.all(10),
+              decoration: InputDecoration(
+                border: const UnderlineInputBorder(),
+                labelText: AppLocalizations.of(context).destination,
+                contentPadding: const EdgeInsets.all(10),
               ),
             ),
             TextField(
@@ -255,12 +256,12 @@ class _AddVoyagePageBody extends StatelessWidget {
               maxLines: null,
               minLines: 3,
               keyboardType: TextInputType.multiline,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Description',
-                labelStyle: TextStyle(),
+              decoration: InputDecoration(
+                border: const OutlineInputBorder(),
+                labelText: AppLocalizations.of(context).description,
+                labelStyle: const TextStyle(),
                 alignLabelWithHint: true,
-                contentPadding: EdgeInsets.all(10),
+                contentPadding: const EdgeInsets.all(10),
               ),
             ),
           ],

@@ -6,6 +6,7 @@ import 'package:voyage_vault/app/injection_container.dart';
 import 'package:voyage_vault/domain/models/expense_model.dart';
 import 'package:voyage_vault/domain/models/voyage_model.dart';
 import 'package:voyage_vault/features/home/pages/edit_expense/cubit/edit_expense_cubit.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class EditExpensePage extends StatelessWidget {
   EditExpensePage({
@@ -55,7 +56,8 @@ class EditExpensePage extends StatelessWidget {
             return Scaffold(
               appBar: AppBar(
                 backgroundColor: Colors.transparent,
-                title: const Text('Edit Expense'),
+                title: Text(
+                    '${AppLocalizations.of(context).edit} ${AppLocalizations.of(context).expense}'),
                 actions: [
                   _saveButton(context),
                 ],
@@ -83,7 +85,7 @@ class EditExpensePage extends StatelessWidget {
                       context.read<EditExpenseCubit>().update();
                     }
                   },
-            child: const Text('Save'));
+            child: Text(AppLocalizations.of(context).save));
       },
     );
   }
@@ -125,10 +127,10 @@ class _EditExpensePageBody extends StatelessWidget {
       builder: (context, state) {
         return DropdownButtonFormField<String>(
           value: state.voyageTitle,
-          decoration: const InputDecoration(
-            border: UnderlineInputBorder(),
-            labelText: 'Voyage',
-            contentPadding: EdgeInsets.all(10),
+          decoration: InputDecoration(
+            border: const UnderlineInputBorder(),
+            labelText: AppLocalizations.of(context).voyage,
+            contentPadding: const EdgeInsets.all(10),
           ),
           items: [
             ...state.voyageTitles.map(
@@ -187,10 +189,10 @@ class _EditExpensePageBody extends StatelessWidget {
       builder: (context, state) {
         return DropdownButtonFormField<String>(
           value: expenseModel.category,
-          decoration: const InputDecoration(
-            border: UnderlineInputBorder(),
-            labelText: 'Category',
-            contentPadding: EdgeInsets.all(10),
+          decoration: InputDecoration(
+            border: const UnderlineInputBorder(),
+            labelText: AppLocalizations.of(context).category,
+            contentPadding: const EdgeInsets.all(10),
           ),
           items: [
             ...state.categoryTitles.map(

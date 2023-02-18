@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:voyage_vault/app/core/enums.dart';
 import 'package:voyage_vault/app/cubit/root_cubit.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ThemeSelectionPage extends StatelessWidget {
   const ThemeSelectionPage({super.key});
@@ -12,7 +14,8 @@ class ThemeSelectionPage extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.transparent,
-            title: const Text('Choose Theme'),
+            title: Text(
+                '${AppLocalizations.of(context).choose} ${AppLocalizations.of(context).theme}'),
           ),
           body: SafeArea(
             child: Center(
@@ -37,7 +40,7 @@ class ThemeSelectionPage extends StatelessWidget {
                               context.read<RootCubit>().setThemeDark();
                             },
                             title: const Text('Dark'),
-                            trailing: state.currentTheme == ThemeMode.dark
+                            trailing: state.selectedTheme == SelectedTheme.dark
                                 ? const Icon(Icons.check_box)
                                 : const Icon(Icons.check_box_outline_blank),
                           ),
@@ -47,7 +50,7 @@ class ThemeSelectionPage extends StatelessWidget {
                               context.read<RootCubit>().setThemeLight();
                             },
                             title: const Text('Light'),
-                            trailing: state.currentTheme == ThemeMode.light
+                            trailing: state.selectedTheme == SelectedTheme.light
                                 ? const Icon(Icons.check_box)
                                 : const Icon(Icons.check_box_outline_blank),
                           ),
@@ -61,9 +64,10 @@ class ThemeSelectionPage extends StatelessWidget {
                               context.read<RootCubit>().setThemeSystem();
                             },
                             title: const Text('System'),
-                            trailing: state.currentTheme == ThemeMode.system
-                                ? const Icon(Icons.check_box)
-                                : const Icon(Icons.check_box_outline_blank),
+                            trailing:
+                                state.selectedTheme == SelectedTheme.system
+                                    ? const Icon(Icons.check_box)
+                                    : const Icon(Icons.check_box_outline_blank),
                           ),
                         ],
                       ),

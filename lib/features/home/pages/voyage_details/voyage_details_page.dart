@@ -8,6 +8,7 @@ import 'package:voyage_vault/features/home/pages/edit_expense/edit_expense_page.
 import 'package:voyage_vault/features/home/pages/edit_voyage/edit_voyage_page.dart';
 import 'package:voyage_vault/features/home/pages/voyage_details/cubit/voyage_details_cubit.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class VoyageDetailsPage extends StatelessWidget {
   const VoyageDetailsPage({super.key, required this.voyageModel});
@@ -46,7 +47,7 @@ class VoyageDetailsPage extends StatelessWidget {
                               .read<VoyageDetailsCubit>()
                               .refreshVoyage(currentVoyageModel.id));
                     }),
-                    child: const Text('Edit'))
+                    child: Text(AppLocalizations.of(context).edit))
               ],
             ),
             floatingActionButton: FloatingActionButton(
@@ -207,7 +208,7 @@ class VoyageDetailsPage extends StatelessWidget {
                                       backgroundColor: const Color(0xFF21B7CA),
                                       foregroundColor: Colors.white,
                                       icon: Icons.edit,
-                                      label: 'Edit',
+                                      label: AppLocalizations.of(context).edit,
                                     ),
                                     SlidableAction(
                                       onPressed: (context) {
@@ -224,7 +225,8 @@ class VoyageDetailsPage extends StatelessWidget {
                                       backgroundColor: const Color(0xFFFE4A49),
                                       foregroundColor: Colors.white,
                                       icon: Icons.delete,
-                                      label: 'Delete',
+                                      label:
+                                          AppLocalizations.of(context).delete,
                                     ),
                                   ],
                                 ),
@@ -245,11 +247,11 @@ class VoyageDetailsPage extends StatelessWidget {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                  'Expense: ${expenseModel.name}'),
+                                                  '${AppLocalizations.of(context).expense}: ${expenseModel.name}'),
                                               Text(
                                                   'Amount: ${expenseModel.price.toString()}'),
                                               Text(
-                                                  'Category: ${expenseModel.category}'),
+                                                  '${AppLocalizations.of(context).category}: ${expenseModel.category}'),
                                               Text(
                                                   'Date Added: ${expenseModel.dateAddedFormated()}'),
                                             ],

@@ -1,0 +1,35 @@
+{
+  "voyageVault": "Voûte de Voyage",
+  "addVoyage": "Ajouter un Voyage",
+  "addExpense": "Ajouter une Dépense",
+  "expense": "Expense",
+  "voyages": "Voyages",
+  "voyage": "Voyage",
+  "add": "Ajouter",
+  "account": "Compte",
+  "language" : "Langue",
+  "choose": "Choisir",
+  "theme": "Thème",
+  "accountSettings": "Paramètres du compte",
+  "edit": "Modifier",
+  "save": "Enregistrer",
+  "expense": "Dépense",
+  "amount": "Montant",
+  "category": "Catégorie",
+  "dateAdded": "Date d'ajout",
+  "spentDate": "Date de dépense",
+  "delete": "Supprimer",
+  "destination": "Destination",
+  "description": "Description",
+
+  "nDays": "{count, plural, =0{0 jours} =1{1 jour} other{{count} jours}}",
+  "@nDays": {
+    "description": "A plural message",
+    "placeholders": {
+        "count": {
+        "type": "num",
+        "format": "compact"
+     }
+    }
+  }   
+}

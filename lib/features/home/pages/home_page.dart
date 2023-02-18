@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:voyage_vault/features/home/pages/add_page_content/add_page_content.dart';
 import 'package:voyage_vault/features/home/pages/settings/my_account_page.dart';
 import 'package:voyage_vault/features/home/pages/voyages_page_content/voyages_page_content.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -32,11 +33,16 @@ class _HomePageState extends State<HomePage> {
           () => _currentIndex = newIndex,
         ),
         currentIndex: _currentIndex,
-        items: const [
+        items: [
           BottomNavigationBarItem(
-              icon: Icon(Icons.airplanemode_active), label: 'Voyages'),
-          BottomNavigationBarItem(icon: Icon(Icons.add), label: 'Add'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Account')
+              icon: const Icon(Icons.airplanemode_active),
+              label: AppLocalizations.of(context).voyages),
+          BottomNavigationBarItem(
+              icon: const Icon(Icons.add),
+              label: AppLocalizations.of(context).add),
+          BottomNavigationBarItem(
+              icon: const Icon(Icons.person),
+              label: AppLocalizations.of(context).account)
         ],
       );
 }

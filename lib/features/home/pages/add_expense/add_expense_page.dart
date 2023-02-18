@@ -5,6 +5,7 @@ import 'package:voyage_vault/app/core/enums.dart';
 import 'package:voyage_vault/app/injection_container.dart';
 import 'package:voyage_vault/domain/models/voyage_model.dart';
 import 'package:voyage_vault/features/home/pages/add_expense/cubit/add_expense_cubit.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddExpensePage extends StatelessWidget {
   AddExpensePage({super.key, this.voyageModel});
@@ -75,7 +76,7 @@ class AddExpensePage extends StatelessWidget {
                     }
                   }
                 : null,
-            child: const Text('Save'));
+            child: Text(AppLocalizations.of(context).save));
       },
     );
   }
@@ -113,10 +114,10 @@ class _AddExpensePageBody extends StatelessWidget {
       builder: (context, state) {
         return DropdownButtonFormField<String>(
           value: state.voyageTitle,
-          decoration: const InputDecoration(
-            border: UnderlineInputBorder(),
-            labelText: 'Voyage',
-            contentPadding: EdgeInsets.all(10),
+          decoration: InputDecoration(
+            border: const UnderlineInputBorder(),
+            labelText: AppLocalizations.of(context).voyage,
+            contentPadding: const EdgeInsets.all(10),
           ),
           items: [
             ...state.voyageTitles.map(
@@ -145,10 +146,10 @@ class _AddExpensePageBody extends StatelessWidget {
       builder: (context, state) {
         return DropdownButtonFormField<String>(
           value: state.category,
-          decoration: const InputDecoration(
-            border: UnderlineInputBorder(),
-            labelText: 'Category',
-            contentPadding: EdgeInsets.all(10),
+          decoration: InputDecoration(
+            border: const UnderlineInputBorder(),
+            labelText: AppLocalizations.of(context).category,
+            contentPadding: const EdgeInsets.all(10),
           ),
           items: [
             ...state.categoryTitles.map(

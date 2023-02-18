@@ -6,6 +6,7 @@ import 'package:voyage_vault/domain/models/voyage_model.dart';
 import 'package:voyage_vault/features/home/pages/voyage_details/voyage_details_page.dart';
 import 'package:voyage_vault/features/home/pages/voyages_page_content/cubit/voyages_cubit.dart';
 import 'package:voyage_vault/features/home/pages/voyages_page_content/widgets/alert_dialog.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class VoyagesPageContent extends StatelessWidget {
   const VoyagesPageContent({super.key});
@@ -135,7 +136,7 @@ class _ListViewItem extends StatelessWidget {
                     style: const TextStyle(fontSize: 10),
                   ),
                   Text(
-                    '${voyageModel.duration()} days',
+                    AppLocalizations.of(context).nDays(voyageModel.duration()),
                     style: const TextStyle(fontSize: 10),
                   )
                 ],

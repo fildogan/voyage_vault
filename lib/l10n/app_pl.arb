@@ -1,0 +1,36 @@
+{
+  "voyageVault": "Skarbiec Podróży",
+  "addVoyage": "Dodaj podróż",
+  "addExpense": "Dodaj wydatek",
+  "expense": "Expense",
+  "voyages": "Podróże",
+  "voyage": "Podróż",
+  "add": "Dodaj",
+  "account": "Konto",
+  "language" : "Język",
+  "choose": "Wybierz",
+  "theme": "Motyw",
+  "accountSettings": "Ustawienia konta",
+  "edit": "Edytuj",
+  "save": "Zapisz",
+  "expense": "Wydatek",
+  "amount": "Kwota",
+  "category": "Kategoria",
+  "dateAdded": "Data dodania",
+  "spentDate": "Data wydatku",
+  "delete": "Usuń",
+  "destination": "Cel podróży",
+  "description": "Opis",
+
+  "nDays": "{count, plural, =0{0 dni} =1{1 dzień} other{{count} dni}}",
+  "@nDays": {
+    "description": "A plural message",
+    "placeholders": {
+        "count": {
+        "type": "num",
+        "format": "compact"
+     }
+    }
+  }    
+
+}
