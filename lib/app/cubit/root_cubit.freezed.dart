@@ -18,9 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$RootState {
   Status get status => throw _privateConstructorUsedError;
   SelectedLanguage get selectedLanguage => throw _privateConstructorUsedError;
-  SelectedTheme get selectedTheme =>
-      throw _privateConstructorUsedError; // @Default(ThemeMode.system) ThemeMode currentTheme,
-// Locale? locale,
+  SelectedTheme get selectedTheme => throw _privateConstructorUsedError;
   PackageInfo? get packageInfo => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -149,8 +147,6 @@ class _$_RootState extends _RootState {
   @override
   @JsonKey()
   final SelectedTheme selectedTheme;
-// @Default(ThemeMode.system) ThemeMode currentTheme,
-// Locale? locale,
   @override
   final PackageInfo? packageInfo;
 
@@ -198,8 +194,7 @@ abstract class _RootState extends RootState {
   SelectedLanguage get selectedLanguage;
   @override
   SelectedTheme get selectedTheme;
-  @override // @Default(ThemeMode.system) ThemeMode currentTheme,
-// Locale? locale,
+  @override
   PackageInfo? get packageInfo;
   @override
   @JsonKey(ignore: true)
