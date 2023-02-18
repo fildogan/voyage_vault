@@ -73,8 +73,9 @@ class VoyageDetailsPage extends StatelessWidget {
                         currentVoyageModel.description == ''
                             ? const SizedBox.shrink()
                             : Text(
-                                'Description: ${currentVoyageModel.description}'),
-                        Text('Voyage budget: ${currentVoyageModel.budget}'),
+                                '${AppLocalizations.of(context).description}: ${currentVoyageModel.description}'),
+                        Text(
+                            '${AppLocalizations.of(context).voyageBudget}: ${currentVoyageModel.budget}'),
                         Text(
                             'Total expenses spent: € ${expenseSum.toString()}'),
                         Text(
@@ -249,11 +250,11 @@ class VoyageDetailsPage extends StatelessWidget {
                                               Text(
                                                   '${AppLocalizations.of(context).expense}: ${expenseModel.name}'),
                                               Text(
-                                                  'Amount: ${expenseModel.price.toString()}'),
+                                                  '${AppLocalizations.of(context).amount}: ${expenseModel.price.toString()}'),
                                               Text(
                                                   '${AppLocalizations.of(context).category}: ${expenseModel.category}'),
                                               Text(
-                                                  'Date Added: ${expenseModel.dateAddedFormated()}'),
+                                                  '${AppLocalizations.of(context).dateAdded}: ${expenseModel.dateAddedFormated()}'),
                                             ],
                                           ),
                                         ),

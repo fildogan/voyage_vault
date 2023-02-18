@@ -31,5 +31,28 @@
         "format": "compact"
      }
     }
-  }   
+  },
+  "pleaseEnterExpenseName": "Veuillez entrer le nom de la dépense",
+  "pleaseEnterExpenseAmount": "Veuillez entrer le montant de la dépense",
+  "pleaseChooseCategory": "Veuillez choisir une catégorie",
+  "pleaseChooseVoyage": "Veuillez choisir un voyage",
+  "price": "Prix",
+  "budget": "Budget",
+  "startDate": "Date de début",
+  "endDate": "Date de fin",
+  "expenseName": "Nom de la dépense",
+  "voyageBudget": "Budget du voyage",
+  "voyageName": "Nom du voyage",
+  "updated": "mis à jour",
+  "updatedSuccesfully": "mis à jour avec succès",
+  "appName": "Nom de l'application",
+  "appVersion": "Version de l'application",
+  "contactUs": "Nous contacter",
+  "rateUs": "Évaluez-nous",
+  "about": "À propos de",
+  "application": "Application",
+  "legal": "Légal",
+  "dark": "Sombre",
+  "light": "Clair",
+  "system": "Système"   
 }

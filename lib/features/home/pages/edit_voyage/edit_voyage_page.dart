@@ -152,9 +152,9 @@ class _EditVoyagePageBody extends StatelessWidget {
               onChanged: ((value) {
                 context.read<EditVoyageCubit>().changeTitleValue(value);
               }),
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 border: UnderlineInputBorder(),
-                labelText: 'Voyage name',
+                labelText: AppLocalizations.of(context).voyageName,
                 contentPadding: EdgeInsets.all(10),
               ),
             ),
@@ -172,10 +172,10 @@ class _EditVoyagePageBody extends StatelessWidget {
             TextFormField(
               initialValue: voyageBudget.toString(),
               textAlign: TextAlign.start,
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(),
-                labelText: 'Budget',
-                contentPadding: EdgeInsets.all(10),
+              decoration: InputDecoration(
+                border: const UnderlineInputBorder(),
+                labelText: AppLocalizations.of(context).budget,
+                contentPadding: const EdgeInsets.all(10),
               ),
               inputFormatters: [
                 FilteringTextInputFormatter.allow(
@@ -198,11 +198,11 @@ class _EditVoyagePageBody extends StatelessWidget {
                           text: voyageStartDate != null
                               ? startDateFormated
                               : null),
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         border: InputBorder.none,
-                        icon: Icon(Icons.calendar_today),
-                        labelText: "Start Date",
-                        contentPadding: EdgeInsets.all(10),
+                        icon: const Icon(Icons.calendar_today),
+                        labelText: AppLocalizations.of(context).startDate,
+                        contentPadding: const EdgeInsets.all(10),
                       ),
                       readOnly: true, // when true user cannot edit text
                       onTap: () async {
@@ -224,11 +224,11 @@ class _EditVoyagePageBody extends StatelessWidget {
                   child: TextField(
                       controller: TextEditingController(
                           text: voyageEndDate != null ? endDateFormated : null),
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         border: InputBorder.none,
-                        icon: Icon(Icons.calendar_today),
-                        labelText: "End Date",
-                        contentPadding: EdgeInsets.all(10),
+                        icon: const Icon(Icons.calendar_today),
+                        labelText: AppLocalizations.of(context).endDate,
+                        contentPadding: const EdgeInsets.all(10),
                       ),
                       readOnly: true, // when true user cannot edit text
                       onTap: () async {

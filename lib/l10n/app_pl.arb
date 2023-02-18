@@ -31,6 +31,32 @@
         "format": "compact"
      }
     }
-  }    
+  },
+
+  "pleaseEnterExpenseName": "Proszę wprowadzić nazwę wydatku",
+  "pleaseEnterExpenseAmount": "Proszę podać kwotę wydatku",
+  "pleaseChooseCategory": "Proszę wybrać kategorię",
+  "pleaseChooseVoyage": "Proszę wybrać podróż",
+  "price": "Cena",
+  "budget": "Budżet",
+  "startDate": "Data rozpoczęcia",
+  "endDate": "Data zakończenia",
+  "expenseName": "Nazwa wydatku",
+  "voyageBudget": "Budżet podróży",
+  "voyageName": "Nazwa podróży",
+  "updated": "aktualizacja",
+  "updatedSuccesfully": "zaktualizowano pomyślnie",
+  "appName": "Nazwa aplikacji",
+  "appVersion": "Wersja aplikacji",
+  "contactUs": "Skontaktuj się z nami",
+  "rateUs": "Oceń nas",
+  "about": "O nas",
+  "application": "Aplikacja",
+  "legal": "Prawne",
+  "dark": "Ciemny",
+  "light": "Jasny",
+  "system": "Domyślne",
+  "add": "Dodaj",
+  "account": "Konto"    
 
 }

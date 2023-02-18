@@ -64,7 +64,7 @@ class _AddVoyagePageState extends State<AddVoyagePage> {
             return Scaffold(
               appBar: AppBar(
                 backgroundColor: Colors.transparent,
-                title: Text('Create ${AppLocalizations.of(context).voyage}'),
+                title: Text(AppLocalizations.of(context).addVoyage),
                 actions: [
                   TextButton(
                       onPressed: (() {
@@ -166,10 +166,10 @@ class _AddVoyagePageBody extends StatelessWidget {
           children: [
             TextField(
               onChanged: onTitleChanged,
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(),
-                labelText: 'Voyage name',
-                contentPadding: EdgeInsets.all(10),
+              decoration: InputDecoration(
+                border: const UnderlineInputBorder(),
+                labelText: AppLocalizations.of(context).voyageName,
+                contentPadding: const EdgeInsets.all(10),
               ),
             ),
             TextField(
@@ -182,10 +182,10 @@ class _AddVoyagePageBody extends StatelessWidget {
             ),
             TextField(
               textAlign: TextAlign.end,
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(),
-                labelText: 'Budget',
-                contentPadding: EdgeInsets.all(10),
+              decoration: InputDecoration(
+                border: const UnderlineInputBorder(),
+                labelText: AppLocalizations.of(context).budget,
+                contentPadding: const EdgeInsets.all(10),
               ),
               inputFormatters: [
                 FilteringTextInputFormatter.allow(
@@ -205,11 +205,12 @@ class _AddVoyagePageBody extends StatelessWidget {
                   child: TextField(
                       controller:
                           TextEditingController(text: startDateFormated),
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         border: InputBorder.none,
-                        icon: Icon(Icons.calendar_today),
-                        labelText: "Start Date",
-                        contentPadding: EdgeInsets.all(10),
+                        icon: const Icon(Icons.calendar_today),
+                        labelText: AppLocalizations.of(context).startDate,
+                        labelStyle: TextStyle(fontSize: 12),
+                        contentPadding: const EdgeInsets.all(10),
                       ),
                       readOnly: true, // when true user cannot edit text
                       onTap: () async {
@@ -230,11 +231,12 @@ class _AddVoyagePageBody extends StatelessWidget {
                 Flexible(
                   child: TextField(
                       controller: TextEditingController(text: endDateFormated),
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         border: InputBorder.none,
-                        icon: Icon(Icons.calendar_today),
-                        labelText: "End Date",
-                        contentPadding: EdgeInsets.all(10),
+                        icon: const Icon(Icons.calendar_today),
+                        labelText: AppLocalizations.of(context).endDate,
+                        labelStyle: TextStyle(fontSize: 12),
+                        contentPadding: const EdgeInsets.all(10),
                       ),
                       readOnly: true, // when true user cannot edit text
                       onTap: () async {

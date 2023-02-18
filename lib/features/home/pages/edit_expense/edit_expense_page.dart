@@ -157,13 +157,13 @@ class _EditExpensePageBody extends StatelessWidget {
       builder: (context, state) {
         return TextFormField(
           controller: TextEditingController(text: state.dateAddedFormated),
-          decoration: const InputDecoration(
-            border: UnderlineInputBorder(),
-            icon: Icon(
+          decoration: InputDecoration(
+            border: const UnderlineInputBorder(),
+            icon: const Icon(
               Icons.calendar_today,
             ),
-            labelText: "Spent Date",
-            contentPadding: EdgeInsets.all(10),
+            labelText: AppLocalizations.of(context).spentDate,
+            contentPadding: const EdgeInsets.all(10),
           ),
           readOnly: true, // when true user cannot edit text
           onTap: () async {
@@ -221,10 +221,10 @@ class _EditExpensePageBody extends StatelessWidget {
         return TextFormField(
           initialValue: expenseModel.price.toString(),
           textAlign: TextAlign.start,
-          decoration: const InputDecoration(
-            border: UnderlineInputBorder(),
-            labelText: 'Price',
-            contentPadding: EdgeInsets.all(10),
+          decoration: InputDecoration(
+            border: const UnderlineInputBorder(),
+            labelText: AppLocalizations.of(context).price,
+            contentPadding: const EdgeInsets.all(10),
           ),
           inputFormatters: [
             FilteringTextInputFormatter.allow(
@@ -236,8 +236,9 @@ class _EditExpensePageBody extends StatelessWidget {
             final price = double.tryParse(value);
             context.read<EditExpenseCubit>().changePrice(price: price ?? 0);
           },
-          validator: (value) =>
-              state.isPriceValid ? null : 'Please enter expense amount',
+          validator: (value) => state.isPriceValid
+              ? null
+              : AppLocalizations.of(context).pleaseEnterExpenseAmount,
         );
       },
     );
@@ -251,13 +252,14 @@ class _EditExpensePageBody extends StatelessWidget {
           onChanged: (value) {
             context.read<EditExpenseCubit>().changeName(name: value);
           },
-          decoration: const InputDecoration(
-            border: UnderlineInputBorder(),
-            labelText: 'Expense name',
-            contentPadding: EdgeInsets.all(10),
+          decoration: InputDecoration(
+            border: const UnderlineInputBorder(),
+            labelText: AppLocalizations.of(context).expenseName,
+            contentPadding: const EdgeInsets.all(10),
           ),
-          validator: (value) =>
-              state.isNameValid ? null : 'Please enter expense name',
+          validator: (value) => state.isNameValid
+              ? null
+              : AppLocalizations.of(context).pleaseEnterExpenseName,
         );
       },
     );

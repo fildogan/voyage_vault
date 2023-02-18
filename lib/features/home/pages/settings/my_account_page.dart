@@ -70,7 +70,7 @@ class MyAccountPageContent extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  const Text('Application'),
+                  Text(AppLocalizations.of(context).application),
                   const SizedBox(height: 10),
                   Container(
                     decoration: BoxDecoration(
@@ -115,7 +115,7 @@ class MyAccountPageContent extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  const Text('About'),
+                  Text(AppLocalizations.of(context).about),
                   const SizedBox(height: 10),
                   Container(
                     decoration: BoxDecoration(
@@ -129,7 +129,7 @@ class MyAccountPageContent extends StatelessWidget {
                           //         topLeft: Radius.circular(10),
                           //         topRight: Radius.circular(10))),
                           // onTap: () {},
-                          title: const Text('App name'),
+                          title: Text(AppLocalizations.of(context).appName),
                           trailing: Text(packageinfo.appName),
                         ),
                         const Seperator(),
@@ -139,7 +139,7 @@ class MyAccountPageContent extends StatelessWidget {
                           //         topLeft: Radius.circular(10),
                           //         topRight: Radius.circular(10))),
                           // onTap: () {},
-                          title: const Text('App version'),
+                          title: Text(AppLocalizations.of(context).appVersion),
                           trailing: Text(
                               '${packageinfo.version} (${packageinfo.buildNumber})'),
                         ),
@@ -155,7 +155,7 @@ class MyAccountPageContent extends StatelessWidget {
                           //         topLeft: Radius.circular(10),
                           //         topRight: Radius.circular(10))),
                           onTap: () {},
-                          title: const Text('Rate us'),
+                          title: Text(AppLocalizations.of(context).rateUs),
                           trailing: const Icon(Icons.chevron_right),
                         ),
                         const Seperator(),
@@ -167,14 +167,14 @@ class MyAccountPageContent extends StatelessWidget {
                           onTap: () {
                             launchEmail();
                           },
-                          title: const Text('Contact us'),
+                          title: Text(AppLocalizations.of(context).contactUs),
                           trailing: const Icon(Icons.email),
                         ),
                       ],
                     ),
                   ),
                   const SizedBox(height: 20),
-                  const Text('Legal'),
+                  Text(AppLocalizations.of(context).legal),
                   const SizedBox(height: 10),
                   Container(
                     decoration: BoxDecoration(

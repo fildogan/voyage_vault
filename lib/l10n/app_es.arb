@@ -31,5 +31,28 @@
         "format": "compact"
      }
     }
-  }  
+  },
+  "pleaseEnterExpenseName": "Por favor, ingrese el nombre del gasto",
+  "pleaseEnterExpenseAmount": "Por favor, ingrese la cantidad del gasto",
+  "pleaseChooseCategory": "Por favor, elija una categoría",
+  "pleaseChooseVoyage": "Por favor, elija un viaje",
+  "price": "Precio",
+  "budget": "Presupuesto",
+  "startDate": "Fecha de inicio",
+  "endDate": "Fecha de fin",
+  "expenseName": "Nombre del gasto",
+  "voyageBudget": "Presupuesto del viaje",
+  "voyageName": "Nombre del viaje",
+  "updated": "actualizado",
+  "updatedSuccesfully": "actualizado exitosamente",
+  "appName": "Nombre de la aplicación",
+  "appVersion": "Versión de la aplicación",
+  "contactUs": "Contáctenos",
+  "rateUs": "Califícanos",
+  "about": "Acerca de",
+  "application": "Aplicación",
+  "legal": "Legal",
+  "dark": "Oscuro",
+  "light": "Claro",
+  "system": "Sistema"  
 }

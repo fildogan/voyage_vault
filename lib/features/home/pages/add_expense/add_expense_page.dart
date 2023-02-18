@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -54,7 +55,10 @@ class AddExpensePage extends StatelessWidget {
           return Scaffold(
               appBar: AppBar(
                 backgroundColor: Colors.transparent,
-                title: const Text('Add an expense'),
+                title: AutoSizeText(
+                  AppLocalizations.of(context).addExpense,
+                  maxLines: 1,
+                ),
                 actions: [_saveButton(context)],
               ),
               body: _AddExpensePageBody(
@@ -134,8 +138,9 @@ class _AddExpensePageBody extends StatelessWidget {
           onChanged: ((value) => context
               .read<AddExpenseCubit>()
               .changeVoyageTitle(voyageTitle: value!)),
-          validator: (value) =>
-              state.isVoyageValid ? null : 'Please choose a voyage',
+          validator: (value) => state.isVoyageValid
+              ? null
+              : AppLocalizations.of(context).pleaseChooseVoyage,
         );
       },
     );
@@ -165,8 +170,9 @@ class _AddExpensePageBody extends StatelessWidget {
           ],
           onChanged: ((value) =>
               context.read<AddExpenseCubit>().changeCategory(category: value!)),
-          validator: (value) =>
-              state.isCategoryValid ? null : 'Please choose a category',
+          validator: (value) => state.isCategoryValid
+              ? null
+              : AppLocalizations.of(context).pleaseChooseCategory,
         );
       },
     );
@@ -177,10 +183,10 @@ class _AddExpensePageBody extends StatelessWidget {
       builder: (context, state) {
         return TextFormField(
           textAlign: TextAlign.start,
-          decoration: const InputDecoration(
-            border: UnderlineInputBorder(),
-            labelText: 'Price',
-            contentPadding: EdgeInsets.all(10),
+          decoration: InputDecoration(
+            border: const UnderlineInputBorder(),
+            labelText: AppLocalizations.of(context).price,
+            contentPadding: const EdgeInsets.all(10),
           ),
           inputFormatters: [
             FilteringTextInputFormatter.allow(
@@ -192,8 +198,9 @@ class _AddExpensePageBody extends StatelessWidget {
             final price = double.tryParse(value);
             context.read<AddExpenseCubit>().changePrice(price: price ?? 0);
           },
-          validator: (value) =>
-              state.isPriceValid ? null : 'Please enter expense amount',
+          validator: (value) => state.isPriceValid
+              ? null
+              : AppLocalizations.of(context).pleaseEnterExpenseAmount,
         );
       },
     );
@@ -203,16 +210,17 @@ class _AddExpensePageBody extends StatelessWidget {
     return BlocBuilder<AddExpenseCubit, AddExpenseState>(
       builder: (context, state) {
         return TextFormField(
-          decoration: const InputDecoration(
-            border: UnderlineInputBorder(),
-            labelText: 'Expense name',
-            contentPadding: EdgeInsets.all(10),
+          decoration: InputDecoration(
+            border: const UnderlineInputBorder(),
+            labelText: AppLocalizations.of(context).expenseName,
+            contentPadding: const EdgeInsets.all(10),
           ),
           onChanged: (value) {
             context.read<AddExpenseCubit>().changeName(name: value);
           },
-          validator: (value) =>
-              state.isNameValid ? null : 'Please enter expense name',
+          validator: (value) => state.isNameValid
+              ? null
+              : AppLocalizations.of(context).pleaseEnterExpenseName,
         );
       },
     );

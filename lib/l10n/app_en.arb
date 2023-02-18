@@ -31,7 +31,31 @@
         "format": "compact"
      }
     }
-  }
+  },
 
-  
+  "pleaseEnterExpenseName": "Please enter expense name",
+  "pleaseEnterExpenseAmount": "Please enter expense amount",
+  "pleaseChooseCategory": "Please choose a category",
+  "pleaseChooseVoyage": "Please choose a voyage",
+  "price": "Price",
+  "budget": "Budget",
+  "startDate": "Start Date",
+  "endDate": "End Date",
+  "expenseName": "Expense name",
+  "voyageBudget": "Voyage budget",
+  "voyageName": "Voyage name",
+  "updated": "updated",
+  "updatedSuccesfully": "updated succesfully",
+  "appName": "App name",
+  "appVersion": "App version",
+  "contactUs": "Contact us",
+  "rateUs": "Rate us",
+  "about": "About",
+  "application": "Application",
+  "legal": "Legal",
+  "dark": "Dark",
+  "light": "Light",
+  "system": "System"
+
+
 }
