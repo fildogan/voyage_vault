@@ -18,8 +18,9 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$RootState {
   Status get status => throw _privateConstructorUsedError;
   SelectedLanguage get selectedLanguage => throw _privateConstructorUsedError;
-  ThemeMode get currentTheme => throw _privateConstructorUsedError;
-  Locale? get locale => throw _privateConstructorUsedError;
+  SelectedTheme get selectedTheme =>
+      throw _privateConstructorUsedError; // @Default(ThemeMode.system) ThemeMode currentTheme,
+// Locale? locale,
   PackageInfo? get packageInfo => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -35,8 +36,7 @@ abstract class $RootStateCopyWith<$Res> {
   $Res call(
       {Status status,
       SelectedLanguage selectedLanguage,
-      ThemeMode currentTheme,
-      Locale? locale,
+      SelectedTheme selectedTheme,
       PackageInfo? packageInfo});
 }
 
@@ -55,8 +55,7 @@ class _$RootStateCopyWithImpl<$Res, $Val extends RootState>
   $Res call({
     Object? status = null,
     Object? selectedLanguage = null,
-    Object? currentTheme = null,
-    Object? locale = freezed,
+    Object? selectedTheme = null,
     Object? packageInfo = freezed,
   }) {
     return _then(_value.copyWith(
@@ -68,14 +67,10 @@ class _$RootStateCopyWithImpl<$Res, $Val extends RootState>
           ? _value.selectedLanguage
           : selectedLanguage // ignore: cast_nullable_to_non_nullable
               as SelectedLanguage,
-      currentTheme: null == currentTheme
-          ? _value.currentTheme
-          : currentTheme // ignore: cast_nullable_to_non_nullable
-              as ThemeMode,
-      locale: freezed == locale
-          ? _value.locale
-          : locale // ignore: cast_nullable_to_non_nullable
-              as Locale?,
+      selectedTheme: null == selectedTheme
+          ? _value.selectedTheme
+          : selectedTheme // ignore: cast_nullable_to_non_nullable
+              as SelectedTheme,
       packageInfo: freezed == packageInfo
           ? _value.packageInfo
           : packageInfo // ignore: cast_nullable_to_non_nullable
@@ -94,8 +89,7 @@ abstract class _$$_RootStateCopyWith<$Res> implements $RootStateCopyWith<$Res> {
   $Res call(
       {Status status,
       SelectedLanguage selectedLanguage,
-      ThemeMode currentTheme,
-      Locale? locale,
+      SelectedTheme selectedTheme,
       PackageInfo? packageInfo});
 }
 
@@ -112,8 +106,7 @@ class __$$_RootStateCopyWithImpl<$Res>
   $Res call({
     Object? status = null,
     Object? selectedLanguage = null,
-    Object? currentTheme = null,
-    Object? locale = freezed,
+    Object? selectedTheme = null,
     Object? packageInfo = freezed,
   }) {
     return _then(_$_RootState(
@@ -125,14 +118,10 @@ class __$$_RootStateCopyWithImpl<$Res>
           ? _value.selectedLanguage
           : selectedLanguage // ignore: cast_nullable_to_non_nullable
               as SelectedLanguage,
-      currentTheme: null == currentTheme
-          ? _value.currentTheme
-          : currentTheme // ignore: cast_nullable_to_non_nullable
-              as ThemeMode,
-      locale: freezed == locale
-          ? _value.locale
-          : locale // ignore: cast_nullable_to_non_nullable
-              as Locale?,
+      selectedTheme: null == selectedTheme
+          ? _value.selectedTheme
+          : selectedTheme // ignore: cast_nullable_to_non_nullable
+              as SelectedTheme,
       packageInfo: freezed == packageInfo
           ? _value.packageInfo
           : packageInfo // ignore: cast_nullable_to_non_nullable
@@ -147,8 +136,7 @@ class _$_RootState extends _RootState {
   _$_RootState(
       {this.status = Status.initial,
       this.selectedLanguage = SelectedLanguage.system,
-      this.currentTheme = ThemeMode.system,
-      this.locale,
+      this.selectedTheme = SelectedTheme.system,
       this.packageInfo})
       : super._();
 
@@ -160,15 +148,15 @@ class _$_RootState extends _RootState {
   final SelectedLanguage selectedLanguage;
   @override
   @JsonKey()
-  final ThemeMode currentTheme;
-  @override
-  final Locale? locale;
+  final SelectedTheme selectedTheme;
+// @Default(ThemeMode.system) ThemeMode currentTheme,
+// Locale? locale,
   @override
   final PackageInfo? packageInfo;
 
   @override
   String toString() {
-    return 'RootState(status: $status, selectedLanguage: $selectedLanguage, currentTheme: $currentTheme, locale: $locale, packageInfo: $packageInfo)';
+    return 'RootState(status: $status, selectedLanguage: $selectedLanguage, selectedTheme: $selectedTheme, packageInfo: $packageInfo)';
   }
 
   @override
@@ -179,16 +167,15 @@ class _$_RootState extends _RootState {
             (identical(other.status, status) || other.status == status) &&
             (identical(other.selectedLanguage, selectedLanguage) ||
                 other.selectedLanguage == selectedLanguage) &&
-            (identical(other.currentTheme, currentTheme) ||
-                other.currentTheme == currentTheme) &&
-            (identical(other.locale, locale) || other.locale == locale) &&
+            (identical(other.selectedTheme, selectedTheme) ||
+                other.selectedTheme == selectedTheme) &&
             (identical(other.packageInfo, packageInfo) ||
                 other.packageInfo == packageInfo));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, status, selectedLanguage, currentTheme, locale, packageInfo);
+      runtimeType, status, selectedLanguage, selectedTheme, packageInfo);
 
   @JsonKey(ignore: true)
   @override
@@ -201,8 +188,7 @@ abstract class _RootState extends RootState {
   factory _RootState(
       {final Status status,
       final SelectedLanguage selectedLanguage,
-      final ThemeMode currentTheme,
-      final Locale? locale,
+      final SelectedTheme selectedTheme,
       final PackageInfo? packageInfo}) = _$_RootState;
   _RootState._() : super._();
 
@@ -211,10 +197,9 @@ abstract class _RootState extends RootState {
   @override
   SelectedLanguage get selectedLanguage;
   @override
-  ThemeMode get currentTheme;
-  @override
-  Locale? get locale;
-  @override
+  SelectedTheme get selectedTheme;
+  @override // @Default(ThemeMode.system) ThemeMode currentTheme,
+// Locale? locale,
   PackageInfo? get packageInfo;
   @override
   @JsonKey(ignore: true)
