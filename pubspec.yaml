@@ -59,6 +59,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   url_launcher: ^6.1.9
+  shared_preferences: ^0.5.7+3
 
 
   # flutterfire_ui: ^0.4.3+20
