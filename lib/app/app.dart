@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) => BlocProvider(
-        create: (context) => RootCubit()..setPackageInfo(),
+        create: (context) => RootCubit()..start(),
         child: BlocBuilder<RootCubit, RootState>(
           builder: (context, state) {
             return MaterialApp(
