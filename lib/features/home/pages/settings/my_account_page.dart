@@ -8,6 +8,7 @@ import 'package:voyage_vault/features/auth/pages/user_profile.dart';
 import 'package:voyage_vault/features/home/pages/settings/pages/language_selection.dart';
 import 'package:voyage_vault/features/home/pages/settings/pages/theme_selection.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'dart:io' show Platform;
 
 class MyAccountPageContent extends StatelessWidget {
   const MyAccountPageContent({super.key});
@@ -29,9 +30,7 @@ class MyAccountPageContent extends StatelessWidget {
               child: ListView(
                 // mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 20),
-                  Text(AppLocalizations.of(context).account),
-                  const SizedBox(height: 10),
+                  Header(AppLocalizations.of(context).account),
                   Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
@@ -69,9 +68,7 @@ class MyAccountPageContent extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 20),
-                  Text(AppLocalizations.of(context).application),
-                  const SizedBox(height: 10),
+                  Header(AppLocalizations.of(context).application),
                   Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
@@ -114,9 +111,7 @@ class MyAccountPageContent extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 20),
-                  Text(AppLocalizations.of(context).about),
-                  const SizedBox(height: 10),
+                  Header(AppLocalizations.of(context).about),
                   Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
@@ -144,9 +139,12 @@ class MyAccountPageContent extends StatelessWidget {
                               '${packageinfo.version} (${packageinfo.buildNumber})'),
                         ),
                         const Seperator(),
-                        const ListTile(
-                          title: Text('Minimun OS version'),
-                          trailing: Text('16.0'),
+                        ListTile(
+                          title:
+                              Text(AppLocalizations.of(context).minOsVersion),
+                          trailing: Platform.isAndroid
+                              ? const Text('21')
+                              : const Text('10.14'),
                         ),
                         const Seperator(),
                         ListTile(
@@ -173,9 +171,7 @@ class MyAccountPageContent extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 20),
-                  Text(AppLocalizations.of(context).legal),
-                  const SizedBox(height: 10),
+                  Header(AppLocalizations.of(context).legal),
                   Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
@@ -188,7 +184,7 @@ class MyAccountPageContent extends StatelessWidget {
                                   topLeft: Radius.circular(10),
                                   topRight: Radius.circular(10))),
                           onTap: () {},
-                          title: const Text('Terms of Use'),
+                          title: Text(AppLocalizations.of(context).termsOfUse),
                           trailing: const Icon(Icons.chevron_right),
                         ),
                         const Seperator(),
@@ -198,7 +194,8 @@ class MyAccountPageContent extends StatelessWidget {
                                   bottomLeft: Radius.circular(10),
                                   bottomRight: Radius.circular(10))),
                           onTap: () {},
-                          title: const Text('Privacy Policy'),
+                          title:
+                              Text(AppLocalizations.of(context).privacyPolicy),
                           trailing: const Icon(Icons.chevron_right),
                         ),
                       ],
@@ -230,7 +227,6 @@ class MyAccountPageContent extends StatelessWidget {
     String email = Uri.encodeComponent("filip.doganowski@gmail.com");
     String subject = Uri.encodeComponent("Feedback");
     String body = Uri.encodeComponent("Hi!\nHere is my feedback:\n");
-    print(subject); //output: Hello%20Flutter
     Uri mail = Uri.parse("mailto:$email?subject=$subject&body=$body");
     try {
       if (await launchUrl(mail)) {
@@ -280,8 +276,6 @@ class MyAccountPageContent extends StatelessWidget {
     //   await launch(urlString);
     //   print('jjj');
     // }
-
-    print('object');
   }
 
   // Future launchEmail() async {
@@ -296,6 +290,30 @@ class MyAccountPageContent extends StatelessWidget {
 
   //   print('object');
   // }
+}
+
+class Header extends StatelessWidget {
+  const Header(
+    this.text, {
+    super.key,
+  });
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 20),
+        Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text(text),
+        ),
+        const SizedBox(height: 10),
+      ],
+    );
+  }
 }
 
 class Seperator extends StatelessWidget {
