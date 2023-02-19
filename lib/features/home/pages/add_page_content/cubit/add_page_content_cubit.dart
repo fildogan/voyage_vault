@@ -20,23 +20,29 @@ class AddPageContentCubit extends Cubit<AddPageContentState> {
     if (state.closed) {
       return;
     }
+
     emit(
-      AddPageContentState(
+      state.copyWith(
         status: Status.loading,
       ),
     );
     try {
+      print('quotes');
       final quotes = await _quotesRepository.getQuoteModels();
       final intValue = Random().nextInt(quotes.length - 1);
+      // print(quotes[2].title);
       if (!state.closed) {
+        print('quotes');
+
         emit(
-          AddPageContentState(
+          state.copyWith(
             status: Status.success,
             quotes: quotes,
             chosenQuote: quotes[intValue],
           ),
         );
       }
+      print('quotes2');
     } catch (error) {
       if (!state.closed) {
         emit(

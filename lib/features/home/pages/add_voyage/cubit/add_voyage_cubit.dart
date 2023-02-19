@@ -34,7 +34,7 @@ class AddVoyageCubit extends Cubit<AddVoyageState> {
         location: location,
         description: description,
       );
-      emit(AddVoyageState(saved: true));
+      emit(state.copyWith(saved: true));
     } catch (error) {
       emit(
         AddVoyageState(
@@ -82,16 +82,20 @@ class AddVoyageCubit extends Cubit<AddVoyageState> {
   }
 
   Future<void> error(String error) async {
-    emit(AddVoyageState(
+    emit(state.copyWith(
       errorMessage: error,
-      voyageTitles: state.voyageTitles,
+    ));
+    emit(state.copyWith(
+      errorMessage: null,
     ));
   }
 
   Future<void> success(String success) async {
-    emit(AddVoyageState(
+    emit(state.copyWith(
       successMessage: success,
-      // voyageTitles: state.voyageTitles,
+    ));
+    emit(state.copyWith(
+      successMessage: null,
     ));
   }
 
