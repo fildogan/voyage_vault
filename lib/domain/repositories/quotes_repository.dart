@@ -6,13 +6,9 @@ import 'package:voyage_vault/domain/models/quote_model.dart';
 class QuotesRepository {
   QuotesRepository({required this.remoteDataSource});
 
-  final QuotesRemoteDioDataSource remoteDataSource;
+  final QuotesRemoteRetroFitDataSource remoteDataSource;
 
   Future<List<QuoteModel>> getQuoteModels() async {
-    final json = await remoteDataSource.getQuotes();
-    if (json == null) {
-      return [];
-    }
-    return json.map((item) => QuoteModel.fromJson(item)).toList();
+    return remoteDataSource.getQuotes();
   }
 }
