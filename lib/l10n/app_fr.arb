@@ -54,5 +54,8 @@
   "legal": "Légal",
   "dark": "Sombre",
   "light": "Clair",
-  "system": "Système"   
+  "system": "Système",
+  "termsOfUse": "Conditions d'utilisation",
+  "privacyPolicy": "Politique de confidentialité",
+  "minOsVersion": "Version minimale du système d'exploitation"   
 }

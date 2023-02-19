@@ -55,7 +55,10 @@
   "legal": "Legal",
   "dark": "Dark",
   "light": "Light",
-  "system": "System"
+  "system": "System",
+  "termsOfUse": "Terms of Use",
+  "privacyPolicy": "Privacy Policy",
+  "minOsVersion": "Minimum OS version"
 
 
 }

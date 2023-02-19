@@ -57,6 +57,9 @@
   "light": "Jasny",
   "system": "Domyślne",
   "add": "Dodaj",
-  "account": "Konto"    
+  "account": "Konto",
+  "termsOfUse": "Warunki korzystania",
+  "privacyPolicy": "Polityka prywatności",
+  "minOsVersion": "Minimalna wersja systemu operacyjnego"    
 
 }
