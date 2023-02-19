@@ -6,13 +6,11 @@ class PreferencesService {
   Future saveTheme(SelectedTheme selectedTheme) async {
     final preferences = await SharedPreferences.getInstance();
     await preferences.setInt('theme', selectedTheme.index);
-    print('Saved Theme');
   }
 
   Future saveLanguage(SelectedLanguage selectedLanguage) async {
     final preferences = await SharedPreferences.getInstance();
     await preferences.setInt('language', selectedLanguage.index);
-    print('Saved Language');
   }
 
   Future getSettings() async {

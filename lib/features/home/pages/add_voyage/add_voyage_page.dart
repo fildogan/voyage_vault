@@ -209,7 +209,7 @@ class _AddVoyagePageBody extends StatelessWidget {
                         border: InputBorder.none,
                         icon: const Icon(Icons.calendar_today),
                         labelText: AppLocalizations.of(context).startDate,
-                        labelStyle: TextStyle(fontSize: 12),
+                        labelStyle: const TextStyle(fontSize: 12),
                         contentPadding: const EdgeInsets.all(10),
                       ),
                       readOnly: true, // when true user cannot edit text
@@ -235,7 +235,7 @@ class _AddVoyagePageBody extends StatelessWidget {
                         border: InputBorder.none,
                         icon: const Icon(Icons.calendar_today),
                         labelText: AppLocalizations.of(context).endDate,
-                        labelStyle: TextStyle(fontSize: 12),
+                        labelStyle: const TextStyle(fontSize: 12),
                         contentPadding: const EdgeInsets.all(10),
                       ),
                       readOnly: true, // when true user cannot edit text

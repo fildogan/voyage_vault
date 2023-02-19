@@ -27,13 +27,9 @@ class AddPageContentCubit extends Cubit<AddPageContentState> {
       ),
     );
     try {
-      print('quotes');
       final quotes = await _quotesRepository.getQuoteModels();
       final intValue = Random().nextInt(quotes.length - 1);
-      // print(quotes[2].title);
       if (!state.closed) {
-        print('quotes');
-
         emit(
           state.copyWith(
             status: Status.success,
@@ -42,7 +38,6 @@ class AddPageContentCubit extends Cubit<AddPageContentState> {
           ),
         );
       }
-      print('quotes2');
     } catch (error) {
       if (!state.closed) {
         emit(

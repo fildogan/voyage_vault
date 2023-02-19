@@ -153,9 +153,9 @@ class _EditVoyagePageBody extends StatelessWidget {
                 context.read<EditVoyageCubit>().changeTitleValue(value);
               }),
               decoration: InputDecoration(
-                border: UnderlineInputBorder(),
+                border: const UnderlineInputBorder(),
                 labelText: AppLocalizations.of(context).voyageName,
-                contentPadding: EdgeInsets.all(10),
+                contentPadding: const EdgeInsets.all(10),
               ),
             ),
             TextFormField(
