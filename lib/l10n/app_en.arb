@@ -58,7 +58,13 @@
   "system": "System",
   "termsOfUse": "Terms of Use",
   "privacyPolicy": "Privacy Policy",
-  "minOsVersion": "Minimum OS version"
+  "minOsVersion": "Minimum OS version",
 
+  "voyagers": "Voyagers",
+  "voyager": "Voyager",
+  "addVoyager": "Add Voyager",
+  "voyagerName": "Voyager Name",
+  "pleaseEnterVoyagerName": "Please enter voyager name",
+  "editExpense": "Edit Expense"
 
 }
