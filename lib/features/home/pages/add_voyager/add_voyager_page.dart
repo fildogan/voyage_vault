@@ -1,0 +1,135 @@
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:voyage_vault/app/core/enums.dart';
+import 'package:voyage_vault/app/injection_container.dart';
+import 'package:voyage_vault/domain/models/voyage_model.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:voyage_vault/features/home/pages/add_voyager/cubit/add_voyager_cubit.dart';
+
+class AddVoyagerPage extends StatelessWidget {
+  AddVoyagerPage({super.key, this.voyageModel});
+
+  final VoyageModel? voyageModel;
+
+  final formKey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider<AddVoyagerCubit>(
+      create: (context) => getIt<AddVoyagerCubit>(),
+      child: BlocListener<AddVoyagerCubit, AddVoyagerState>(
+        listener: (context, state) {
+          if (state.formStatus == FormStatus.success) {
+            Navigator.of(context).pop();
+          }
+          if (state.errorMessage != null) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  state.errorMessage ?? 'Unknown error',
+                ),
+                backgroundColor: Colors.red,
+              ),
+            );
+          }
+          if (state.successMessage != null) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Row(
+                  children: [
+                    const Icon(Icons.done),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Text(state.successMessage ?? 'Success')
+                  ],
+                ),
+              ),
+            );
+          }
+        },
+        child: BlocBuilder<AddVoyagerCubit, AddVoyagerState>(
+            builder: (context, state) {
+          return Scaffold(
+              appBar: AppBar(
+                backgroundColor: Colors.transparent,
+                title: AutoSizeText(
+                  AppLocalizations.of(context).addVoyager,
+                  maxLines: 1,
+                ),
+                actions: [_saveButton(context)],
+              ),
+              body: _AddVoyagerPageBody(
+                formKey: formKey,
+              ));
+        }),
+      ),
+    );
+  }
+
+  Widget _saveButton(BuildContext context) {
+    return BlocBuilder<AddVoyagerCubit, AddVoyagerState>(
+      builder: (context, state) {
+        return TextButton(
+            onPressed: state.formStatus == FormStatus.initial
+                ? () {
+                    //TODO: Add save function
+                    // if (formKey.currentState!.validate()) {
+                    //   context.read<AddVoyagerCubit>().add();
+                    // }
+                  }
+                : null,
+            child: Text(AppLocalizations.of(context).save));
+      },
+    );
+  }
+}
+
+class _AddVoyagerPageBody extends StatelessWidget {
+  const _AddVoyagerPageBody({
+    required this.formKey,
+  });
+
+  final GlobalKey formKey;
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Form(
+        key: formKey,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ListView(
+            children: [
+              _nameField(),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _nameField() {
+    return BlocBuilder<AddVoyagerCubit, AddVoyagerState>(
+      builder: (context, state) {
+        return TextFormField(
+          decoration: InputDecoration(
+            border: const UnderlineInputBorder(),
+            labelText: AppLocalizations.of(context).voyagerName,
+            contentPadding: const EdgeInsets.all(10),
+          ),
+          onChanged: (value) {
+            // TODO: add onChanged
+            // context.read<AddVoyagerCubit>().changeName(name: value);
+          },
+          // TODO: add validator
+          // validator: (value) => state.isNameValid
+          //     ? null
+          //     : AppLocalizations.of(context).pleaseEnterVoyagerName,
+        );
+      },
+    );
+  }
+}
