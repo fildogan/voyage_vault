@@ -39,6 +39,8 @@ abstract class $AddVoyagerStateCopyWith<$Res> {
       String? errorMessage,
       String? successMessage,
       VoyagerModel? voyagerModel});
+
+  $VoyagerModelCopyWith<$Res>? get voyagerModel;
 }
 
 /// @nodoc
@@ -83,6 +85,18 @@ class _$AddVoyagerStateCopyWithImpl<$Res, $Val extends AddVoyagerState>
               as VoyagerModel?,
     ) as $Val);
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $VoyagerModelCopyWith<$Res>? get voyagerModel {
+    if (_value.voyagerModel == null) {
+      return null;
+    }
+
+    return $VoyagerModelCopyWith<$Res>(_value.voyagerModel!, (value) {
+      return _then(_value.copyWith(voyagerModel: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -99,6 +113,9 @@ abstract class _$$_AddVoyagerStateCopyWith<$Res>
       String? errorMessage,
       String? successMessage,
       VoyagerModel? voyagerModel});
+
+  @override
+  $VoyagerModelCopyWith<$Res>? get voyagerModel;
 }
 
 /// @nodoc
@@ -183,13 +200,13 @@ class _$_AddVoyagerState implements _AddVoyagerState {
                 other.errorMessage == errorMessage) &&
             (identical(other.successMessage, successMessage) ||
                 other.successMessage == successMessage) &&
-            const DeepCollectionEquality()
-                .equals(other.voyagerModel, voyagerModel));
+            (identical(other.voyagerModel, voyagerModel) ||
+                other.voyagerModel == voyagerModel));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, status, formStatus, errorMessage,
-      successMessage, const DeepCollectionEquality().hash(voyagerModel));
+      successMessage, voyagerModel);
 
   @JsonKey(ignore: true)
   @override
