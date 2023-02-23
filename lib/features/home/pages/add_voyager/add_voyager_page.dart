@@ -1,9 +1,8 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:voyage_vault/app/core/enums.dart';
 import 'package:voyage_vault/app/injection_container.dart';
-import 'package:voyage_vault/components/save_app_bar_button.dart';
+import 'package:voyage_vault/components/add_edit_app_bar.dart';
 import 'package:voyage_vault/domain/models/voyage_model.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:voyage_vault/features/home/pages/add_voyager/cubit/add_voyager_cubit.dart';
@@ -12,7 +11,7 @@ class AddVoyagerPage extends StatelessWidget {
   AddVoyagerPage({super.key, this.voyageModel});
 
   final VoyageModel? voyageModel;
-
+  void Function()? saveVoyager;
   final formKey = GlobalKey<FormState>();
 
   @override
@@ -52,7 +51,7 @@ class AddVoyagerPage extends StatelessWidget {
         },
         child: BlocBuilder<AddVoyagerCubit, AddVoyagerState>(
             builder: (context, state) {
-          void Function()? saveVoyager = state.formStatus == FormStatus.initial
+          saveVoyager = state.formStatus == FormStatus.initial
               ? () {
                   //TODO: Add save function
                   // if (formKey.currentState!.validate()) {
@@ -61,17 +60,10 @@ class AddVoyagerPage extends StatelessWidget {
                 }
               : null;
           return Scaffold(
-              appBar: AppBar(
-                backgroundColor: Colors.transparent,
-                title: AutoSizeText(
-                  AppLocalizations.of(context).addVoyager,
-                  maxLines: 1,
-                ),
-                actions: [
-                  SaveAppBarButton(
-                    onPressed: saveVoyager,
-                  )
-                ],
+              appBar: AddEditAppBar(
+                title: AppLocalizations.of(context).addVoyager,
+                saveAction: saveVoyager,
+                appBar: AppBar(),
               ),
               body: _AddVoyagerPageBody(
                 formKey: formKey,

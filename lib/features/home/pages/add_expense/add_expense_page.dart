@@ -1,10 +1,9 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:voyage_vault/app/core/enums.dart';
 import 'package:voyage_vault/app/injection_container.dart';
-import 'package:voyage_vault/components/save_app_bar_button.dart';
+import 'package:voyage_vault/components/add_edit_app_bar.dart';
 import 'package:voyage_vault/domain/models/voyage_model.dart';
 import 'package:voyage_vault/features/home/pages/add_expense/cubit/add_expense_cubit.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -15,6 +14,7 @@ class AddExpensePage extends StatelessWidget {
   final VoyageModel? voyageModel;
 
   final formKey = GlobalKey<FormState>();
+  void Function()? saveExpense;
 
   @override
   Widget build(BuildContext context) {
@@ -53,35 +53,24 @@ class AddExpensePage extends StatelessWidget {
         },
         child: BlocBuilder<AddExpenseCubit, AddExpenseState>(
             builder: (context, state) {
+          saveExpense = state.formStatus == FormStatus.initial
+              ? () {
+                  if (formKey.currentState!.validate()) {
+                    context.read<AddExpenseCubit>().add();
+                  }
+                }
+              : null;
           return Scaffold(
-              appBar: AppBar(
-                backgroundColor: Colors.transparent,
-                title: AutoSizeText(
-                  AppLocalizations.of(context).addExpense,
-                  maxLines: 1,
-                ),
-                actions: [_saveButton(context)],
+              appBar: AddEditAppBar(
+                title: AppLocalizations.of(context).addExpense,
+                saveAction: saveExpense,
+                appBar: AppBar(),
               ),
               body: _AddExpensePageBody(
                 formKey: formKey,
               ));
         }),
       ),
-    );
-  }
-
-  Widget _saveButton(BuildContext context) {
-    return BlocBuilder<AddExpenseCubit, AddExpenseState>(
-      builder: (context, state) {
-        return SaveAppBarButton(
-            onPressed: state.formStatus == FormStatus.initial
-                ? () {
-                    if (formKey.currentState!.validate()) {
-                      context.read<AddExpenseCubit>().add();
-                    }
-                  }
-                : null);
-      },
     );
   }
 }

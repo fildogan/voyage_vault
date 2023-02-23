@@ -11,9 +11,12 @@ class SaveAppBarButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: onPressed,
-      child: Text(AppLocalizations.of(context).save),
+    return Padding(
+      padding: const EdgeInsets.only(right: 10),
+      child: TextButton(
+        onPressed: onPressed,
+        child: Text(AppLocalizations.of(context).save),
+      ),
     );
   }
 }

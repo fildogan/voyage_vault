@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:voyage_vault/app/injection_container.dart';
-import 'package:voyage_vault/components/save_app_bar_button.dart';
+import 'package:voyage_vault/components/add_edit_app_bar.dart';
 import 'package:voyage_vault/features/home/pages/add_voyage/cubit/add_voyage_cubit.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -21,6 +21,7 @@ class _AddVoyagePageState extends State<AddVoyagePage> {
   DateTime? _voyageEndDate;
   String? _voyageLocation;
   String? _voyageDescription;
+  late void Function() saveVoyage;
 
   @override
   Widget build(BuildContext context) {
@@ -62,25 +63,21 @@ class _AddVoyagePageState extends State<AddVoyagePage> {
         },
         child: BlocBuilder<AddVoyageCubit, AddVoyageState>(
           builder: (context, state) {
+            saveVoyage = (() {
+              context.read<AddVoyageCubit>().addVoyageAndCheck(
+                    title: _voyageTitle,
+                    budget: _voyageBudget,
+                    startDate: _voyageStartDate,
+                    endDate: _voyageEndDate,
+                    location: _voyageLocation,
+                    description: _voyageDescription,
+                  );
+            });
             return Scaffold(
-              appBar: AppBar(
-                backgroundColor: Colors.transparent,
-                title: Text(AppLocalizations.of(context).addVoyage),
-                actions: [
-                  SaveAppBarButton(
-                    onPressed: (() {
-                      context.read<AddVoyageCubit>().addVoyageAndCheck(
-                            title: _voyageTitle,
-                            budget: _voyageBudget,
-                            startDate: _voyageStartDate,
-                            endDate: _voyageEndDate,
-                            location: _voyageLocation,
-                            description: _voyageDescription,
-                          );
-                    }),
-                  )
-                ],
-                // automaticallyImplyLeading: false,
+              appBar: AddEditAppBar(
+                title: AppLocalizations.of(context).addVoyage,
+                saveAction: saveVoyage,
+                appBar: AppBar(),
               ),
               body: _AddVoyagePageBody(
                 onTitleChanged: (newValue) =>
