@@ -1,9 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:voyage_vault/app/core/enums.dart';
 import 'package:voyage_vault/app/injection_container.dart';
+import 'package:voyage_vault/components/save_app_bar_button.dart';
 import 'package:voyage_vault/domain/models/voyage_model.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:voyage_vault/features/home/pages/add_voyager/cubit/add_voyager_cubit.dart';
@@ -52,6 +52,14 @@ class AddVoyagerPage extends StatelessWidget {
         },
         child: BlocBuilder<AddVoyagerCubit, AddVoyagerState>(
             builder: (context, state) {
+          void Function()? saveVoyager = state.formStatus == FormStatus.initial
+              ? () {
+                  //TODO: Add save function
+                  // if (formKey.currentState!.validate()) {
+                  //   context.read<AddVoyagerCubit>().add();
+                  // }
+                }
+              : null;
           return Scaffold(
               appBar: AppBar(
                 backgroundColor: Colors.transparent,
@@ -59,30 +67,17 @@ class AddVoyagerPage extends StatelessWidget {
                   AppLocalizations.of(context).addVoyager,
                   maxLines: 1,
                 ),
-                actions: [_saveButton(context)],
+                actions: [
+                  SaveAppBarButton(
+                    onPressed: saveVoyager,
+                  )
+                ],
               ),
               body: _AddVoyagerPageBody(
                 formKey: formKey,
               ));
         }),
       ),
-    );
-  }
-
-  Widget _saveButton(BuildContext context) {
-    return BlocBuilder<AddVoyagerCubit, AddVoyagerState>(
-      builder: (context, state) {
-        return TextButton(
-            onPressed: state.formStatus == FormStatus.initial
-                ? () {
-                    //TODO: Add save function
-                    // if (formKey.currentState!.validate()) {
-                    //   context.read<AddVoyagerCubit>().add();
-                    // }
-                  }
-                : null,
-            child: Text(AppLocalizations.of(context).save));
-      },
     );
   }
 }

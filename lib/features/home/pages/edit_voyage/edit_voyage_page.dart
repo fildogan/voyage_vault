@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:voyage_vault/app/injection_container.dart';
+import 'package:voyage_vault/components/save_app_bar_button.dart';
 import 'package:voyage_vault/domain/models/voyage_model.dart';
 import 'package:voyage_vault/features/home/pages/edit_voyage/cubit/edit_voyage_cubit.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -59,22 +60,21 @@ class EditVoyagePage extends StatelessWidget {
                 title: Text(
                     '${AppLocalizations.of(context).edit} ${AppLocalizations.of(context).voyage}'),
                 actions: [
-                  TextButton(
-                      onPressed: (() async {
-                        context.read<EditVoyageCubit>().updateVoyageAndCheck(
-                              voyageId: voyageModel.id,
-                              initialTitle: voyageModel.title,
-                              title: state.title,
-                              budget: state.budget,
-                              startDate:
-                                  state.startDate ?? voyageModel.startDate,
-                              endDate: state.endDate ?? voyageModel.endDate,
-                              location: state.location ?? voyageModel.location,
-                              description:
-                                  state.description ?? voyageModel.description,
-                            );
-                      }),
-                      child: Text(AppLocalizations.of(context).save)),
+                  SaveAppBarButton(
+                    onPressed: (() async {
+                      context.read<EditVoyageCubit>().updateVoyageAndCheck(
+                            voyageId: voyageModel.id,
+                            initialTitle: voyageModel.title,
+                            title: state.title,
+                            budget: state.budget,
+                            startDate: state.startDate ?? voyageModel.startDate,
+                            endDate: state.endDate ?? voyageModel.endDate,
+                            location: state.location ?? voyageModel.location,
+                            description:
+                                state.description ?? voyageModel.description,
+                          );
+                    }),
+                  ),
                 ],
                 // automaticallyImplyLeading: false,
               ),

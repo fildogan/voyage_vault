@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:voyage_vault/app/injection_container.dart';
+import 'package:voyage_vault/components/save_app_bar_button.dart';
 import 'package:voyage_vault/features/home/pages/add_voyage/cubit/add_voyage_cubit.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -66,18 +67,18 @@ class _AddVoyagePageState extends State<AddVoyagePage> {
                 backgroundColor: Colors.transparent,
                 title: Text(AppLocalizations.of(context).addVoyage),
                 actions: [
-                  TextButton(
-                      onPressed: (() {
-                        context.read<AddVoyageCubit>().addVoyageAndCheck(
-                              title: _voyageTitle,
-                              budget: _voyageBudget,
-                              startDate: _voyageStartDate,
-                              endDate: _voyageEndDate,
-                              location: _voyageLocation,
-                              description: _voyageDescription,
-                            );
-                      }),
-                      child: Text(AppLocalizations.of(context).save)),
+                  SaveAppBarButton(
+                    onPressed: (() {
+                      context.read<AddVoyageCubit>().addVoyageAndCheck(
+                            title: _voyageTitle,
+                            budget: _voyageBudget,
+                            startDate: _voyageStartDate,
+                            endDate: _voyageEndDate,
+                            location: _voyageLocation,
+                            description: _voyageDescription,
+                          );
+                    }),
+                  )
                 ],
                 // automaticallyImplyLeading: false,
               ),

@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:voyage_vault/app/core/enums.dart';
 import 'package:voyage_vault/app/injection_container.dart';
+import 'package:voyage_vault/components/save_app_bar_button.dart';
 import 'package:voyage_vault/domain/models/voyage_model.dart';
 import 'package:voyage_vault/features/home/pages/add_expense/cubit/add_expense_cubit.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -72,15 +73,14 @@ class AddExpensePage extends StatelessWidget {
   Widget _saveButton(BuildContext context) {
     return BlocBuilder<AddExpenseCubit, AddExpenseState>(
       builder: (context, state) {
-        return TextButton(
+        return SaveAppBarButton(
             onPressed: state.formStatus == FormStatus.initial
                 ? () {
                     if (formKey.currentState!.validate()) {
                       context.read<AddExpenseCubit>().add();
                     }
                   }
-                : null,
-            child: Text(AppLocalizations.of(context).save));
+                : null);
       },
     );
   }

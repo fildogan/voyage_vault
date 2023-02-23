@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:voyage_vault/app/core/enums.dart';
 import 'package:voyage_vault/app/injection_container.dart';
+import 'package:voyage_vault/components/save_app_bar_button.dart';
 import 'package:voyage_vault/domain/models/expense_model.dart';
 import 'package:voyage_vault/domain/models/voyage_model.dart';
 import 'package:voyage_vault/features/home/pages/edit_expense/cubit/edit_expense_cubit.dart';
@@ -77,15 +78,15 @@ class EditExpensePage extends StatelessWidget {
   Widget _saveButton(BuildContext context) {
     return BlocBuilder<EditExpenseCubit, EditExpenseState>(
       builder: (context, state) {
-        return TextButton(
-            onPressed: state.formStatus == FormStatus.submitting
-                ? null
-                : () {
-                    if (formKey.currentState!.validate()) {
-                      context.read<EditExpenseCubit>().update();
-                    }
-                  },
-            child: Text(AppLocalizations.of(context).save));
+        return SaveAppBarButton(
+          onPressed: state.formStatus == FormStatus.submitting
+              ? null
+              : () {
+                  if (formKey.currentState!.validate()) {
+                    context.read<EditExpenseCubit>().update();
+                  }
+                },
+        );
       },
     );
   }
