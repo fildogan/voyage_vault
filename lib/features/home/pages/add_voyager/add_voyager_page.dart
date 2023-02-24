@@ -52,14 +52,15 @@ class AddVoyagerPage extends StatelessWidget {
         },
         child: BlocBuilder<AddVoyagerCubit, AddVoyagerState>(
             builder: (context, state) {
-          saveVoyager = state.formStatus == FormStatus.initial
-              ? () {
-                  //TODO: Add save function
-                  // if (formKey.currentState!.validate()) {
-                  //   context.read<AddVoyagerCubit>().add();
-                  // }
-                }
-              : null;
+          saveVoyager = () => context.read<AddVoyagerCubit>().add();
+          // state.formStatus == FormStatus.initial
+          // ? () {
+          //TODO: Add save function
+          // if (formKey.currentState!.validate()) {
+          //   context.read<AddVoyagerCubit>().add();
+          // }
+          // }
+          // : null;
           return Scaffold(
               appBar: AddEditAppBar(
                 title: AppLocalizations.of(context).addVoyager,

@@ -24,12 +24,12 @@ class VoyagesCubit extends Cubit<VoyagesState> {
 
   Future<void> start() async {
     emit(
-      VoyagesState(status: Status.loading),
+      state.copyWith(status: Status.loading),
     );
     _streamSubscription =
         _voyagesRepository.getVoyagesStream().listen((voyages) {
       emit(
-        VoyagesState(
+        state.copyWith(
           status: Status.success,
           voyages: voyages,
         ),
