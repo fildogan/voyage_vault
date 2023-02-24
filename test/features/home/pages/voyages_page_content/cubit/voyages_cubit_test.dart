@@ -39,7 +39,7 @@ void main() {
       blocTest<VoyagesCubit, VoyagesState>(
         'should call getVoyagesStream from repository when start is called',
         build: () => sut,
-        act: (cubit) async => cubit.start(),
+        act: (cubit) => cubit.start(),
         verify: (_) async {
           // Verify if getVoyagesStream is called
           verify(voyagesRepository.getVoyagesStream()).called(1);
