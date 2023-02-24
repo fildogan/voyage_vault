@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+@immutable
 class Header extends StatelessWidget {
   const Header(
     this.text, {

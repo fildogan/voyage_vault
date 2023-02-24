@@ -9,6 +9,7 @@ import 'package:voyage_vault/features/home/pages/add_voyage/add_voyage_page.dart
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:voyage_vault/features/home/pages/add_voyager/add_voyager_page.dart';
 
+@immutable
 class AddPageContent extends StatelessWidget {
   const AddPageContent({super.key});
 

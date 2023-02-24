@@ -5,8 +5,10 @@ import 'package:voyage_vault/domain/models/expense_model.dart';
 import 'package:voyage_vault/features/home/pages/edit_expense/cubit/edit_expense_cubit.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+@immutable
 class EditExpensePageBody extends StatelessWidget {
   const EditExpensePageBody({
+    super.key,
     required this.formKey,
     required this.expenseModel,
   });

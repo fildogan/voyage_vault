@@ -13,6 +13,7 @@ import 'dart:io' show Platform;
 
 import 'package:voyage_vault/features/home/pages/settings/widgets/settings_item.dart';
 
+@immutable
 class SettingsPageContent extends StatelessWidget {
   const SettingsPageContent({super.key});
 

@@ -8,6 +8,7 @@ import 'package:voyage_vault/features/home/pages/edit_voyage/cubit/edit_voyage_c
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:voyage_vault/features/home/pages/edit_voyage/edit_voyage_page_body.dart';
 
+@immutable
 class EditVoyagePage extends StatelessWidget {
   const EditVoyagePage({super.key, required this.voyageModel});
 

@@ -8,16 +8,17 @@ import 'package:voyage_vault/domain/models/voyage_model.dart';
 import 'package:voyage_vault/features/home/pages/add_expense/cubit/add_expense_cubit.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+@immutable
 class AddExpensePage extends StatelessWidget {
   AddExpensePage({super.key, this.voyageModel});
 
   final VoyageModel? voyageModel;
 
   final formKey = GlobalKey<FormState>();
-  void Function()? saveExpense;
 
   @override
   Widget build(BuildContext context) {
+    void Function()? saveExpense;
     return BlocProvider<AddExpenseCubit>(
       create: (context) => getIt<AddExpenseCubit>()..start(voyageModel),
       child: BlocListener<AddExpenseCubit, AddExpenseState>(

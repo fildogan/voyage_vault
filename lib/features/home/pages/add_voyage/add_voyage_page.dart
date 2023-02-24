@@ -7,6 +7,7 @@ import 'package:voyage_vault/features/home/pages/add_voyage/add_voyage_page_body
 import 'package:voyage_vault/features/home/pages/add_voyage/cubit/add_voyage_cubit.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+@immutable
 class AddVoyagePage extends StatefulWidget {
   const AddVoyagePage({super.key});
 

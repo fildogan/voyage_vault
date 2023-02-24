@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+@immutable
 class AddVoyagePageBody extends StatelessWidget {
   const AddVoyagePageBody({
+    super.key,
     required this.onTitleChanged,
     required this.onBudgetChanged,
     required this.onStartDateChanged,

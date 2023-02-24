@@ -4,8 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:voyage_vault/features/home/pages/edit_voyage/cubit/edit_voyage_cubit.dart';
 
+@immutable
 class EditVoyagePageBody extends StatelessWidget {
   const EditVoyagePageBody({
+    super.key,
     // required this.onBudgetChanged,
     required this.onStartDateChanged,
     this.startDateFormated,

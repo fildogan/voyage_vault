@@ -5,6 +5,7 @@ import 'package:voyage_vault/features/home/pages/settings/pages/language_selecti
 import 'package:voyage_vault/features/home/pages/settings/widgets/header.dart';
 import 'package:voyage_vault/features/home/pages/settings/widgets/setting_buton.dart';
 
+@immutable
 class SettingsItem extends StatelessWidget {
   const SettingsItem({
     super.key,

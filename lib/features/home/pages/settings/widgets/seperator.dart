@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+@immutable
 class Seperator extends StatelessWidget {
   const Seperator({
     super.key,

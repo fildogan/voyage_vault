@@ -10,6 +10,7 @@ import 'package:voyage_vault/features/home/pages/voyage_details/cubit/voyage_det
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+@immutable
 class VoyageDetailsPage extends StatelessWidget {
   const VoyageDetailsPage({super.key, required this.voyageModel});
 

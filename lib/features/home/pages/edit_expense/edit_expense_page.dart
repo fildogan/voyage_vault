@@ -9,6 +9,7 @@ import 'package:voyage_vault/features/home/pages/edit_expense/cubit/edit_expense
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:voyage_vault/features/home/pages/edit_expense/edit_expense_page_body.dart';
 
+@immutable
 class EditExpensePage extends StatelessWidget {
   EditExpensePage({
     super.key,

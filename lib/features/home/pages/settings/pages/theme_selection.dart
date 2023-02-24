@@ -4,6 +4,7 @@ import 'package:voyage_vault/app/core/enums.dart';
 import 'package:voyage_vault/app/cubit/root_cubit.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+@immutable
 class ThemeSelectionPage extends StatelessWidget {
   const ThemeSelectionPage({super.key});
 

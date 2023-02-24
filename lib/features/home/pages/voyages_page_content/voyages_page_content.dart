@@ -8,6 +8,7 @@ import 'package:voyage_vault/features/home/pages/voyages_page_content/cubit/voya
 import 'package:voyage_vault/features/home/pages/voyages_page_content/widgets/alert_dialog.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+@immutable
 class VoyagesPageContent extends StatelessWidget {
   const VoyagesPageContent({super.key});
 

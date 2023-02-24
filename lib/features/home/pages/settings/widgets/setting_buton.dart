@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:voyage_vault/app/core/enums.dart';
 
+@immutable
 class SettingButton extends StatelessWidget {
   const SettingButton({
     required this.buttonPosition,
