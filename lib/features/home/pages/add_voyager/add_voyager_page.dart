@@ -6,6 +6,7 @@ import 'package:voyage_vault/components/add_edit_app_bar.dart';
 import 'package:voyage_vault/domain/models/voyage_model.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:voyage_vault/features/home/pages/add_voyager/cubit/add_voyager_cubit.dart';
+import 'package:flex_color_picker/flex_color_picker.dart';
 
 @immutable
 class AddVoyagerPage extends StatelessWidget {
@@ -93,6 +94,17 @@ class _AddVoyagerPageBody extends StatelessWidget {
           child: ListView(
             children: [
               _nameField(),
+              ColorPicker(
+                onColorChanged: (Color) {},
+                pickersEnabled: const <ColorPickerType, bool>{
+                  ColorPickerType.both: false,
+                  ColorPickerType.primary: true,
+                  ColorPickerType.accent: false,
+                  ColorPickerType.bw: false,
+                  ColorPickerType.custom: false,
+                  ColorPickerType.wheel: true,
+                },
+              ),
             ],
           ),
         ),
