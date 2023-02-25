@@ -140,6 +140,33 @@ class VoyagersRepository {
       return voyagers.map((voyager) => voyager.name).toList();
     });
   }
+
+  Stream<List<VoyagerModel>> getVoyagersStreamById(List<String> voyagerIdList) {
+    final userID = FirebaseAuth.instance.currentUser?.uid;
+    if (userID == null) {
+      throw Exception('User is not logged in');
+    }
+    return FirebaseFirestore.instance
+        .collection('users')
+        .doc(userID)
+        .collection('voyagers')
+        .orderBy('name')
+        .snapshots()
+        .map(
+      (querySnapshot) {
+        return querySnapshot.docs
+            .where((doc) => voyagerIdList.contains(doc.id))
+            .map(
+          (doc) {
+            return VoyagerModel(
+                id: doc.id,
+                name: doc['name'].toString(),
+                color: HexColor.fromHex(doc['color'].toString()));
+          },
+        ).toList();
+      },
+    );
+  }
 }
 
 extension HexColor on Color {

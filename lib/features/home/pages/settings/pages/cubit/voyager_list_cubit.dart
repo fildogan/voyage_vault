@@ -12,7 +12,7 @@ part 'voyager_list_cubit.freezed.dart';
 
 @injectable
 class VoyagerListCubit extends Cubit<VoyagerListState> {
-  VoyagerListCubit(this._voyagersRepository) : super(VoyagerListState());
+  VoyagerListCubit(this._voyagersRepository) : super(const VoyagerListState());
 
   final VoyagersRepository _voyagersRepository;
 

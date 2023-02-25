@@ -84,6 +84,7 @@ extension GetItInjectableX on _i1.GetIt {
     gh.factory<_i15.VoyageDetailsCubit>(() => _i15.VoyageDetailsCubit(
           gh<_i6.VoyagesRepository>(),
           gh<_i3.ExpensesRepository>(),
+          gh<_i5.VoyagersRepository>(),
         ));
     gh.factory<_i16.VoyagerListCubit>(
         () => _i16.VoyagerListCubit(gh<_i5.VoyagersRepository>()));
