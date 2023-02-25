@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:voyage_vault/app/injection_container.dart';
-import 'package:voyage_vault/domain/models/expense_model.dart';
 import 'package:voyage_vault/domain/models/voyage_model.dart';
 import 'package:voyage_vault/features/global_widgets/confirm_delete_alert_dialog.dart';
 import 'package:voyage_vault/features/global_widgets/slidable/slidable_action_delete.dart';
@@ -30,6 +29,7 @@ class VoyageDetailsPage extends StatelessWidget {
           final expenseModels = state.expenses;
           final VoyageModel currentVoyageModel =
               state.voyageModel ?? voyageModel;
+          final voyagers = state.voyagers;
           // Get sum of all expenses for given voyage
           final double expenseSum =
               expenseModels.fold(0, (prev, element) => prev + element.price);
@@ -103,6 +103,21 @@ class VoyageDetailsPage extends StatelessWidget {
                               ? Colors.red
                               : Colors.green.shade800,
                           backgroundColor: Colors.transparent,
+                        ),
+                        Row(
+                          children: [
+                            for (final voyager in voyagers)
+                              Row(
+                                children: [
+                                  Text(voyager.name),
+                                  Container(
+                                    width: 10,
+                                    height: 10,
+                                    color: voyager.color,
+                                  )
+                                ],
+                              ),
+                          ],
                         ),
                       ],
                     ),

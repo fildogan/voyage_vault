@@ -34,6 +34,7 @@ class VoyagesRepository {
               description: doc.data().toString().contains('description')
                   ? doc['description'].toString()
                   : '',
+              voyagers: List.from(doc['voyagers']),
             );
           },
         ).toList();
@@ -148,6 +149,7 @@ class VoyagesRepository {
       endDate: (doc['enddate'] as Timestamp).toDate(),
       location: doc['location'].toString(),
       description: doc['description'].toString(),
+      voyagers: List.from(doc['voyagers']),
     );
   }
 

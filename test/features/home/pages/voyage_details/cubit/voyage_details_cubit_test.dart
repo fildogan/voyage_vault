@@ -5,24 +5,29 @@ import 'package:mockito/mockito.dart';
 import 'package:voyage_vault/app/core/enums.dart';
 import 'package:voyage_vault/domain/models/voyage_model.dart';
 import 'package:voyage_vault/domain/repositories/expenses_repository.dart';
+import 'package:voyage_vault/domain/repositories/voyager_repository.dart';
 import 'package:voyage_vault/domain/repositories/voyages_repository.dart';
 import 'package:voyage_vault/features/home/pages/voyage_details/cubit/voyage_details_cubit.dart';
 
 @GenerateNiceMocks([MockSpec<VoyagesRepository>()])
 @GenerateNiceMocks([MockSpec<ExpensesRepository>()])
+@GenerateNiceMocks([MockSpec<VoyagersRepository>()])
 import 'voyage_details_cubit_test.mocks.dart';
 
 void main() {
   late VoyageDetailsCubit sut;
   late MockVoyagesRepository voyagesRepository;
   late MockExpensesRepository expensesRepository;
+  late MockVoyagersRepository voyagersRepository;
   String randomId1 = 'randomId1';
 
   setUp(
     () {
       voyagesRepository = MockVoyagesRepository();
       expensesRepository = MockExpensesRepository();
-      sut = VoyageDetailsCubit(voyagesRepository, expensesRepository);
+      voyagersRepository = MockVoyagersRepository();
+      sut = VoyageDetailsCubit(
+          voyagesRepository, expensesRepository, voyagersRepository);
     },
   );
 
@@ -41,6 +46,7 @@ void main() {
         verify(voyagesRepository.getVoyageById(randomId1)).called(1);
         verify(expensesRepository.getExpensesStreamByVoyageId(randomId1))
             .called(1);
+        verify(voyagersRepository.getVoyagersStreamById([])).called(1);
       },
     );
   });

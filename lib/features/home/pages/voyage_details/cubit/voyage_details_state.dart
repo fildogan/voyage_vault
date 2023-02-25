@@ -7,6 +7,7 @@ class VoyageDetailsState with _$VoyageDetailsState {
     String? errorMessage,
     VoyageModel? voyageModel,
     @Default([]) List<ExpenseModel> expenses,
+    @Default([]) List<VoyagerModel> voyagers,
   }) = _VoyageDetailsState;
 }
 
