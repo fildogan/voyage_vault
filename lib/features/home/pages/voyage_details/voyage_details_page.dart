@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:voyage_vault/app/injection_container.dart';
+import 'package:voyage_vault/domain/models/expense_model.dart';
 import 'package:voyage_vault/domain/models/voyage_model.dart';
+import 'package:voyage_vault/features/global_widgets/confirm_delete_alert_dialog.dart';
+import 'package:voyage_vault/features/global_widgets/slidable/slidable_action_delete.dart';
+import 'package:voyage_vault/features/global_widgets/slidable/slidable_action_edit.dart';
 import 'package:voyage_vault/features/home/pages/add_expense/add_expense_page.dart';
 import 'package:voyage_vault/features/home/pages/edit_expense/edit_expense_page.dart';
 import 'package:voyage_vault/features/home/pages/edit_voyage/edit_voyage_page.dart';
@@ -128,25 +132,53 @@ class VoyageDetailsPage extends StatelessWidget {
                           ))
                         else
                           for (final expenseModel in expenseModels)
-                            InkWell(
-                              // onTap: () {
-                              //   Navigator.of(context)
-                              //       .push(MaterialPageRoute(
-                              //           builder: (context) => EditExpensePage(
-                              //               voyageModel: voyageModel)))
-                              //       .then((value) => context
-                              //           .read<VoyageDetailsCubit>()
-                              //           .refreshVoyage(currentVoyageModel.id));
-                              // },
-                              child: Slidable(
-                                key: ValueKey(expenseModel.id),
-                                endActionPane: ActionPane(
-                                  // A motion is a widget used to control how the pane animates.
-                                  motion: const StretchMotion(),
-
-                                  // A pane can dismiss the Slidable.
-                                  dismissible: DismissiblePane(
-                                    onDismissed: () {
+                            Slidable(
+                              key: ValueKey(expenseModel.id),
+                              endActionPane: ActionPane(
+                                motion: const StretchMotion(),
+                                dismissible: DismissiblePane(
+                                  onDismissed: () {
+                                    context
+                                        .read<VoyageDetailsCubit>()
+                                        .remove(
+                                          expenseId: expenseModel.id,
+                                        )
+                                        .then((value) => context
+                                            .read<VoyageDetailsCubit>()
+                                            .refreshVoyage(
+                                                currentVoyageModel.id));
+                                  },
+                                  closeOnCancel: true,
+                                  confirmDismiss: () async {
+                                    bool result = await showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return ConfirmDeleteAlertDialog(
+                                          title:
+                                              'Delete expense ${expenseModel.name}?',
+                                          content:
+                                              'If you continue, this expense will be permanently deleted. This action is irreversible.',
+                                        );
+                                      },
+                                    );
+                                    return result;
+                                  },
+                                ),
+                                children: [
+                                  SlidableActionEdit(
+                                    onPressed: (context) {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  EditExpensePage(
+                                                    expenseModel: expenseModel,
+                                                    voyageModel:
+                                                        currentVoyageModel,
+                                                  )));
+                                    },
+                                  ),
+                                  SlidableActionDelete(
+                                    onPressed: (context) {
                                       context
                                           .read<VoyageDetailsCubit>()
                                           .remove(
@@ -157,122 +189,49 @@ class VoyageDetailsPage extends StatelessWidget {
                                               .refreshVoyage(
                                                   currentVoyageModel.id));
                                     },
-                                    closeOnCancel: true,
-                                    confirmDismiss: () async {
-                                      bool result = await showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return AlertDialog(
-                                            title: Text(
-                                              'Delete expense ${expenseModel.name}?',
-                                            ),
-                                            content: const Text(
-                                              'If you continue, this expense will be permanently deleted. This action is irreversible.',
-                                            ),
-                                            actions: [
-                                              TextButton(
-                                                onPressed: () =>
-                                                    Navigator.of(context)
-                                                        .pop(true),
-                                                child: const Text('Yes'),
-                                              ),
-                                              TextButton(
-                                                onPressed: () =>
-                                                    Navigator.of(context)
-                                                        .pop(false),
-                                                child: const Text('No'),
-                                              ),
-                                            ],
-                                          );
-                                        },
-                                      );
-
-                                      return result;
-                                    },
                                   ),
-
-                                  // All actions are defined in the children parameter.
-                                  children: [
-                                    // A SlidableAction can have an icon and/or a label.
-
-                                    SlidableAction(
-                                      onPressed: (context) {
-                                        Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    EditExpensePage(
-                                                      expenseModel:
-                                                          expenseModel,
-                                                      voyageModel:
-                                                          currentVoyageModel,
-                                                    )));
-                                      },
-                                      backgroundColor: const Color(0xFF21B7CA),
-                                      foregroundColor: Colors.white,
-                                      icon: Icons.edit,
-                                      label: AppLocalizations.of(context).edit,
-                                    ),
-                                    SlidableAction(
-                                      onPressed: (context) {
-                                        context
-                                            .read<VoyageDetailsCubit>()
-                                            .remove(
-                                              expenseId: expenseModel.id,
-                                            )
-                                            .then((value) => context
-                                                .read<VoyageDetailsCubit>()
-                                                .refreshVoyage(
-                                                    currentVoyageModel.id));
-                                      },
-                                      backgroundColor: const Color(0xFFFE4A49),
-                                      foregroundColor: Colors.white,
-                                      icon: Icons.delete,
-                                      label:
-                                          AppLocalizations.of(context).delete,
-                                    ),
-                                  ],
-                                ),
+                                ],
+                              ),
+                              child: SizedBox(
+                                width: double.infinity,
                                 child: SizedBox(
                                   width: double.infinity,
-                                  child: SizedBox(
-                                    width: double.infinity,
-                                    // color: Colors.black12,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 15, vertical: 8),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                  '${AppLocalizations.of(context).expense}: ${expenseModel.name}'),
-                                              Text(
-                                                  '${AppLocalizations.of(context).amount}: ${expenseModel.price.toString()}'),
-                                              Text(
-                                                  '${AppLocalizations.of(context).category}: ${expenseModel.category}'),
-                                              Text(
-                                                  '${AppLocalizations.of(context).dateAdded}: ${expenseModel.dateAddedFormated()}'),
-                                            ],
-                                          ),
+                                  // color: Colors.black12,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 15, vertical: 8),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                                '${AppLocalizations.of(context).expense}: ${expenseModel.name}'),
+                                            Text(
+                                                '${AppLocalizations.of(context).amount}: ${expenseModel.price.toString()}'),
+                                            Text(
+                                                '${AppLocalizations.of(context).category}: ${expenseModel.category}'),
+                                            Text(
+                                                '${AppLocalizations.of(context).dateAdded}: ${expenseModel.dateAddedFormated()}'),
+                                          ],
                                         ),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 15),
-                                          child: Container(
-                                            decoration: const BoxDecoration(
-                                              border: Border(
-                                                bottom: BorderSide(
-                                                    color: Colors.black38),
-                                              ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 15),
+                                        child: Container(
+                                          decoration: const BoxDecoration(
+                                            border: Border(
+                                              bottom: BorderSide(
+                                                  color: Colors.black38),
                                             ),
                                           ),
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),

@@ -56,7 +56,7 @@ class AddVoyagerPage extends StatelessWidget {
           saveVoyager = () => context.read<AddVoyagerCubit>().add();
           // state.formStatus == FormStatus.initial
           // ? () {
-          //TODO: Add save function
+          //TODO: Add validation on save
           // if (formKey.currentState!.validate()) {
           //   context.read<AddVoyagerCubit>().add();
           // }
@@ -99,22 +99,6 @@ class _AddVoyagerPageBody extends StatelessWidget {
                 children: [
                   _nameField(),
                   _colorPicker(context, dialogSelectColor),
-                  // ColorIndicator(
-                  //   color: dialogSelectColor,
-                  //   onSelect: () async {
-                  //     final Color newColor =
-                  //         await showColorPickerDialog(context, dialogSelectColor,
-                  //             pickersEnabled: const <ColorPickerType, bool>{
-                  //               ColorPickerType.both: false,
-                  //               ColorPickerType.primary: false,
-                  //               ColorPickerType.accent: true,
-                  //               ColorPickerType.bw: false,
-                  //               ColorPickerType.custom: false,
-                  //               ColorPickerType.wheel: false,
-                  //             },
-                  //             enableShadesSelection: false);
-                  //   },
-                  // ),
                 ],
               ),
             ),
@@ -125,6 +109,8 @@ class _AddVoyagerPageBody extends StatelessWidget {
   }
 
   ElevatedButton _colorPicker(BuildContext context, Color dialogSelectColor) {
+    // TODO: convert to formfield
+    // TODO: add validation
     return ElevatedButton(
         onPressed: () async {
           await showColorPickerDialog(

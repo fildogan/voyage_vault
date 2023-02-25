@@ -43,6 +43,21 @@ class VoyagerListCubit extends Cubit<VoyagerListState> {
           });
   }
 
+  Future<void> remove({
+    required String voyagerId,
+  }) async {
+    try {
+      await _voyagersRepository.remove(id: voyagerId);
+    } catch (error) {
+      emit(
+        VoyagerListState(
+          status: Status.error,
+          errorMessage: error.toString(),
+        ),
+      );
+    }
+  }
+
   @override
   Future<void> close() {
     _streamSubscription?.cancel();
