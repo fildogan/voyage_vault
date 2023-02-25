@@ -23,6 +23,7 @@ mixin _$VoyageModel {
   String get location => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
   double get budget => throw _privateConstructorUsedError;
+  List<String>? get voyagers => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $VoyageModelCopyWith<VoyageModel> get copyWith =>
@@ -42,7 +43,8 @@ abstract class $VoyageModelCopyWith<$Res> {
       DateTime endDate,
       String location,
       String description,
-      double budget});
+      double budget,
+      List<String>? voyagers});
 }
 
 /// @nodoc
@@ -65,6 +67,7 @@ class _$VoyageModelCopyWithImpl<$Res, $Val extends VoyageModel>
     Object? location = null,
     Object? description = null,
     Object? budget = null,
+    Object? voyagers = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -95,6 +98,10 @@ class _$VoyageModelCopyWithImpl<$Res, $Val extends VoyageModel>
           ? _value.budget
           : budget // ignore: cast_nullable_to_non_nullable
               as double,
+      voyagers: freezed == voyagers
+          ? _value.voyagers
+          : voyagers // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
     ) as $Val);
   }
 }
@@ -114,7 +121,8 @@ abstract class _$$_VoyageModelCopyWith<$Res>
       DateTime endDate,
       String location,
       String description,
-      double budget});
+      double budget,
+      List<String>? voyagers});
 }
 
 /// @nodoc
@@ -135,6 +143,7 @@ class __$$_VoyageModelCopyWithImpl<$Res>
     Object? location = null,
     Object? description = null,
     Object? budget = null,
+    Object? voyagers = freezed,
   }) {
     return _then(_$_VoyageModel(
       id: null == id
@@ -165,6 +174,10 @@ class __$$_VoyageModelCopyWithImpl<$Res>
           ? _value.budget
           : budget // ignore: cast_nullable_to_non_nullable
               as double,
+      voyagers: freezed == voyagers
+          ? _value._voyagers
+          : voyagers // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
     ));
   }
 }
@@ -179,8 +192,10 @@ class _$_VoyageModel extends _VoyageModel {
       required this.endDate,
       required this.location,
       required this.description,
-      required this.budget})
-      : super._();
+      required this.budget,
+      final List<String>? voyagers})
+      : _voyagers = voyagers,
+        super._();
 
   @override
   final String id;
@@ -196,10 +211,19 @@ class _$_VoyageModel extends _VoyageModel {
   final String description;
   @override
   final double budget;
+  final List<String>? _voyagers;
+  @override
+  List<String>? get voyagers {
+    final value = _voyagers;
+    if (value == null) return null;
+    if (_voyagers is EqualUnmodifiableListView) return _voyagers;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
-    return 'VoyageModel(id: $id, title: $title, startDate: $startDate, endDate: $endDate, location: $location, description: $description, budget: $budget)';
+    return 'VoyageModel(id: $id, title: $title, startDate: $startDate, endDate: $endDate, location: $location, description: $description, budget: $budget, voyagers: $voyagers)';
   }
 
   @override
@@ -216,12 +240,21 @@ class _$_VoyageModel extends _VoyageModel {
                 other.location == location) &&
             (identical(other.description, description) ||
                 other.description == description) &&
-            (identical(other.budget, budget) || other.budget == budget));
+            (identical(other.budget, budget) || other.budget == budget) &&
+            const DeepCollectionEquality().equals(other._voyagers, _voyagers));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, title, startDate, endDate,
-      location, description, budget);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      title,
+      startDate,
+      endDate,
+      location,
+      description,
+      budget,
+      const DeepCollectionEquality().hash(_voyagers));
 
   @JsonKey(ignore: true)
   @override
@@ -238,7 +271,8 @@ abstract class _VoyageModel extends VoyageModel {
       required final DateTime endDate,
       required final String location,
       required final String description,
-      required final double budget}) = _$_VoyageModel;
+      required final double budget,
+      final List<String>? voyagers}) = _$_VoyageModel;
   const _VoyageModel._() : super._();
 
   @override
@@ -255,6 +289,8 @@ abstract class _VoyageModel extends VoyageModel {
   String get description;
   @override
   double get budget;
+  @override
+  List<String>? get voyagers;
   @override
   @JsonKey(ignore: true)
   _$$_VoyageModelCopyWith<_$_VoyageModel> get copyWith =>
