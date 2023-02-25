@@ -7,6 +7,7 @@ class AddVoyagerState with _$AddVoyagerState {
     @Default(FormStatus.initial) FormStatus formStatus,
     String? errorMessage,
     String? successMessage,
-    VoyagerModel? voyagerModel,
+    String? voyagerName,
+    Color? voyagerColor,
   }) = _AddVoyagerState;
 }

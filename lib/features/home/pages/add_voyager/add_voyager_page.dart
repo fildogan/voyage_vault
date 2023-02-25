@@ -86,30 +86,75 @@ class _AddVoyagerPageBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Form(
-        key: formKey,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ListView(
-            children: [
-              _nameField(),
-              ColorPicker(
-                onColorChanged: (Color) {},
-                pickersEnabled: const <ColorPickerType, bool>{
-                  ColorPickerType.both: false,
-                  ColorPickerType.primary: true,
-                  ColorPickerType.accent: false,
-                  ColorPickerType.bw: false,
-                  ColorPickerType.custom: false,
-                  ColorPickerType.wheel: true,
-                },
+    return BlocBuilder<AddVoyagerCubit, AddVoyagerState>(
+      builder: (context, state) {
+        Color dialogSelectColor = state.voyagerColor ?? Colors.transparent;
+
+        return SafeArea(
+          child: Form(
+            key: formKey,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ListView(
+                children: [
+                  _nameField(),
+                  _colorPicker(context, dialogSelectColor),
+                  // ColorIndicator(
+                  //   color: dialogSelectColor,
+                  //   onSelect: () async {
+                  //     final Color newColor =
+                  //         await showColorPickerDialog(context, dialogSelectColor,
+                  //             pickersEnabled: const <ColorPickerType, bool>{
+                  //               ColorPickerType.both: false,
+                  //               ColorPickerType.primary: false,
+                  //               ColorPickerType.accent: true,
+                  //               ColorPickerType.bw: false,
+                  //               ColorPickerType.custom: false,
+                  //               ColorPickerType.wheel: false,
+                  //             },
+                  //             enableShadesSelection: false);
+                  //   },
+                  // ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
+  }
+
+  ElevatedButton _colorPicker(BuildContext context, Color dialogSelectColor) {
+    return ElevatedButton(
+        onPressed: () async {
+          await showColorPickerDialog(
+            context,
+            dialogSelectColor,
+            pickersEnabled: const <ColorPickerType, bool>{
+              ColorPickerType.both: false,
+              ColorPickerType.primary: true,
+              ColorPickerType.accent: false,
+              ColorPickerType.bw: false,
+              ColorPickerType.custom: false,
+              ColorPickerType.wheel: false,
+            },
+            enableShadesSelection: false,
+          ).then((newColor) {
+            context.read<AddVoyagerCubit>().changeColor(color: newColor);
+            return null;
+          });
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text('Pick color'),
+            ColorIndicator(
+              height: 30,
+              width: 30,
+              color: dialogSelectColor,
+            )
+          ],
+        ));
   }
 
   Widget _nameField() {
@@ -122,8 +167,7 @@ class _AddVoyagerPageBody extends StatelessWidget {
             contentPadding: const EdgeInsets.all(10),
           ),
           onChanged: (value) {
-            // TODO: add onChanged
-            // context.read<AddVoyagerCubit>().changeName(name: value);
+            context.read<AddVoyagerCubit>().changeName(name: value);
           },
           // TODO: add validator
           // validator: (value) => state.isNameValid

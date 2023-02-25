@@ -20,7 +20,8 @@ mixin _$AddVoyagerState {
   FormStatus get formStatus => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
   String? get successMessage => throw _privateConstructorUsedError;
-  VoyagerModel? get voyagerModel => throw _privateConstructorUsedError;
+  String? get voyagerName => throw _privateConstructorUsedError;
+  Color? get voyagerColor => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AddVoyagerStateCopyWith<AddVoyagerState> get copyWith =>
@@ -38,9 +39,8 @@ abstract class $AddVoyagerStateCopyWith<$Res> {
       FormStatus formStatus,
       String? errorMessage,
       String? successMessage,
-      VoyagerModel? voyagerModel});
-
-  $VoyagerModelCopyWith<$Res>? get voyagerModel;
+      String? voyagerName,
+      Color? voyagerColor});
 }
 
 /// @nodoc
@@ -60,7 +60,8 @@ class _$AddVoyagerStateCopyWithImpl<$Res, $Val extends AddVoyagerState>
     Object? formStatus = null,
     Object? errorMessage = freezed,
     Object? successMessage = freezed,
-    Object? voyagerModel = freezed,
+    Object? voyagerName = freezed,
+    Object? voyagerColor = freezed,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -79,23 +80,15 @@ class _$AddVoyagerStateCopyWithImpl<$Res, $Val extends AddVoyagerState>
           ? _value.successMessage
           : successMessage // ignore: cast_nullable_to_non_nullable
               as String?,
-      voyagerModel: freezed == voyagerModel
-          ? _value.voyagerModel
-          : voyagerModel // ignore: cast_nullable_to_non_nullable
-              as VoyagerModel?,
+      voyagerName: freezed == voyagerName
+          ? _value.voyagerName
+          : voyagerName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      voyagerColor: freezed == voyagerColor
+          ? _value.voyagerColor
+          : voyagerColor // ignore: cast_nullable_to_non_nullable
+              as Color?,
     ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $VoyagerModelCopyWith<$Res>? get voyagerModel {
-    if (_value.voyagerModel == null) {
-      return null;
-    }
-
-    return $VoyagerModelCopyWith<$Res>(_value.voyagerModel!, (value) {
-      return _then(_value.copyWith(voyagerModel: value) as $Val);
-    });
   }
 }
 
@@ -112,10 +105,8 @@ abstract class _$$_AddVoyagerStateCopyWith<$Res>
       FormStatus formStatus,
       String? errorMessage,
       String? successMessage,
-      VoyagerModel? voyagerModel});
-
-  @override
-  $VoyagerModelCopyWith<$Res>? get voyagerModel;
+      String? voyagerName,
+      Color? voyagerColor});
 }
 
 /// @nodoc
@@ -133,7 +124,8 @@ class __$$_AddVoyagerStateCopyWithImpl<$Res>
     Object? formStatus = null,
     Object? errorMessage = freezed,
     Object? successMessage = freezed,
-    Object? voyagerModel = freezed,
+    Object? voyagerName = freezed,
+    Object? voyagerColor = freezed,
   }) {
     return _then(_$_AddVoyagerState(
       status: null == status
@@ -152,10 +144,14 @@ class __$$_AddVoyagerStateCopyWithImpl<$Res>
           ? _value.successMessage
           : successMessage // ignore: cast_nullable_to_non_nullable
               as String?,
-      voyagerModel: freezed == voyagerModel
-          ? _value.voyagerModel
-          : voyagerModel // ignore: cast_nullable_to_non_nullable
-              as VoyagerModel?,
+      voyagerName: freezed == voyagerName
+          ? _value.voyagerName
+          : voyagerName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      voyagerColor: freezed == voyagerColor
+          ? _value.voyagerColor
+          : voyagerColor // ignore: cast_nullable_to_non_nullable
+              as Color?,
     ));
   }
 }
@@ -168,7 +164,8 @@ class _$_AddVoyagerState implements _AddVoyagerState {
       this.formStatus = FormStatus.initial,
       this.errorMessage,
       this.successMessage,
-      this.voyagerModel});
+      this.voyagerName,
+      this.voyagerColor});
 
   @override
   @JsonKey()
@@ -181,11 +178,13 @@ class _$_AddVoyagerState implements _AddVoyagerState {
   @override
   final String? successMessage;
   @override
-  final VoyagerModel? voyagerModel;
+  final String? voyagerName;
+  @override
+  final Color? voyagerColor;
 
   @override
   String toString() {
-    return 'AddVoyagerState(status: $status, formStatus: $formStatus, errorMessage: $errorMessage, successMessage: $successMessage, voyagerModel: $voyagerModel)';
+    return 'AddVoyagerState(status: $status, formStatus: $formStatus, errorMessage: $errorMessage, successMessage: $successMessage, voyagerName: $voyagerName, voyagerColor: $voyagerColor)';
   }
 
   @override
@@ -200,13 +199,15 @@ class _$_AddVoyagerState implements _AddVoyagerState {
                 other.errorMessage == errorMessage) &&
             (identical(other.successMessage, successMessage) ||
                 other.successMessage == successMessage) &&
-            (identical(other.voyagerModel, voyagerModel) ||
-                other.voyagerModel == voyagerModel));
+            (identical(other.voyagerName, voyagerName) ||
+                other.voyagerName == voyagerName) &&
+            (identical(other.voyagerColor, voyagerColor) ||
+                other.voyagerColor == voyagerColor));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, status, formStatus, errorMessage,
-      successMessage, voyagerModel);
+      successMessage, voyagerName, voyagerColor);
 
   @JsonKey(ignore: true)
   @override
@@ -221,7 +222,8 @@ abstract class _AddVoyagerState implements AddVoyagerState {
       final FormStatus formStatus,
       final String? errorMessage,
       final String? successMessage,
-      final VoyagerModel? voyagerModel}) = _$_AddVoyagerState;
+      final String? voyagerName,
+      final Color? voyagerColor}) = _$_AddVoyagerState;
 
   @override
   Status get status;
@@ -232,7 +234,9 @@ abstract class _AddVoyagerState implements AddVoyagerState {
   @override
   String? get successMessage;
   @override
-  VoyagerModel? get voyagerModel;
+  String? get voyagerName;
+  @override
+  Color? get voyagerColor;
   @override
   @JsonKey(ignore: true)
   _$$_AddVoyagerStateCopyWith<_$_AddVoyagerState> get copyWith =>
