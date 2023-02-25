@@ -59,7 +59,6 @@
   "termsOfUse": "Terms of Use",
   "privacyPolicy": "Privacy Policy",
   "minOsVersion": "Minimum OS version",
-
   "voyagers": "Voyagers",
   "voyager": "Voyager",
   "addVoyager": "Add Voyager",
@@ -71,5 +70,4 @@
   "pleaseEnterBudgetAmount": "Please enter budget amount",
   "pleaseChooseDate": "Please choose a date",
   "endDateShouldComeAfter": "End date should come after the start date"
-
 }

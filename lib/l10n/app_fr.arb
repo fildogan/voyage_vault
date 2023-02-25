@@ -57,5 +57,16 @@
   "system": "Système",
   "termsOfUse": "Conditions d'utilisation",
   "privacyPolicy": "Politique de confidentialité",
-  "minOsVersion": "Version minimale du système d'exploitation"   
+  "minOsVersion": "Version minimale du système d'exploitation",
+  "voyagers": "Voyageurs",
+  "voyager": "Voyageur",
+  "addVoyager": "Ajouter un voyageur",
+  "voyagerName": "Nom du voyageur",
+  "pleaseEnterVoyagerName": "Veuillez entrer le nom du voyageur",
+  "editExpense": "Modifier les dépenses",
+  "pleaseEnterVoyageTitle": "Veuillez entrer le titre du voyage",
+  "pleaseEnterVoyageDestination": "Veuillez entrer la destination du voyage",
+  "pleaseEnterBudgetAmount": "Veuillez entrer le montant du budget",
+  "pleaseChooseDate": "Veuillez choisir une date",
+  "endDateShouldComeAfter": "La date de fin doit être postérieure à la date de début"   
 }

@@ -60,6 +60,17 @@
   "account": "Konto",
   "termsOfUse": "Warunki korzystania",
   "privacyPolicy": "Polityka prywatności",
-  "minOsVersion": "Minimalna wersja systemu operacyjnego"    
+  "minOsVersion": "Minimalna wersja systemu operacyjnego",
+  "voyagers": "Podróżnicy",
+  "voyager": "Podróżnik",
+  "addVoyager": "Dodaj podróżnika",
+  "voyagerName": "Imię podróżnika",
+  "pleaseEnterVoyagerName": "Wprowadź imię podróżnika",
+  "editExpense": "Edytuj wydatki",
+  "pleaseEnterVoyageTitle": "Wprowadź tytuł podróży",
+  "pleaseEnterVoyageDestination": "Wprowadź cel podróży",
+  "pleaseEnterBudgetAmount": "Wprowadź kwotę budżetu",
+  "pleaseChooseDate": "Wybierz datę",
+  "endDateShouldComeAfter": "Data końcowa powinna być po dacie początkowej"  
 
 }
