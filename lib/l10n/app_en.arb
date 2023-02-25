@@ -65,6 +65,11 @@
   "addVoyager": "Add Voyager",
   "voyagerName": "Voyager Name",
   "pleaseEnterVoyagerName": "Please enter voyager name",
-  "editExpense": "Edit Expense"
+  "editExpense": "Edit Expense",
+  "pleaseEnterVoyageTitle": "Please enter voyage title",
+  "pleaseEnterVoyageDestination": "Please enter voyage destination",
+  "pleaseEnterBudgetAmount": "Please enter budget amount",
+  "pleaseChooseDate": "Please choose a date",
+  "endDateShouldComeAfter": "End date should come after the start date"
 
 }

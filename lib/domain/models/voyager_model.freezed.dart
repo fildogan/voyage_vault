@@ -19,6 +19,7 @@ mixin _$VoyagerModel {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   Color get color => throw _privateConstructorUsedError;
+  bool? get isSelected => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $VoyagerModelCopyWith<VoyagerModel> get copyWith =>
@@ -31,7 +32,7 @@ abstract class $VoyagerModelCopyWith<$Res> {
           VoyagerModel value, $Res Function(VoyagerModel) then) =
       _$VoyagerModelCopyWithImpl<$Res, VoyagerModel>;
   @useResult
-  $Res call({String id, String name, Color color});
+  $Res call({String id, String name, Color color, bool? isSelected});
 }
 
 /// @nodoc
@@ -50,6 +51,7 @@ class _$VoyagerModelCopyWithImpl<$Res, $Val extends VoyagerModel>
     Object? id = null,
     Object? name = null,
     Object? color = null,
+    Object? isSelected = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -64,6 +66,10 @@ class _$VoyagerModelCopyWithImpl<$Res, $Val extends VoyagerModel>
           ? _value.color
           : color // ignore: cast_nullable_to_non_nullable
               as Color,
+      isSelected: freezed == isSelected
+          ? _value.isSelected
+          : isSelected // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ) as $Val);
   }
 }
@@ -76,7 +82,7 @@ abstract class _$$_VoyagerModelCopyWith<$Res>
       __$$_VoyagerModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name, Color color});
+  $Res call({String id, String name, Color color, bool? isSelected});
 }
 
 /// @nodoc
@@ -93,6 +99,7 @@ class __$$_VoyagerModelCopyWithImpl<$Res>
     Object? id = null,
     Object? name = null,
     Object? color = null,
+    Object? isSelected = freezed,
   }) {
     return _then(_$_VoyagerModel(
       id: null == id
@@ -107,6 +114,10 @@ class __$$_VoyagerModelCopyWithImpl<$Res>
           ? _value.color
           : color // ignore: cast_nullable_to_non_nullable
               as Color,
+      isSelected: freezed == isSelected
+          ? _value.isSelected
+          : isSelected // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -115,7 +126,10 @@ class __$$_VoyagerModelCopyWithImpl<$Res>
 
 class _$_VoyagerModel extends _VoyagerModel {
   const _$_VoyagerModel(
-      {required this.id, required this.name, required this.color})
+      {required this.id,
+      required this.name,
+      required this.color,
+      this.isSelected})
       : super._();
 
   @override
@@ -124,10 +138,12 @@ class _$_VoyagerModel extends _VoyagerModel {
   final String name;
   @override
   final Color color;
+  @override
+  final bool? isSelected;
 
   @override
   String toString() {
-    return 'VoyagerModel(id: $id, name: $name, color: $color)';
+    return 'VoyagerModel(id: $id, name: $name, color: $color, isSelected: $isSelected)';
   }
 
   @override
@@ -137,11 +153,13 @@ class _$_VoyagerModel extends _VoyagerModel {
             other is _$_VoyagerModel &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.color, color) || other.color == color));
+            (identical(other.color, color) || other.color == color) &&
+            (identical(other.isSelected, isSelected) ||
+                other.isSelected == isSelected));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, color);
+  int get hashCode => Object.hash(runtimeType, id, name, color, isSelected);
 
   @JsonKey(ignore: true)
   @override
@@ -154,7 +172,8 @@ abstract class _VoyagerModel extends VoyagerModel {
   const factory _VoyagerModel(
       {required final String id,
       required final String name,
-      required final Color color}) = _$_VoyagerModel;
+      required final Color color,
+      final bool? isSelected}) = _$_VoyagerModel;
   const _VoyagerModel._() : super._();
 
   @override
@@ -163,6 +182,8 @@ abstract class _VoyagerModel extends VoyagerModel {
   String get name;
   @override
   Color get color;
+  @override
+  bool? get isSelected;
   @override
   @JsonKey(ignore: true)
   _$$_VoyagerModelCopyWith<_$_VoyagerModel> get copyWith =>

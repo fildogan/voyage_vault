@@ -21,6 +21,14 @@ mixin _$AddVoyageState {
   String? get errorMessage => throw _privateConstructorUsedError;
   String? get successMessage => throw _privateConstructorUsedError;
   List<String> get voyageTitles => throw _privateConstructorUsedError;
+  String get voyageId => throw _privateConstructorUsedError;
+  String get voyageTitle => throw _privateConstructorUsedError;
+  DateTime? get startDate => throw _privateConstructorUsedError;
+  DateTime? get endDate => throw _privateConstructorUsedError;
+  String get location => throw _privateConstructorUsedError;
+  String get description => throw _privateConstructorUsedError;
+  double get budget => throw _privateConstructorUsedError;
+  List<VoyagerModel> get voyagers => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AddVoyageStateCopyWith<AddVoyageState> get copyWith =>
@@ -38,7 +46,15 @@ abstract class $AddVoyageStateCopyWith<$Res> {
       bool saved,
       String? errorMessage,
       String? successMessage,
-      List<String> voyageTitles});
+      List<String> voyageTitles,
+      String voyageId,
+      String voyageTitle,
+      DateTime? startDate,
+      DateTime? endDate,
+      String location,
+      String description,
+      double budget,
+      List<VoyagerModel> voyagers});
 }
 
 /// @nodoc
@@ -59,6 +75,14 @@ class _$AddVoyageStateCopyWithImpl<$Res, $Val extends AddVoyageState>
     Object? errorMessage = freezed,
     Object? successMessage = freezed,
     Object? voyageTitles = null,
+    Object? voyageId = null,
+    Object? voyageTitle = null,
+    Object? startDate = freezed,
+    Object? endDate = freezed,
+    Object? location = null,
+    Object? description = null,
+    Object? budget = null,
+    Object? voyagers = null,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -81,6 +105,38 @@ class _$AddVoyageStateCopyWithImpl<$Res, $Val extends AddVoyageState>
           ? _value.voyageTitles
           : voyageTitles // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      voyageId: null == voyageId
+          ? _value.voyageId
+          : voyageId // ignore: cast_nullable_to_non_nullable
+              as String,
+      voyageTitle: null == voyageTitle
+          ? _value.voyageTitle
+          : voyageTitle // ignore: cast_nullable_to_non_nullable
+              as String,
+      startDate: freezed == startDate
+          ? _value.startDate
+          : startDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      endDate: freezed == endDate
+          ? _value.endDate
+          : endDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      location: null == location
+          ? _value.location
+          : location // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+      budget: null == budget
+          ? _value.budget
+          : budget // ignore: cast_nullable_to_non_nullable
+              as double,
+      voyagers: null == voyagers
+          ? _value.voyagers
+          : voyagers // ignore: cast_nullable_to_non_nullable
+              as List<VoyagerModel>,
     ) as $Val);
   }
 }
@@ -98,7 +154,15 @@ abstract class _$$_AddVoyageStateCopyWith<$Res>
       bool saved,
       String? errorMessage,
       String? successMessage,
-      List<String> voyageTitles});
+      List<String> voyageTitles,
+      String voyageId,
+      String voyageTitle,
+      DateTime? startDate,
+      DateTime? endDate,
+      String location,
+      String description,
+      double budget,
+      List<VoyagerModel> voyagers});
 }
 
 /// @nodoc
@@ -117,6 +181,14 @@ class __$$_AddVoyageStateCopyWithImpl<$Res>
     Object? errorMessage = freezed,
     Object? successMessage = freezed,
     Object? voyageTitles = null,
+    Object? voyageId = null,
+    Object? voyageTitle = null,
+    Object? startDate = freezed,
+    Object? endDate = freezed,
+    Object? location = null,
+    Object? description = null,
+    Object? budget = null,
+    Object? voyagers = null,
   }) {
     return _then(_$_AddVoyageState(
       status: null == status
@@ -139,20 +211,62 @@ class __$$_AddVoyageStateCopyWithImpl<$Res>
           ? _value._voyageTitles
           : voyageTitles // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      voyageId: null == voyageId
+          ? _value.voyageId
+          : voyageId // ignore: cast_nullable_to_non_nullable
+              as String,
+      voyageTitle: null == voyageTitle
+          ? _value.voyageTitle
+          : voyageTitle // ignore: cast_nullable_to_non_nullable
+              as String,
+      startDate: freezed == startDate
+          ? _value.startDate
+          : startDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      endDate: freezed == endDate
+          ? _value.endDate
+          : endDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      location: null == location
+          ? _value.location
+          : location // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+      budget: null == budget
+          ? _value.budget
+          : budget // ignore: cast_nullable_to_non_nullable
+              as double,
+      voyagers: null == voyagers
+          ? _value._voyagers
+          : voyagers // ignore: cast_nullable_to_non_nullable
+              as List<VoyagerModel>,
     ));
   }
 }
 
 /// @nodoc
 
-class _$_AddVoyageState implements _AddVoyageState {
+class _$_AddVoyageState extends _AddVoyageState {
   _$_AddVoyageState(
       {this.status = Status.initial,
       this.saved = false,
       this.errorMessage,
       this.successMessage,
-      final List<String> voyageTitles = const []})
-      : _voyageTitles = voyageTitles;
+      final List<String> voyageTitles = const [],
+      this.voyageId = '',
+      this.voyageTitle = '',
+      this.startDate,
+      this.endDate,
+      this.location = '',
+      this.description = '',
+      this.budget = 0,
+      final List<VoyagerModel> voyagers = const []})
+      : _voyageTitles = voyageTitles,
+        _voyagers = voyagers,
+        super._();
 
   @override
   @JsonKey()
@@ -174,8 +288,36 @@ class _$_AddVoyageState implements _AddVoyageState {
   }
 
   @override
+  @JsonKey()
+  final String voyageId;
+  @override
+  @JsonKey()
+  final String voyageTitle;
+  @override
+  final DateTime? startDate;
+  @override
+  final DateTime? endDate;
+  @override
+  @JsonKey()
+  final String location;
+  @override
+  @JsonKey()
+  final String description;
+  @override
+  @JsonKey()
+  final double budget;
+  final List<VoyagerModel> _voyagers;
+  @override
+  @JsonKey()
+  List<VoyagerModel> get voyagers {
+    if (_voyagers is EqualUnmodifiableListView) return _voyagers;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_voyagers);
+  }
+
+  @override
   String toString() {
-    return 'AddVoyageState(status: $status, saved: $saved, errorMessage: $errorMessage, successMessage: $successMessage, voyageTitles: $voyageTitles)';
+    return 'AddVoyageState(status: $status, saved: $saved, errorMessage: $errorMessage, successMessage: $successMessage, voyageTitles: $voyageTitles, voyageId: $voyageId, voyageTitle: $voyageTitle, startDate: $startDate, endDate: $endDate, location: $location, description: $description, budget: $budget, voyagers: $voyagers)';
   }
 
   @override
@@ -190,12 +332,38 @@ class _$_AddVoyageState implements _AddVoyageState {
             (identical(other.successMessage, successMessage) ||
                 other.successMessage == successMessage) &&
             const DeepCollectionEquality()
-                .equals(other._voyageTitles, _voyageTitles));
+                .equals(other._voyageTitles, _voyageTitles) &&
+            (identical(other.voyageId, voyageId) ||
+                other.voyageId == voyageId) &&
+            (identical(other.voyageTitle, voyageTitle) ||
+                other.voyageTitle == voyageTitle) &&
+            (identical(other.startDate, startDate) ||
+                other.startDate == startDate) &&
+            (identical(other.endDate, endDate) || other.endDate == endDate) &&
+            (identical(other.location, location) ||
+                other.location == location) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.budget, budget) || other.budget == budget) &&
+            const DeepCollectionEquality().equals(other._voyagers, _voyagers));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, status, saved, errorMessage,
-      successMessage, const DeepCollectionEquality().hash(_voyageTitles));
+  int get hashCode => Object.hash(
+      runtimeType,
+      status,
+      saved,
+      errorMessage,
+      successMessage,
+      const DeepCollectionEquality().hash(_voyageTitles),
+      voyageId,
+      voyageTitle,
+      startDate,
+      endDate,
+      location,
+      description,
+      budget,
+      const DeepCollectionEquality().hash(_voyagers));
 
   @JsonKey(ignore: true)
   @override
@@ -204,13 +372,22 @@ class _$_AddVoyageState implements _AddVoyageState {
       __$$_AddVoyageStateCopyWithImpl<_$_AddVoyageState>(this, _$identity);
 }
 
-abstract class _AddVoyageState implements AddVoyageState {
+abstract class _AddVoyageState extends AddVoyageState {
   factory _AddVoyageState(
       {final Status status,
       final bool saved,
       final String? errorMessage,
       final String? successMessage,
-      final List<String> voyageTitles}) = _$_AddVoyageState;
+      final List<String> voyageTitles,
+      final String voyageId,
+      final String voyageTitle,
+      final DateTime? startDate,
+      final DateTime? endDate,
+      final String location,
+      final String description,
+      final double budget,
+      final List<VoyagerModel> voyagers}) = _$_AddVoyageState;
+  _AddVoyageState._() : super._();
 
   @override
   Status get status;
@@ -222,6 +399,22 @@ abstract class _AddVoyageState implements AddVoyageState {
   String? get successMessage;
   @override
   List<String> get voyageTitles;
+  @override
+  String get voyageId;
+  @override
+  String get voyageTitle;
+  @override
+  DateTime? get startDate;
+  @override
+  DateTime? get endDate;
+  @override
+  String get location;
+  @override
+  String get description;
+  @override
+  double get budget;
+  @override
+  List<VoyagerModel> get voyagers;
   @override
   @JsonKey(ignore: true)
   _$$_AddVoyageStateCopyWith<_$_AddVoyageState> get copyWith =>

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:voyage_vault/domain/models/expense_model.dart';
+import 'package:voyage_vault/features/global_widgets/select_date_form_field.dart';
 import 'package:voyage_vault/features/home/pages/edit_expense/cubit/edit_expense_cubit.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -68,33 +69,51 @@ class EditExpensePageBody extends StatelessWidget {
     );
   }
 
+  // Widget _dateField() {
+  //   return BlocBuilder<EditExpenseCubit, EditExpenseState>(
+  //     builder: (context, state) {
+  //       return TextFormField(
+  //         controller: TextEditingController(text: state.dateAddedFormated),
+  //         decoration: InputDecoration(
+  //           border: const UnderlineInputBorder(),
+  //           icon: const Icon(
+  //             Icons.calendar_today,
+  //           ),
+  //           labelText: AppLocalizations.of(context).spentDate,
+  //           contentPadding: const EdgeInsets.all(10),
+  //         ),
+  //         readOnly: true, // when true user cannot edit text
+  //         onTap: () async {
+  //           await showDatePicker(
+  //             context: context,
+  //             initialDate: state.dateAdded ?? DateTime.now(),
+  //             firstDate: DateTime(2020),
+  //             lastDate: DateTime.now().add(const Duration(days: 365 * 10)),
+  //           ).then((selectedDate) {
+  //             if (selectedDate != null) {
+  //               context
+  //                   .read<EditExpenseCubit>()
+  //                   .changeDateAdded(dateAdded: selectedDate);
+  //             }
+  //           });
+  //         },
+  //       );
+  //     },
+  //   );
+  // }
+
   Widget _dateField() {
     return BlocBuilder<EditExpenseCubit, EditExpenseState>(
       builder: (context, state) {
-        return TextFormField(
-          controller: TextEditingController(text: state.dateAddedFormated),
-          decoration: InputDecoration(
-            border: const UnderlineInputBorder(),
-            icon: const Icon(
-              Icons.calendar_today,
-            ),
-            labelText: AppLocalizations.of(context).spentDate,
-            contentPadding: const EdgeInsets.all(10),
-          ),
-          readOnly: true, // when true user cannot edit text
-          onTap: () async {
-            final selectedDate = await showDatePicker(
-              context: context,
-              initialDate: state.dateAdded ?? DateTime.now(),
-              firstDate: DateTime(2020),
-              lastDate: DateTime.now().add(const Duration(days: 365 * 10)),
-            );
-            if (selectedDate != null) {
-              context
-                  .read<EditExpenseCubit>()
-                  .changeDateAdded(dateAdded: selectedDate);
-            }
-          },
+        return selectDateFormField(
+          context: context,
+          controllerText: state.dateAddedFormated,
+          labelText: AppLocalizations.of(context).spentDate,
+          changeDate: (selectedDate) => context
+              .read<EditExpenseCubit>()
+              .changeDateAdded(dateAdded: selectedDate),
+          initialDate: state.dateAdded,
+          //TODO: Add validator
         );
       },
     );

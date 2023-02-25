@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:voyage_vault/app/core/enums.dart';
 import 'package:voyage_vault/app/injection_container.dart';
 import 'package:voyage_vault/components/add_edit_app_bar.dart';
+import 'package:voyage_vault/components/text_form_field_decoration.dart';
 import 'package:voyage_vault/domain/models/voyage_model.dart';
 import 'package:voyage_vault/features/home/pages/add_expense/cubit/add_expense_cubit.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -103,34 +104,47 @@ class _AddExpensePageBody extends StatelessWidget {
     );
   }
 
-  Widget _voyageField() {
+  Widget _nameField() {
     return BlocBuilder<AddExpenseCubit, AddExpenseState>(
       builder: (context, state) {
-        return DropdownButtonFormField<String>(
-          value: state.voyageTitle,
-          decoration: InputDecoration(
-            border: const UnderlineInputBorder(),
-            labelText: AppLocalizations.of(context).voyage,
-            contentPadding: const EdgeInsets.all(10),
+        return TextFormField(
+          decoration: textFormFieldDecoration(
+            context,
+            labelText: AppLocalizations.of(context).expenseName,
           ),
-          items: [
-            ...state.voyageTitles.map(
-              (String voyage) {
-                return DropdownMenuItem(
-                  value: voyage,
-                  child: Text(
-                    voyage[0].toUpperCase() + voyage.substring(1),
-                  ),
-                );
-              },
-            )
-          ],
-          onChanged: ((value) => context
-              .read<AddExpenseCubit>()
-              .changeVoyageTitle(voyageTitle: value!)),
-          validator: (value) => state.isVoyageValid
+          onChanged: (value) {
+            context.read<AddExpenseCubit>().changeName(name: value);
+          },
+          validator: (value) => state.isNameValid
               ? null
-              : AppLocalizations.of(context).pleaseChooseVoyage,
+              : AppLocalizations.of(context).pleaseEnterExpenseName,
+        );
+      },
+    );
+  }
+
+  Widget _priceField() {
+    return BlocBuilder<AddExpenseCubit, AddExpenseState>(
+      builder: (context, state) {
+        return TextFormField(
+          textAlign: TextAlign.start,
+          decoration: textFormFieldDecoration(
+            context,
+            labelText: AppLocalizations.of(context).price,
+          ),
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(
+              RegExp(r'^\d*\.?\d{0,2}'),
+            ),
+          ],
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          onChanged: (value) {
+            final price = double.tryParse(value);
+            context.read<AddExpenseCubit>().changePrice(price: price ?? 0);
+          },
+          validator: (value) => state.isPriceValid
+              ? null
+              : AppLocalizations.of(context).pleaseEnterExpenseAmount,
         );
       },
     );
@@ -141,10 +155,9 @@ class _AddExpensePageBody extends StatelessWidget {
       builder: (context, state) {
         return DropdownButtonFormField<String>(
           value: state.category,
-          decoration: InputDecoration(
-            border: const UnderlineInputBorder(),
+          decoration: textFormFieldDecoration(
+            context,
             labelText: AppLocalizations.of(context).category,
-            contentPadding: const EdgeInsets.all(10),
           ),
           items: [
             ...state.categoryTitles.map(
@@ -168,49 +181,33 @@ class _AddExpensePageBody extends StatelessWidget {
     );
   }
 
-  Widget _priceField() {
+  Widget _voyageField() {
     return BlocBuilder<AddExpenseCubit, AddExpenseState>(
       builder: (context, state) {
-        return TextFormField(
-          textAlign: TextAlign.start,
-          decoration: InputDecoration(
-            border: const UnderlineInputBorder(),
-            labelText: AppLocalizations.of(context).price,
-            contentPadding: const EdgeInsets.all(10),
+        return DropdownButtonFormField<String>(
+          value: state.voyageTitle,
+          decoration: textFormFieldDecoration(
+            context,
+            labelText: AppLocalizations.of(context).voyage,
           ),
-          inputFormatters: [
-            FilteringTextInputFormatter.allow(
-              RegExp(r'^\d*\.?\d{0,2}'),
-            ),
+          items: [
+            ...state.voyageTitles.map(
+              (String voyage) {
+                return DropdownMenuItem(
+                  value: voyage,
+                  child: Text(
+                    voyage[0].toUpperCase() + voyage.substring(1),
+                  ),
+                );
+              },
+            )
           ],
-          keyboardType: const TextInputType.numberWithOptions(decimal: true),
-          onChanged: (value) {
-            final price = double.tryParse(value);
-            context.read<AddExpenseCubit>().changePrice(price: price ?? 0);
-          },
-          validator: (value) => state.isPriceValid
+          onChanged: ((value) => context
+              .read<AddExpenseCubit>()
+              .changeVoyageTitle(voyageTitle: value!)),
+          validator: (value) => state.isVoyageValid
               ? null
-              : AppLocalizations.of(context).pleaseEnterExpenseAmount,
-        );
-      },
-    );
-  }
-
-  Widget _nameField() {
-    return BlocBuilder<AddExpenseCubit, AddExpenseState>(
-      builder: (context, state) {
-        return TextFormField(
-          decoration: InputDecoration(
-            border: const UnderlineInputBorder(),
-            labelText: AppLocalizations.of(context).expenseName,
-            contentPadding: const EdgeInsets.all(10),
-          ),
-          onChanged: (value) {
-            context.read<AddExpenseCubit>().changeName(name: value);
-          },
-          validator: (value) => state.isNameValid
-              ? null
-              : AppLocalizations.of(context).pleaseEnterExpenseName,
+              : AppLocalizations.of(context).pleaseChooseVoyage,
         );
       },
     );

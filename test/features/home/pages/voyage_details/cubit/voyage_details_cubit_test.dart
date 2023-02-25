@@ -43,10 +43,10 @@ void main() {
       wait: const Duration(milliseconds: 300),
       verify: (_) async {
         // Verify if getVoyagesStream is called
-        verify(voyagesRepository.getVoyageById(randomId1)).called(1);
+        verify(await voyagesRepository.getVoyageById(randomId1)).called(1);
         verify(expensesRepository.getExpensesStreamByVoyageId(randomId1))
             .called(1);
-        verify(voyagersRepository.getVoyagersStreamById([])).called(1);
+        verify(voyagersRepository.getVoyagersStream()).called(1);
       },
     );
   });
@@ -60,7 +60,7 @@ void main() {
         wait: const Duration(milliseconds: 300),
         verify: (_) async {
           // Verify if getVoyagesStream is called
-          verify(voyagesRepository.getVoyageById(randomId1)).called(1);
+          verify(await voyagesRepository.getVoyageById(randomId1)).called(1);
         },
       );
       group(

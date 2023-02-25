@@ -24,20 +24,7 @@ class VoyagersRepository {
             return VoyagerModel(
                 id: doc.id,
                 name: doc['name'].toString(),
-                color: HexColor.fromHex(doc['color'].toString())
-                // name: doc['name'].toString(),
-                // budget: doc.data().toString().contains('budget')
-                //     ? double.parse(doc['budget'].toString())
-                //     : 0.00,
-                // startDate: (doc['startdate'] as Timestamp).toDate(),
-                // endDate: (doc['enddate'] as Timestamp).toDate(),
-                // location: doc.data().toString().contains('location')
-                //     ? doc['location'].toString()
-                //     : '',
-                // description: doc.data().toString().contains('description')
-                //     ? doc['description'].toString()
-                //     : '',
-                );
+                color: HexColor.fromHex(doc['color'].toString()));
           },
         ).toList();
       },

@@ -8,20 +8,27 @@ class AddVoyageState with _$AddVoyageState {
     String? errorMessage,
     String? successMessage,
     @Default([]) List<String> voyageTitles,
+    @Default('') String voyageId,
+    @Default('') String voyageTitle,
+    DateTime? startDate,
+    DateTime? endDate,
+    @Default('') String location,
+    @Default('') String description,
+    @Default(0) double budget,
+    @Default([]) List<VoyagerModel> voyagers,
   }) = _AddVoyageState;
+  const AddVoyageState._();
+
+  bool get isTitleValid => voyageTitle.isNotEmpty;
+  bool get isLocationValid => location.isNotEmpty;
+  bool get isBudgetValid => budget > 0;
+  bool get isStartDateValid => startDate != null;
+  bool get isEndDateValid => endDate != null;
+  bool get isEndDateAfterStart => !endDate!.isBefore(startDate!);
+
+  String get startDateFormatted =>
+      startDate != null ? DateFormat.yMd().format(startDate!) : '';
+
+  String get endDateFormatted =>
+      endDate != null ? DateFormat.yMd().format(endDate!) : '';
 }
-
-// @immutable
-// class AddVoyageState {
-//   const AddVoyageState({
-//     this.status = Status.initial,
-//     this.saved = false,
-//     this.errorMessage = '',
-//     this.voyageTitles = const [],
-//   });
-
-//   final Status status;
-//   final bool saved;
-//   final String errorMessage;
-//   final List<String> voyageTitles;
-// }

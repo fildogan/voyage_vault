@@ -11,6 +11,7 @@ class VoyagerModel with _$VoyagerModel {
     required String id,
     required String name,
     required Color color,
+    bool? isSelected,
   }) = _VoyagerModel;
   const VoyagerModel._();
 }
