@@ -3,15 +3,19 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
+import 'dart:async' as _i5;
+import 'dart:ui' as _i9;
 
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:voyage_vault/domain/models/expense_model.dart' as _i6;
+import 'package:voyage_vault/domain/models/expense_model.dart' as _i7;
 import 'package:voyage_vault/domain/models/voyage_model.dart' as _i2;
+import 'package:voyage_vault/domain/models/voyager_model.dart' as _i3;
 import 'package:voyage_vault/domain/repositories/expenses_repository.dart'
-    as _i5;
+    as _i6;
+import 'package:voyage_vault/domain/repositories/voyager_repository.dart'
+    as _i8;
 import 'package:voyage_vault/domain/repositories/voyages_repository.dart'
-    as _i3;
+    as _i4;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -34,27 +38,38 @@ class _FakeVoyageModel_0 extends _i1.SmartFake implements _i2.VoyageModel {
         );
 }
 
+class _FakeVoyagerModel_1 extends _i1.SmartFake implements _i3.VoyagerModel {
+  _FakeVoyagerModel_1(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
 /// A class which mocks [VoyagesRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockVoyagesRepository extends _i1.Mock implements _i3.VoyagesRepository {
+class MockVoyagesRepository extends _i1.Mock implements _i4.VoyagesRepository {
   @override
-  _i4.Stream<List<_i2.VoyageModel>> getVoyagesStream() => (super.noSuchMethod(
+  _i5.Stream<List<_i2.VoyageModel>> getVoyagesStream() => (super.noSuchMethod(
         Invocation.method(
           #getVoyagesStream,
           [],
         ),
-        returnValue: _i4.Stream<List<_i2.VoyageModel>>.empty(),
-        returnValueForMissingStub: _i4.Stream<List<_i2.VoyageModel>>.empty(),
-      ) as _i4.Stream<List<_i2.VoyageModel>>);
+        returnValue: _i5.Stream<List<_i2.VoyageModel>>.empty(),
+        returnValueForMissingStub: _i5.Stream<List<_i2.VoyageModel>>.empty(),
+      ) as _i5.Stream<List<_i2.VoyageModel>>);
   @override
-  _i4.Future<void> add({
+  _i5.Future<void> add({
     required String? title,
     required double? budget,
     required DateTime? startDate,
     required DateTime? endDate,
     required String? location,
     required String? description,
+    required List<String>? voyagers,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -67,13 +82,14 @@ class MockVoyagesRepository extends _i1.Mock implements _i3.VoyagesRepository {
             #endDate: endDate,
             #location: location,
             #description: description,
+            #voyagers: voyagers,
           },
         ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
   @override
-  _i4.Future<void> update({
+  _i5.Future<void> update({
     required String? id,
     required String? title,
     required double? budget,
@@ -96,35 +112,35 @@ class MockVoyagesRepository extends _i1.Mock implements _i3.VoyagesRepository {
             #description: description,
           },
         ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
   @override
-  _i4.Future<void> remove({required String? id}) => (super.noSuchMethod(
+  _i5.Future<void> remove({required String? id}) => (super.noSuchMethod(
         Invocation.method(
           #remove,
           [],
           {#id: id},
         ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
   @override
-  _i4.Future<String> getVoyageIdByTitle(String? title) => (super.noSuchMethod(
+  _i5.Future<String> getVoyageIdByTitle(String? title) => (super.noSuchMethod(
         Invocation.method(
           #getVoyageIdByTitle,
           [title],
         ),
-        returnValue: _i4.Future<String>.value(''),
-        returnValueForMissingStub: _i4.Future<String>.value(''),
-      ) as _i4.Future<String>);
+        returnValue: _i5.Future<String>.value(''),
+        returnValueForMissingStub: _i5.Future<String>.value(''),
+      ) as _i5.Future<String>);
   @override
-  _i4.Future<_i2.VoyageModel> getVoyageById(String? id) => (super.noSuchMethod(
+  _i5.Future<_i2.VoyageModel> getVoyageById(String? id) => (super.noSuchMethod(
         Invocation.method(
           #getVoyageById,
           [id],
         ),
-        returnValue: _i4.Future<_i2.VoyageModel>.value(_FakeVoyageModel_0(
+        returnValue: _i5.Future<_i2.VoyageModel>.value(_FakeVoyageModel_0(
           this,
           Invocation.method(
             #getVoyageById,
@@ -132,43 +148,43 @@ class MockVoyagesRepository extends _i1.Mock implements _i3.VoyagesRepository {
           ),
         )),
         returnValueForMissingStub:
-            _i4.Future<_i2.VoyageModel>.value(_FakeVoyageModel_0(
+            _i5.Future<_i2.VoyageModel>.value(_FakeVoyageModel_0(
           this,
           Invocation.method(
             #getVoyageById,
             [id],
           ),
         )),
-      ) as _i4.Future<_i2.VoyageModel>);
+      ) as _i5.Future<_i2.VoyageModel>);
   @override
-  _i4.Stream<List<String>> getVoyageTitlesStream() => (super.noSuchMethod(
+  _i5.Stream<List<String>> getVoyageTitlesStream() => (super.noSuchMethod(
         Invocation.method(
           #getVoyageTitlesStream,
           [],
         ),
-        returnValue: _i4.Stream<List<String>>.empty(),
-        returnValueForMissingStub: _i4.Stream<List<String>>.empty(),
-      ) as _i4.Stream<List<String>>);
+        returnValue: _i5.Stream<List<String>>.empty(),
+        returnValueForMissingStub: _i5.Stream<List<String>>.empty(),
+      ) as _i5.Stream<List<String>>);
 }
 
 /// A class which mocks [ExpensesRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockExpensesRepository extends _i1.Mock
-    implements _i5.ExpensesRepository {
+    implements _i6.ExpensesRepository {
   @override
-  _i4.Stream<List<_i6.ExpenseModel>> getExpensesStreamByVoyageId(
+  _i5.Stream<List<_i7.ExpenseModel>> getExpensesStreamByVoyageId(
           String? voyageId) =>
       (super.noSuchMethod(
         Invocation.method(
           #getExpensesStreamByVoyageId,
           [voyageId],
         ),
-        returnValue: _i4.Stream<List<_i6.ExpenseModel>>.empty(),
-        returnValueForMissingStub: _i4.Stream<List<_i6.ExpenseModel>>.empty(),
-      ) as _i4.Stream<List<_i6.ExpenseModel>>);
+        returnValue: _i5.Stream<List<_i7.ExpenseModel>>.empty(),
+        returnValueForMissingStub: _i5.Stream<List<_i7.ExpenseModel>>.empty(),
+      ) as _i5.Stream<List<_i7.ExpenseModel>>);
   @override
-  _i4.Future<void> add(
+  _i5.Future<void> add(
     String? name,
     String? voyageId,
     double? price,
@@ -184,32 +200,32 @@ class MockExpensesRepository extends _i1.Mock
             category,
           ],
         ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
   @override
-  _i4.Future<void> remove({required String? id}) => (super.noSuchMethod(
+  _i5.Future<void> remove({required String? id}) => (super.noSuchMethod(
         Invocation.method(
           #remove,
           [],
           {#id: id},
         ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
   @override
-  _i4.Future<void> removeExpensesByVoyageId({required String? voyageId}) =>
+  _i5.Future<void> removeExpensesByVoyageId({required String? voyageId}) =>
       (super.noSuchMethod(
         Invocation.method(
           #removeExpensesByVoyageId,
           [],
           {#voyageId: voyageId},
         ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
   @override
-  _i4.Future<void> update({
+  _i5.Future<void> update({
     required String? id,
     required String? name,
     required double? price,
@@ -230,7 +246,121 @@ class MockExpensesRepository extends _i1.Mock
             #voyageId: voyageId,
           },
         ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
+}
+
+/// A class which mocks [VoyagersRepository].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockVoyagersRepository extends _i1.Mock
+    implements _i8.VoyagersRepository {
+  @override
+  _i5.Stream<List<_i3.VoyagerModel>> getVoyagersStream() => (super.noSuchMethod(
+        Invocation.method(
+          #getVoyagersStream,
+          [],
+        ),
+        returnValue: _i5.Stream<List<_i3.VoyagerModel>>.empty(),
+        returnValueForMissingStub: _i5.Stream<List<_i3.VoyagerModel>>.empty(),
+      ) as _i5.Stream<List<_i3.VoyagerModel>>);
+  @override
+  _i5.Future<void> add({
+    required String? name,
+    required _i9.Color? color,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #add,
+          [],
+          {
+            #name: name,
+            #color: color,
+          },
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
+  @override
+  _i5.Future<void> update({
+    required String? id,
+    required String? name,
+    required _i9.Color? color,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #update,
+          [],
+          {
+            #id: id,
+            #name: name,
+            #color: color,
+          },
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
+  @override
+  _i5.Future<void> remove({required String? id}) => (super.noSuchMethod(
+        Invocation.method(
+          #remove,
+          [],
+          {#id: id},
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
+  @override
+  _i5.Future<String> getVoyagerIdByName(String? name) => (super.noSuchMethod(
+        Invocation.method(
+          #getVoyagerIdByName,
+          [name],
+        ),
+        returnValue: _i5.Future<String>.value(''),
+        returnValueForMissingStub: _i5.Future<String>.value(''),
+      ) as _i5.Future<String>);
+  @override
+  _i5.Future<_i3.VoyagerModel> getVoyagerById(String? id) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getVoyagerById,
+          [id],
+        ),
+        returnValue: _i5.Future<_i3.VoyagerModel>.value(_FakeVoyagerModel_1(
+          this,
+          Invocation.method(
+            #getVoyagerById,
+            [id],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i5.Future<_i3.VoyagerModel>.value(_FakeVoyagerModel_1(
+          this,
+          Invocation.method(
+            #getVoyagerById,
+            [id],
+          ),
+        )),
+      ) as _i5.Future<_i3.VoyagerModel>);
+  @override
+  _i5.Stream<List<String>> getVoyagerNamesStream() => (super.noSuchMethod(
+        Invocation.method(
+          #getVoyagerNamesStream,
+          [],
+        ),
+        returnValue: _i5.Stream<List<String>>.empty(),
+        returnValueForMissingStub: _i5.Stream<List<String>>.empty(),
+      ) as _i5.Stream<List<String>>);
+  @override
+  _i5.Stream<List<_i3.VoyagerModel>> getVoyagersStreamById(
+          List<String>? voyagerIdList) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getVoyagersStreamById,
+          [voyagerIdList],
+        ),
+        returnValue: _i5.Stream<List<_i3.VoyagerModel>>.empty(),
+        returnValueForMissingStub: _i5.Stream<List<_i3.VoyagerModel>>.empty(),
+      ) as _i5.Stream<List<_i3.VoyagerModel>>);
 }

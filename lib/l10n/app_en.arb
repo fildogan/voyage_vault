@@ -31,7 +31,43 @@
         "format": "compact"
      }
     }
-  }
+  },
 
-  
+  "pleaseEnterExpenseName": "Please enter expense name",
+  "pleaseEnterExpenseAmount": "Please enter expense amount",
+  "pleaseChooseCategory": "Please choose a category",
+  "pleaseChooseVoyage": "Please choose a voyage",
+  "price": "Price",
+  "budget": "Budget",
+  "startDate": "Start Date",
+  "endDate": "End Date",
+  "expenseName": "Expense name",
+  "voyageBudget": "Voyage budget",
+  "voyageName": "Voyage name",
+  "updated": "updated",
+  "updatedSuccesfully": "updated succesfully",
+  "appName": "App name",
+  "appVersion": "App version",
+  "contactUs": "Contact us",
+  "rateUs": "Rate us",
+  "about": "About",
+  "application": "Application",
+  "legal": "Legal",
+  "dark": "Dark",
+  "light": "Light",
+  "system": "System",
+  "termsOfUse": "Terms of Use",
+  "privacyPolicy": "Privacy Policy",
+  "minOsVersion": "Minimum OS version",
+  "voyagers": "Voyagers",
+  "voyager": "Voyager",
+  "addVoyager": "Add Voyager",
+  "voyagerName": "Voyager Name",
+  "pleaseEnterVoyagerName": "Please enter voyager name",
+  "editExpense": "Edit Expense",
+  "pleaseEnterVoyageTitle": "Please enter voyage title",
+  "pleaseEnterVoyageDestination": "Please enter voyage destination",
+  "pleaseEnterBudgetAmount": "Please enter budget amount",
+  "pleaseChooseDate": "Please choose a date",
+  "endDateShouldComeAfter": "End date should come after the start date"
 }

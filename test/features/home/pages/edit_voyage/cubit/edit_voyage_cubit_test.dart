@@ -12,7 +12,6 @@ import 'edit_voyage_cubit_test.mocks.dart';
 void main() {
   late EditVoyageCubit sut;
   late MockVoyagesRepository voyagesRepository;
-  String randomId1 = 'randomId1';
   VoyageModel voyageModel1 = VoyageModel(
       id: 'id',
       title: 'title',
@@ -35,7 +34,7 @@ void main() {
 
   group('start', () {
     blocTest<EditVoyageCubit, EditVoyageState>(
-      'should call getVoyageById from voyagesRepository and getExpensesStreamByVoyageId from expensesRepository when refreshVoyage is called',
+      'should call getVoyageById from voyagesRepository when start is called',
       build: () => sut,
       act: (cubit) async => cubit.start(voyageModel: voyageModel1),
       wait: const Duration(milliseconds: 300),

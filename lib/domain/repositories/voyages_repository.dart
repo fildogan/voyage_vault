@@ -34,6 +34,7 @@ class VoyagesRepository {
               description: doc.data().toString().contains('description')
                   ? doc['description'].toString()
                   : '',
+              voyagers: List.from(doc['voyagers']),
             );
           },
         ).toList();
@@ -50,6 +51,7 @@ class VoyagesRepository {
     required DateTime endDate,
     required String location,
     required String description,
+    required List<String> voyagers,
   }) async {
     final userID = FirebaseAuth.instance.currentUser?.uid;
     if (userID == null) {
@@ -66,6 +68,7 @@ class VoyagesRepository {
       'enddate': endDate,
       'location': location,
       'description': description,
+      'voyagers': voyagers,
     });
   }
 
@@ -148,6 +151,7 @@ class VoyagesRepository {
       endDate: (doc['enddate'] as Timestamp).toDate(),
       location: doc['location'].toString(),
       description: doc['description'].toString(),
+      voyagers: List.from(doc['voyagers']),
     );
   }
 

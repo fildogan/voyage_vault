@@ -31,21 +31,16 @@ class RootCubit extends Cubit<RootState> {
   Future<void> getSettings() async {
     final SettingsModel settings = await PreferencesService().getSettings();
     final selectedTheme = settings.selectedTheme;
-    // final currentTheme = state.currentTheme;
     final selectedLanguage = settings.selectedLanguage;
-    // final locale = state.locale;
     emit(state.copyWith(
       selectedTheme: selectedTheme,
-      // currentTheme: currentTheme,
       selectedLanguage: selectedLanguage,
-      // locale: locale,
     ));
   }
 
   Future<void> setThemeDark() async {
     PreferencesService().saveTheme(SelectedTheme.dark);
     emit(state.copyWith(
-      // currentTheme: ThemeMode.dark,
       selectedTheme: SelectedTheme.dark,
     ));
   }
@@ -53,7 +48,6 @@ class RootCubit extends Cubit<RootState> {
   Future<void> setThemeLight() async {
     PreferencesService().saveTheme(SelectedTheme.light);
     emit(state.copyWith(
-      // currentTheme: ThemeMode.light,
       selectedTheme: SelectedTheme.light,
     ));
   }
@@ -61,7 +55,6 @@ class RootCubit extends Cubit<RootState> {
   Future<void> setThemeSystem() async {
     PreferencesService().saveTheme(SelectedTheme.system);
     emit(state.copyWith(
-      // currentTheme: ThemeMode.system,
       selectedTheme: SelectedTheme.system,
     ));
   }
@@ -70,7 +63,6 @@ class RootCubit extends Cubit<RootState> {
     PreferencesService().saveLanguage(SelectedLanguage.system);
     emit(state.copyWith(
       selectedLanguage: SelectedLanguage.system,
-      // locale: null,
     ));
   }
 
@@ -78,7 +70,6 @@ class RootCubit extends Cubit<RootState> {
     PreferencesService().saveLanguage(SelectedLanguage.english);
     emit(state.copyWith(
       selectedLanguage: SelectedLanguage.english,
-      // locale: localeList[0],
     ));
   }
 
@@ -86,7 +77,6 @@ class RootCubit extends Cubit<RootState> {
     PreferencesService().saveLanguage(SelectedLanguage.spanish);
     emit(state.copyWith(
       selectedLanguage: SelectedLanguage.spanish,
-      // locale: localeList[1],
     ));
   }
 
@@ -94,7 +84,6 @@ class RootCubit extends Cubit<RootState> {
     PreferencesService().saveLanguage(SelectedLanguage.french);
     emit(state.copyWith(
       selectedLanguage: SelectedLanguage.french,
-      // locale: localeList[2],
     ));
   }
 
@@ -102,7 +91,6 @@ class RootCubit extends Cubit<RootState> {
     PreferencesService().saveLanguage(SelectedLanguage.italian);
     emit(state.copyWith(
       selectedLanguage: SelectedLanguage.italian,
-      // locale: localeList[3],
     ));
   }
 
@@ -110,7 +98,6 @@ class RootCubit extends Cubit<RootState> {
     PreferencesService().saveLanguage(SelectedLanguage.polish);
     emit(state.copyWith(
       selectedLanguage: SelectedLanguage.polish,
-      // locale: localeList[4],
     ));
   }
 }

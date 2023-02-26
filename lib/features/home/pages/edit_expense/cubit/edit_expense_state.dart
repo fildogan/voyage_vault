@@ -21,7 +21,8 @@ class EditExpenseState with _$EditExpenseState {
 
   bool get isNameValid => name.isNotEmpty;
   bool get isPriceValid => price > 0;
-  String get dateAddedFormated => DateFormat.yMd().format(dateAdded!);
+  String get dateAddedFormated =>
+      dateAdded != null ? DateFormat.yMd().format(dateAdded!) : '';
 
   // EditExpenseState copyWith({
   //   String? name,

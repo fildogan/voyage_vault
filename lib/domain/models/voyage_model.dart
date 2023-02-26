@@ -15,6 +15,7 @@ class VoyageModel with _$VoyageModel {
     required String location,
     required String description,
     required double budget,
+    List<String>? voyagers,
   }) = _VoyageModel;
   const VoyageModel._();
 

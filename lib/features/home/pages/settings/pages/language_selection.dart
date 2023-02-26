@@ -4,6 +4,7 @@ import 'package:voyage_vault/app/core/enums.dart';
 import 'package:voyage_vault/app/cubit/root_cubit.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+@immutable
 class LanguageSelectionPage extends StatelessWidget {
   const LanguageSelectionPage({super.key});
 
@@ -50,7 +51,7 @@ class LanguageSelectionPage extends StatelessWidget {
                             onTap: () {
                               context.read<RootCubit>().setLanguageSpanish();
                             },
-                            title: const Text('Spanish'),
+                            title: const Text('Español'),
                             trailing: state.selectedLanguage ==
                                     SelectedLanguage.spanish
                                 ? const Icon(Icons.check_box)
@@ -61,7 +62,7 @@ class LanguageSelectionPage extends StatelessWidget {
                             onTap: () {
                               context.read<RootCubit>().setLanguageFrench();
                             },
-                            title: const Text('French'),
+                            title: const Text('Français'),
                             trailing: state.selectedLanguage ==
                                     SelectedLanguage.french
                                 ? const Icon(Icons.check_box)
@@ -72,7 +73,7 @@ class LanguageSelectionPage extends StatelessWidget {
                             onTap: () {
                               context.read<RootCubit>().setLanguageItalian();
                             },
-                            title: const Text('Italian'),
+                            title: const Text('Italiano'),
                             trailing: state.selectedLanguage ==
                                     SelectedLanguage.italian
                                 ? const Icon(Icons.check_box)
@@ -83,7 +84,7 @@ class LanguageSelectionPage extends StatelessWidget {
                             onTap: () {
                               context.read<RootCubit>().setLanguagePolish();
                             },
-                            title: const Text('Polish'),
+                            title: const Text('Polski'),
                             trailing: state.selectedLanguage ==
                                     SelectedLanguage.polish
                                 ? const Icon(Icons.check_box)
@@ -98,7 +99,7 @@ class LanguageSelectionPage extends StatelessWidget {
                             onTap: () {
                               context.read<RootCubit>().setLanguageSystem();
                             },
-                            title: const Text('System'),
+                            title: Text(AppLocalizations.of(context).system),
                             trailing: state.selectedLanguage ==
                                     SelectedLanguage.system
                                 ? const Icon(Icons.check_box)

@@ -20,8 +20,9 @@ class AddPageContentCubit extends Cubit<AddPageContentState> {
     if (state.closed) {
       return;
     }
+
     emit(
-      AddPageContentState(
+      state.copyWith(
         status: Status.loading,
       ),
     );
@@ -30,7 +31,7 @@ class AddPageContentCubit extends Cubit<AddPageContentState> {
       final intValue = Random().nextInt(quotes.length - 1);
       if (!state.closed) {
         emit(
-          AddPageContentState(
+          state.copyWith(
             status: Status.success,
             quotes: quotes,
             chosenQuote: quotes[intValue],

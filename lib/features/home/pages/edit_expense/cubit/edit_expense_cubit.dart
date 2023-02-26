@@ -29,18 +29,18 @@ class EditExpenseCubit extends Cubit<EditExpenseState> {
     required ExpenseModel expenseModel,
     required VoyageModel voyageModel,
   }) async {
-    setValues(expenseModel: expenseModel, voyageModel: voyageModel);
+    emit(state.copyWith(status: Status.loading));
+    await setValues(expenseModel: expenseModel, voyageModel: voyageModel);
     await getVoyageTitleStream();
     emit(state.copyWith(status: Status.success));
   }
 
   Future<void> getVoyageTitleStream() async {
-    emit(state.copyWith(status: Status.loading));
     _streamSubscription = _voyagesRepository
         .getVoyagesStream()
         .map((voyages) => voyages.map((voyage) => voyage.title).toList())
-        .listen((voyageTitles) => emit(
-            state.copyWith(status: Status.success, voyageTitles: voyageTitles)))
+        .listen(
+            (voyageTitles) => emit(state.copyWith(voyageTitles: voyageTitles)))
       ..onError(
         (error) => emit(
           EditExpenseState(
@@ -88,6 +88,7 @@ class EditExpenseCubit extends Cubit<EditExpenseState> {
       emit(
         EditExpenseState(
           status: Status.error,
+          formStatus: FormStatus.error,
           errorMessage: error.toString(),
         ),
       );

@@ -27,28 +27,16 @@ class EditVoyageCubit extends Cubit<EditVoyageState> {
 
   Future<void> getVoyageTitleStream() async {
     emit(
-      EditVoyageState(
+      state.copyWith(
         status: Status.loading,
-        title: state.title,
-        budget: state.budget,
-        startDate: state.startDate,
-        endDate: state.endDate,
-        location: state.location,
-        description: state.description,
       ),
     );
     _streamSubscription = _voyagesRepository
         .getVoyagesStream()
         .map((voyages) => voyages.map((voyage) => voyage.title).toList())
         .listen(
-          (voyageTitles) => emit(EditVoyageState(
+          (voyageTitles) => emit(state.copyWith(
             voyageTitles: voyageTitles,
-            title: state.title,
-            budget: state.budget,
-            startDate: state.startDate,
-            endDate: state.endDate,
-            location: state.location,
-            description: state.description,
           )),
         )..onError(
         (error) => emit(
@@ -62,8 +50,7 @@ class EditVoyageCubit extends Cubit<EditVoyageState> {
 
   Future<void> setValues({required VoyageModel voyageModel}) async {
     emit(
-      EditVoyageState(
-        voyageTitles: state.voyageTitles,
+      state.copyWith(
         title: voyageModel.title,
         budget: voyageModel.budget,
         startDate: voyageModel.startDate,
@@ -75,31 +62,20 @@ class EditVoyageCubit extends Cubit<EditVoyageState> {
   }
 
   Future<void> error(String error) async {
-    emit(EditVoyageState(
+    emit(state.copyWith(
       errorMessage: error,
-      voyageTitles: state.voyageTitles,
-      title: state.title,
-      budget: state.budget,
-      startDate: state.startDate,
-      endDate: state.endDate,
-      location: state.location,
-      description: state.description,
     ));
-    emit(EditVoyageState(
+    emit(state.copyWith(
       errorMessage: null,
-      voyageTitles: state.voyageTitles,
-      title: state.title,
-      budget: state.budget,
-      startDate: state.startDate,
-      endDate: state.endDate,
-      location: state.location,
-      description: state.description,
     ));
   }
 
   Future<void> success(String success) async {
-    emit(EditVoyageState(
+    emit(state.copyWith(
       successMessage: success,
+    ));
+    emit(state.copyWith(
+      successMessage: null,
     ));
   }
 
@@ -153,7 +129,7 @@ class EditVoyageCubit extends Cubit<EditVoyageState> {
     required String description,
   }) async {
     emit(
-      EditVoyageState(
+      state.copyWith(
         title: title,
         budget: budget,
         startDate: startDate,
@@ -172,7 +148,7 @@ class EditVoyageCubit extends Cubit<EditVoyageState> {
           location: location,
           description: description);
       emit(
-        EditVoyageState(
+        state.copyWith(
           saved: true,
         ),
       );
@@ -190,14 +166,8 @@ class EditVoyageCubit extends Cubit<EditVoyageState> {
     String? title,
   ) async {
     emit(
-      EditVoyageState(
-        voyageTitles: state.voyageTitles,
+      state.copyWith(
         title: title,
-        budget: state.budget,
-        startDate: state.startDate,
-        endDate: state.endDate,
-        location: state.location,
-        description: state.description,
       ),
     );
   }
@@ -206,14 +176,8 @@ class EditVoyageCubit extends Cubit<EditVoyageState> {
     double? budget,
   ) async {
     emit(
-      EditVoyageState(
-        voyageTitles: state.voyageTitles,
-        title: state.title,
+      state.copyWith(
         budget: budget,
-        startDate: state.startDate,
-        endDate: state.endDate,
-        location: state.location,
-        description: state.description,
       ),
     );
   }
@@ -222,14 +186,8 @@ class EditVoyageCubit extends Cubit<EditVoyageState> {
     String? location,
   ) async {
     emit(
-      EditVoyageState(
-        voyageTitles: state.voyageTitles,
-        title: state.title,
-        budget: state.budget,
-        startDate: state.startDate,
-        endDate: state.endDate,
+      state.copyWith(
         location: location,
-        description: state.description,
       ),
     );
   }
@@ -238,13 +196,7 @@ class EditVoyageCubit extends Cubit<EditVoyageState> {
     String? description,
   ) async {
     emit(
-      EditVoyageState(
-        voyageTitles: state.voyageTitles,
-        title: state.title,
-        budget: state.budget,
-        startDate: state.startDate,
-        endDate: state.endDate,
-        location: state.location,
+      state.copyWith(
         description: description,
       ),
     );
@@ -254,14 +206,8 @@ class EditVoyageCubit extends Cubit<EditVoyageState> {
     DateTime? startDate,
   ) async {
     emit(
-      EditVoyageState(
-        voyageTitles: state.voyageTitles,
-        title: state.title,
-        budget: state.budget,
+      state.copyWith(
         startDate: startDate,
-        endDate: state.endDate,
-        location: state.location,
-        description: state.description,
       ),
     );
   }
@@ -270,14 +216,8 @@ class EditVoyageCubit extends Cubit<EditVoyageState> {
     DateTime? endDate,
   ) async {
     emit(
-      EditVoyageState(
-        voyageTitles: state.voyageTitles,
-        title: state.title,
-        budget: state.budget,
-        startDate: state.startDate,
+      state.copyWith(
         endDate: endDate,
-        location: state.location,
-        description: state.description,
       ),
     );
   }

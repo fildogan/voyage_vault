@@ -3,10 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:voyage_vault/app/core/enums.dart';
 import 'package:voyage_vault/app/injection_container.dart';
+import 'package:voyage_vault/components/add_edit_app_bar.dart';
+import 'package:voyage_vault/components/text_form_field_decoration.dart';
 import 'package:voyage_vault/domain/models/voyage_model.dart';
 import 'package:voyage_vault/features/home/pages/add_expense/cubit/add_expense_cubit.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+@immutable
 class AddExpensePage extends StatelessWidget {
   AddExpensePage({super.key, this.voyageModel});
 
@@ -16,6 +19,7 @@ class AddExpensePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void Function()? saveExpense;
     return BlocProvider<AddExpenseCubit>(
       create: (context) => getIt<AddExpenseCubit>()..start(voyageModel),
       child: BlocListener<AddExpenseCubit, AddExpenseState>(
@@ -51,33 +55,24 @@ class AddExpensePage extends StatelessWidget {
         },
         child: BlocBuilder<AddExpenseCubit, AddExpenseState>(
             builder: (context, state) {
+          saveExpense = state.formStatus == FormStatus.initial
+              ? () {
+                  if (formKey.currentState!.validate()) {
+                    context.read<AddExpenseCubit>().add();
+                  }
+                }
+              : null;
           return Scaffold(
-              appBar: AppBar(
-                backgroundColor: Colors.transparent,
-                title: const Text('Add an expense'),
-                actions: [_saveButton(context)],
+              appBar: AddEditAppBar(
+                title: AppLocalizations.of(context).addExpense,
+                saveAction: saveExpense,
+                appBar: AppBar(),
               ),
               body: _AddExpensePageBody(
                 formKey: formKey,
               ));
         }),
       ),
-    );
-  }
-
-  Widget _saveButton(BuildContext context) {
-    return BlocBuilder<AddExpenseCubit, AddExpenseState>(
-      builder: (context, state) {
-        return TextButton(
-            onPressed: state.formStatus == FormStatus.initial
-                ? () {
-                    if (formKey.currentState!.validate()) {
-                      context.read<AddExpenseCubit>().add();
-                    }
-                  }
-                : null,
-            child: Text(AppLocalizations.of(context).save));
-      },
     );
   }
 }
@@ -109,15 +104,91 @@ class _AddExpensePageBody extends StatelessWidget {
     );
   }
 
+  Widget _nameField() {
+    return BlocBuilder<AddExpenseCubit, AddExpenseState>(
+      builder: (context, state) {
+        return TextFormField(
+          decoration: textFormFieldDecoration(
+            context,
+            labelText: AppLocalizations.of(context).expenseName,
+          ),
+          onChanged: (value) {
+            context.read<AddExpenseCubit>().changeName(name: value);
+          },
+          validator: (value) => state.isNameValid
+              ? null
+              : AppLocalizations.of(context).pleaseEnterExpenseName,
+        );
+      },
+    );
+  }
+
+  Widget _priceField() {
+    return BlocBuilder<AddExpenseCubit, AddExpenseState>(
+      builder: (context, state) {
+        return TextFormField(
+          textAlign: TextAlign.start,
+          decoration: textFormFieldDecoration(
+            context,
+            labelText: AppLocalizations.of(context).price,
+          ),
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(
+              RegExp(r'^\d*\.?\d{0,2}'),
+            ),
+          ],
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          onChanged: (value) {
+            final price = double.tryParse(value);
+            context.read<AddExpenseCubit>().changePrice(price: price ?? 0);
+          },
+          validator: (value) => state.isPriceValid
+              ? null
+              : AppLocalizations.of(context).pleaseEnterExpenseAmount,
+        );
+      },
+    );
+  }
+
+  Widget _categoryField() {
+    return BlocBuilder<AddExpenseCubit, AddExpenseState>(
+      builder: (context, state) {
+        return DropdownButtonFormField<String>(
+          value: state.category,
+          decoration: textFormFieldDecoration(
+            context,
+            labelText: AppLocalizations.of(context).category,
+          ),
+          items: [
+            ...state.categoryTitles.map(
+              (String category) {
+                return DropdownMenuItem(
+                  value: category,
+                  child: Text(
+                    category[0].toUpperCase() + category.substring(1),
+                  ),
+                );
+              },
+            ),
+          ],
+          onChanged: ((value) =>
+              context.read<AddExpenseCubit>().changeCategory(category: value!)),
+          validator: (value) => state.isCategoryValid
+              ? null
+              : AppLocalizations.of(context).pleaseChooseCategory,
+        );
+      },
+    );
+  }
+
   Widget _voyageField() {
     return BlocBuilder<AddExpenseCubit, AddExpenseState>(
       builder: (context, state) {
         return DropdownButtonFormField<String>(
           value: state.voyageTitle,
-          decoration: InputDecoration(
-            border: const UnderlineInputBorder(),
+          decoration: textFormFieldDecoration(
+            context,
             labelText: AppLocalizations.of(context).voyage,
-            contentPadding: const EdgeInsets.all(10),
           ),
           items: [
             ...state.voyageTitles.map(
@@ -134,85 +205,9 @@ class _AddExpensePageBody extends StatelessWidget {
           onChanged: ((value) => context
               .read<AddExpenseCubit>()
               .changeVoyageTitle(voyageTitle: value!)),
-          validator: (value) =>
-              state.isVoyageValid ? null : 'Please choose a voyage',
-        );
-      },
-    );
-  }
-
-  Widget _categoryField() {
-    return BlocBuilder<AddExpenseCubit, AddExpenseState>(
-      builder: (context, state) {
-        return DropdownButtonFormField<String>(
-          value: state.category,
-          decoration: InputDecoration(
-            border: const UnderlineInputBorder(),
-            labelText: AppLocalizations.of(context).category,
-            contentPadding: const EdgeInsets.all(10),
-          ),
-          items: [
-            ...state.categoryTitles.map(
-              (String category) {
-                return DropdownMenuItem(
-                  value: category,
-                  child: Text(
-                    category[0].toUpperCase() + category.substring(1),
-                  ),
-                );
-              },
-            ),
-          ],
-          onChanged: ((value) =>
-              context.read<AddExpenseCubit>().changeCategory(category: value!)),
-          validator: (value) =>
-              state.isCategoryValid ? null : 'Please choose a category',
-        );
-      },
-    );
-  }
-
-  Widget _priceField() {
-    return BlocBuilder<AddExpenseCubit, AddExpenseState>(
-      builder: (context, state) {
-        return TextFormField(
-          textAlign: TextAlign.start,
-          decoration: const InputDecoration(
-            border: UnderlineInputBorder(),
-            labelText: 'Price',
-            contentPadding: EdgeInsets.all(10),
-          ),
-          inputFormatters: [
-            FilteringTextInputFormatter.allow(
-              RegExp(r'^\d*\.?\d{0,2}'),
-            ),
-          ],
-          keyboardType: const TextInputType.numberWithOptions(decimal: true),
-          onChanged: (value) {
-            final price = double.tryParse(value);
-            context.read<AddExpenseCubit>().changePrice(price: price ?? 0);
-          },
-          validator: (value) =>
-              state.isPriceValid ? null : 'Please enter expense amount',
-        );
-      },
-    );
-  }
-
-  Widget _nameField() {
-    return BlocBuilder<AddExpenseCubit, AddExpenseState>(
-      builder: (context, state) {
-        return TextFormField(
-          decoration: const InputDecoration(
-            border: UnderlineInputBorder(),
-            labelText: 'Expense name',
-            contentPadding: EdgeInsets.all(10),
-          ),
-          onChanged: (value) {
-            context.read<AddExpenseCubit>().changeName(name: value);
-          },
-          validator: (value) =>
-              state.isNameValid ? null : 'Please enter expense name',
+          validator: (value) => state.isVoyageValid
+              ? null
+              : AppLocalizations.of(context).pleaseChooseVoyage,
         );
       },
     );

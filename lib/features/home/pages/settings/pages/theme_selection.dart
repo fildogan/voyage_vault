@@ -4,6 +4,7 @@ import 'package:voyage_vault/app/core/enums.dart';
 import 'package:voyage_vault/app/cubit/root_cubit.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+@immutable
 class ThemeSelectionPage extends StatelessWidget {
   const ThemeSelectionPage({super.key});
 
@@ -39,7 +40,7 @@ class ThemeSelectionPage extends StatelessWidget {
                             onTap: () {
                               context.read<RootCubit>().setThemeDark();
                             },
-                            title: const Text('Dark'),
+                            title: Text(AppLocalizations.of(context).dark),
                             trailing: state.selectedTheme == SelectedTheme.dark
                                 ? const Icon(Icons.check_box)
                                 : const Icon(Icons.check_box_outline_blank),
@@ -49,7 +50,7 @@ class ThemeSelectionPage extends StatelessWidget {
                             onTap: () {
                               context.read<RootCubit>().setThemeLight();
                             },
-                            title: const Text('Light'),
+                            title: Text(AppLocalizations.of(context).light),
                             trailing: state.selectedTheme == SelectedTheme.light
                                 ? const Icon(Icons.check_box)
                                 : const Icon(Icons.check_box_outline_blank),
@@ -63,7 +64,7 @@ class ThemeSelectionPage extends StatelessWidget {
                             onTap: () {
                               context.read<RootCubit>().setThemeSystem();
                             },
-                            title: const Text('System'),
+                            title: Text(AppLocalizations.of(context).system),
                             trailing:
                                 state.selectedTheme == SelectedTheme.system
                                     ? const Icon(Icons.check_box)

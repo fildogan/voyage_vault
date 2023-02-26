@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:voyage_vault/features/home/pages/add_page_content/add_page_content.dart';
-import 'package:voyage_vault/features/home/pages/settings/my_account_page.dart';
+import 'package:voyage_vault/features/home/pages/settings/settings_page.dart';
 import 'package:voyage_vault/features/home/pages/voyages_page_content/voyages_page_content.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+@immutable
 class HomePage extends StatefulWidget {
   const HomePage({
     super.key,
@@ -18,7 +19,7 @@ class _HomePageState extends State<HomePage> {
   final List<Widget> _pageNavigation = [
     const VoyagesPageContent(),
     const AddPageContent(),
-    const MyAccountPageContent(),
+    const SettingsPageContent(),
   ];
   @override
   Widget build(BuildContext context) {

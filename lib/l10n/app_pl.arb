@@ -31,6 +31,46 @@
         "format": "compact"
      }
     }
-  }    
+  },
+
+  "pleaseEnterExpenseName": "Proszę wprowadzić nazwę wydatku",
+  "pleaseEnterExpenseAmount": "Proszę podać kwotę wydatku",
+  "pleaseChooseCategory": "Proszę wybrać kategorię",
+  "pleaseChooseVoyage": "Proszę wybrać podróż",
+  "price": "Cena",
+  "budget": "Budżet",
+  "startDate": "Data rozpoczęcia",
+  "endDate": "Data zakończenia",
+  "expenseName": "Nazwa wydatku",
+  "voyageBudget": "Budżet podróży",
+  "voyageName": "Nazwa podróży",
+  "updated": "aktualizacja",
+  "updatedSuccesfully": "zaktualizowano pomyślnie",
+  "appName": "Nazwa aplikacji",
+  "appVersion": "Wersja aplikacji",
+  "contactUs": "Skontaktuj się z nami",
+  "rateUs": "Oceń nas",
+  "about": "O nas",
+  "application": "Aplikacja",
+  "legal": "Prawne",
+  "dark": "Ciemny",
+  "light": "Jasny",
+  "system": "Domyślne",
+  "add": "Dodaj",
+  "account": "Konto",
+  "termsOfUse": "Warunki korzystania",
+  "privacyPolicy": "Polityka prywatności",
+  "minOsVersion": "Minimalna wersja systemu operacyjnego",
+  "voyagers": "Podróżnicy",
+  "voyager": "Podróżnik",
+  "addVoyager": "Dodaj podróżnika",
+  "voyagerName": "Imię podróżnika",
+  "pleaseEnterVoyagerName": "Wprowadź imię podróżnika",
+  "editExpense": "Edytuj wydatki",
+  "pleaseEnterVoyageTitle": "Wprowadź tytuł podróży",
+  "pleaseEnterVoyageDestination": "Wprowadź cel podróży",
+  "pleaseEnterBudgetAmount": "Wprowadź kwotę budżetu",
+  "pleaseChooseDate": "Wybierz datę",
+  "endDateShouldComeAfter": "Data końcowa powinna być po dacie początkowej"  
 
 }

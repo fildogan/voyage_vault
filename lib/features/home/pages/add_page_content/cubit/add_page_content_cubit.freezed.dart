@@ -39,6 +39,8 @@ abstract class $AddPageContentStateCopyWith<$Res> {
       List<QuoteModel> quotes,
       QuoteModel? chosenQuote,
       bool closed});
+
+  $QuoteModelCopyWith<$Res>? get chosenQuote;
 }
 
 /// @nodoc
@@ -83,6 +85,18 @@ class _$AddPageContentStateCopyWithImpl<$Res, $Val extends AddPageContentState>
               as bool,
     ) as $Val);
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $QuoteModelCopyWith<$Res>? get chosenQuote {
+    if (_value.chosenQuote == null) {
+      return null;
+    }
+
+    return $QuoteModelCopyWith<$Res>(_value.chosenQuote!, (value) {
+      return _then(_value.copyWith(chosenQuote: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -99,6 +113,9 @@ abstract class _$$_AddPageContentStateCopyWith<$Res>
       List<QuoteModel> quotes,
       QuoteModel? chosenQuote,
       bool closed});
+
+  @override
+  $QuoteModelCopyWith<$Res>? get chosenQuote;
 }
 
 /// @nodoc
