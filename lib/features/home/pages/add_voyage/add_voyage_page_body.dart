@@ -20,8 +20,6 @@ class AddVoyagePageBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController voyagerController = TextEditingController();
-
     return SafeArea(
       child: BlocBuilder<AddVoyageCubit, AddVoyageState>(
         builder: (context, state) {
@@ -36,14 +34,14 @@ class AddVoyagePageBody extends StatelessWidget {
                   _budgetField(context),
                   _dateFields(context, state),
                   _descriptionField(context),
-                  Column(children: [
-                    for (final voyager in state.voyagers)
-                      TextFormField(
-                        onTap: () {
-                          context
-                              .read<AddVoyageCubit>()
-                              .selectVoyager(voyagerModel: voyager);
-                        },
+                  for (final voyager in state.voyagers)
+                    InkWell(
+                      onTap: () {
+                        context
+                            .read<AddVoyageCubit>()
+                            .selectVoyager(voyagerModel: voyager);
+                      },
+                      child: TextFormField(
                         decoration: InputDecoration(
                             suffixIcon: voyager.isSelected ?? false
                                 ? const Icon(Icons.check_box)
@@ -53,11 +51,10 @@ class AddVoyagePageBody extends StatelessWidget {
                               width: 20,
                               color: voyager.color,
                             )),
-                        // textFormFieldDecoration(context, labelText: ''),
                         initialValue: voyager.name,
-                        enabled: true,
+                        enabled: false,
                       ),
-                  ])
+                    )
                 ],
               ),
             ),
