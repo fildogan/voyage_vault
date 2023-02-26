@@ -7,6 +7,7 @@ import 'package:voyage_vault/components/add_edit_app_bar.dart';
 import 'package:voyage_vault/components/add_edit_form_body.dart';
 import 'package:voyage_vault/components/text_form_field_decoration.dart';
 import 'package:voyage_vault/domain/models/voyage_model.dart';
+import 'package:voyage_vault/domain/models/voyager_model.dart';
 import 'package:voyage_vault/features/home/pages/add_expense/cubit/add_expense_cubit.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -56,6 +57,7 @@ class AddExpensePage extends StatelessWidget {
         },
         child: BlocBuilder<AddExpenseCubit, AddExpenseState>(
             builder: (context, state) {
+          print(state.voyagers);
           saveExpense = state.formStatus == FormStatus.initial
               ? () {
                   if (formKey.currentState!.validate()) {
@@ -95,6 +97,7 @@ class _AddExpensePageBody extends StatelessWidget {
           priceField(),
           categoryField(),
           voyageField(),
+          voyagerField()
         ],
       ),
     );
@@ -177,33 +180,108 @@ class _AddExpensePageBody extends StatelessWidget {
     );
   }
 
+  // Widget voyageField() {
+  //   return BlocBuilder<AddExpenseCubit, AddExpenseState>(
+  //     builder: (context, state) {
+  //       return DropdownButtonFormField<String>(
+  //         value: state.voyageTitle,
+  //         decoration: textFormFieldDecoration(
+  //           context,
+  //           labelText: AppLocalizations.of(context).voyage,
+  //         ),
+  //         items: [
+  //           ...state.voyageTitles.map(
+  //             (String voyage) {
+  //               return DropdownMenuItem(
+  //                 value: voyage,
+  //                 child: Text(
+  //                   voyage[0].toUpperCase() + voyage.substring(1),
+  //                 ),
+  //               );
+  //             },
+  //           )
+  //         ],
+  //         onChanged: ((value) => context
+  //             .read<AddExpenseCubit>()
+  //             .changeVoyageTitle(voyageTitle: value!)),
+  //         validator: (value) => state.isVoyageTitleValid
+  //             ? null
+  //             : AppLocalizations.of(context).pleaseChooseVoyage,
+  //       );
+  //     },
+  //   );
+  // }
+
   Widget voyageField() {
     return BlocBuilder<AddExpenseCubit, AddExpenseState>(
       builder: (context, state) {
-        return DropdownButtonFormField<String>(
-          value: state.voyageTitle,
+        return DropdownButtonFormField<VoyageModel>(
+          value: state.voyage,
           decoration: textFormFieldDecoration(
             context,
             labelText: AppLocalizations.of(context).voyage,
           ),
           items: [
-            ...state.voyageTitles.map(
-              (String voyage) {
+            ...state.voyages.map(
+              (VoyageModel voyage) {
                 return DropdownMenuItem(
                   value: voyage,
                   child: Text(
-                    voyage[0].toUpperCase() + voyage.substring(1),
+                    voyage.title[0].toUpperCase() + voyage.title.substring(1),
                   ),
                 );
               },
             )
           ],
-          onChanged: ((value) => context
-              .read<AddExpenseCubit>()
-              .changeVoyageTitle(voyageTitle: value!)),
+          onChanged: ((value) =>
+              context.read<AddExpenseCubit>().changeVoyage(voyage: value!)),
           validator: (value) => state.isVoyageValid
               ? null
               : AppLocalizations.of(context).pleaseChooseVoyage,
+        );
+      },
+    );
+  }
+
+  Widget voyagerField() {
+    return BlocBuilder<AddExpenseCubit, AddExpenseState>(
+      builder: (context, state) {
+        return IgnorePointer(
+          ignoring: state.voyage == null,
+          child: DropdownButtonFormField<VoyagerModel>(
+            value: state.voyager,
+            decoration: textFormFieldDecoration(context,
+                labelText: AppLocalizations.of(context).voyager,
+                enabled: state.voyage != null),
+            items: (state.voyage == null ||
+                    state.voyage?.voyagers == null ||
+                    state.voyagers.isEmpty)
+                ? [
+                    const DropdownMenuItem(
+                      child: Text('Choose a voyage first'),
+                    )
+                  ]
+                : [
+                    ...state.voyagers.map(
+                      (VoyagerModel voyager) {
+                        return DropdownMenuItem(
+                          value: voyager,
+                          child: Text(
+                            voyager.name[0].toUpperCase() +
+                                voyager.name.substring(1),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+
+            onChanged: ((value) =>
+                context.read<AddExpenseCubit>().changeVoyager(voyager: value!)),
+
+            // validator: (value) => state.isVoyageValid
+            //     ? null
+            //     : AppLocalizations.of(context).pleaseChooseVoyage,
+          ),
         );
       },
     );

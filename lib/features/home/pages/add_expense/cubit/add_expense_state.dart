@@ -8,19 +8,22 @@ class AddExpenseState with _$AddExpenseState {
     String? errorMessage,
     String? successMessage,
     @Default(expenseCategoryList) List<String> categoryTitles,
-    @Default([]) List<String> voyageTitles,
+    @Default([]) List<VoyageModel> voyages,
     @Default('') String voyageId,
     @Default('') String expenseId,
     @Default('') String name,
+    @Default([]) List<String> voyagerIdList,
     String? category,
+    VoyagerModel? voyager,
     @Default(0) double price,
-    String? voyageTitle,
+    VoyageModel? voyage,
     DateTime? dateAdded,
+    @Default([]) List<VoyagerModel> voyagers,
   }) = _AddExpenseState;
   const AddExpenseState._();
 
   bool get isNameValid => name.isNotEmpty;
   bool get isPriceValid => price > 0;
   bool get isCategoryValid => category != null;
-  bool get isVoyageValid => voyageTitle != null;
+  bool get isVoyageValid => voyage != null;
 }
