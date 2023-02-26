@@ -3,8 +3,11 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:intl/intl.dart';
 import 'package:voyage_vault/app/core/enums.dart';
 import 'package:voyage_vault/domain/models/voyage_model.dart';
+import 'package:voyage_vault/domain/models/voyager_model.dart';
+import 'package:voyage_vault/domain/repositories/voyager_repository.dart';
 import 'package:voyage_vault/domain/repositories/voyages_repository.dart';
 
 part 'edit_voyage_state.dart';
@@ -12,9 +15,12 @@ part 'edit_voyage_cubit.freezed.dart';
 
 @injectable
 class EditVoyageCubit extends Cubit<EditVoyageState> {
-  EditVoyageCubit(this._voyagesRepository) : super(EditVoyageState());
+  EditVoyageCubit(this._voyagesRepository, this._voyagersRepository)
+      : super(EditVoyageState());
 
   final VoyagesRepository _voyagesRepository;
+
+  final VoyagersRepository _voyagersRepository;
 
   StreamSubscription? _streamSubscription;
 
@@ -23,6 +29,23 @@ class EditVoyageCubit extends Cubit<EditVoyageState> {
       voyageModel: voyageModel,
     );
     getVoyageTitleStream();
+    getVoyagerStream();
+  }
+
+  Future<void> setValues({required VoyageModel voyageModel}) async {
+    emit(
+      state.copyWith(
+        voyageId: voyageModel.id,
+        title: voyageModel.title,
+        budget: voyageModel.budget,
+        startDate: voyageModel.startDate,
+        endDate: voyageModel.endDate,
+        location: voyageModel.location,
+        description: voyageModel.description,
+        selectedVoyagers: voyageModel.voyagers ?? [],
+        initialTitle: voyageModel.title,
+      ),
+    );
   }
 
   Future<void> getVoyageTitleStream() async {
@@ -35,9 +58,11 @@ class EditVoyageCubit extends Cubit<EditVoyageState> {
         .getVoyagesStream()
         .map((voyages) => voyages.map((voyage) => voyage.title).toList())
         .listen(
-          (voyageTitles) => emit(state.copyWith(
-            voyageTitles: voyageTitles,
-          )),
+          (voyageTitles) => emit(
+            state.copyWith(
+              voyageTitles: voyageTitles,
+            ),
+          ),
         )..onError(
         (error) => emit(
           EditVoyageState(
@@ -48,17 +73,26 @@ class EditVoyageCubit extends Cubit<EditVoyageState> {
       );
   }
 
-  Future<void> setValues({required VoyageModel voyageModel}) async {
-    emit(
-      state.copyWith(
-        title: voyageModel.title,
-        budget: voyageModel.budget,
-        startDate: voyageModel.startDate,
-        endDate: voyageModel.endDate,
-        location: voyageModel.location,
-        description: voyageModel.description,
-      ),
-    );
+  Future<void> getVoyagerStream() async {
+    _streamSubscription =
+        _voyagersRepository.getVoyagersStream().map((voyagers) {
+      // Set isSelected to true for voyagers in selectedVoyagers list
+      final updatedVoyagers = voyagers.map((voyager) {
+        if (state.selectedVoyagers.contains(voyager.id)) {
+          return voyager.copyWith(isSelected: true);
+        }
+        return voyager;
+      }).toList();
+      return updatedVoyagers;
+    }).listen((voyagers) => emit(state.copyWith(voyagers: voyagers)))
+          ..onError(
+            (error) => emit(
+              EditVoyageState(
+                status: Status.error,
+                errorMessage: error.toString(),
+              ),
+            ),
+          );
   }
 
   Future<void> error(String error) async {
@@ -74,79 +108,27 @@ class EditVoyageCubit extends Cubit<EditVoyageState> {
     emit(state.copyWith(
       successMessage: success,
     ));
-    emit(state.copyWith(
-      successMessage: null,
-    ));
-  }
-
-  Future<void> updateVoyageAndCheck({
-    required String voyageId,
-    required String initialTitle,
-    String? title,
-    double? budget,
-    DateTime? startDate,
-    DateTime? endDate,
-    String? location,
-    String? description,
-  }) async {
-    if (title == null ||
-        title == '' ||
-        budget == null ||
-        budget == 0 ||
-        budget.isNaN ||
-        startDate == null ||
-        endDate == null) {
-      error('Please fill all fields');
-    } else if (endDate.isBefore(startDate)) {
-      error('Voyage start date should be before end date');
-    } else if ((state.voyageTitles
-            .map((i) => i.toLowerCase())
-            .contains(title.toLowerCase())) &&
-        (title != initialTitle)) {
-      error('Voyage title already exists');
-    } else {
-      update(
-          voyageId: voyageId,
-          title: title,
-          budget: budget,
-          startDate: startDate,
-          endDate: endDate,
-          location: location ?? '',
-          description: description ?? '');
-      final String capitalizedTitle =
-          title[0].toUpperCase() + title.substring(1);
-      success('$capitalizedTitle updated succesfully');
-    }
-  }
-
-  Future<void> update({
-    required String voyageId,
-    required String title,
-    required double budget,
-    required DateTime startDate,
-    required DateTime endDate,
-    required String location,
-    required String description,
-  }) async {
     emit(
       state.copyWith(
-        title: title,
-        budget: budget,
-        startDate: startDate,
-        endDate: endDate,
-        location: location,
-        description: description,
+        successMessage: null,
       ),
     );
+  }
+
+  Future<void> update() async {
+    List<String> selectedVoyagerIds = getSelectedVoyagerIds(state.voyagers);
+
     try {
       await _voyagesRepository.update(
-          id: voyageId,
-          title: title,
-          budget: budget,
-          startDate: startDate,
-          endDate: endDate,
-          location: location,
-          description: description);
+        id: state.voyageId,
+        title: state.title,
+        budget: state.budget,
+        startDate: state.startDate ?? DateTime(2022),
+        endDate: state.endDate ?? DateTime(2022),
+        location: state.location,
+        description: state.description,
+        voyagers: selectedVoyagerIds,
+      );
       emit(
         state.copyWith(
           saved: true,
@@ -162,64 +144,62 @@ class EditVoyageCubit extends Cubit<EditVoyageState> {
     }
   }
 
-  Future<void> changeTitleValue(
-    String? title,
-  ) async {
-    emit(
-      state.copyWith(
-        title: title,
-      ),
-    );
+  List<String> getSelectedVoyagerIds(List<VoyagerModel> voyagers) {
+    List<VoyagerModel> selectedVoyagers =
+        voyagers.where((v) => v.isSelected == true).toList();
+    List<String> selectedIds = selectedVoyagers.map((v) => v.id).toList();
+    return selectedIds;
   }
 
-  Future<void> changeBudgetValue(
-    double? budget,
-  ) async {
-    emit(
-      state.copyWith(
-        budget: budget,
-      ),
-    );
+  Future<void> changeTitle({
+    required String title,
+  }) async {
+    emit(state.copyWith(title: title));
   }
 
-  Future<void> changeLocationValue(
-    String? location,
-  ) async {
-    emit(
-      state.copyWith(
-        location: location,
-      ),
-    );
+  Future<void> changeLocation({
+    required String location,
+  }) async {
+    emit(state.copyWith(location: location));
   }
 
-  Future<void> changeDescriptionValue(
-    String? description,
-  ) async {
-    emit(
-      state.copyWith(
-        description: description,
-      ),
-    );
+  Future<void> changeBudget({
+    required double budget,
+  }) async {
+    emit(state.copyWith(budget: budget));
   }
 
-  Future<void> changeStartDateValue(
-    DateTime? startDate,
-  ) async {
-    emit(
-      state.copyWith(
-        startDate: startDate,
-      ),
-    );
+  Future<void> changeDescription({
+    required String description,
+  }) async {
+    emit(state.copyWith(description: description));
   }
 
-  Future<void> changeEndDateValue(
-    DateTime? endDate,
-  ) async {
-    emit(
-      state.copyWith(
-        endDate: endDate,
-      ),
-    );
+  Future<void> changeStartDate({
+    required DateTime startDate,
+  }) async {
+    emit(state.copyWith(startDate: startDate));
+  }
+
+  Future<void> changeEndDate({
+    required DateTime endDate,
+  }) async {
+    emit(state.copyWith(endDate: endDate));
+  }
+
+  Future<void> selectVoyager({
+    required VoyagerModel voyagerModel,
+  }) async {
+    final newVoyagers = state.voyagers.map((v) {
+      if (v.id == voyagerModel.id) {
+        // Update the isSelected property for the target VoyagerModel
+        return v.copyWith(isSelected: v.isSelected ?? false ? false : true);
+      } else {
+        return v;
+      }
+    }).toList();
+
+    emit(state.copyWith(voyagers: newVoyagers));
   }
 
   @override

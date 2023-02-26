@@ -77,8 +77,10 @@ extension GetItInjectableX on _i1.GetIt {
           gh<_i6.VoyagesRepository>(),
           gh<_i3.ExpensesRepository>(),
         ));
-    gh.factory<_i12.EditVoyageCubit>(
-        () => _i12.EditVoyageCubit(gh<_i6.VoyagesRepository>()));
+    gh.factory<_i12.EditVoyageCubit>(() => _i12.EditVoyageCubit(
+          gh<_i6.VoyagesRepository>(),
+          gh<_i5.VoyagersRepository>(),
+        ));
     gh.factory<_i13.QuotesRemoteRetroFitDataSource>(
         () => _i13.QuotesRemoteRetroFitDataSource(gh<_i10.Dio>()));
     gh.factory<_i14.QuotesRepository>(() => _i14.QuotesRepository(

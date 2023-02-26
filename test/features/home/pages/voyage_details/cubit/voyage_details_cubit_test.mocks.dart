@@ -97,6 +97,7 @@ class MockVoyagesRepository extends _i1.Mock implements _i4.VoyagesRepository {
     required DateTime? endDate,
     required String? location,
     required String? description,
+    required List<String>? voyagers,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -110,6 +111,7 @@ class MockVoyagesRepository extends _i1.Mock implements _i4.VoyagesRepository {
             #endDate: endDate,
             #location: location,
             #description: description,
+            #voyagers: voyagers,
           },
         ),
         returnValue: _i5.Future<void>.value(),

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:voyage_vault/components/add_edit_form_body.dart';
 import 'package:voyage_vault/components/text_form_field_decoration.dart';
+import 'package:voyage_vault/domain/models/voyager_model.dart';
 import 'package:voyage_vault/features/global_widgets/select_date_form_field.dart';
 import 'package:voyage_vault/features/home/pages/add_voyage/cubit/add_voyage_cubit.dart';
 
@@ -33,26 +34,7 @@ class AddVoyagePageBody extends StatelessWidget {
               _dateFields(context, state),
               _descriptionField(context),
               for (final voyager in state.voyagers)
-                InkWell(
-                  onTap: () {
-                    context
-                        .read<AddVoyageCubit>()
-                        .selectVoyager(voyagerModel: voyager);
-                  },
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                        suffixIcon: voyager.isSelected ?? false
-                            ? const Icon(Icons.check_box)
-                            : const Icon(Icons.check_box_outline_blank),
-                        icon: Container(
-                          height: 20,
-                          width: 20,
-                          color: voyager.color,
-                        )),
-                    initialValue: voyager.name,
-                    enabled: false,
-                  ),
-                )
+                _voyagerField(context, voyager)
             ],
           );
         },
@@ -71,55 +53,18 @@ class AddVoyagePageBody extends StatelessWidget {
             context,
             labelText: AppLocalizations.of(context).voyageName,
           ),
-          validator: (value) => state.isTitleValid
-              ? null
-              : AppLocalizations.of(context).pleaseEnterVoyageTitle,
+          validator: (value) {
+            if (!state.isTitleValid) {
+              return AppLocalizations.of(context).pleaseEnterVoyageTitle;
+            }
+            if (state.doesTitleExist) {
+              //TODO: add translation
+              return 'Title exists';
+            }
+            return null;
+          },
         );
       },
-    );
-  }
-
-  Widget _dateFields(BuildContext context, AddVoyageState state) {
-    return Row(
-      children: [
-        Flexible(
-          child: selectDateFormField(
-            context: context,
-            controllerText: state.startDateFormatted,
-            labelText: AppLocalizations.of(context).startDate,
-            changeDate: (selectedDate) => context
-                .read<AddVoyageCubit>()
-                .changeStartDate(startDate: selectedDate),
-            validator: (value) => state.isStartDateValid
-                ? null
-                : AppLocalizations.of(context).pleaseChooseDate,
-            //TODO Fix too long text
-          ),
-        ),
-        const SizedBox(
-          width: 30,
-        ),
-        Flexible(
-          child: selectDateFormField(
-            context: context,
-            controllerText: state.endDateFormatted,
-            labelText: AppLocalizations.of(context).endDate,
-            changeDate: (selectedDate) => context
-                .read<AddVoyageCubit>()
-                .changeEndDate(endDate: selectedDate),
-            validator: (value) {
-              if (!state.isStartDateValid) {
-                return AppLocalizations.of(context).pleaseChooseDate;
-              }
-              if (!state.isEndDateAfterStart) {
-                return AppLocalizations.of(context).endDateShouldComeAfter;
-              }
-              return null;
-            },
-            //TODO Fix too long text
-          ),
-        ),
-      ],
     );
   }
 
@@ -169,6 +114,50 @@ class AddVoyagePageBody extends StatelessWidget {
     );
   }
 
+  Widget _dateFields(BuildContext context, AddVoyageState state) {
+    return Row(
+      children: [
+        Flexible(
+          child: selectDateFormField(
+            context: context,
+            controllerText: state.startDateFormatted,
+            labelText: AppLocalizations.of(context).startDate,
+            changeDate: (selectedDate) => context
+                .read<AddVoyageCubit>()
+                .changeStartDate(startDate: selectedDate),
+            validator: (value) => state.isStartDateValid
+                ? null
+                : AppLocalizations.of(context).pleaseChooseDate,
+            //TODO Fix too long text
+          ),
+        ),
+        const SizedBox(
+          width: 30,
+        ),
+        Flexible(
+          child: selectDateFormField(
+            context: context,
+            controllerText: state.endDateFormatted,
+            labelText: AppLocalizations.of(context).endDate,
+            changeDate: (selectedDate) => context
+                .read<AddVoyageCubit>()
+                .changeEndDate(endDate: selectedDate),
+            validator: (value) {
+              if (!state.isStartDateValid) {
+                return AppLocalizations.of(context).pleaseChooseDate;
+              }
+              if (!state.isEndDateAfterStart) {
+                return AppLocalizations.of(context).endDateShouldComeAfter;
+              }
+              return null;
+            },
+            //TODO Fix too long text
+          ),
+        ),
+      ],
+    );
+  }
+
   Widget _descriptionField(BuildContext context) {
     return TextFormField(
       onChanged: (value) {
@@ -183,6 +172,27 @@ class AddVoyagePageBody extends StatelessWidget {
         labelStyle: const TextStyle(),
         alignLabelWithHint: true,
         contentPadding: const EdgeInsets.all(10),
+      ),
+    );
+  }
+
+  InkWell _voyagerField(BuildContext context, VoyagerModel voyager) {
+    return InkWell(
+      onTap: () {
+        context.read<AddVoyageCubit>().selectVoyager(voyagerModel: voyager);
+      },
+      child: TextFormField(
+        decoration: InputDecoration(
+            suffixIcon: voyager.isSelected ?? false
+                ? const Icon(Icons.check_box)
+                : const Icon(Icons.check_box_outline_blank),
+            icon: Container(
+              height: 20,
+              width: 20,
+              color: voyager.color,
+            )),
+        initialValue: voyager.name,
+        enabled: false,
       ),
     );
   }

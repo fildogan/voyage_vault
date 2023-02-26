@@ -80,6 +80,7 @@ class VoyagesRepository {
     required DateTime endDate,
     required String location,
     required String description,
+    required List<String> voyagers,
   }) async {
     final userID = FirebaseAuth.instance.currentUser?.uid;
     if (userID == null) {
@@ -97,6 +98,7 @@ class VoyagesRepository {
       'enddate': endDate,
       'location': location,
       'description': description,
+      'voyagers': voyagers,
     });
   }
 

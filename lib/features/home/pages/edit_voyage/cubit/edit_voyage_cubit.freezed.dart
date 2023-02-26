@@ -21,12 +21,16 @@ mixin _$EditVoyageState {
   String? get errorMessage => throw _privateConstructorUsedError;
   String? get successMessage => throw _privateConstructorUsedError;
   List<String> get voyageTitles => throw _privateConstructorUsedError;
-  String? get title => throw _privateConstructorUsedError;
-  double? get budget => throw _privateConstructorUsedError;
+  String get voyageId => throw _privateConstructorUsedError;
+  String get title => throw _privateConstructorUsedError;
+  String get location => throw _privateConstructorUsedError;
+  double get budget => throw _privateConstructorUsedError;
   DateTime? get startDate => throw _privateConstructorUsedError;
   DateTime? get endDate => throw _privateConstructorUsedError;
-  String? get location => throw _privateConstructorUsedError;
-  String? get description => throw _privateConstructorUsedError;
+  String get description => throw _privateConstructorUsedError;
+  List<VoyagerModel> get voyagers => throw _privateConstructorUsedError;
+  List<String> get selectedVoyagers => throw _privateConstructorUsedError;
+  String get initialTitle => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $EditVoyageStateCopyWith<EditVoyageState> get copyWith =>
@@ -45,12 +49,16 @@ abstract class $EditVoyageStateCopyWith<$Res> {
       String? errorMessage,
       String? successMessage,
       List<String> voyageTitles,
-      String? title,
-      double? budget,
+      String voyageId,
+      String title,
+      String location,
+      double budget,
       DateTime? startDate,
       DateTime? endDate,
-      String? location,
-      String? description});
+      String description,
+      List<VoyagerModel> voyagers,
+      List<String> selectedVoyagers,
+      String initialTitle});
 }
 
 /// @nodoc
@@ -71,12 +79,16 @@ class _$EditVoyageStateCopyWithImpl<$Res, $Val extends EditVoyageState>
     Object? errorMessage = freezed,
     Object? successMessage = freezed,
     Object? voyageTitles = null,
-    Object? title = freezed,
-    Object? budget = freezed,
+    Object? voyageId = null,
+    Object? title = null,
+    Object? location = null,
+    Object? budget = null,
     Object? startDate = freezed,
     Object? endDate = freezed,
-    Object? location = freezed,
-    Object? description = freezed,
+    Object? description = null,
+    Object? voyagers = null,
+    Object? selectedVoyagers = null,
+    Object? initialTitle = null,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -99,14 +111,22 @@ class _$EditVoyageStateCopyWithImpl<$Res, $Val extends EditVoyageState>
           ? _value.voyageTitles
           : voyageTitles // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      title: freezed == title
+      voyageId: null == voyageId
+          ? _value.voyageId
+          : voyageId // ignore: cast_nullable_to_non_nullable
+              as String,
+      title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
-              as String?,
-      budget: freezed == budget
+              as String,
+      location: null == location
+          ? _value.location
+          : location // ignore: cast_nullable_to_non_nullable
+              as String,
+      budget: null == budget
           ? _value.budget
           : budget // ignore: cast_nullable_to_non_nullable
-              as double?,
+              as double,
       startDate: freezed == startDate
           ? _value.startDate
           : startDate // ignore: cast_nullable_to_non_nullable
@@ -115,14 +135,22 @@ class _$EditVoyageStateCopyWithImpl<$Res, $Val extends EditVoyageState>
           ? _value.endDate
           : endDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      location: freezed == location
-          ? _value.location
-          : location // ignore: cast_nullable_to_non_nullable
-              as String?,
-      description: freezed == description
+      description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
+      voyagers: null == voyagers
+          ? _value.voyagers
+          : voyagers // ignore: cast_nullable_to_non_nullable
+              as List<VoyagerModel>,
+      selectedVoyagers: null == selectedVoyagers
+          ? _value.selectedVoyagers
+          : selectedVoyagers // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      initialTitle: null == initialTitle
+          ? _value.initialTitle
+          : initialTitle // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -141,12 +169,16 @@ abstract class _$$_EditVoyageStateCopyWith<$Res>
       String? errorMessage,
       String? successMessage,
       List<String> voyageTitles,
-      String? title,
-      double? budget,
+      String voyageId,
+      String title,
+      String location,
+      double budget,
       DateTime? startDate,
       DateTime? endDate,
-      String? location,
-      String? description});
+      String description,
+      List<VoyagerModel> voyagers,
+      List<String> selectedVoyagers,
+      String initialTitle});
 }
 
 /// @nodoc
@@ -165,12 +197,16 @@ class __$$_EditVoyageStateCopyWithImpl<$Res>
     Object? errorMessage = freezed,
     Object? successMessage = freezed,
     Object? voyageTitles = null,
-    Object? title = freezed,
-    Object? budget = freezed,
+    Object? voyageId = null,
+    Object? title = null,
+    Object? location = null,
+    Object? budget = null,
     Object? startDate = freezed,
     Object? endDate = freezed,
-    Object? location = freezed,
-    Object? description = freezed,
+    Object? description = null,
+    Object? voyagers = null,
+    Object? selectedVoyagers = null,
+    Object? initialTitle = null,
   }) {
     return _then(_$_EditVoyageState(
       status: null == status
@@ -193,14 +229,22 @@ class __$$_EditVoyageStateCopyWithImpl<$Res>
           ? _value._voyageTitles
           : voyageTitles // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      title: freezed == title
+      voyageId: null == voyageId
+          ? _value.voyageId
+          : voyageId // ignore: cast_nullable_to_non_nullable
+              as String,
+      title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
-              as String?,
-      budget: freezed == budget
+              as String,
+      location: null == location
+          ? _value.location
+          : location // ignore: cast_nullable_to_non_nullable
+              as String,
+      budget: null == budget
           ? _value.budget
           : budget // ignore: cast_nullable_to_non_nullable
-              as double?,
+              as double,
       startDate: freezed == startDate
           ? _value.startDate
           : startDate // ignore: cast_nullable_to_non_nullable
@@ -209,34 +253,49 @@ class __$$_EditVoyageStateCopyWithImpl<$Res>
           ? _value.endDate
           : endDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      location: freezed == location
-          ? _value.location
-          : location // ignore: cast_nullable_to_non_nullable
-              as String?,
-      description: freezed == description
+      description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
+      voyagers: null == voyagers
+          ? _value._voyagers
+          : voyagers // ignore: cast_nullable_to_non_nullable
+              as List<VoyagerModel>,
+      selectedVoyagers: null == selectedVoyagers
+          ? _value._selectedVoyagers
+          : selectedVoyagers // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      initialTitle: null == initialTitle
+          ? _value.initialTitle
+          : initialTitle // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
 
 /// @nodoc
 
-class _$_EditVoyageState implements _EditVoyageState {
+class _$_EditVoyageState extends _EditVoyageState {
   _$_EditVoyageState(
       {this.status = Status.initial,
       this.saved = false,
       this.errorMessage,
       this.successMessage,
       final List<String> voyageTitles = const [],
-      this.title,
-      this.budget,
+      this.voyageId = '',
+      this.title = '',
+      this.location = '',
+      this.budget = 0,
       this.startDate,
       this.endDate,
-      this.location,
-      this.description})
-      : _voyageTitles = voyageTitles;
+      this.description = '',
+      final List<VoyagerModel> voyagers = const [],
+      final List<String> selectedVoyagers = const [],
+      this.initialTitle = ''})
+      : _voyageTitles = voyageTitles,
+        _voyagers = voyagers,
+        _selectedVoyagers = selectedVoyagers,
+        super._();
 
   @override
   @JsonKey()
@@ -258,21 +317,50 @@ class _$_EditVoyageState implements _EditVoyageState {
   }
 
   @override
-  final String? title;
+  @JsonKey()
+  final String voyageId;
   @override
-  final double? budget;
+  @JsonKey()
+  final String title;
+  @override
+  @JsonKey()
+  final String location;
+  @override
+  @JsonKey()
+  final double budget;
   @override
   final DateTime? startDate;
   @override
   final DateTime? endDate;
   @override
-  final String? location;
+  @JsonKey()
+  final String description;
+  final List<VoyagerModel> _voyagers;
   @override
-  final String? description;
+  @JsonKey()
+  List<VoyagerModel> get voyagers {
+    if (_voyagers is EqualUnmodifiableListView) return _voyagers;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_voyagers);
+  }
+
+  final List<String> _selectedVoyagers;
+  @override
+  @JsonKey()
+  List<String> get selectedVoyagers {
+    if (_selectedVoyagers is EqualUnmodifiableListView)
+      return _selectedVoyagers;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_selectedVoyagers);
+  }
+
+  @override
+  @JsonKey()
+  final String initialTitle;
 
   @override
   String toString() {
-    return 'EditVoyageState(status: $status, saved: $saved, errorMessage: $errorMessage, successMessage: $successMessage, voyageTitles: $voyageTitles, title: $title, budget: $budget, startDate: $startDate, endDate: $endDate, location: $location, description: $description)';
+    return 'EditVoyageState(status: $status, saved: $saved, errorMessage: $errorMessage, successMessage: $successMessage, voyageTitles: $voyageTitles, voyageId: $voyageId, title: $title, location: $location, budget: $budget, startDate: $startDate, endDate: $endDate, description: $description, voyagers: $voyagers, selectedVoyagers: $selectedVoyagers, initialTitle: $initialTitle)';
   }
 
   @override
@@ -288,15 +376,22 @@ class _$_EditVoyageState implements _EditVoyageState {
                 other.successMessage == successMessage) &&
             const DeepCollectionEquality()
                 .equals(other._voyageTitles, _voyageTitles) &&
+            (identical(other.voyageId, voyageId) ||
+                other.voyageId == voyageId) &&
             (identical(other.title, title) || other.title == title) &&
+            (identical(other.location, location) ||
+                other.location == location) &&
             (identical(other.budget, budget) || other.budget == budget) &&
             (identical(other.startDate, startDate) ||
                 other.startDate == startDate) &&
             (identical(other.endDate, endDate) || other.endDate == endDate) &&
-            (identical(other.location, location) ||
-                other.location == location) &&
             (identical(other.description, description) ||
-                other.description == description));
+                other.description == description) &&
+            const DeepCollectionEquality().equals(other._voyagers, _voyagers) &&
+            const DeepCollectionEquality()
+                .equals(other._selectedVoyagers, _selectedVoyagers) &&
+            (identical(other.initialTitle, initialTitle) ||
+                other.initialTitle == initialTitle));
   }
 
   @override
@@ -307,12 +402,16 @@ class _$_EditVoyageState implements _EditVoyageState {
       errorMessage,
       successMessage,
       const DeepCollectionEquality().hash(_voyageTitles),
+      voyageId,
       title,
+      location,
       budget,
       startDate,
       endDate,
-      location,
-      description);
+      description,
+      const DeepCollectionEquality().hash(_voyagers),
+      const DeepCollectionEquality().hash(_selectedVoyagers),
+      initialTitle);
 
   @JsonKey(ignore: true)
   @override
@@ -321,19 +420,24 @@ class _$_EditVoyageState implements _EditVoyageState {
       __$$_EditVoyageStateCopyWithImpl<_$_EditVoyageState>(this, _$identity);
 }
 
-abstract class _EditVoyageState implements EditVoyageState {
+abstract class _EditVoyageState extends EditVoyageState {
   factory _EditVoyageState(
       {final Status status,
       final bool saved,
       final String? errorMessage,
       final String? successMessage,
       final List<String> voyageTitles,
-      final String? title,
-      final double? budget,
+      final String voyageId,
+      final String title,
+      final String location,
+      final double budget,
       final DateTime? startDate,
       final DateTime? endDate,
-      final String? location,
-      final String? description}) = _$_EditVoyageState;
+      final String description,
+      final List<VoyagerModel> voyagers,
+      final List<String> selectedVoyagers,
+      final String initialTitle}) = _$_EditVoyageState;
+  _EditVoyageState._() : super._();
 
   @override
   Status get status;
@@ -346,17 +450,25 @@ abstract class _EditVoyageState implements EditVoyageState {
   @override
   List<String> get voyageTitles;
   @override
-  String? get title;
+  String get voyageId;
   @override
-  double? get budget;
+  String get title;
+  @override
+  String get location;
+  @override
+  double get budget;
   @override
   DateTime? get startDate;
   @override
   DateTime? get endDate;
   @override
-  String? get location;
+  String get description;
   @override
-  String? get description;
+  List<VoyagerModel> get voyagers;
+  @override
+  List<String> get selectedVoyagers;
+  @override
+  String get initialTitle;
   @override
   @JsonKey(ignore: true)
   _$$_EditVoyageStateCopyWith<_$_EditVoyageState> get copyWith =>

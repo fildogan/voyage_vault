@@ -33,7 +33,7 @@ class AddVoyageCubit extends Cubit<AddVoyageState> {
 
     try {
       await _voyagesRepository.add(
-        title: state.voyageTitle,
+        title: state.title,
         budget: state.budget,
         startDate: state.startDate ?? DateTime(2022),
         endDate: state.endDate ?? DateTime(2022),
@@ -52,35 +52,35 @@ class AddVoyageCubit extends Cubit<AddVoyageState> {
     }
   }
 
-  Future<void> addVoyageAndCheck({
-    String? title,
-    double? budget,
-    DateTime? startDate,
-    DateTime? endDate,
-    String? location,
-    String? description,
-  }) async {
-    if (title == null ||
-        title == '' ||
-        budget == null ||
-        budget == 0 ||
-        budget.isNaN ||
-        startDate == null ||
-        endDate == null) {
-      error('Please fill all fields');
-    } else if (endDate.isBefore(startDate)) {
-      error('Voyage start date should be before end date');
-    } else if (state.voyageTitles
-        .map((i) => i.toLowerCase())
-        .contains(title.toLowerCase())) {
-      error('Voyage title already exists');
-    } else {
-      add();
-      final String capitalizedTitle =
-          title[0].toUpperCase() + title.substring(1);
-      success('$capitalizedTitle added succesfully');
-    }
-  }
+  // Future<void> addVoyageAndCheck({
+  //   String? title,
+  //   double? budget,
+  //   DateTime? startDate,
+  //   DateTime? endDate,
+  //   String? location,
+  //   String? description,
+  // }) async {
+  //   if (title == null ||
+  //       title == '' ||
+  //       budget == null ||
+  //       budget == 0 ||
+  //       budget.isNaN ||
+  //       startDate == null ||
+  //       endDate == null) {
+  //     error('Please fill all fields');
+  //   } else if (endDate.isBefore(startDate)) {
+  //     error('Voyage start date should be before end date');
+  //   } else if (state.voyageTitles
+  //       .map((i) => i.toLowerCase())
+  //       .contains(title.toLowerCase())) {
+  //     error('Voyage title already exists');
+  //   } else {
+  //     add();
+  //     final String capitalizedTitle =
+  //         title[0].toUpperCase() + title.substring(1);
+  //     success('$capitalizedTitle added succesfully');
+  //   }
+  // }
 
   Future<void> error(String error) async {
     emit(state.copyWith(
@@ -105,8 +105,10 @@ class AddVoyageCubit extends Cubit<AddVoyageState> {
         .getVoyagesStream()
         .map((voyages) => voyages.map((voyage) => voyage.title).toList())
         .listen(
-          (voyageTitles) => emit(state.copyWith(voyageTitles: voyageTitles)),
-        )..onError(
+      (voyageTitles) {
+        emit(state.copyWith(voyageTitles: voyageTitles));
+      },
+    )..onError(
         (error) => emit(
           AddVoyageState(
             status: Status.error,
@@ -141,7 +143,7 @@ class AddVoyageCubit extends Cubit<AddVoyageState> {
   Future<void> changeTitle({
     required String title,
   }) async {
-    emit(state.copyWith(voyageTitle: title));
+    emit(state.copyWith(title: title));
   }
 
   Future<void> changeLocation({
@@ -150,16 +152,16 @@ class AddVoyageCubit extends Cubit<AddVoyageState> {
     emit(state.copyWith(location: location));
   }
 
-  Future<void> changeDescription({
-    required String description,
-  }) async {
-    emit(state.copyWith(description: description));
-  }
-
   Future<void> changeBudget({
     required double budget,
   }) async {
     emit(state.copyWith(budget: budget));
+  }
+
+  Future<void> changeDescription({
+    required String description,
+  }) async {
+    emit(state.copyWith(description: description));
   }
 
   Future<void> changeStartDate({
@@ -172,12 +174,6 @@ class AddVoyageCubit extends Cubit<AddVoyageState> {
     required DateTime endDate,
   }) async {
     emit(state.copyWith(endDate: endDate));
-  }
-
-  @override
-  Future<void> close() {
-    _streamSubscription?.cancel();
-    return super.close();
   }
 
   Future<void> selectVoyager({
@@ -193,5 +189,11 @@ class AddVoyageCubit extends Cubit<AddVoyageState> {
     }).toList();
 
     emit(state.copyWith(voyagers: newVoyagers));
+  }
+
+  @override
+  Future<void> close() {
+    _streamSubscription?.cancel();
+    return super.close();
   }
 }

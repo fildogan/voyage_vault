@@ -14,4 +14,9 @@ class VoyagerModel with _$VoyagerModel {
     bool? isSelected,
   }) = _VoyagerModel;
   const VoyagerModel._();
+
+  // Define a setter method for isSelected
+  VoyagerModel setSelected(bool value) {
+    return copyWith(isSelected: value);
+  }
 }
