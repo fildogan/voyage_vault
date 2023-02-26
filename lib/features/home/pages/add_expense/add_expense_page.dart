@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:voyage_vault/app/core/enums.dart';
 import 'package:voyage_vault/app/injection_container.dart';
 import 'package:voyage_vault/components/add_edit_app_bar.dart';
+import 'package:voyage_vault/components/add_edit_form_body.dart';
 import 'package:voyage_vault/components/text_form_field_decoration.dart';
 import 'package:voyage_vault/domain/models/voyage_model.dart';
 import 'package:voyage_vault/features/home/pages/add_expense/cubit/add_expense_cubit.dart';
@@ -87,24 +88,19 @@ class _AddExpensePageBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Form(
-        key: formKey,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ListView(
-            children: [
-              _nameField(),
-              _priceField(),
-              _categoryField(),
-              _voyageField()
-            ],
-          ),
-        ),
+      child: AddEditFormBody(
+        formKey: formKey,
+        children: [
+          nameField(),
+          priceField(),
+          categoryField(),
+          voyageField(),
+        ],
       ),
     );
   }
 
-  Widget _nameField() {
+  Widget nameField() {
     return BlocBuilder<AddExpenseCubit, AddExpenseState>(
       builder: (context, state) {
         return TextFormField(
@@ -123,7 +119,7 @@ class _AddExpensePageBody extends StatelessWidget {
     );
   }
 
-  Widget _priceField() {
+  Widget priceField() {
     return BlocBuilder<AddExpenseCubit, AddExpenseState>(
       builder: (context, state) {
         return TextFormField(
@@ -150,7 +146,7 @@ class _AddExpensePageBody extends StatelessWidget {
     );
   }
 
-  Widget _categoryField() {
+  Widget categoryField() {
     return BlocBuilder<AddExpenseCubit, AddExpenseState>(
       builder: (context, state) {
         return DropdownButtonFormField<String>(
@@ -181,7 +177,7 @@ class _AddExpensePageBody extends StatelessWidget {
     );
   }
 
-  Widget _voyageField() {
+  Widget voyageField() {
     return BlocBuilder<AddExpenseCubit, AddExpenseState>(
       builder: (context, state) {
         return DropdownButtonFormField<String>(

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:voyage_vault/app/core/enums.dart';
 import 'package:voyage_vault/app/injection_container.dart';
 import 'package:voyage_vault/components/add_edit_app_bar.dart';
+import 'package:voyage_vault/components/add_edit_form_body.dart';
 import 'package:voyage_vault/domain/models/voyage_model.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:voyage_vault/features/home/pages/add_voyager/cubit/add_voyager_cubit.dart';
@@ -91,17 +92,12 @@ class _AddVoyagerPageBody extends StatelessWidget {
         Color dialogSelectColor = state.voyagerColor ?? Colors.transparent;
 
         return SafeArea(
-          child: Form(
-            key: formKey,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ListView(
-                children: [
-                  _nameField(),
-                  _colorPicker(context, dialogSelectColor),
-                ],
-              ),
-            ),
+          child: AddEditFormBody(
+            formKey: formKey,
+            children: [
+              _nameField(),
+              _colorPicker(context, dialogSelectColor),
+            ],
           ),
         );
       },

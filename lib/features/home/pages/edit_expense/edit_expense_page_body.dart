@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:voyage_vault/components/add_edit_form_body.dart';
 import 'package:voyage_vault/domain/models/expense_model.dart';
 import 'package:voyage_vault/features/global_widgets/select_date_form_field.dart';
 import 'package:voyage_vault/features/home/pages/edit_expense/cubit/edit_expense_cubit.dart';
@@ -21,20 +22,15 @@ class EditExpensePageBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Form(
-        key: formKey,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ListView(
-            children: [
-              _nameField(),
-              _priceField(),
-              _dateField(),
-              _categoryField(),
-              _voyageField()
-            ],
-          ),
-        ),
+      child: AddEditFormBody(
+        formKey: formKey,
+        children: [
+          _nameField(),
+          _priceField(),
+          _dateField(),
+          _categoryField(),
+          _voyageField()
+        ],
       ),
     );
   }

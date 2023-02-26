@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:voyage_vault/components/add_edit_form_body.dart';
 import 'package:voyage_vault/components/text_form_field_decoration.dart';
 import 'package:voyage_vault/features/global_widgets/select_date_form_field.dart';
 import 'package:voyage_vault/features/home/pages/add_voyage/cubit/add_voyage_cubit.dart';
@@ -23,41 +24,36 @@ class AddVoyagePageBody extends StatelessWidget {
     return SafeArea(
       child: BlocBuilder<AddVoyageCubit, AddVoyageState>(
         builder: (context, state) {
-          return Form(
-            key: formKey,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ListView(
-                children: [
-                  _titleField(context),
-                  _locationField(context),
-                  _budgetField(context),
-                  _dateFields(context, state),
-                  _descriptionField(context),
-                  for (final voyager in state.voyagers)
-                    InkWell(
-                      onTap: () {
-                        context
-                            .read<AddVoyageCubit>()
-                            .selectVoyager(voyagerModel: voyager);
-                      },
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                            suffixIcon: voyager.isSelected ?? false
-                                ? const Icon(Icons.check_box)
-                                : const Icon(Icons.check_box_outline_blank),
-                            icon: Container(
-                              height: 20,
-                              width: 20,
-                              color: voyager.color,
-                            )),
-                        initialValue: voyager.name,
-                        enabled: false,
-                      ),
-                    )
-                ],
-              ),
-            ),
+          return AddEditFormBody(
+            formKey: formKey,
+            children: [
+              _titleField(context),
+              _locationField(context),
+              _budgetField(context),
+              _dateFields(context, state),
+              _descriptionField(context),
+              for (final voyager in state.voyagers)
+                InkWell(
+                  onTap: () {
+                    context
+                        .read<AddVoyageCubit>()
+                        .selectVoyager(voyagerModel: voyager);
+                  },
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                        suffixIcon: voyager.isSelected ?? false
+                            ? const Icon(Icons.check_box)
+                            : const Icon(Icons.check_box_outline_blank),
+                        icon: Container(
+                          height: 20,
+                          width: 20,
+                          color: voyager.color,
+                        )),
+                    initialValue: voyager.name,
+                    enabled: false,
+                  ),
+                )
+            ],
           );
         },
       ),
