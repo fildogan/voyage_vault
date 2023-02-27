@@ -223,6 +223,7 @@ class MockExpensesRepository extends _i1.Mock
     required DateTime? dateAdded,
     required String? category,
     required String? voyageId,
+    required String? voyagerId,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -235,6 +236,7 @@ class MockExpensesRepository extends _i1.Mock
             #dateAdded: dateAdded,
             #category: category,
             #voyageId: voyageId,
+            #voyagerId: voyagerId,
           },
         ),
         returnValue: _i4.Future<void>.value(),

@@ -209,6 +209,7 @@ class VoyageDetailsPage extends StatelessWidget {
                     builder: (context) => EditExpensePage(
                           expenseModel: expenseModel,
                           voyageModel: currentVoyageModel,
+                          voyagerModel: voyager,
                         )));
               },
             ),

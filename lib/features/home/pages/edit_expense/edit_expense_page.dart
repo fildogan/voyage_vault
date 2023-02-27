@@ -5,20 +5,22 @@ import 'package:voyage_vault/app/injection_container.dart';
 import 'package:voyage_vault/components/save_app_bar_button.dart';
 import 'package:voyage_vault/domain/models/expense_model.dart';
 import 'package:voyage_vault/domain/models/voyage_model.dart';
+import 'package:voyage_vault/domain/models/voyager_model.dart';
 import 'package:voyage_vault/features/home/pages/edit_expense/cubit/edit_expense_cubit.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:voyage_vault/features/home/pages/edit_expense/edit_expense_page_body.dart';
 
 @immutable
 class EditExpensePage extends StatelessWidget {
-  EditExpensePage({
-    super.key,
-    required this.expenseModel,
-    required this.voyageModel,
-  });
+  EditExpensePage(
+      {super.key,
+      required this.expenseModel,
+      required this.voyageModel,
+      this.voyagerModel});
 
   final ExpenseModel expenseModel;
   final VoyageModel voyageModel;
+  final VoyagerModel? voyagerModel;
 
   final formKey = GlobalKey<FormState>();
 
@@ -26,7 +28,10 @@ class EditExpensePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<EditExpenseCubit>(
       create: (context) => getIt<EditExpenseCubit>()
-        ..start(expenseModel: expenseModel, voyageModel: voyageModel),
+        ..start(
+            expenseModel: expenseModel,
+            voyageModel: voyageModel,
+            voyagerModel: voyagerModel),
       child: BlocListener<EditExpenseCubit, EditExpenseState>(
         listener: (context, state) {
           if (state.formStatus == FormStatus.success) {

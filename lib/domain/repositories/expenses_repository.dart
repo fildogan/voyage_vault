@@ -98,6 +98,7 @@ class ExpensesRepository {
     required DateTime dateAdded,
     required String category,
     required String voyageId,
+    required String voyagerId,
   }) async {
     final userID = FirebaseAuth.instance.currentUser?.uid;
     if (userID == null) {
@@ -114,6 +115,7 @@ class ExpensesRepository {
       'dateadded': dateAdded,
       'category': category,
       'voyageid': voyageId,
+      'voyagerid': voyagerId,
     });
   }
 

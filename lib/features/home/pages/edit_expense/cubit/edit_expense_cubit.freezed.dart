@@ -21,14 +21,22 @@ mixin _$EditExpenseState {
   String? get errorMessage => throw _privateConstructorUsedError;
   String? get successMessage => throw _privateConstructorUsedError;
   List<String> get categoryTitles => throw _privateConstructorUsedError;
+  List<VoyageModel> get voyages =>
+      throw _privateConstructorUsedError; //TODO: delete list voyagetitles
   List<String> get voyageTitles => throw _privateConstructorUsedError;
   String get voyageId => throw _privateConstructorUsedError;
   String get expenseId => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
+  List<String> get voyagerIdList => throw _privateConstructorUsedError;
   String get category => throw _privateConstructorUsedError;
+  VoyagerModel? get voyager => throw _privateConstructorUsedError;
   double get price => throw _privateConstructorUsedError;
+  VoyageModel? get voyage => throw _privateConstructorUsedError;
+  ExpenseModel? get expense => throw _privateConstructorUsedError;
   String get voyageTitle => throw _privateConstructorUsedError;
   DateTime? get dateAdded => throw _privateConstructorUsedError;
+  List<VoyagerModel> get voyagers => throw _privateConstructorUsedError;
+  String get initialVoyagerId => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $EditExpenseStateCopyWith<EditExpenseState> get copyWith =>
@@ -47,14 +55,25 @@ abstract class $EditExpenseStateCopyWith<$Res> {
       String? errorMessage,
       String? successMessage,
       List<String> categoryTitles,
+      List<VoyageModel> voyages,
       List<String> voyageTitles,
       String voyageId,
       String expenseId,
       String name,
+      List<String> voyagerIdList,
       String category,
+      VoyagerModel? voyager,
       double price,
+      VoyageModel? voyage,
+      ExpenseModel? expense,
       String voyageTitle,
-      DateTime? dateAdded});
+      DateTime? dateAdded,
+      List<VoyagerModel> voyagers,
+      String initialVoyagerId});
+
+  $VoyagerModelCopyWith<$Res>? get voyager;
+  $VoyageModelCopyWith<$Res>? get voyage;
+  $ExpenseModelCopyWith<$Res>? get expense;
 }
 
 /// @nodoc
@@ -75,14 +94,21 @@ class _$EditExpenseStateCopyWithImpl<$Res, $Val extends EditExpenseState>
     Object? errorMessage = freezed,
     Object? successMessage = freezed,
     Object? categoryTitles = null,
+    Object? voyages = null,
     Object? voyageTitles = null,
     Object? voyageId = null,
     Object? expenseId = null,
     Object? name = null,
+    Object? voyagerIdList = null,
     Object? category = null,
+    Object? voyager = freezed,
     Object? price = null,
+    Object? voyage = freezed,
+    Object? expense = freezed,
     Object? voyageTitle = null,
     Object? dateAdded = freezed,
+    Object? voyagers = null,
+    Object? initialVoyagerId = null,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -105,6 +131,10 @@ class _$EditExpenseStateCopyWithImpl<$Res, $Val extends EditExpenseState>
           ? _value.categoryTitles
           : categoryTitles // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      voyages: null == voyages
+          ? _value.voyages
+          : voyages // ignore: cast_nullable_to_non_nullable
+              as List<VoyageModel>,
       voyageTitles: null == voyageTitles
           ? _value.voyageTitles
           : voyageTitles // ignore: cast_nullable_to_non_nullable
@@ -121,14 +151,30 @@ class _$EditExpenseStateCopyWithImpl<$Res, $Val extends EditExpenseState>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      voyagerIdList: null == voyagerIdList
+          ? _value.voyagerIdList
+          : voyagerIdList // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       category: null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
               as String,
+      voyager: freezed == voyager
+          ? _value.voyager
+          : voyager // ignore: cast_nullable_to_non_nullable
+              as VoyagerModel?,
       price: null == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as double,
+      voyage: freezed == voyage
+          ? _value.voyage
+          : voyage // ignore: cast_nullable_to_non_nullable
+              as VoyageModel?,
+      expense: freezed == expense
+          ? _value.expense
+          : expense // ignore: cast_nullable_to_non_nullable
+              as ExpenseModel?,
       voyageTitle: null == voyageTitle
           ? _value.voyageTitle
           : voyageTitle // ignore: cast_nullable_to_non_nullable
@@ -137,7 +183,51 @@ class _$EditExpenseStateCopyWithImpl<$Res, $Val extends EditExpenseState>
           ? _value.dateAdded
           : dateAdded // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      voyagers: null == voyagers
+          ? _value.voyagers
+          : voyagers // ignore: cast_nullable_to_non_nullable
+              as List<VoyagerModel>,
+      initialVoyagerId: null == initialVoyagerId
+          ? _value.initialVoyagerId
+          : initialVoyagerId // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $VoyagerModelCopyWith<$Res>? get voyager {
+    if (_value.voyager == null) {
+      return null;
+    }
+
+    return $VoyagerModelCopyWith<$Res>(_value.voyager!, (value) {
+      return _then(_value.copyWith(voyager: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $VoyageModelCopyWith<$Res>? get voyage {
+    if (_value.voyage == null) {
+      return null;
+    }
+
+    return $VoyageModelCopyWith<$Res>(_value.voyage!, (value) {
+      return _then(_value.copyWith(voyage: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $ExpenseModelCopyWith<$Res>? get expense {
+    if (_value.expense == null) {
+      return null;
+    }
+
+    return $ExpenseModelCopyWith<$Res>(_value.expense!, (value) {
+      return _then(_value.copyWith(expense: value) as $Val);
+    });
   }
 }
 
@@ -155,14 +245,28 @@ abstract class _$$_EditExpenseStateCopyWith<$Res>
       String? errorMessage,
       String? successMessage,
       List<String> categoryTitles,
+      List<VoyageModel> voyages,
       List<String> voyageTitles,
       String voyageId,
       String expenseId,
       String name,
+      List<String> voyagerIdList,
       String category,
+      VoyagerModel? voyager,
       double price,
+      VoyageModel? voyage,
+      ExpenseModel? expense,
       String voyageTitle,
-      DateTime? dateAdded});
+      DateTime? dateAdded,
+      List<VoyagerModel> voyagers,
+      String initialVoyagerId});
+
+  @override
+  $VoyagerModelCopyWith<$Res>? get voyager;
+  @override
+  $VoyageModelCopyWith<$Res>? get voyage;
+  @override
+  $ExpenseModelCopyWith<$Res>? get expense;
 }
 
 /// @nodoc
@@ -181,14 +285,21 @@ class __$$_EditExpenseStateCopyWithImpl<$Res>
     Object? errorMessage = freezed,
     Object? successMessage = freezed,
     Object? categoryTitles = null,
+    Object? voyages = null,
     Object? voyageTitles = null,
     Object? voyageId = null,
     Object? expenseId = null,
     Object? name = null,
+    Object? voyagerIdList = null,
     Object? category = null,
+    Object? voyager = freezed,
     Object? price = null,
+    Object? voyage = freezed,
+    Object? expense = freezed,
     Object? voyageTitle = null,
     Object? dateAdded = freezed,
+    Object? voyagers = null,
+    Object? initialVoyagerId = null,
   }) {
     return _then(_$_EditExpenseState(
       status: null == status
@@ -211,6 +322,10 @@ class __$$_EditExpenseStateCopyWithImpl<$Res>
           ? _value._categoryTitles
           : categoryTitles // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      voyages: null == voyages
+          ? _value._voyages
+          : voyages // ignore: cast_nullable_to_non_nullable
+              as List<VoyageModel>,
       voyageTitles: null == voyageTitles
           ? _value._voyageTitles
           : voyageTitles // ignore: cast_nullable_to_non_nullable
@@ -227,14 +342,30 @@ class __$$_EditExpenseStateCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      voyagerIdList: null == voyagerIdList
+          ? _value._voyagerIdList
+          : voyagerIdList // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       category: null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
               as String,
+      voyager: freezed == voyager
+          ? _value.voyager
+          : voyager // ignore: cast_nullable_to_non_nullable
+              as VoyagerModel?,
       price: null == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as double,
+      voyage: freezed == voyage
+          ? _value.voyage
+          : voyage // ignore: cast_nullable_to_non_nullable
+              as VoyageModel?,
+      expense: freezed == expense
+          ? _value.expense
+          : expense // ignore: cast_nullable_to_non_nullable
+              as ExpenseModel?,
       voyageTitle: null == voyageTitle
           ? _value.voyageTitle
           : voyageTitle // ignore: cast_nullable_to_non_nullable
@@ -243,6 +374,14 @@ class __$$_EditExpenseStateCopyWithImpl<$Res>
           ? _value.dateAdded
           : dateAdded // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      voyagers: null == voyagers
+          ? _value._voyagers
+          : voyagers // ignore: cast_nullable_to_non_nullable
+              as List<VoyagerModel>,
+      initialVoyagerId: null == initialVoyagerId
+          ? _value.initialVoyagerId
+          : initialVoyagerId // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -256,16 +395,26 @@ class _$_EditExpenseState extends _EditExpenseState {
       this.errorMessage,
       this.successMessage,
       final List<String> categoryTitles = expenseCategoryList,
+      final List<VoyageModel> voyages = const [],
       final List<String> voyageTitles = const [],
       this.voyageId = '',
       this.expenseId = '',
       this.name = '',
+      final List<String> voyagerIdList = const [],
       this.category = '',
+      this.voyager,
       this.price = 0,
+      this.voyage,
+      this.expense,
       this.voyageTitle = '',
-      this.dateAdded})
+      this.dateAdded,
+      final List<VoyagerModel> voyagers = const [],
+      this.initialVoyagerId = ''})
       : _categoryTitles = categoryTitles,
+        _voyages = voyages,
         _voyageTitles = voyageTitles,
+        _voyagerIdList = voyagerIdList,
+        _voyagers = voyagers,
         super._();
 
   @override
@@ -287,7 +436,18 @@ class _$_EditExpenseState extends _EditExpenseState {
     return EqualUnmodifiableListView(_categoryTitles);
   }
 
+  final List<VoyageModel> _voyages;
+  @override
+  @JsonKey()
+  List<VoyageModel> get voyages {
+    if (_voyages is EqualUnmodifiableListView) return _voyages;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_voyages);
+  }
+
+//TODO: delete list voyagetitles
   final List<String> _voyageTitles;
+//TODO: delete list voyagetitles
   @override
   @JsonKey()
   List<String> get voyageTitles {
@@ -305,21 +465,48 @@ class _$_EditExpenseState extends _EditExpenseState {
   @override
   @JsonKey()
   final String name;
+  final List<String> _voyagerIdList;
+  @override
+  @JsonKey()
+  List<String> get voyagerIdList {
+    if (_voyagerIdList is EqualUnmodifiableListView) return _voyagerIdList;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_voyagerIdList);
+  }
+
   @override
   @JsonKey()
   final String category;
   @override
+  final VoyagerModel? voyager;
+  @override
   @JsonKey()
   final double price;
+  @override
+  final VoyageModel? voyage;
+  @override
+  final ExpenseModel? expense;
   @override
   @JsonKey()
   final String voyageTitle;
   @override
   final DateTime? dateAdded;
+  final List<VoyagerModel> _voyagers;
+  @override
+  @JsonKey()
+  List<VoyagerModel> get voyagers {
+    if (_voyagers is EqualUnmodifiableListView) return _voyagers;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_voyagers);
+  }
+
+  @override
+  @JsonKey()
+  final String initialVoyagerId;
 
   @override
   String toString() {
-    return 'EditExpenseState(status: $status, formStatus: $formStatus, errorMessage: $errorMessage, successMessage: $successMessage, categoryTitles: $categoryTitles, voyageTitles: $voyageTitles, voyageId: $voyageId, expenseId: $expenseId, name: $name, category: $category, price: $price, voyageTitle: $voyageTitle, dateAdded: $dateAdded)';
+    return 'EditExpenseState(status: $status, formStatus: $formStatus, errorMessage: $errorMessage, successMessage: $successMessage, categoryTitles: $categoryTitles, voyages: $voyages, voyageTitles: $voyageTitles, voyageId: $voyageId, expenseId: $expenseId, name: $name, voyagerIdList: $voyagerIdList, category: $category, voyager: $voyager, price: $price, voyage: $voyage, expense: $expense, voyageTitle: $voyageTitle, dateAdded: $dateAdded, voyagers: $voyagers, initialVoyagerId: $initialVoyagerId)';
   }
 
   @override
@@ -336,6 +523,7 @@ class _$_EditExpenseState extends _EditExpenseState {
                 other.successMessage == successMessage) &&
             const DeepCollectionEquality()
                 .equals(other._categoryTitles, _categoryTitles) &&
+            const DeepCollectionEquality().equals(other._voyages, _voyages) &&
             const DeepCollectionEquality()
                 .equals(other._voyageTitles, _voyageTitles) &&
             (identical(other.voyageId, voyageId) ||
@@ -343,31 +531,47 @@ class _$_EditExpenseState extends _EditExpenseState {
             (identical(other.expenseId, expenseId) ||
                 other.expenseId == expenseId) &&
             (identical(other.name, name) || other.name == name) &&
+            const DeepCollectionEquality()
+                .equals(other._voyagerIdList, _voyagerIdList) &&
             (identical(other.category, category) ||
                 other.category == category) &&
+            (identical(other.voyager, voyager) || other.voyager == voyager) &&
             (identical(other.price, price) || other.price == price) &&
+            (identical(other.voyage, voyage) || other.voyage == voyage) &&
+            (identical(other.expense, expense) || other.expense == expense) &&
             (identical(other.voyageTitle, voyageTitle) ||
                 other.voyageTitle == voyageTitle) &&
             (identical(other.dateAdded, dateAdded) ||
-                other.dateAdded == dateAdded));
+                other.dateAdded == dateAdded) &&
+            const DeepCollectionEquality().equals(other._voyagers, _voyagers) &&
+            (identical(other.initialVoyagerId, initialVoyagerId) ||
+                other.initialVoyagerId == initialVoyagerId));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      status,
-      formStatus,
-      errorMessage,
-      successMessage,
-      const DeepCollectionEquality().hash(_categoryTitles),
-      const DeepCollectionEquality().hash(_voyageTitles),
-      voyageId,
-      expenseId,
-      name,
-      category,
-      price,
-      voyageTitle,
-      dateAdded);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        status,
+        formStatus,
+        errorMessage,
+        successMessage,
+        const DeepCollectionEquality().hash(_categoryTitles),
+        const DeepCollectionEquality().hash(_voyages),
+        const DeepCollectionEquality().hash(_voyageTitles),
+        voyageId,
+        expenseId,
+        name,
+        const DeepCollectionEquality().hash(_voyagerIdList),
+        category,
+        voyager,
+        price,
+        voyage,
+        expense,
+        voyageTitle,
+        dateAdded,
+        const DeepCollectionEquality().hash(_voyagers),
+        initialVoyagerId
+      ]);
 
   @JsonKey(ignore: true)
   @override
@@ -383,14 +587,21 @@ abstract class _EditExpenseState extends EditExpenseState {
       final String? errorMessage,
       final String? successMessage,
       final List<String> categoryTitles,
+      final List<VoyageModel> voyages,
       final List<String> voyageTitles,
       final String voyageId,
       final String expenseId,
       final String name,
+      final List<String> voyagerIdList,
       final String category,
+      final VoyagerModel? voyager,
       final double price,
+      final VoyageModel? voyage,
+      final ExpenseModel? expense,
       final String voyageTitle,
-      final DateTime? dateAdded}) = _$_EditExpenseState;
+      final DateTime? dateAdded,
+      final List<VoyagerModel> voyagers,
+      final String initialVoyagerId}) = _$_EditExpenseState;
   _EditExpenseState._() : super._();
 
   @override
@@ -404,6 +615,8 @@ abstract class _EditExpenseState extends EditExpenseState {
   @override
   List<String> get categoryTitles;
   @override
+  List<VoyageModel> get voyages;
+  @override //TODO: delete list voyagetitles
   List<String> get voyageTitles;
   @override
   String get voyageId;
@@ -412,13 +625,25 @@ abstract class _EditExpenseState extends EditExpenseState {
   @override
   String get name;
   @override
+  List<String> get voyagerIdList;
+  @override
   String get category;
   @override
+  VoyagerModel? get voyager;
+  @override
   double get price;
+  @override
+  VoyageModel? get voyage;
+  @override
+  ExpenseModel? get expense;
   @override
   String get voyageTitle;
   @override
   DateTime? get dateAdded;
+  @override
+  List<VoyagerModel> get voyagers;
+  @override
+  String get initialVoyagerId;
   @override
   @JsonKey(ignore: true)
   _$$_EditExpenseStateCopyWith<_$_EditExpenseState> get copyWith =>

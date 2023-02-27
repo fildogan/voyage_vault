@@ -97,7 +97,7 @@ class _AddExpensePageBody extends StatelessWidget {
           priceField(),
           categoryField(),
           voyageField(),
-          voyagerField()
+          voyagerField(),
         ],
       ),
     );
@@ -266,9 +266,20 @@ class _AddExpensePageBody extends StatelessWidget {
                       (VoyagerModel voyager) {
                         return DropdownMenuItem(
                           value: voyager,
-                          child: Text(
-                            voyager.name[0].toUpperCase() +
-                                voyager.name.substring(1),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.person,
+                                color: voyager.color,
+                              ),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                voyager.name[0].toUpperCase() +
+                                    voyager.name.substring(1),
+                              ),
+                            ],
                           ),
                         );
                       },

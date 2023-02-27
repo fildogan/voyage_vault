@@ -24,6 +24,6 @@ class AddExpenseState with _$AddExpenseState {
 
   bool get isNameValid => name.isNotEmpty;
   bool get isPriceValid => price > 0;
-  bool get isCategoryValid => category != null;
+  bool get isCategoryValid => category != null && (category ?? '').isNotEmpty;
   bool get isVoyageValid => voyage != null;
 }
