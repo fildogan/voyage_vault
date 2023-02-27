@@ -158,14 +158,15 @@ class __$$_AddVoyagerStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_AddVoyagerState implements _AddVoyagerState {
+class _$_AddVoyagerState extends _AddVoyagerState {
   _$_AddVoyagerState(
       {this.status = Status.initial,
       this.formStatus = FormStatus.initial,
       this.errorMessage,
       this.successMessage,
       this.voyagerName,
-      this.voyagerColor});
+      this.voyagerColor})
+      : super._();
 
   @override
   @JsonKey()
@@ -216,7 +217,7 @@ class _$_AddVoyagerState implements _AddVoyagerState {
       __$$_AddVoyagerStateCopyWithImpl<_$_AddVoyagerState>(this, _$identity);
 }
 
-abstract class _AddVoyagerState implements AddVoyagerState {
+abstract class _AddVoyagerState extends AddVoyagerState {
   factory _AddVoyagerState(
       {final Status status,
       final FormStatus formStatus,
@@ -224,6 +225,7 @@ abstract class _AddVoyagerState implements AddVoyagerState {
       final String? successMessage,
       final String? voyagerName,
       final Color? voyagerColor}) = _$_AddVoyagerState;
+  _AddVoyagerState._() : super._();
 
   @override
   Status get status;

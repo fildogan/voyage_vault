@@ -10,4 +10,9 @@ class AddVoyagerState with _$AddVoyagerState {
     String? voyagerName,
     Color? voyagerColor,
   }) = _AddVoyagerState;
+  const AddVoyagerState._();
+
+  bool get isNameValid =>
+      (voyagerName != null && (voyagerName ?? '').isNotEmpty);
+  bool get isColorValid => voyagerColor != null;
 }

@@ -14,6 +14,14 @@ class AddVoyagerCubit extends Cubit<AddVoyagerState> {
 
   final VoyagersRepository _voyagersRepository;
 
+  Future<void> start() async {
+    emit(state.copyWith(status: Status.loading));
+
+    await Future.delayed(const Duration(seconds: 3));
+
+    emit(state.copyWith(status: Status.success));
+  }
+
   Future<void> add() async {
     emit(state.copyWith(formStatus: FormStatus.submitting));
     if (state.voyagerName == null || state.voyagerColor == null) {
