@@ -4,6 +4,8 @@ import 'package:voyage_vault/app/core/enums.dart';
 import 'package:voyage_vault/app/injection_container.dart';
 import 'package:voyage_vault/components/add_edit_app_bar.dart';
 import 'package:voyage_vault/components/add_edit_form_body.dart';
+import 'package:voyage_vault/components/add_edit_listener.dart';
+import 'package:voyage_vault/components/status_switch_case.dart';
 import 'package:voyage_vault/domain/models/voyage_model.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:voyage_vault/features/home/pages/add_voyager/cubit/add_voyager_cubit.dart';
@@ -18,61 +20,38 @@ class AddVoyagerPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void Function()? saveVoyager;
     return BlocProvider<AddVoyagerCubit>(
-      create: (context) => getIt<AddVoyagerCubit>(),
-      child: BlocListener<AddVoyagerCubit, AddVoyagerState>(
+      create: (context) => getIt<AddVoyagerCubit>()..start(),
+      child: BlocConsumer<AddVoyagerCubit, AddVoyagerState>(
         listener: (context, state) {
-          if (state.formStatus == FormStatus.success) {
-            Navigator.of(context).pop();
-          }
-          if (state.errorMessage != null) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  state.errorMessage ?? 'Unknown error',
-                ),
-                backgroundColor: Colors.red,
-              ),
-            );
-          }
-          if (state.successMessage != null) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Row(
-                  children: [
-                    const Icon(Icons.done),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Text(state.successMessage ?? 'Success')
-                  ],
-                ),
-              ),
-            );
-          }
+          AddEditListener(
+            context: context,
+            formStatus: state.formStatus,
+            errorMessage: state.errorMessage,
+            successMessage: state.successMessage,
+          ).listen();
         },
-        child: BlocBuilder<AddVoyagerCubit, AddVoyagerState>(
-            builder: (context, state) {
-          saveVoyager = () => context.read<AddVoyagerCubit>().add();
-          // state.formStatus == FormStatus.initial
-          // ? () {
-          //TODO: Add validation on save
-          // if (formKey.currentState!.validate()) {
-          //   context.read<AddVoyagerCubit>().add();
-          // }
-          // }
-          // : null;
+        builder: (context, state) {
+          void Function()? saveVoyager;
+          saveVoyager = state.formStatus == FormStatus.initial
+              ? () {
+                  if (formKey.currentState!.validate()) {
+                    context.read<AddVoyagerCubit>().add();
+                  }
+                }
+              : null;
+
           return Scaffold(
               appBar: AddEditAppBar(
                 title: AppLocalizations.of(context).addVoyager,
                 saveAction: saveVoyager,
                 appBar: AppBar(),
+                formStatus: state.formStatus,
               ),
               body: _AddVoyagerPageBody(
                 formKey: formKey,
               ));
-        }),
+        },
       ),
     );
   }
@@ -91,12 +70,25 @@ class _AddVoyagerPageBody extends StatelessWidget {
       builder: (context, state) {
         Color dialogSelectColor = state.voyagerColor ?? Colors.transparent;
 
-        return SafeArea(
-          child: AddEditFormBody(
+        return StatusSwitchCase(
+          context: context,
+          status: state.status,
+          child: () => AddEditFormBody(
             formKey: formKey,
             children: [
               _nameField(),
+              // ColorPickerFormField(
+              //   context: context,
+              //   dialogSelectColor: dialogSelectColor,
+              //   initialValue: dialogSelectColor,
+              //   isColorValid: state.isColorValid,
+              // ),
               _colorPicker(context, dialogSelectColor),
+              // ElevatedButton(
+              //     onPressed: () {
+              //       print(state.voyagerColor);
+              //     },
+              //     child: Text('text'))
             ],
           ),
         );
@@ -104,8 +96,27 @@ class _AddVoyagerPageBody extends StatelessWidget {
     );
   }
 
+  Widget _nameField() {
+    return BlocBuilder<AddVoyagerCubit, AddVoyagerState>(
+      builder: (context, state) {
+        return TextFormField(
+          decoration: InputDecoration(
+            border: const UnderlineInputBorder(),
+            labelText: AppLocalizations.of(context).voyagerName,
+            contentPadding: const EdgeInsets.all(10),
+          ),
+          onChanged: (value) {
+            context.read<AddVoyagerCubit>().changeName(name: value);
+          },
+          validator: (value) => state.isNameValid
+              ? null
+              : AppLocalizations.of(context).pleaseEnterVoyagerName,
+        );
+      },
+    );
+  }
+
   ElevatedButton _colorPicker(BuildContext context, Color dialogSelectColor) {
-    // TODO: convert to formfield
     // TODO: add validation
     return ElevatedButton(
         onPressed: () async {
@@ -138,25 +149,61 @@ class _AddVoyagerPageBody extends StatelessWidget {
           ],
         ));
   }
+}
 
-  Widget _nameField() {
-    return BlocBuilder<AddVoyagerCubit, AddVoyagerState>(
-      builder: (context, state) {
-        return TextFormField(
-          decoration: InputDecoration(
-            border: const UnderlineInputBorder(),
-            labelText: AppLocalizations.of(context).voyagerName,
-            contentPadding: const EdgeInsets.all(10),
-          ),
-          onChanged: (value) {
-            context.read<AddVoyagerCubit>().changeName(name: value);
+class ColorPickerFormField extends FormField<Color?> {
+  ColorPickerFormField({
+    Key? key,
+    // FormFieldSetter<Color?>? onSaved,
+    FormFieldValidator<Color?>? validator,
+    Color? initialValue,
+    bool enabled = true,
+    required bool isColorValid,
+    required BuildContext context,
+    required Color dialogSelectColor,
+  }) : super(
+          key: key,
+          // onSaved: onSaved,
+          validator: (value) => isColorValid
+              ? null
+              : AppLocalizations.of(context).pleaseEnterVoyagerName,
+          initialValue: initialValue,
+          builder: (FormFieldState<Color?> state) {
+            return ElevatedButton(
+              onPressed: enabled
+                  ? () async {
+                      await showColorPickerDialog(
+                        context,
+                        dialogSelectColor,
+                        pickersEnabled: const <ColorPickerType, bool>{
+                          ColorPickerType.both: false,
+                          ColorPickerType.primary: true,
+                          ColorPickerType.accent: false,
+                          ColorPickerType.bw: false,
+                          ColorPickerType.custom: false,
+                          ColorPickerType.wheel: false,
+                        },
+                        enableShadesSelection: false,
+                      ).then((newColor) {
+                        context
+                            .read<AddVoyagerCubit>()
+                            .changeColor(color: newColor);
+                        return null;
+                      });
+                    }
+                  : null,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Pick color'),
+                  ColorIndicator(
+                    height: 30,
+                    width: 30,
+                    color: state.value ?? Colors.white,
+                  ),
+                ],
+              ),
+            );
           },
-          // TODO: add validator
-          // validator: (value) => state.isNameValid
-          //     ? null
-          //     : AppLocalizations.of(context).pleaseEnterVoyagerName,
         );
-      },
-    );
-  }
 }
