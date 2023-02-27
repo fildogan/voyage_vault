@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:voyage_vault/app/injection_container.dart';
+import 'package:voyage_vault/domain/models/expense_model.dart';
 import 'package:voyage_vault/domain/models/voyage_model.dart';
+import 'package:voyage_vault/domain/models/voyager_model.dart';
 import 'package:voyage_vault/features/global_widgets/confirm_delete_alert_dialog.dart';
 import 'package:voyage_vault/features/global_widgets/slidable/slidable_action_delete.dart';
 import 'package:voyage_vault/features/global_widgets/slidable/slidable_action_edit.dart';
@@ -147,110 +149,8 @@ class VoyageDetailsPage extends StatelessWidget {
                           ))
                         else
                           for (final expenseModel in expenseModels)
-                            Slidable(
-                              key: ValueKey(expenseModel.id),
-                              endActionPane: ActionPane(
-                                motion: const StretchMotion(),
-                                dismissible: DismissiblePane(
-                                  onDismissed: () {
-                                    context
-                                        .read<VoyageDetailsCubit>()
-                                        .remove(
-                                          expenseId: expenseModel.id,
-                                        )
-                                        .then((value) => context
-                                            .read<VoyageDetailsCubit>()
-                                            .refreshVoyage(
-                                                currentVoyageModel.id));
-                                  },
-                                  closeOnCancel: true,
-                                  confirmDismiss: () async {
-                                    bool result = await showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return ConfirmDeleteAlertDialog(
-                                          title:
-                                              'Delete expense ${expenseModel.name}?',
-                                          content:
-                                              'If you continue, this expense will be permanently deleted. This action is irreversible.',
-                                        );
-                                      },
-                                    );
-                                    return result;
-                                  },
-                                ),
-                                children: [
-                                  SlidableActionEdit(
-                                    onPressed: (context) {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  EditExpensePage(
-                                                    expenseModel: expenseModel,
-                                                    voyageModel:
-                                                        currentVoyageModel,
-                                                  )));
-                                    },
-                                  ),
-                                  SlidableActionDelete(
-                                    onPressed: (context) {
-                                      context
-                                          .read<VoyageDetailsCubit>()
-                                          .remove(
-                                            expenseId: expenseModel.id,
-                                          )
-                                          .then((value) => context
-                                              .read<VoyageDetailsCubit>()
-                                              .refreshVoyage(
-                                                  currentVoyageModel.id));
-                                    },
-                                  ),
-                                ],
-                              ),
-                              child: SizedBox(
-                                width: double.infinity,
-                                child: SizedBox(
-                                  width: double.infinity,
-                                  // color: Colors.black12,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 15, vertical: 8),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                                '${AppLocalizations.of(context).expense}: ${expenseModel.name}'),
-                                            Text(
-                                                '${AppLocalizations.of(context).amount}: ${expenseModel.price.toString()}'),
-                                            Text(
-                                                '${AppLocalizations.of(context).category}: ${expenseModel.category}'),
-                                            Text(
-                                                '${AppLocalizations.of(context).dateAdded}: ${expenseModel.dateAddedFormated()}'),
-                                          ],
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 15),
-                                        child: Container(
-                                          decoration: const BoxDecoration(
-                                            border: Border(
-                                              bottom: BorderSide(
-                                                  color: Colors.black38),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
+                            expenseModelSlidable(expenseModel, context,
+                                state.voyagers, currentVoyageModel),
                       ],
                     ),
                   ),
@@ -261,5 +161,145 @@ class VoyageDetailsPage extends StatelessWidget {
         },
       ),
     );
+  }
+
+  Widget expenseModelSlidable(ExpenseModel expenseModel, BuildContext context,
+      List<VoyagerModel> voyagers, VoyageModel currentVoyageModel) {
+    final voyager = getVoyagerById(expenseModel.voyagerId, voyagers);
+
+    return InkWell(
+      onTap: () {
+        print(voyager);
+        print(expenseModel.voyagerId);
+      },
+      child: Slidable(
+        key: ValueKey(expenseModel.id),
+        endActionPane: ActionPane(
+          motion: const StretchMotion(),
+          dismissible: DismissiblePane(
+            onDismissed: () {
+              context
+                  .read<VoyageDetailsCubit>()
+                  .remove(
+                    expenseId: expenseModel.id,
+                  )
+                  .then((value) => context
+                      .read<VoyageDetailsCubit>()
+                      .refreshVoyage(currentVoyageModel.id));
+            },
+            closeOnCancel: true,
+            confirmDismiss: () async {
+              bool result = await showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return ConfirmDeleteAlertDialog(
+                    title: 'Delete expense ${expenseModel.name}?',
+                    content:
+                        'If you continue, this expense will be permanently deleted. This action is irreversible.',
+                  );
+                },
+              );
+              return result;
+            },
+          ),
+          children: [
+            SlidableActionEdit(
+              onPressed: (context) {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => EditExpensePage(
+                          expenseModel: expenseModel,
+                          voyageModel: currentVoyageModel,
+                        )));
+              },
+            ),
+            SlidableActionDelete(
+              onPressed: (context) {
+                context
+                    .read<VoyageDetailsCubit>()
+                    .remove(
+                      expenseId: expenseModel.id,
+                    )
+                    .then((value) => context
+                        .read<VoyageDetailsCubit>()
+                        .refreshVoyage(currentVoyageModel.id));
+              },
+            ),
+          ],
+        ),
+        child: SizedBox(
+          width: double.infinity,
+          child: SizedBox(
+            width: double.infinity,
+            // color: Colors.black12,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                          '${AppLocalizations.of(context).expense}: ${expenseModel.name}'),
+                      Text(
+                          '${AppLocalizations.of(context).amount}: ${expenseModel.price.toString()}'),
+                      Text(
+                          '${AppLocalizations.of(context).category}: ${expenseModel.category}'),
+                      Text(
+                          '${AppLocalizations.of(context).dateAdded}: ${expenseModel.dateAddedFormated()}'),
+                      if (voyager != null)
+                        Row(
+                          children: [
+                            Text(
+                                '${AppLocalizations.of(context).voyager}: ${voyager.name}'),
+                            Icon(
+                              Icons.person,
+                              color: voyager.color,
+                            )
+                          ],
+                        )
+                      else
+                        Row(
+                          children: [
+                            Text(
+                                //TODO: add unassigned translation
+                                '${AppLocalizations.of(context).voyager}: Unassigned'),
+                            const Icon(
+                              Icons.person_off,
+                            )
+                          ],
+                        ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(color: Colors.black38),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  VoyagerModel? getVoyagerById(String? id, List<VoyagerModel>? voyagers) {
+    if (id == null || voyagers == null || voyagers.isEmpty) {
+      return null;
+    }
+    try {
+      return voyagers.firstWhere((voyager) => voyager.id == id);
+    } catch (e) {
+      // Handle the case where no matching voyager is found
+      return null;
+    }
   }
 }

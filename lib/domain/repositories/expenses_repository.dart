@@ -26,18 +26,22 @@ class ExpensesRepository {
             category: doc['category'].toString(),
             price: double.parse(doc['price'].toString()),
             dateAdded: (doc['dateadded'] as Timestamp).toDate(),
+            voyagerId: doc.data().toString().contains('voyagerid')
+                ? doc['voyagerid'].toString()
+                : null,
           );
         }).toList();
       },
     );
   }
 
-  Future<void> add(
-    String name,
-    String voyageId,
-    double price,
-    String category,
-  ) async {
+  Future<void> add({
+    required String name,
+    required String voyageId,
+    required double price,
+    required String category,
+    required String voyagerId,
+  }) async {
     final userID = FirebaseAuth.instance.currentUser?.uid;
     if (userID == null) {
       throw Exception('User is not logged in');
@@ -52,6 +56,7 @@ class ExpensesRepository {
       'price': price,
       'category': category,
       'dateadded': DateTime.now(),
+      'voyagerid': voyagerId,
     });
   }
 

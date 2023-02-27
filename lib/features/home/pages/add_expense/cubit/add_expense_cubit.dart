@@ -32,16 +32,25 @@ class AddExpenseCubit extends Cubit<AddExpenseState> {
     emit(state.copyWith(
         voyage: voyageModel, voyagerIdList: voyageModel?.voyagers ?? []));
     await getVoyagesStream();
-    await getVoyagerStream();
+    if (state.voyage != null) {
+      await getVoyagerStream();
+    }
     emit(state.copyWith(status: Status.success));
   }
 
   Future<void> add() async {
     emit(state.copyWith(formStatus: FormStatus.submitting));
     try {
-      if (state.voyage != null && state.category != null) {
+      if (state.voyage != null &&
+          state.category != null &&
+          state.voyager != null) {
         await _expensesRepository.add(
-            state.name, state.voyage!.id, state.price, state.category!);
+          name: state.name,
+          voyageId: state.voyage!.id,
+          price: state.price,
+          category: state.category!,
+          voyagerId: state.voyager!.id,
+        );
         emit(state.copyWith(
             formStatus: FormStatus.success,
             successMessage: '${state.name} added'));

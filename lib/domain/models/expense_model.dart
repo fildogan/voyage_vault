@@ -14,6 +14,7 @@ class ExpenseModel with _$ExpenseModel {
     required String category,
     required double price,
     required DateTime dateAdded,
+    String? voyagerId,
   }) = _ExpenseModel;
   const ExpenseModel._();
 

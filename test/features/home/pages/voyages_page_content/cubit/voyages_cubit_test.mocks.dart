@@ -172,21 +172,24 @@ class MockExpensesRepository extends _i1.Mock
         returnValueForMissingStub: _i4.Stream<List<_i6.ExpenseModel>>.empty(),
       ) as _i4.Stream<List<_i6.ExpenseModel>>);
   @override
-  _i4.Future<void> add(
-    String? name,
-    String? voyageId,
-    double? price,
-    String? category,
-  ) =>
+  _i4.Future<void> add({
+    required String? name,
+    required String? voyageId,
+    required double? price,
+    required String? category,
+    required String? voyagerId,
+  }) =>
       (super.noSuchMethod(
         Invocation.method(
           #add,
-          [
-            name,
-            voyageId,
-            price,
-            category,
-          ],
+          [],
+          {
+            #name: name,
+            #voyageId: voyageId,
+            #price: price,
+            #category: category,
+            #voyagerId: voyagerId,
+          },
         ),
         returnValue: _i4.Future<void>.value(),
         returnValueForMissingStub: _i4.Future<void>.value(),

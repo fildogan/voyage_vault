@@ -22,6 +22,7 @@ mixin _$ExpenseModel {
   String get category => throw _privateConstructorUsedError;
   double get price => throw _privateConstructorUsedError;
   DateTime get dateAdded => throw _privateConstructorUsedError;
+  String? get voyagerId => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ExpenseModelCopyWith<ExpenseModel> get copyWith =>
@@ -40,7 +41,8 @@ abstract class $ExpenseModelCopyWith<$Res> {
       String name,
       String category,
       double price,
-      DateTime dateAdded});
+      DateTime dateAdded,
+      String? voyagerId});
 }
 
 /// @nodoc
@@ -62,6 +64,7 @@ class _$ExpenseModelCopyWithImpl<$Res, $Val extends ExpenseModel>
     Object? category = null,
     Object? price = null,
     Object? dateAdded = null,
+    Object? voyagerId = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -88,6 +91,10 @@ class _$ExpenseModelCopyWithImpl<$Res, $Val extends ExpenseModel>
           ? _value.dateAdded
           : dateAdded // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      voyagerId: freezed == voyagerId
+          ? _value.voyagerId
+          : voyagerId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -106,7 +113,8 @@ abstract class _$$_ExpenseModelCopyWith<$Res>
       String name,
       String category,
       double price,
-      DateTime dateAdded});
+      DateTime dateAdded,
+      String? voyagerId});
 }
 
 /// @nodoc
@@ -126,6 +134,7 @@ class __$$_ExpenseModelCopyWithImpl<$Res>
     Object? category = null,
     Object? price = null,
     Object? dateAdded = null,
+    Object? voyagerId = freezed,
   }) {
     return _then(_$_ExpenseModel(
       id: null == id
@@ -152,6 +161,10 @@ class __$$_ExpenseModelCopyWithImpl<$Res>
           ? _value.dateAdded
           : dateAdded // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      voyagerId: freezed == voyagerId
+          ? _value.voyagerId
+          : voyagerId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -165,7 +178,8 @@ class _$_ExpenseModel extends _ExpenseModel {
       required this.name,
       required this.category,
       required this.price,
-      required this.dateAdded})
+      required this.dateAdded,
+      this.voyagerId})
       : super._();
 
   @override
@@ -180,10 +194,12 @@ class _$_ExpenseModel extends _ExpenseModel {
   final double price;
   @override
   final DateTime dateAdded;
+  @override
+  final String? voyagerId;
 
   @override
   String toString() {
-    return 'ExpenseModel(id: $id, voyageId: $voyageId, name: $name, category: $category, price: $price, dateAdded: $dateAdded)';
+    return 'ExpenseModel(id: $id, voyageId: $voyageId, name: $name, category: $category, price: $price, dateAdded: $dateAdded, voyagerId: $voyagerId)';
   }
 
   @override
@@ -199,12 +215,14 @@ class _$_ExpenseModel extends _ExpenseModel {
                 other.category == category) &&
             (identical(other.price, price) || other.price == price) &&
             (identical(other.dateAdded, dateAdded) ||
-                other.dateAdded == dateAdded));
+                other.dateAdded == dateAdded) &&
+            (identical(other.voyagerId, voyagerId) ||
+                other.voyagerId == voyagerId));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, voyageId, name, category, price, dateAdded);
+  int get hashCode => Object.hash(
+      runtimeType, id, voyageId, name, category, price, dateAdded, voyagerId);
 
   @JsonKey(ignore: true)
   @override
@@ -220,7 +238,8 @@ abstract class _ExpenseModel extends ExpenseModel {
       required final String name,
       required final String category,
       required final double price,
-      required final DateTime dateAdded}) = _$_ExpenseModel;
+      required final DateTime dateAdded,
+      final String? voyagerId}) = _$_ExpenseModel;
   const _ExpenseModel._() : super._();
 
   @override
@@ -235,6 +254,8 @@ abstract class _ExpenseModel extends ExpenseModel {
   double get price;
   @override
   DateTime get dateAdded;
+  @override
+  String? get voyagerId;
   @override
   @JsonKey(ignore: true)
   _$$_ExpenseModelCopyWith<_$_ExpenseModel> get copyWith =>
