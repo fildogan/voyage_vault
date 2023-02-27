@@ -3,7 +3,7 @@ import 'package:voyage_vault/app/core/enums.dart';
 
 class StatusSwitchCase extends StatelessWidget {
   final BuildContext context;
-  final Widget Function() buildBody;
+  final Widget Function() child;
   final Status status;
   final bool? ifCheck;
   final String? ifTrueMessage;
@@ -12,7 +12,7 @@ class StatusSwitchCase extends StatelessWidget {
   const StatusSwitchCase({
     Key? key,
     required this.context,
-    required this.buildBody,
+    required this.child,
     required this.status,
     this.ifCheck,
     this.ifTrueMessage,
@@ -38,7 +38,7 @@ class StatusSwitchCase extends StatelessWidget {
           );
         }
         return SafeArea(
-          child: buildBody(),
+          child: child(),
         );
       case Status.error:
         return Center(

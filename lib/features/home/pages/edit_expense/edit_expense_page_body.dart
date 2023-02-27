@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:voyage_vault/components/add_edit_form_body.dart';
+import 'package:voyage_vault/components/status_switch_case.dart';
 import 'package:voyage_vault/components/text_form_field_decoration.dart';
 import 'package:voyage_vault/domain/models/expense_model.dart';
 import 'package:voyage_vault/domain/models/voyage_model.dart';
@@ -24,19 +25,26 @@ class EditExpensePageBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: AddEditFormBody(
-        formKey: formKey,
-        children: [
-          _nameField(),
-          _priceField(),
-          _dateField(),
-          _categoryField(),
-          // _voyageField(),
-          voyageField(),
-          voyagerField(),
-        ],
-      ),
+    return BlocBuilder<EditExpenseCubit, EditExpenseState>(
+      builder: (context, state) {
+        return StatusSwitchCase(
+            context: context,
+            child: () => AddEditFormBody(
+                  formKey: formKey,
+                  children: [
+                    _nameField(),
+                    _priceField(),
+                    _dateField(),
+                    _categoryField(),
+                    voyageField(),
+                    voyagerField(),
+                  ],
+                ),
+            status: state.status,
+            ifCheck: state.voyages.isEmpty,
+            ifTrueMessage: 'No voyages found',
+            errorMessage: state.errorMessage);
+      },
     );
   }
 

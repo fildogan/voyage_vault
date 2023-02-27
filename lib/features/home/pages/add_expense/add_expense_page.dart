@@ -71,26 +71,23 @@ class _AddExpensePageBody extends StatelessWidget {
     return BlocBuilder<AddExpenseCubit, AddExpenseState>(
       builder: (context, state) {
         return StatusSwitchCase(
-            context: context,
-            buildBody: _buildAddEditFormBody,
-            status: state.status,
-            ifCheck: state.voyages.isEmpty,
-            ifTrueMessage: 'No voyages found',
-            errorMessage: state.errorMessage);
+          context: context,
+          status: state.status,
+          ifCheck: state.voyages.isEmpty,
+          ifTrueMessage: 'No voyages found',
+          errorMessage: state.errorMessage,
+          child: () => AddEditFormBody(
+            formKey: formKey,
+            children: [
+              nameField(),
+              priceField(),
+              categoryField(),
+              voyageField(),
+              voyagerField(),
+            ],
+          ),
+        );
       },
-    );
-  }
-
-  Widget _buildAddEditFormBody() {
-    return AddEditFormBody(
-      formKey: formKey,
-      children: [
-        nameField(),
-        priceField(),
-        categoryField(),
-        voyageField(),
-        voyagerField(),
-      ],
     );
   }
 

@@ -44,7 +44,6 @@ class EditExpenseCubit extends Cubit<EditExpenseState> {
     await getVoyagesStream();
     await getVoyagerStream();
     emit(state.copyWith(status: Status.success));
-    await setVoyager2();
   }
 
   Future<void> getVoyagesStream() async {
@@ -56,7 +55,6 @@ class EditExpenseCubit extends Cubit<EditExpenseState> {
     _streamSubscription = _voyagesRepository.getVoyagesStream().listen(
           (voyages) => emit(
             state.copyWith(
-              status: Status.success,
               voyages: voyages,
             ),
           ),
@@ -102,7 +100,7 @@ class EditExpenseCubit extends Cubit<EditExpenseState> {
     emit(
       state.copyWith(
         voyager: voyagerModel,
-        initialVoyagerId: voyagerModel?.id ?? '',
+        // initialVoyagerId: voyagerModel?.id ?? '',
         expenseId: expenseModel.id,
         name: expenseModel.name,
         price: expenseModel.price,
@@ -114,27 +112,6 @@ class EditExpenseCubit extends Cubit<EditExpenseState> {
         voyagerIdList: voyageModel.voyagers ?? [],
       ),
     );
-  }
-
-  Future<void> setVoyager() async {
-    for (var v in state.voyagers) {
-      if (v.id == state.initialVoyagerId) {
-        emit(state.copyWith(voyager: v));
-        return;
-      }
-    }
-    // If the function reaches this point, no Voyager was found with the given ID
-    // emit(state.copyWith(voyager: null));
-  }
-
-  Future<void> setVoyager2() async {
-    final List<VoyagerModel> voyagers = state.voyagers;
-    final String? initialVoyagerId = state.expense?.voyagerId;
-
-    emit(state.copyWith(
-        voyager: (voyagers.isNotEmpty && initialVoyagerId != null)
-            ? voyagers.firstWhere((voyager) => voyager.id == initialVoyagerId)
-            : null));
   }
 
   Future<void> update() async {

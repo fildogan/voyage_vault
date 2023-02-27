@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:voyage_vault/app/core/enums.dart';
 import 'package:voyage_vault/app/injection_container.dart';
-import 'package:voyage_vault/components/save_app_bar_button.dart';
+import 'package:voyage_vault/components/add_edit_app_bar.dart';
 import 'package:voyage_vault/domain/models/expense_model.dart';
 import 'package:voyage_vault/domain/models/voyage_model.dart';
 import 'package:voyage_vault/domain/models/voyager_model.dart';
@@ -26,6 +26,8 @@ class EditExpensePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    late void Function() saveExpense;
+
     return BlocProvider<EditExpenseCubit>(
       create: (context) => getIt<EditExpenseCubit>()
         ..start(
@@ -60,14 +62,17 @@ class EditExpensePage extends StatelessWidget {
         },
         child: BlocBuilder<EditExpenseCubit, EditExpenseState>(
           builder: (context, state) {
+            saveExpense = (() {
+              if (formKey.currentState!.validate()) {
+                context.read<EditExpenseCubit>().update();
+              }
+            });
             return Scaffold(
-              appBar: AppBar(
-                backgroundColor: Colors.transparent,
-                title: Text(AppLocalizations.of(context).editExpense),
-                actions: [
-                  _saveButton(context),
-                ],
-                // automaticallyImplyLeading: false,
+              appBar: AddEditAppBar(
+                saveAction: saveExpense,
+                appBar: AppBar(),
+                title: AppLocalizations.of(context).editExpense,
+                formStatus: state.formStatus,
               ),
               body: EditExpensePageBody(
                 formKey: formKey,
@@ -77,22 +82,6 @@ class EditExpensePage extends StatelessWidget {
           },
         ),
       ),
-    );
-  }
-
-  Widget _saveButton(BuildContext context) {
-    return BlocBuilder<EditExpenseCubit, EditExpenseState>(
-      builder: (context, state) {
-        return SaveAppBarButton(
-          onPressed: state.formStatus == FormStatus.submitting
-              ? null
-              : () {
-                  if (formKey.currentState!.validate()) {
-                    context.read<EditExpenseCubit>().update();
-                  }
-                },
-        );
-      },
     );
   }
 }
