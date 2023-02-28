@@ -37,12 +37,11 @@ import 'package:voyage_vault/features/home/pages/settings/pages/cubit/voyager_li
 import 'package:voyage_vault/features/home/pages/voyage_details/cubit/voyage_details_cubit.dart'
     as _i15;
 import 'package:voyage_vault/features/home/pages/voyages_page_content/cubit/voyages_cubit.dart'
-    as _i17;
+    as _i17; // ignore_for_file: unnecessary_lambdas
 
-/// ignore_for_file: unnecessary_lambdas
-/// ignore_for_file: lines_longer_than_80_chars
+// ignore_for_file: lines_longer_than_80_chars
 extension GetItInjectableX on _i1.GetIt {
-  /// initializes the registration of main-scope dependencies inside of [GetIt]
+  // initializes the registration of main-scope dependencies inside of GetIt
   _i1.GetIt init({
     String? environment,
     _i2.EnvironmentFilter? environmentFilter,

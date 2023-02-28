@@ -115,7 +115,8 @@ class EditExpenseCubit extends Cubit<EditExpenseState> {
   }
 
   Future<void> update() async {
-    emit(state.copyWith(formStatus: FormStatus.submitting));
+    emit(state.copyWith(
+        formStatus: FormStatus.submitting, status: Status.loading));
     try {
       if (state.voyage != null && state.voyager != null) {
         await _expensesRepository.update(

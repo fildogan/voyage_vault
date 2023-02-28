@@ -39,7 +39,8 @@ class AddExpenseCubit extends Cubit<AddExpenseState> {
   }
 
   Future<void> add() async {
-    emit(state.copyWith(formStatus: FormStatus.submitting));
+    emit(state.copyWith(
+        formStatus: FormStatus.submitting, status: Status.loading));
     try {
       if (state.voyage != null &&
           state.category != null &&
@@ -58,6 +59,7 @@ class AddExpenseCubit extends Cubit<AddExpenseState> {
     } catch (error) {
       emit(
         AddExpenseState(
+          formStatus: FormStatus.error,
           status: Status.error,
           errorMessage: error.toString(),
         ),

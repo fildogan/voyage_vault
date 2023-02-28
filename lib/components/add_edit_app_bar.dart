@@ -20,7 +20,7 @@ class AddEditAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.pink,
+      backgroundColor: Colors.transparent,
       title: AutoSizeText(
         title,
         maxLines: 1,

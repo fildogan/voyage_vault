@@ -48,8 +48,10 @@ class VoyagesCubit extends Cubit<VoyagesState> {
   Future<void> remove({
     required String voyageId,
   }) async {
+    emit(state.copyWith(status: Status.loading));
     try {
       await _voyagesRepository.remove(id: voyageId);
+      emit(state.copyWith(status: Status.success));
     } catch (error) {
       emit(
         VoyagesState(

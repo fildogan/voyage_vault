@@ -74,7 +74,7 @@ class _AddExpensePageBody extends StatelessWidget {
           context: context,
           status: state.status,
           ifCheck: state.voyages.isEmpty,
-          ifTrueMessage: 'No voyages found',
+          ifTrueMessage: 'No voyages found, add a voyage first',
           errorMessage: state.errorMessage,
           child: () => AddEditFormBody(
             formKey: formKey,
