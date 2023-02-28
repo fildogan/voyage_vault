@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:voyage_vault/app/injection_container.dart';
+import 'package:voyage_vault/components/status_switch_case.dart';
 import 'package:voyage_vault/domain/models/expense_model.dart';
 import 'package:voyage_vault/domain/models/voyage_model.dart';
 import 'package:voyage_vault/domain/models/voyager_model.dart';
@@ -68,8 +69,13 @@ class VoyageDetailsPage extends StatelessWidget {
               ),
               child: const Icon(Icons.add),
             ),
-            body: SafeArea(
-              child: Column(
+            body: StatusSwitchCase(
+              context: context,
+              status: state.status,
+              // ifCheck: state.expenses.isEmpty,
+              // ifTrueMessage: 'No expenses found',
+              errorMessage: state.errorMessage,
+              child: () => Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
@@ -153,6 +159,15 @@ class VoyageDetailsPage extends StatelessWidget {
                                 state.voyagers, currentVoyageModel),
                       ],
                     ),
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: voyagers.map((voyager) {
+                      double total =
+                          getExpensesTotalForVoyager(voyager, expenseModels);
+                      return Text(
+                          'Total expenses for ${voyager.name}: \$$total');
+                    }).toList(),
                   ),
                 ],
               ),
@@ -303,4 +318,15 @@ class VoyageDetailsPage extends StatelessWidget {
       return null;
     }
   }
+}
+
+double getExpensesTotalForVoyager(
+    VoyagerModel voyager, List<ExpenseModel> expenses) {
+  double total = 0;
+  for (ExpenseModel expense in expenses) {
+    if (expense.voyagerId == voyager.id) {
+      total += expense.price;
+    }
+  }
+  return total;
 }
