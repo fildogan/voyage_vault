@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$AddVoyagerState {
   Status get status => throw _privateConstructorUsedError;
   FormStatus get formStatus => throw _privateConstructorUsedError;
+  List<VoyagerModel> get voyagers => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
   String? get successMessage => throw _privateConstructorUsedError;
   String? get voyagerName => throw _privateConstructorUsedError;
@@ -37,6 +38,7 @@ abstract class $AddVoyagerStateCopyWith<$Res> {
   $Res call(
       {Status status,
       FormStatus formStatus,
+      List<VoyagerModel> voyagers,
       String? errorMessage,
       String? successMessage,
       String? voyagerName,
@@ -58,6 +60,7 @@ class _$AddVoyagerStateCopyWithImpl<$Res, $Val extends AddVoyagerState>
   $Res call({
     Object? status = null,
     Object? formStatus = null,
+    Object? voyagers = null,
     Object? errorMessage = freezed,
     Object? successMessage = freezed,
     Object? voyagerName = freezed,
@@ -72,6 +75,10 @@ class _$AddVoyagerStateCopyWithImpl<$Res, $Val extends AddVoyagerState>
           ? _value.formStatus
           : formStatus // ignore: cast_nullable_to_non_nullable
               as FormStatus,
+      voyagers: null == voyagers
+          ? _value.voyagers
+          : voyagers // ignore: cast_nullable_to_non_nullable
+              as List<VoyagerModel>,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
@@ -103,6 +110,7 @@ abstract class _$$_AddVoyagerStateCopyWith<$Res>
   $Res call(
       {Status status,
       FormStatus formStatus,
+      List<VoyagerModel> voyagers,
       String? errorMessage,
       String? successMessage,
       String? voyagerName,
@@ -122,6 +130,7 @@ class __$$_AddVoyagerStateCopyWithImpl<$Res>
   $Res call({
     Object? status = null,
     Object? formStatus = null,
+    Object? voyagers = null,
     Object? errorMessage = freezed,
     Object? successMessage = freezed,
     Object? voyagerName = freezed,
@@ -136,6 +145,10 @@ class __$$_AddVoyagerStateCopyWithImpl<$Res>
           ? _value.formStatus
           : formStatus // ignore: cast_nullable_to_non_nullable
               as FormStatus,
+      voyagers: null == voyagers
+          ? _value._voyagers
+          : voyagers // ignore: cast_nullable_to_non_nullable
+              as List<VoyagerModel>,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
@@ -162,11 +175,13 @@ class _$_AddVoyagerState extends _AddVoyagerState {
   _$_AddVoyagerState(
       {this.status = Status.initial,
       this.formStatus = FormStatus.initial,
+      final List<VoyagerModel> voyagers = const [],
       this.errorMessage,
       this.successMessage,
       this.voyagerName,
       this.voyagerColor})
-      : super._();
+      : _voyagers = voyagers,
+        super._();
 
   @override
   @JsonKey()
@@ -174,6 +189,15 @@ class _$_AddVoyagerState extends _AddVoyagerState {
   @override
   @JsonKey()
   final FormStatus formStatus;
+  final List<VoyagerModel> _voyagers;
+  @override
+  @JsonKey()
+  List<VoyagerModel> get voyagers {
+    if (_voyagers is EqualUnmodifiableListView) return _voyagers;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_voyagers);
+  }
+
   @override
   final String? errorMessage;
   @override
@@ -185,7 +209,7 @@ class _$_AddVoyagerState extends _AddVoyagerState {
 
   @override
   String toString() {
-    return 'AddVoyagerState(status: $status, formStatus: $formStatus, errorMessage: $errorMessage, successMessage: $successMessage, voyagerName: $voyagerName, voyagerColor: $voyagerColor)';
+    return 'AddVoyagerState(status: $status, formStatus: $formStatus, voyagers: $voyagers, errorMessage: $errorMessage, successMessage: $successMessage, voyagerName: $voyagerName, voyagerColor: $voyagerColor)';
   }
 
   @override
@@ -196,6 +220,7 @@ class _$_AddVoyagerState extends _AddVoyagerState {
             (identical(other.status, status) || other.status == status) &&
             (identical(other.formStatus, formStatus) ||
                 other.formStatus == formStatus) &&
+            const DeepCollectionEquality().equals(other._voyagers, _voyagers) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage) &&
             (identical(other.successMessage, successMessage) ||
@@ -207,8 +232,15 @@ class _$_AddVoyagerState extends _AddVoyagerState {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, status, formStatus, errorMessage,
-      successMessage, voyagerName, voyagerColor);
+  int get hashCode => Object.hash(
+      runtimeType,
+      status,
+      formStatus,
+      const DeepCollectionEquality().hash(_voyagers),
+      errorMessage,
+      successMessage,
+      voyagerName,
+      voyagerColor);
 
   @JsonKey(ignore: true)
   @override
@@ -221,6 +253,7 @@ abstract class _AddVoyagerState extends AddVoyagerState {
   factory _AddVoyagerState(
       {final Status status,
       final FormStatus formStatus,
+      final List<VoyagerModel> voyagers,
       final String? errorMessage,
       final String? successMessage,
       final String? voyagerName,
@@ -231,6 +264,8 @@ abstract class _AddVoyagerState extends AddVoyagerState {
   Status get status;
   @override
   FormStatus get formStatus;
+  @override
+  List<VoyagerModel> get voyagers;
   @override
   String? get errorMessage;
   @override

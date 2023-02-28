@@ -5,6 +5,7 @@ class AddVoyagerState with _$AddVoyagerState {
   factory AddVoyagerState({
     @Default(Status.initial) Status status,
     @Default(FormStatus.initial) FormStatus formStatus,
+    @Default([]) List<VoyagerModel> voyagers,
     String? errorMessage,
     String? successMessage,
     String? voyagerName,
@@ -15,4 +16,7 @@ class AddVoyagerState with _$AddVoyagerState {
   bool get isNameValid =>
       (voyagerName != null && (voyagerName ?? '').isNotEmpty);
   bool get isColorValid => voyagerColor != null;
+  bool get doesNameExist => (voyagers
+      .map((i) => i.name.toLowerCase())
+      .contains(voyagerName?.toLowerCase()));
 }

@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:voyage_vault/app/core/enums.dart';
+import 'package:voyage_vault/domain/models/voyager_model.dart';
 import 'package:voyage_vault/domain/repositories/voyager_repository.dart';
 
 part 'add_voyager_state.dart';
@@ -10,14 +13,19 @@ part 'add_voyager_cubit.freezed.dart';
 
 @injectable
 class AddVoyagerCubit extends Cubit<AddVoyagerState> {
-  AddVoyagerCubit(this._voyagersRepository) : super(AddVoyagerState());
+  AddVoyagerCubit(
+    this._voyagersRepository,
+  ) : super(AddVoyagerState());
 
   final VoyagersRepository _voyagersRepository;
+
+  StreamSubscription? _streamSubscription;
 
   Future<void> start() async {
     emit(state.copyWith(status: Status.loading));
 
-    await Future.delayed(const Duration(seconds: 3));
+    // await Future.delayed(const Duration(seconds: 1));
+    await getVoyagersStream();
 
     emit(state.copyWith(status: Status.success));
   }
@@ -36,6 +44,28 @@ class AddVoyagerCubit extends Cubit<AddVoyagerState> {
     }
   }
 
+  Future<void> getVoyagersStream() async {
+    emit(
+      state.copyWith(
+        status: Status.loading,
+      ),
+    );
+    _streamSubscription = _voyagersRepository.getVoyagersStream().listen(
+          (voyagers) => emit(
+            state.copyWith(
+              voyagers: voyagers,
+            ),
+          ),
+        )..onError(
+        (error) => emit(
+          AddVoyagerState(
+            status: Status.error,
+            errorMessage: error.toString(),
+          ),
+        ),
+      );
+  }
+
   Future<void> changeName({
     required String name,
   }) async {
@@ -46,5 +76,11 @@ class AddVoyagerCubit extends Cubit<AddVoyagerState> {
     required Color color,
   }) async {
     emit(state.copyWith(voyagerColor: color));
+  }
+
+  @override
+  Future<void> close() {
+    _streamSubscription?.cancel();
+    return super.close();
   }
 }
