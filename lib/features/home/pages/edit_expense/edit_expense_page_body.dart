@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:voyage_vault/components/add_edit_form_body.dart';
 import 'package:voyage_vault/components/status_switch_case.dart';
-import 'package:voyage_vault/components/text_form_field_decoration.dart';
+import 'package:voyage_vault/components/form_field_decoration.dart';
 import 'package:voyage_vault/domain/models/expense_model.dart';
 import 'package:voyage_vault/domain/models/voyage_model.dart';
 import 'package:voyage_vault/domain/models/voyager_model.dart';
@@ -151,7 +151,7 @@ class EditExpensePageBody extends StatelessWidget {
       builder: (context, state) {
         return DropdownButtonFormField<VoyageModel>(
           value: state.voyage,
-          decoration: textFormFieldDecoration(
+          decoration: formFieldDecoration(
             context,
             labelText: AppLocalizations.of(context).voyage,
           ),
@@ -184,7 +184,7 @@ class EditExpensePageBody extends StatelessWidget {
           ignoring: state.voyage == null,
           child: DropdownButtonFormField<VoyagerModel>(
             value: state.voyager,
-            decoration: textFormFieldDecoration(context,
+            decoration: formFieldDecoration(context,
                 labelText: AppLocalizations.of(context).voyager,
                 enabled: state.voyage != null),
             items: (state.voyage == null ||

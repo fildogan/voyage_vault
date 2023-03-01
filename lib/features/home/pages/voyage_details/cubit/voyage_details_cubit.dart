@@ -29,6 +29,11 @@ class VoyageDetailsCubit extends Cubit<VoyageDetailsState> {
   StreamSubscription? _streamSubscription;
 
   Future<void> refreshVoyage(String voyageId) async {
+    emit(
+      state.copyWith(
+        status: Status.loading,
+      ),
+    );
     await getVoyageWithId(voyageId);
     getVoyagerModelStream();
     getExpensesStreamByVoyageId(voyageId);

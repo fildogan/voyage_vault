@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
-InputDecoration textFormFieldDecoration(BuildContext context,
-    {required String labelText, bool? enabled}) {
+InputDecoration formFieldDecoration(BuildContext context,
+    {required String labelText, bool? enabled, Widget? suffix}) {
   return InputDecoration(
+      suffix: suffix,
       border: const UnderlineInputBorder(),
       labelText: labelText,
       contentPadding: const EdgeInsets.all(10),

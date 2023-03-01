@@ -7,7 +7,7 @@ import 'package:voyage_vault/components/add_edit_app_bar.dart';
 import 'package:voyage_vault/components/add_edit_form_body.dart';
 import 'package:voyage_vault/components/add_edit_listener.dart';
 import 'package:voyage_vault/components/status_switch_case.dart';
-import 'package:voyage_vault/components/text_form_field_decoration.dart';
+import 'package:voyage_vault/components/form_field_decoration.dart';
 import 'package:voyage_vault/domain/models/voyage_model.dart';
 import 'package:voyage_vault/domain/models/voyager_model.dart';
 import 'package:voyage_vault/features/home/pages/add_expense/cubit/add_expense_cubit.dart';
@@ -95,7 +95,7 @@ class _AddExpensePageBody extends StatelessWidget {
     return BlocBuilder<AddExpenseCubit, AddExpenseState>(
       builder: (context, state) {
         return TextFormField(
-          decoration: textFormFieldDecoration(
+          decoration: formFieldDecoration(
             context,
             labelText: AppLocalizations.of(context).expenseName,
           ),
@@ -115,7 +115,7 @@ class _AddExpensePageBody extends StatelessWidget {
       builder: (context, state) {
         return TextFormField(
           textAlign: TextAlign.start,
-          decoration: textFormFieldDecoration(
+          decoration: formFieldDecoration(
             context,
             labelText: AppLocalizations.of(context).price,
           ),
@@ -142,7 +142,7 @@ class _AddExpensePageBody extends StatelessWidget {
       builder: (context, state) {
         return DropdownButtonFormField<String>(
           value: state.category,
-          decoration: textFormFieldDecoration(
+          decoration: formFieldDecoration(
             context,
             labelText: AppLocalizations.of(context).category,
           ),
@@ -173,7 +173,7 @@ class _AddExpensePageBody extends StatelessWidget {
       builder: (context, state) {
         return DropdownButtonFormField<VoyageModel>(
           value: state.voyage,
-          decoration: textFormFieldDecoration(
+          decoration: formFieldDecoration(
             context,
             labelText: AppLocalizations.of(context).voyage,
           ),
@@ -206,7 +206,7 @@ class _AddExpensePageBody extends StatelessWidget {
           ignoring: state.voyage == null,
           child: DropdownButtonFormField<VoyagerModel>(
             value: state.voyager,
-            decoration: textFormFieldDecoration(context,
+            decoration: formFieldDecoration(context,
                 labelText: AppLocalizations.of(context).voyager,
                 enabled: state.voyage != null),
             items: (state.voyage == null ||

@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:voyage_vault/components/add_edit_form_body.dart';
-import 'package:voyage_vault/components/text_form_field_decoration.dart';
+import 'package:voyage_vault/components/form_field_decoration.dart';
 import 'package:voyage_vault/domain/models/voyager_model.dart';
 import 'package:voyage_vault/features/global_widgets/select_date_form_field.dart';
 import 'package:voyage_vault/features/home/pages/edit_voyage/cubit/edit_voyage_cubit.dart';
@@ -50,7 +50,7 @@ class EditVoyagePageBody extends StatelessWidget {
           onChanged: ((value) {
             context.read<EditVoyageCubit>().changeTitle(title: value);
           }),
-          decoration: textFormFieldDecoration(
+          decoration: formFieldDecoration(
             context,
             labelText: AppLocalizations.of(context).voyageName,
           ),
@@ -76,7 +76,7 @@ class EditVoyagePageBody extends StatelessWidget {
           onChanged: (value) {
             context.read<EditVoyageCubit>().changeLocation(location: value);
           },
-          decoration: textFormFieldDecoration(
+          decoration: formFieldDecoration(
             context,
             labelText: AppLocalizations.of(context).destination,
           ),
@@ -94,7 +94,7 @@ class EditVoyagePageBody extends StatelessWidget {
         return TextFormField(
           initialValue: state.budgetString,
           textAlign: TextAlign.start,
-          decoration: textFormFieldDecoration(
+          decoration: formFieldDecoration(
             context,
             labelText: AppLocalizations.of(context).budget,
           ),

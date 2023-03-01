@@ -6,7 +6,7 @@ import 'package:voyage_vault/domain/models/voyager_model.dart';
 import 'package:voyage_vault/features/global_widgets/confirm_delete_alert_dialog.dart';
 import 'package:voyage_vault/features/global_widgets/slidable/slidable_action_delete.dart';
 import 'package:voyage_vault/features/global_widgets/slidable/slidable_action_edit.dart';
-import 'package:voyage_vault/features/home/pages/settings/pages/cubit/voyager_list_cubit.dart';
+import 'package:voyage_vault/features/home/pages/settings/pages/voyager_list/cubit/voyager_list_cubit.dart';
 
 class VoyagerListPage extends StatelessWidget {
   const VoyagerListPage({super.key});

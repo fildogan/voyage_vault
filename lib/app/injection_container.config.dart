@@ -32,7 +32,7 @@ import 'package:voyage_vault/features/home/pages/edit_expense/cubit/edit_expense
     as _i11;
 import 'package:voyage_vault/features/home/pages/edit_voyage/cubit/edit_voyage_cubit.dart'
     as _i12;
-import 'package:voyage_vault/features/home/pages/settings/pages/cubit/voyager_list_cubit.dart'
+import 'package:voyage_vault/features/home/pages/settings/pages/voyager_list/cubit/voyager_list_cubit.dart'
     as _i16;
 import 'package:voyage_vault/features/home/pages/voyage_details/cubit/voyage_details_cubit.dart'
     as _i15;
