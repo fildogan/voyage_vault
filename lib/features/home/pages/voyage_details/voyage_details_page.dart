@@ -31,7 +31,7 @@ class VoyageDetailsPage extends StatelessWidget {
         builder: (context, state) {
           final expenseModels = state.expenses;
           final VoyageModel currentVoyageModel =
-              state.voyageModel ?? voyageModel;
+              state.voyageModel ?? voyageModel.copyWith(title: 'dupa');
           final voyagers = state.voyagers;
           // Get sum of all expenses for given voyage
           final double expenseSum =
@@ -80,54 +80,59 @@ class VoyageDetailsPage extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        currentVoyageModel.description == ''
-                            ? const SizedBox.shrink()
-                            : Text(
-                                '${AppLocalizations.of(context).description}: ${currentVoyageModel.description}'),
-                        Text(
-                            '${AppLocalizations.of(context).voyageBudget}: ${currentVoyageModel.budget}'),
-                        Text(
-                            'Total expenses spent: € ${expenseSum.toString()}'),
-                        Text(
-                            'Percentage spent: $percentBudgetSpentFormatted %'),
-                        percentBudgetSpent > 1.0
-                            ? Text(
-                                'You have spent €${(expenseSum - currentVoyageModel.budget).toStringAsFixed(2)} over the budget')
-                            : const SizedBox(),
-                        LinearPercentIndicator(
-                          padding: const EdgeInsets.all(0),
-                          width: MediaQuery.of(context).size.width - 30,
-                          // animation: true,
-                          lineHeight: 20.0,
-                          // animationDuration: 2000,
-                          percent: percentBudgetSpent > 1.0
-                              ? 1.0
-                              : percentBudgetSpent,
-                          center: Text("$percentBudgetSpentFormatted%"),
-                          progressColor: percentBudgetSpent > 1.0
-                              ? Colors.red
-                              : Colors.green.shade800,
-                          backgroundColor: Colors.transparent,
-                        ),
-                        Row(
-                          children: [
-                            for (final voyager in voyagers)
-                              Row(
-                                children: [
-                                  Text(voyager.name),
-                                  Container(
-                                    width: 10,
-                                    height: 10,
-                                    color: voyager.color,
-                                  )
-                                ],
-                              ),
-                          ],
-                        ),
-                      ],
+                    child: InkWell(
+                      onTap: () {
+                        print(state.voyageModel);
+                      },
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          currentVoyageModel.description == ''
+                              ? const SizedBox.shrink()
+                              : Text(
+                                  '${AppLocalizations.of(context).description}: ${currentVoyageModel.description}'),
+                          Text(
+                              '${AppLocalizations.of(context).voyageBudget}: ${currentVoyageModel.budget}'),
+                          Text(
+                              'Total expenses spent: € ${expenseSum.toString()}'),
+                          Text(
+                              'Percentage spent: $percentBudgetSpentFormatted %'),
+                          percentBudgetSpent > 1.0
+                              ? Text(
+                                  'You have spent €${(expenseSum - currentVoyageModel.budget).toStringAsFixed(2)} over the budget')
+                              : const SizedBox(),
+                          LinearPercentIndicator(
+                            padding: const EdgeInsets.all(0),
+                            width: MediaQuery.of(context).size.width - 30,
+                            // animation: true,
+                            lineHeight: 20.0,
+                            // animationDuration: 2000,
+                            percent: percentBudgetSpent > 1.0
+                                ? 1.0
+                                : percentBudgetSpent,
+                            center: Text("$percentBudgetSpentFormatted%"),
+                            progressColor: percentBudgetSpent > 1.0
+                                ? Colors.red
+                                : Colors.green.shade800,
+                            backgroundColor: Colors.transparent,
+                          ),
+                          Row(
+                            children: [
+                              for (final voyager in voyagers)
+                                Row(
+                                  children: [
+                                    Text(voyager.name),
+                                    Container(
+                                      width: 10,
+                                      height: 10,
+                                      color: voyager.color,
+                                    )
+                                  ],
+                                ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   Expanded(
@@ -268,7 +273,7 @@ class VoyageDetailsPage extends StatelessWidget {
                         Row(
                           children: [
                             Text(
-                                '${AppLocalizations.of(context).voyager}: ${voyager.name}'),
+                                '${AppLocalizations.of(context).voyager}: ${voyager.name} ${voyager.color.value}'),
                             Icon(
                               Icons.person,
                               color: voyager.color,
