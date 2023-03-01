@@ -58,8 +58,7 @@ class AddVoyagePageBody extends StatelessWidget {
               return AppLocalizations.of(context).pleaseEnterVoyageTitle;
             }
             if (state.doesTitleExist) {
-              //TODO: add translation
-              return 'Title exists';
+              return AppLocalizations.of(context).titleExists;
             }
             return null;
           },

@@ -6,7 +6,9 @@ import 'package:voyage_vault/domain/models/voyager_model.dart';
 import 'package:voyage_vault/features/global_widgets/confirm_delete_alert_dialog.dart';
 import 'package:voyage_vault/features/global_widgets/slidable/slidable_action_delete.dart';
 import 'package:voyage_vault/features/global_widgets/slidable/slidable_action_edit.dart';
+import 'package:voyage_vault/features/home/pages/settings/pages/edit_voyager/edit_voyager_page.dart';
 import 'package:voyage_vault/features/home/pages/settings/pages/voyager_list/cubit/voyager_list_cubit.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class VoyagerListPage extends StatelessWidget {
   const VoyagerListPage({super.key});
@@ -19,7 +21,11 @@ class VoyagerListPage extends StatelessWidget {
         builder: (context, state) {
           List<VoyagerModel> voyagerModels = state.voyagers;
           return Scaffold(
-            appBar: AppBar(),
+            appBar: AppBar(
+              title: Text(
+                AppLocalizations.of(context).voyagers,
+              ),
+            ),
             body: SafeArea(
                 child: ListView(
               children: [
@@ -55,9 +61,6 @@ class VoyagerTile extends StatelessWidget {
                 context.read<VoyagerListCubit>().remove(
                       voyagerId: voyager.id,
                     );
-                // .then((value) => context
-                //     .read<VoyageDetailsCubit>()
-                //     .refreshVoyage(currentVoyageModel.id));
               },
               closeOnCancel: true,
               confirmDismiss: () async {
@@ -77,14 +80,10 @@ class VoyagerTile extends StatelessWidget {
             children: [
               SlidableActionEdit(
                 onPressed: (context) {
-                  // Navigator.of(context).push(
-                  //     MaterialPageRoute(
-                  //         builder: (context) =>
-                  //             EditExpensePage(
-                  //               expenseModel: expenseModel,
-                  //               voyageModel:
-                  //                   currentVoyageModel,
-                  //             )));
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => EditVoyagerPage(
+                            voyagerModel: voyager,
+                          )));
                 },
               ),
               SlidableActionDelete(

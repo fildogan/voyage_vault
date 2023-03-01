@@ -101,8 +101,7 @@ class _AddVoyagerPageBody extends StatelessWidget {
               return AppLocalizations.of(context).pleaseEnterVoyagerName;
             }
             if (state.doesNameExist) {
-              //TODO: add translation
-              return 'Name exists';
+              return AppLocalizations.of(context).nameExists;
             }
             return null;
           },

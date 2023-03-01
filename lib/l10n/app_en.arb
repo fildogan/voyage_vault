@@ -71,6 +71,10 @@
   "pleaseChooseDate": "Please choose a date",
   "endDateShouldComeAfter": "End date should come after the start date",
 
-  "editVoyage": "Edit Voyage"
+  "editVoyage": "Edit Voyage",
+  "editVoyager": "Edit Voyager",
+  "color": "Color",
+  "titleExists": "Title already exists",
+  "nameExists": "Name already exists"
 
 }
