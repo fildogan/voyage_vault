@@ -167,6 +167,16 @@ class MockVoyagesRepository extends _i1.Mock implements _i4.VoyagesRepository {
         returnValue: _i5.Stream<List<String>>.empty(),
         returnValueForMissingStub: _i5.Stream<List<String>>.empty(),
       ) as _i5.Stream<List<String>>);
+  @override
+  _i5.Stream<_i2.VoyageModel> getVoyageStreamById(String? id) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getVoyageStreamById,
+          [id],
+        ),
+        returnValue: _i5.Stream<_i2.VoyageModel>.empty(),
+        returnValueForMissingStub: _i5.Stream<_i2.VoyageModel>.empty(),
+      ) as _i5.Stream<_i2.VoyageModel>);
 }
 
 /// A class which mocks [ExpensesRepository].
