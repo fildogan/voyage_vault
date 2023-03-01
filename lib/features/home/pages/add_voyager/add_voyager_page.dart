@@ -6,6 +6,7 @@ import 'package:voyage_vault/components/add_edit_app_bar.dart';
 import 'package:voyage_vault/components/add_edit_form_body.dart';
 import 'package:voyage_vault/components/add_edit_listener.dart';
 import 'package:voyage_vault/components/status_switch_case.dart';
+import 'package:voyage_vault/components/form_field_decoration.dart';
 import 'package:voyage_vault/domain/models/voyage_model.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:voyage_vault/features/home/pages/add_voyager/cubit/add_voyager_cubit.dart';
@@ -68,12 +69,6 @@ class _AddVoyagerPageBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AddVoyagerCubit, AddVoyagerState>(
       builder: (context, state) {
-        Color dialogSelectColor = state.voyagerColor ?? Colors.transparent;
-        TextEditingController? chosenColorController;
-        chosenColorController?.text = state.voyagerColor == null
-            ? 'Press to choose color'
-            : 'Press to change color';
-
         return StatusSwitchCase(
           context: context,
           status: state.status,
@@ -81,55 +76,7 @@ class _AddVoyagerPageBody extends StatelessWidget {
             formKey: formKey,
             children: [
               _nameField(),
-              // ColorPickerFormField(
-              //   context: context,
-              //   dialogSelectColor: dialogSelectColor,
-              //   initialValue: dialogSelectColor,
-              //   isColorValid: state.isColorValid,
-              // ),
-              // _colorPicker(context, dialogSelectColor),
-              // ElevatedButton(
-              //     onPressed: () {
-              //       print(state.voyagerColor);
-              //     },
-              //     child: Text('text'))
-              TextFormField(
-                enableInteractiveSelection: false,
-                focusNode: AlwaysDisabledFocusNode(),
-                controller: chosenColorController,
-                // initialValue: state.voyagerColor == null
-                //     ? 'Press to choose color'
-                //     : 'Press to change color',
-                onTap: () async {
-                  await showColorPickerDialog(
-                    context,
-                    dialogSelectColor,
-                    pickersEnabled: const <ColorPickerType, bool>{
-                      ColorPickerType.both: false,
-                      ColorPickerType.primary: true,
-                      ColorPickerType.accent: false,
-                      ColorPickerType.bw: false,
-                      ColorPickerType.custom: false,
-                      ColorPickerType.wheel: false,
-                    },
-                    enableShadesSelection: false,
-                  ).then((newColor) {
-                    context
-                        .read<AddVoyagerCubit>()
-                        .changeColor(color: newColor);
-                    return null;
-                  });
-                },
-                decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.person),
-                  prefixIconColor: state.voyagerColor,
-                  labelText: 'Color',
-                  contentPadding: EdgeInsets.all(10),
-                ),
-                validator: (value) => state.isColorValid
-                    ? null
-                    : AppLocalizations.of(context).pleaseEnterVoyagerName,
-              ),
+              _colorField(),
             ],
           ),
         );
@@ -164,108 +111,52 @@ class _AddVoyagerPageBody extends StatelessWidget {
     );
   }
 
-  ElevatedButton _colorPicker(BuildContext context, Color dialogSelectColor) {
-    // TODO: add validation
-    return ElevatedButton(
-        onPressed: () async {
-          await showColorPickerDialog(
-            context,
-            dialogSelectColor,
-            pickersEnabled: const <ColorPickerType, bool>{
-              ColorPickerType.both: false,
-              ColorPickerType.primary: true,
-              ColorPickerType.accent: false,
-              ColorPickerType.bw: false,
-              ColorPickerType.custom: false,
-              ColorPickerType.wheel: false,
-            },
-            enableShadesSelection: false,
-          ).then((newColor) {
-            context.read<AddVoyagerCubit>().changeColor(color: newColor);
-            return null;
-          });
-        },
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text('Pick color'),
-            ColorIndicator(
-              height: 30,
-              width: 30,
-              color: dialogSelectColor,
-            )
-          ],
-        ));
-  }
-}
+  Widget _colorField() {
+    return BlocBuilder<AddVoyagerCubit, AddVoyagerState>(
+      builder: (context, state) {
+        Color dialogSelectColor = state.voyagerColor ?? Colors.transparent;
 
-class ColorPickerFormField extends FormField<Color?> {
-  ColorPickerFormField({
-    Key? key,
-    // FormFieldSetter<Color?>? onSaved,
-    FormFieldValidator<Color?>? validator,
-    Color? initialValue,
-    bool enabled = true,
-    required bool isColorValid,
-    required BuildContext context,
-    required Color dialogSelectColor,
-  }) : super(
-          key: key,
-          // onSaved: onSaved,
-          validator: (value) => isColorValid
+        return TextFormField(
+          enableInteractiveSelection: false,
+          focusNode: AlwaysDisabledFocusNode(),
+          // controller: chosenColorController,
+          onTap: () async {
+            await showColorPickerDialog(
+              context,
+              dialogSelectColor,
+              pickersEnabled: const <ColorPickerType, bool>{
+                ColorPickerType.both: false,
+                ColorPickerType.primary: true,
+                ColorPickerType.accent: false,
+                ColorPickerType.bw: false,
+                ColorPickerType.custom: false,
+                ColorPickerType.wheel: false,
+              },
+              enableShadesSelection: false,
+            ).then((newColor) {
+              context.read<AddVoyagerCubit>().changeColor(color: newColor);
+              return null;
+            });
+          },
+          decoration: formFieldDecoration(
+            context,
+            labelText: 'Color',
+            suffix: Container(
+              width: 24,
+              height: 24,
+              decoration: BoxDecoration(
+                color: state.voyagerColor,
+                borderRadius: BorderRadius.circular(4),
+              ),
+            ),
+          ),
+          validator: (value) => state.isColorValid
               ? null
               : AppLocalizations.of(context).pleaseEnterVoyagerName,
-          initialValue: initialValue,
-          builder: (FormFieldState<Color?> state) {
-            return Column(
-              children: [
-                ElevatedButton(
-                  onPressed: enabled
-                      ? () async {
-                          await showColorPickerDialog(
-                            context,
-                            dialogSelectColor,
-                            pickersEnabled: const <ColorPickerType, bool>{
-                              ColorPickerType.both: false,
-                              ColorPickerType.primary: true,
-                              ColorPickerType.accent: false,
-                              ColorPickerType.bw: false,
-                              ColorPickerType.custom: false,
-                              ColorPickerType.wheel: false,
-                            },
-                            enableShadesSelection: false,
-                          ).then((newColor) {
-                            context
-                                .read<AddVoyagerCubit>()
-                                .changeColor(color: newColor);
-                            return null;
-                          });
-                        }
-                      : null,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text('Pick color'),
-                      ColorIndicator(
-                        height: 30,
-                        width: 30,
-                        color: dialogSelectColor,
-                      ),
-                    ],
-                  ),
-                ),
-                state.hasError
-                    ? Text(
-                        AppLocalizations.of(context).pleaseEnterVoyagerName,
-                        // state.errorText ?? '',
-                        style:
-                            Theme.of(context).inputDecorationTheme.errorStyle,
-                      )
-                    : Container()
-              ],
-            );
-          },
         );
+      },
+    );
+  }
 }
 
 class AlwaysDisabledFocusNode extends FocusNode {
