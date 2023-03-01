@@ -47,6 +47,7 @@ class VoyagersRepository {
         .collection('voyagers')
         .add({
       'name': name,
+      //TODO: save int to firebase
       'color': color.value.toRadixString(16),
     });
   }
@@ -67,7 +68,7 @@ class VoyagersRepository {
         .doc(id)
         .update({
       'name': name,
-      'color': color.toString(),
+      'color': color.value.toRadixString(16),
     });
   }
 

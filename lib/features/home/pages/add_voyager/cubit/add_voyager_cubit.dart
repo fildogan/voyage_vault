@@ -24,7 +24,6 @@ class AddVoyagerCubit extends Cubit<AddVoyagerState> {
   Future<void> start() async {
     emit(state.copyWith(status: Status.loading));
 
-    // await Future.delayed(const Duration(seconds: 1));
     await getVoyagersStream();
 
     emit(state.copyWith(status: Status.success));
