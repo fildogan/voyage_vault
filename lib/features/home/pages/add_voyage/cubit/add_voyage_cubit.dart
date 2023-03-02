@@ -29,6 +29,11 @@ class AddVoyageCubit extends Cubit<AddVoyageState> {
   }
 
   Future<void> add() async {
+    emit(state.copyWith(
+      status: Status.loading,
+      formStatus: FormStatus.submitting,
+    ));
+
     List<String> selectedVoyagerIds = getSelectedVoyagerIds(state.voyagers);
 
     try {
@@ -41,7 +46,7 @@ class AddVoyageCubit extends Cubit<AddVoyageState> {
         description: state.description,
         voyagers: selectedVoyagerIds,
       );
-      emit(state.copyWith(saved: true));
+      emit(state.copyWith(formStatus: FormStatus.success));
     } catch (error) {
       emit(
         AddVoyageState(
@@ -51,36 +56,6 @@ class AddVoyageCubit extends Cubit<AddVoyageState> {
       );
     }
   }
-
-  // Future<void> addVoyageAndCheck({
-  //   String? title,
-  //   double? budget,
-  //   DateTime? startDate,
-  //   DateTime? endDate,
-  //   String? location,
-  //   String? description,
-  // }) async {
-  //   if (title == null ||
-  //       title == '' ||
-  //       budget == null ||
-  //       budget == 0 ||
-  //       budget.isNaN ||
-  //       startDate == null ||
-  //       endDate == null) {
-  //     error('Please fill all fields');
-  //   } else if (endDate.isBefore(startDate)) {
-  //     error('Voyage start date should be before end date');
-  //   } else if (state.voyageTitles
-  //       .map((i) => i.toLowerCase())
-  //       .contains(title.toLowerCase())) {
-  //     error('Voyage title already exists');
-  //   } else {
-  //     add();
-  //     final String capitalizedTitle =
-  //         title[0].toUpperCase() + title.substring(1);
-  //     success('$capitalizedTitle added succesfully');
-  //   }
-  // }
 
   Future<void> error(String error) async {
     emit(state.copyWith(

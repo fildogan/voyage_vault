@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:voyage_vault/components/add_edit_form_body.dart';
 import 'package:voyage_vault/components/form_field_decoration.dart';
+import 'package:voyage_vault/components/status_switch_case.dart';
 import 'package:voyage_vault/domain/models/voyager_model.dart';
 import 'package:voyage_vault/features/global_widgets/select_date_form_field.dart';
 import 'package:voyage_vault/features/home/pages/edit_voyage/cubit/edit_voyage_cubit.dart';
@@ -22,23 +23,27 @@ class EditVoyagePageBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: BlocBuilder<EditVoyageCubit, EditVoyageState>(
-        builder: (context, state) {
-          return AddEditFormBody(
-            formKey: formKey,
-            children: [
-              _titleField(context),
-              _locationField(context),
-              _budgetField(context),
-              _dateFields(context, state),
-              _descriptionField(context),
-              for (final voyager in state.voyagers)
-                _voyagerField(context, voyager)
-            ],
-          );
-        },
-      ),
+    return BlocBuilder<EditVoyageCubit, EditVoyageState>(
+      builder: (context, state) {
+        return StatusSwitchCase(
+            context: context,
+            child: () => AddEditFormBody(
+                  formKey: formKey,
+                  children: [
+                    _titleField(context),
+                    _locationField(context),
+                    _budgetField(context),
+                    _dateFields(context, state),
+                    _descriptionField(context),
+                    for (final voyager in state.voyagers)
+                      _voyagerField(context, voyager)
+                  ],
+                ),
+            status: state.status,
+            ifCheck: state.voyageTitles.isEmpty,
+            ifTrueMessage: 'No voyages found',
+            errorMessage: state.errorMessage);
+      },
     );
   }
 

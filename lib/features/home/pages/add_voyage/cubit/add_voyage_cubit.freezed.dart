@@ -17,7 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$AddVoyageState {
   Status get status => throw _privateConstructorUsedError;
-  bool get saved => throw _privateConstructorUsedError;
+  FormStatus get formStatus => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
   String? get successMessage => throw _privateConstructorUsedError;
   List<String> get voyageTitles => throw _privateConstructorUsedError;
@@ -43,7 +43,7 @@ abstract class $AddVoyageStateCopyWith<$Res> {
   @useResult
   $Res call(
       {Status status,
-      bool saved,
+      FormStatus formStatus,
       String? errorMessage,
       String? successMessage,
       List<String> voyageTitles,
@@ -71,7 +71,7 @@ class _$AddVoyageStateCopyWithImpl<$Res, $Val extends AddVoyageState>
   @override
   $Res call({
     Object? status = null,
-    Object? saved = null,
+    Object? formStatus = null,
     Object? errorMessage = freezed,
     Object? successMessage = freezed,
     Object? voyageTitles = null,
@@ -89,10 +89,10 @@ class _$AddVoyageStateCopyWithImpl<$Res, $Val extends AddVoyageState>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as Status,
-      saved: null == saved
-          ? _value.saved
-          : saved // ignore: cast_nullable_to_non_nullable
-              as bool,
+      formStatus: null == formStatus
+          ? _value.formStatus
+          : formStatus // ignore: cast_nullable_to_non_nullable
+              as FormStatus,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
@@ -151,7 +151,7 @@ abstract class _$$_AddVoyageStateCopyWith<$Res>
   @useResult
   $Res call(
       {Status status,
-      bool saved,
+      FormStatus formStatus,
       String? errorMessage,
       String? successMessage,
       List<String> voyageTitles,
@@ -177,7 +177,7 @@ class __$$_AddVoyageStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? status = null,
-    Object? saved = null,
+    Object? formStatus = null,
     Object? errorMessage = freezed,
     Object? successMessage = freezed,
     Object? voyageTitles = null,
@@ -195,10 +195,10 @@ class __$$_AddVoyageStateCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as Status,
-      saved: null == saved
-          ? _value.saved
-          : saved // ignore: cast_nullable_to_non_nullable
-              as bool,
+      formStatus: null == formStatus
+          ? _value.formStatus
+          : formStatus // ignore: cast_nullable_to_non_nullable
+              as FormStatus,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
@@ -252,7 +252,7 @@ class __$$_AddVoyageStateCopyWithImpl<$Res>
 class _$_AddVoyageState extends _AddVoyageState {
   _$_AddVoyageState(
       {this.status = Status.initial,
-      this.saved = false,
+      this.formStatus = FormStatus.initial,
       this.errorMessage,
       this.successMessage,
       final List<String> voyageTitles = const [],
@@ -273,7 +273,7 @@ class _$_AddVoyageState extends _AddVoyageState {
   final Status status;
   @override
   @JsonKey()
-  final bool saved;
+  final FormStatus formStatus;
   @override
   final String? errorMessage;
   @override
@@ -317,7 +317,7 @@ class _$_AddVoyageState extends _AddVoyageState {
 
   @override
   String toString() {
-    return 'AddVoyageState(status: $status, saved: $saved, errorMessage: $errorMessage, successMessage: $successMessage, voyageTitles: $voyageTitles, voyageId: $voyageId, title: $title, location: $location, budget: $budget, startDate: $startDate, endDate: $endDate, description: $description, voyagers: $voyagers)';
+    return 'AddVoyageState(status: $status, formStatus: $formStatus, errorMessage: $errorMessage, successMessage: $successMessage, voyageTitles: $voyageTitles, voyageId: $voyageId, title: $title, location: $location, budget: $budget, startDate: $startDate, endDate: $endDate, description: $description, voyagers: $voyagers)';
   }
 
   @override
@@ -326,7 +326,8 @@ class _$_AddVoyageState extends _AddVoyageState {
         (other.runtimeType == runtimeType &&
             other is _$_AddVoyageState &&
             (identical(other.status, status) || other.status == status) &&
-            (identical(other.saved, saved) || other.saved == saved) &&
+            (identical(other.formStatus, formStatus) ||
+                other.formStatus == formStatus) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage) &&
             (identical(other.successMessage, successMessage) ||
@@ -351,7 +352,7 @@ class _$_AddVoyageState extends _AddVoyageState {
   int get hashCode => Object.hash(
       runtimeType,
       status,
-      saved,
+      formStatus,
       errorMessage,
       successMessage,
       const DeepCollectionEquality().hash(_voyageTitles),
@@ -374,7 +375,7 @@ class _$_AddVoyageState extends _AddVoyageState {
 abstract class _AddVoyageState extends AddVoyageState {
   factory _AddVoyageState(
       {final Status status,
-      final bool saved,
+      final FormStatus formStatus,
       final String? errorMessage,
       final String? successMessage,
       final List<String> voyageTitles,
@@ -391,7 +392,7 @@ abstract class _AddVoyageState extends AddVoyageState {
   @override
   Status get status;
   @override
-  bool get saved;
+  FormStatus get formStatus;
   @override
   String? get errorMessage;
   @override

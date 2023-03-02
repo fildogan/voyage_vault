@@ -117,7 +117,7 @@ class EditVoyageCubit extends Cubit<EditVoyageState> {
 
   Future<void> update() async {
     emit(
-      state.copyWith(status: Status.loading),
+      state.copyWith(status: Status.loading, formStatus: FormStatus.submitting),
     );
     List<String> selectedVoyagerIds = getSelectedVoyagerIds(state.voyagers);
 
@@ -133,9 +133,7 @@ class EditVoyageCubit extends Cubit<EditVoyageState> {
         voyagers: selectedVoyagerIds,
       );
       emit(
-        state.copyWith(
-          saved: true,
-        ),
+        state.copyWith(formStatus: FormStatus.success),
       );
     } catch (error) {
       emit(

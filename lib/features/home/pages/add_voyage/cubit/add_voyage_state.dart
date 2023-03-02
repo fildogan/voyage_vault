@@ -4,7 +4,7 @@ part of 'add_voyage_cubit.dart';
 class AddVoyageState with _$AddVoyageState {
   factory AddVoyageState({
     @Default(Status.initial) Status status,
-    @Default(false) bool saved,
+    @Default(FormStatus.initial) FormStatus formStatus,
     String? errorMessage,
     String? successMessage,
     @Default([]) List<String> voyageTitles,
