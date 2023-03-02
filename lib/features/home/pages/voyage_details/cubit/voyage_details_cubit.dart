@@ -181,6 +181,10 @@ class VoyageDetailsCubit extends Cubit<VoyageDetailsState> {
     }
   }
 
+  Future<void> showVoyagers() async {
+    emit(state.copyWith(unhiddenVoyagers: !state.unhiddenVoyagers));
+  }
+
   @override
   Future<void> close() {
     _streamSubscription?.cancel();

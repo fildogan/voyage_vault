@@ -8,6 +8,7 @@ class VoyageDetailsState with _$VoyageDetailsState {
     VoyageModel? voyageModel,
     @Default([]) List<ExpenseModel> expenses,
     @Default([]) List<VoyagerModel> voyagers,
+    @Default(false) bool unhiddenVoyagers,
   }) = _VoyageDetailsState;
 }
 

@@ -25,11 +25,13 @@ class EditVoyageCubit extends Cubit<EditVoyageState> {
   StreamSubscription? _streamSubscription;
 
   Future<void> start({required VoyageModel voyageModel}) async {
+    emit(state.copyWith(status: Status.initial));
     setValues(
       voyageModel: voyageModel,
     );
     getVoyageTitleStream();
     getVoyagerStream();
+    emit(state.copyWith(status: Status.success));
   }
 
   Future<void> setValues({required VoyageModel voyageModel}) async {
@@ -49,11 +51,6 @@ class EditVoyageCubit extends Cubit<EditVoyageState> {
   }
 
   Future<void> getVoyageTitleStream() async {
-    emit(
-      state.copyWith(
-        status: Status.loading,
-      ),
-    );
     _streamSubscription = _voyagesRepository
         .getVoyagesStream()
         .map((voyages) => voyages.map((voyage) => voyage.title).toList())
