@@ -86,34 +86,62 @@ class VoyageDetailsPage extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        currentVoyageModel.description == ''
-                            ? const SizedBox.shrink()
-                            : Text(
-                                '${AppLocalizations.of(context).description}: ${currentVoyageModel.description}'),
-                        Text(
-                            '${AppLocalizations.of(context).voyageBudget}: ${currentVoyageModel.budget}'),
-                        Text(
-                            'Total expenses spent: € ${expenseSum.toString()}'),
-                        Text(
-                            'Percentage spent: $percentBudgetSpentFormatted %'),
-                        percentBudgetSpent > 1.0
-                            ? Text(
-                                'You have spent €${(expenseSum - currentVoyageModel.budget).toStringAsFixed(2)} over the budget')
-                            : const SizedBox(),
-                        LinearPercentIndicator(
-                          padding: const EdgeInsets.all(0),
-                          width: MediaQuery.of(context).size.width - 30,
-                          // animation: true,
-                          lineHeight: 20.0,
-                          // animationDuration: 2000,
-                          percent: percentBudgetSpent > 1.0
-                              ? 1.0
-                              : percentBudgetSpent,
-                          center: Text("$percentBudgetSpentFormatted%"),
-                          progressColor: percentBudgetSpent > 1.0
-                              ? Colors.red
-                              : Colors.green.shade800,
-                          backgroundColor: Colors.transparent,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            state.unhiddenDetails
+                                ? Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        currentVoyageModel.description == ''
+                                            ? const SizedBox.shrink()
+                                            : Text(
+                                                '${AppLocalizations.of(context).description}: ${currentVoyageModel.description}'),
+                                        Text(
+                                            '${AppLocalizations.of(context).voyageBudget}: ${currentVoyageModel.budget}'),
+                                        Text(
+                                            'Total expenses spent: € ${expenseSum.toString()}'),
+                                        const Text('Percentage spent:'),
+                                        percentBudgetSpent > 1.0
+                                            ? Text(
+                                                'You have spent €${(expenseSum - currentVoyageModel.budget).toStringAsFixed(2)} over the budget')
+                                            : const SizedBox(),
+                                        LinearPercentIndicator(
+                                          padding: const EdgeInsets.all(0),
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width -
+                                              100,
+                                          // animation: true,
+                                          lineHeight: 20.0,
+                                          // animationDuration: 2000,
+                                          percent: percentBudgetSpent > 1.0
+                                              ? 1.0
+                                              : percentBudgetSpent,
+                                          center: Text(
+                                              "$percentBudgetSpentFormatted%"),
+                                          progressColor:
+                                              percentBudgetSpent > 1.0
+                                                  ? Colors.red
+                                                  : Colors.green.shade800,
+                                          backgroundColor: Colors.transparent,
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                : Text('Details'),
+                            InkWell(
+                              onTap: () => context
+                                  .read<VoyageDetailsCubit>()
+                                  .showDetails(),
+                              child: Icon(state.unhiddenDetails
+                                  ? Icons.keyboard_arrow_down
+                                  : Icons.keyboard_arrow_right),
+                            )
+                          ],
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
