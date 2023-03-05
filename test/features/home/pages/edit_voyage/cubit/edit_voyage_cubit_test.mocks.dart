@@ -80,6 +80,7 @@ class MockVoyagesRepository extends _i1.Mock implements _i3.VoyagesRepository {
     required DateTime? endDate,
     required String? location,
     required String? description,
+    required List<String>? voyagers,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -93,6 +94,7 @@ class MockVoyagesRepository extends _i1.Mock implements _i3.VoyagesRepository {
             #endDate: endDate,
             #location: location,
             #description: description,
+            #voyagers: voyagers,
           },
         ),
         returnValue: _i4.Future<void>.value(),
@@ -148,4 +150,14 @@ class MockVoyagesRepository extends _i1.Mock implements _i3.VoyagesRepository {
         returnValue: _i4.Stream<List<String>>.empty(),
         returnValueForMissingStub: _i4.Stream<List<String>>.empty(),
       ) as _i4.Stream<List<String>>);
+  @override
+  _i4.Stream<_i2.VoyageModel> getVoyageStreamById(String? id) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getVoyageStreamById,
+          [id],
+        ),
+        returnValue: _i4.Stream<_i2.VoyageModel>.empty(),
+        returnValueForMissingStub: _i4.Stream<_i2.VoyageModel>.empty(),
+      ) as _i4.Stream<_i2.VoyageModel>);
 }

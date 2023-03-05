@@ -21,6 +21,8 @@ mixin _$VoyageDetailsState {
   VoyageModel? get voyageModel => throw _privateConstructorUsedError;
   List<ExpenseModel> get expenses => throw _privateConstructorUsedError;
   List<VoyagerModel> get voyagers => throw _privateConstructorUsedError;
+  bool get unhiddenVoyagers => throw _privateConstructorUsedError;
+  bool get unhiddenDetails => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $VoyageDetailsStateCopyWith<VoyageDetailsState> get copyWith =>
@@ -38,7 +40,9 @@ abstract class $VoyageDetailsStateCopyWith<$Res> {
       String? errorMessage,
       VoyageModel? voyageModel,
       List<ExpenseModel> expenses,
-      List<VoyagerModel> voyagers});
+      List<VoyagerModel> voyagers,
+      bool unhiddenVoyagers,
+      bool unhiddenDetails});
 
   $VoyageModelCopyWith<$Res>? get voyageModel;
 }
@@ -61,6 +65,8 @@ class _$VoyageDetailsStateCopyWithImpl<$Res, $Val extends VoyageDetailsState>
     Object? voyageModel = freezed,
     Object? expenses = null,
     Object? voyagers = null,
+    Object? unhiddenVoyagers = null,
+    Object? unhiddenDetails = null,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -83,6 +89,14 @@ class _$VoyageDetailsStateCopyWithImpl<$Res, $Val extends VoyageDetailsState>
           ? _value.voyagers
           : voyagers // ignore: cast_nullable_to_non_nullable
               as List<VoyagerModel>,
+      unhiddenVoyagers: null == unhiddenVoyagers
+          ? _value.unhiddenVoyagers
+          : unhiddenVoyagers // ignore: cast_nullable_to_non_nullable
+              as bool,
+      unhiddenDetails: null == unhiddenDetails
+          ? _value.unhiddenDetails
+          : unhiddenDetails // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 
@@ -112,7 +126,9 @@ abstract class _$$_VoyageDetailsStateCopyWith<$Res>
       String? errorMessage,
       VoyageModel? voyageModel,
       List<ExpenseModel> expenses,
-      List<VoyagerModel> voyagers});
+      List<VoyagerModel> voyagers,
+      bool unhiddenVoyagers,
+      bool unhiddenDetails});
 
   @override
   $VoyageModelCopyWith<$Res>? get voyageModel;
@@ -134,6 +150,8 @@ class __$$_VoyageDetailsStateCopyWithImpl<$Res>
     Object? voyageModel = freezed,
     Object? expenses = null,
     Object? voyagers = null,
+    Object? unhiddenVoyagers = null,
+    Object? unhiddenDetails = null,
   }) {
     return _then(_$_VoyageDetailsState(
       status: null == status
@@ -156,6 +174,14 @@ class __$$_VoyageDetailsStateCopyWithImpl<$Res>
           ? _value._voyagers
           : voyagers // ignore: cast_nullable_to_non_nullable
               as List<VoyagerModel>,
+      unhiddenVoyagers: null == unhiddenVoyagers
+          ? _value.unhiddenVoyagers
+          : unhiddenVoyagers // ignore: cast_nullable_to_non_nullable
+              as bool,
+      unhiddenDetails: null == unhiddenDetails
+          ? _value.unhiddenDetails
+          : unhiddenDetails // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -168,7 +194,9 @@ class _$_VoyageDetailsState implements _VoyageDetailsState {
       this.errorMessage,
       this.voyageModel,
       final List<ExpenseModel> expenses = const [],
-      final List<VoyagerModel> voyagers = const []})
+      final List<VoyagerModel> voyagers = const [],
+      this.unhiddenVoyagers = false,
+      this.unhiddenDetails = false})
       : _expenses = expenses,
         _voyagers = voyagers;
 
@@ -198,8 +226,15 @@ class _$_VoyageDetailsState implements _VoyageDetailsState {
   }
 
   @override
+  @JsonKey()
+  final bool unhiddenVoyagers;
+  @override
+  @JsonKey()
+  final bool unhiddenDetails;
+
+  @override
   String toString() {
-    return 'VoyageDetailsState(status: $status, errorMessage: $errorMessage, voyageModel: $voyageModel, expenses: $expenses, voyagers: $voyagers)';
+    return 'VoyageDetailsState(status: $status, errorMessage: $errorMessage, voyageModel: $voyageModel, expenses: $expenses, voyagers: $voyagers, unhiddenVoyagers: $unhiddenVoyagers, unhiddenDetails: $unhiddenDetails)';
   }
 
   @override
@@ -213,7 +248,11 @@ class _$_VoyageDetailsState implements _VoyageDetailsState {
             (identical(other.voyageModel, voyageModel) ||
                 other.voyageModel == voyageModel) &&
             const DeepCollectionEquality().equals(other._expenses, _expenses) &&
-            const DeepCollectionEquality().equals(other._voyagers, _voyagers));
+            const DeepCollectionEquality().equals(other._voyagers, _voyagers) &&
+            (identical(other.unhiddenVoyagers, unhiddenVoyagers) ||
+                other.unhiddenVoyagers == unhiddenVoyagers) &&
+            (identical(other.unhiddenDetails, unhiddenDetails) ||
+                other.unhiddenDetails == unhiddenDetails));
   }
 
   @override
@@ -223,7 +262,9 @@ class _$_VoyageDetailsState implements _VoyageDetailsState {
       errorMessage,
       voyageModel,
       const DeepCollectionEquality().hash(_expenses),
-      const DeepCollectionEquality().hash(_voyagers));
+      const DeepCollectionEquality().hash(_voyagers),
+      unhiddenVoyagers,
+      unhiddenDetails);
 
   @JsonKey(ignore: true)
   @override
@@ -239,7 +280,9 @@ abstract class _VoyageDetailsState implements VoyageDetailsState {
       final String? errorMessage,
       final VoyageModel? voyageModel,
       final List<ExpenseModel> expenses,
-      final List<VoyagerModel> voyagers}) = _$_VoyageDetailsState;
+      final List<VoyagerModel> voyagers,
+      final bool unhiddenVoyagers,
+      final bool unhiddenDetails}) = _$_VoyageDetailsState;
 
   @override
   Status get status;
@@ -251,6 +294,10 @@ abstract class _VoyageDetailsState implements VoyageDetailsState {
   List<ExpenseModel> get expenses;
   @override
   List<VoyagerModel> get voyagers;
+  @override
+  bool get unhiddenVoyagers;
+  @override
+  bool get unhiddenDetails;
   @override
   @JsonKey(ignore: true)
   _$$_VoyageDetailsStateCopyWith<_$_VoyageDetailsState> get copyWith =>

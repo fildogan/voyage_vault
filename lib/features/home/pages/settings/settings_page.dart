@@ -9,7 +9,7 @@ import 'package:voyage_vault/features/auth/pages/user_profile.dart';
 import 'package:voyage_vault/features/home/pages/settings/pages/language_selection.dart';
 import 'package:voyage_vault/features/home/pages/settings/pages/theme_selection.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:voyage_vault/features/home/pages/settings/pages/voyager_list.dart';
+import 'package:voyage_vault/features/home/pages/settings/pages/voyager_list/voyager_list.dart';
 import 'dart:io' show Platform;
 
 import 'package:voyage_vault/features/home/pages/settings/widgets/settings_item.dart';

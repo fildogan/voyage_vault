@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:voyage_vault/app/core/enums.dart';
 import 'package:voyage_vault/app/injection_container.dart';
+import 'package:voyage_vault/components/status_switch_case.dart';
 import 'package:voyage_vault/domain/models/voyage_model.dart';
 import 'package:voyage_vault/features/global_widgets/confirm_delete_alert_dialog.dart';
 import 'package:voyage_vault/features/home/pages/voyage_details/voyage_details_page.dart';
@@ -17,72 +17,54 @@ class VoyagesPageContent extends StatelessWidget {
     return SafeArea(
       child: BlocProvider<VoyagesCubit>(
         create: (context) => getIt<VoyagesCubit>()..start(),
-        child: BlocBuilder<VoyagesCubit, VoyagesState>(
-          builder: (context, state) {
-            switch (state.status) {
-              case Status.initial:
-                return const Center(
-                  child: Text('Initial state'),
-                );
-              case Status.loading:
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              case Status.success:
-                if (state.voyages.isEmpty) {
-                  return const Center(
-                    child: Text('No voyages found'),
-                  );
-                }
-                final voyageModels = state.voyages;
-                return ListView(
-                  children: [
-                    for (final voyageModel in voyageModels)
-                      Dismissible(
-                        key: ValueKey(voyageModel.id),
-                        onDismissed: (direction) {
-                          context.read<VoyagesCubit>().remove(
-                                voyageId: voyageModel.id,
-                              );
-                          context.read<VoyagesCubit>().removeExpensesByVoyageId(
-                                voyageId: voyageModel.id,
-                              );
-                        },
-                        direction: DismissDirection.endToStart,
-                        background: Container(
-                          alignment: Alignment.centerRight,
-                          padding: const EdgeInsets.only(right: 20),
-                          color: Colors.red,
-                          child: const Icon(Icons.delete, color: Colors.white),
-                        ),
-                        confirmDismiss: (direction) {
-                          return showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return ConfirmDeleteAlertDialog(
-                                title: 'Delete voyage ${voyageModel.title}?',
-                                content:
-                                    'Deleting this voyage will also permanently delete all of its associated expenses. This action is irreversible.',
-                              );
-                            },
+        child:
+            BlocBuilder<VoyagesCubit, VoyagesState>(builder: (context, state) {
+          final voyageModels = state.voyages;
+
+          return StatusSwitchCase(
+            context: context,
+            status: state.status,
+            ifCheck: state.voyages.isEmpty,
+            ifTrueMessage: 'No voyages found',
+            errorMessage: state.errorMessage,
+            child: () => ListView(
+              children: [
+                for (final voyageModel in voyageModels)
+                  Dismissible(
+                    key: ValueKey(voyageModel.id),
+                    onDismissed: (direction) {
+                      context.read<VoyagesCubit>().remove(
+                            voyageId: voyageModel.id,
+                          );
+                      context.read<VoyagesCubit>().removeExpensesByVoyageId(
+                            voyageId: voyageModel.id,
+                          );
+                    },
+                    direction: DismissDirection.endToStart,
+                    background: Container(
+                      alignment: Alignment.centerRight,
+                      padding: const EdgeInsets.only(right: 20),
+                      color: Colors.red,
+                      child: const Icon(Icons.delete, color: Colors.white),
+                    ),
+                    confirmDismiss: (direction) {
+                      return showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return ConfirmDeleteAlertDialog(
+                            title: 'Delete voyage ${voyageModel.title}?',
+                            content:
+                                'Deleting this voyage will also permanently delete all of its associated expenses. This action is irreversible.',
                           );
                         },
-                        child: _ListViewItem(voyageModel: voyageModel),
-                      )
-                  ],
-                );
-              case Status.error:
-                return Center(
-                  child: Text(
-                    state.errorMessage ?? 'Unknown error',
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.error,
-                    ),
-                  ),
-                );
-            }
-          },
-        ),
+                      );
+                    },
+                    child: _ListViewItem(voyageModel: voyageModel),
+                  )
+              ],
+            ),
+          );
+        }),
       ),
     );
   }

@@ -10,6 +10,7 @@ import 'package:voyage_vault/domain/models/voyager_model.dart';
 import 'package:voyage_vault/domain/repositories/expenses_repository.dart';
 import 'package:voyage_vault/domain/repositories/voyager_repository.dart';
 import 'package:voyage_vault/domain/repositories/voyages_repository.dart';
+import 'package:rxdart/rxdart.dart';
 
 part 'voyage_details_state.dart';
 part 'voyage_details_cubit.freezed.dart';
@@ -28,10 +29,54 @@ class VoyageDetailsCubit extends Cubit<VoyageDetailsState> {
 
   StreamSubscription? _streamSubscription;
 
+  StreamSubscription? _voyagesStreamSubscription;
+
+  StreamSubscription? _voyagersStreamSubscription;
+
+  StreamSubscription? _expensesStreamSubscription;
+
+  // Future<void> refreshVoyage(String voyageId) async {
+
+  //   emit(state.copyWith(status: Status.loading));
+
+  //   final voyageStream = _voyagesRepository.getVoyageStreamById(voyageId);
+  //   final expensesStream =
+  //       _expensesRepository.getExpensesStreamByVoyageId(voyageId);
+  //   final voyagersStream = _voyagersRepository
+  //       .getVoyagersStreamById(state.voyageModel?.voyagers ?? []);
+
+  //   _streamSubscription = Rx.combineLatest3(
+  //     voyageStream,
+  //     expensesStream,
+  //     voyagersStream,
+  //     (VoyageModel voyage, List<ExpenseModel> expenses,
+  //         List<VoyagerModel> voyagers) {
+  //       return state.copyWith(
+  //         status: Status.success,
+  //         voyageModel: voyage,
+  //         expenses: expenses,
+  //         voyagers: voyagers,
+  //       );
+  //     },
+  //   ).listen((state) => emit(state), onError: (error) {
+  //     emit(VoyageDetailsState(
+  //       status: Status.error,
+  //       errorMessage: error.toString(),
+  //     ));
+  //   });
+  // }
+
   Future<void> refreshVoyage(String voyageId) async {
+    emit(
+      state.copyWith(
+        status: Status.loading,
+      ),
+    );
+    // await getVoyageStreamByVoyageId(voyageId);
     await getVoyageWithId(voyageId);
-    getVoyagerModelStream();
+
     getExpensesStreamByVoyageId(voyageId);
+    await getVoyagerModelStream();
   }
 
   Future<void> getVoyageWithId(String voyageId) async {
@@ -62,7 +107,7 @@ class VoyageDetailsCubit extends Cubit<VoyageDetailsState> {
         status: Status.loading,
       ),
     );
-    _streamSubscription = _expensesRepository
+    _expensesStreamSubscription = _expensesRepository
         .getExpensesStreamByVoyageId(voyageId)
         .listen((expenses) {
       emit(state.copyWith(expenses: expenses, status: Status.success));
@@ -77,13 +122,33 @@ class VoyageDetailsCubit extends Cubit<VoyageDetailsState> {
       });
   }
 
+  Future<void> getVoyageStreamByVoyageId(String voyageId) async {
+    emit(
+      state.copyWith(
+        status: Status.loading,
+      ),
+    );
+    _voyagesStreamSubscription =
+        _voyagesRepository.getVoyageStreamById(voyageId).listen((voyage) {
+      emit(state.copyWith(voyageModel: voyage, status: Status.success));
+    })
+          ..onError((error) {
+            emit(
+              VoyageDetailsState(
+                status: Status.error,
+                errorMessage: error.toString(),
+              ),
+            );
+          });
+  }
+
   Future<void> getVoyagerModelStream() async {
     emit(
       state.copyWith(
         status: Status.loading,
       ),
     );
-    _streamSubscription = _voyagersRepository
+    _voyagersStreamSubscription = _voyagersRepository
         .getVoyagersStreamById(state.voyageModel?.voyagers ?? [])
         .listen((voyagers) {
       emit(state.copyWith(
@@ -116,32 +181,20 @@ class VoyageDetailsCubit extends Cubit<VoyageDetailsState> {
     }
   }
 
-  // Future<void> getTotalPriceByVoyageId(String voyageId) async {
-  //   _streamSubscription = _expensesRepository
-  //       .getTotalPriceByVoyageId(voyageId)
-  //       .listen((totalPrice) {
-  //     emit(VoyageDetailsState(totalPrice: totalPrice));
-  //   })
-  //     ..onError((error) {
-  //       emit( VoyageDetailsState(status: Status.error,
-  // errorMessage: error.toString(),));
-  //     });
-  // }
+  Future<void> showVoyagers() async {
+    emit(state.copyWith(unhiddenVoyagers: !state.unhiddenVoyagers));
+  }
 
-  // Future<void> getExpensesStream() async {
-  //   _streamSubscription =
-  //       _expensesRepository.getExpensesStream().listen((expenses) {
-  //     emit(VoyageDetailsState(expenses: expenses));
-  //   })
-  //         ..onError((error) {
-  //           emit( VoyageDetailsState(status: Status.error,
-  // errorMessage: error.toString(),));
-  //         });
-  // }
+  Future<void> showDetails() async {
+    emit(state.copyWith(unhiddenDetails: !state.unhiddenDetails));
+  }
 
   @override
   Future<void> close() {
     _streamSubscription?.cancel();
+    _voyagersStreamSubscription?.cancel();
+    _voyagesStreamSubscription?.cancel();
+    _expensesStreamSubscription?.cancel();
     return super.close();
   }
 }

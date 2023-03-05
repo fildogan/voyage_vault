@@ -80,6 +80,7 @@ class VoyagesRepository {
     required DateTime endDate,
     required String location,
     required String description,
+    required List<String> voyagers,
   }) async {
     final userID = FirebaseAuth.instance.currentUser?.uid;
     if (userID == null) {
@@ -97,6 +98,7 @@ class VoyagesRepository {
       'enddate': endDate,
       'location': location,
       'description': description,
+      'voyagers': voyagers,
     });
   }
 
@@ -160,5 +162,38 @@ class VoyagesRepository {
     return getVoyagesStream().map((voyages) {
       return voyages.map((voyage) => voyage.title).toList();
     });
+  }
+
+  Stream<VoyageModel> getVoyageStreamById(String id) {
+    final userID = FirebaseAuth.instance.currentUser?.uid;
+    if (userID == null) {
+      throw Exception('User is not logged in');
+    }
+    return FirebaseFirestore.instance
+        .collection('users')
+        .doc(userID)
+        .collection('voyages')
+        .doc(id)
+        .snapshots()
+        .map(
+      (docSnapshot) {
+        return VoyageModel(
+          id: docSnapshot.id,
+          title: docSnapshot['title'].toString(),
+          budget: docSnapshot.data().toString().contains('budget')
+              ? double.parse(docSnapshot['budget'].toString())
+              : 0.00,
+          startDate: (docSnapshot['startdate'] as Timestamp).toDate(),
+          endDate: (docSnapshot['enddate'] as Timestamp).toDate(),
+          location: docSnapshot.data().toString().contains('location')
+              ? docSnapshot['location'].toString()
+              : '',
+          description: docSnapshot.data().toString().contains('description')
+              ? docSnapshot['description'].toString()
+              : '',
+          voyagers: List.from(docSnapshot['voyagers']),
+        );
+      },
+    );
   }
 }

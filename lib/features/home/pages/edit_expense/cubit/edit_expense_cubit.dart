@@ -8,7 +8,9 @@ import 'package:voyage_vault/app/core/enums.dart';
 import 'package:voyage_vault/data/data_sources/local_data_sources/expense_category_list.dart';
 import 'package:voyage_vault/domain/models/expense_model.dart';
 import 'package:voyage_vault/domain/models/voyage_model.dart';
+import 'package:voyage_vault/domain/models/voyager_model.dart';
 import 'package:voyage_vault/domain/repositories/expenses_repository.dart';
+import 'package:voyage_vault/domain/repositories/voyager_repository.dart';
 import 'package:voyage_vault/domain/repositories/voyages_repository.dart';
 
 part 'edit_expense_state.dart';
@@ -16,32 +18,47 @@ part 'edit_expense_cubit.freezed.dart';
 
 @injectable
 class EditExpenseCubit extends Cubit<EditExpenseState> {
-  EditExpenseCubit(this._voyagesRepository, this._expensesRepository)
+  EditExpenseCubit(this._voyagesRepository, this._expensesRepository,
+      this._voyagersRepository)
       : super(EditExpenseState());
 
   final VoyagesRepository _voyagesRepository;
 
   final ExpensesRepository _expensesRepository;
 
+  final VoyagersRepository _voyagersRepository;
+
   StreamSubscription? _streamSubscription;
 
   Future<void> start({
     required ExpenseModel expenseModel,
     required VoyageModel voyageModel,
+    VoyagerModel? voyagerModel,
   }) async {
     emit(state.copyWith(status: Status.loading));
-    await setValues(expenseModel: expenseModel, voyageModel: voyageModel);
-    await getVoyageTitleStream();
+    setValues(
+        expenseModel: expenseModel,
+        voyageModel: voyageModel,
+        voyagerModel: voyagerModel);
+
+    await getVoyagesStream();
+    await getVoyagerStream();
     emit(state.copyWith(status: Status.success));
   }
 
-  Future<void> getVoyageTitleStream() async {
-    _streamSubscription = _voyagesRepository
-        .getVoyagesStream()
-        .map((voyages) => voyages.map((voyage) => voyage.title).toList())
-        .listen(
-            (voyageTitles) => emit(state.copyWith(voyageTitles: voyageTitles)))
-      ..onError(
+  Future<void> getVoyagesStream() async {
+    emit(
+      state.copyWith(
+        status: Status.loading,
+      ),
+    );
+    _streamSubscription = _voyagesRepository.getVoyagesStream().listen(
+          (voyages) => emit(
+            state.copyWith(
+              voyages: voyages,
+            ),
+          ),
+        )..onError(
         (error) => emit(
           EditExpenseState(
             status: Status.error,
@@ -51,39 +68,72 @@ class EditExpenseCubit extends Cubit<EditExpenseState> {
       );
   }
 
+  Future<void> getVoyagerStream() async {
+    emit(state.copyWith(voyagerIdList: state.voyage?.voyagers ?? []));
+    _streamSubscription =
+        _voyagersRepository.getVoyagersStream().map((voyagers) {
+      // Set isSelected to true for voyagers in selectedVoyagers list
+      final updatedVoyagers = voyagers.map((voyager) {
+        if (state.voyagerIdList.contains(voyager.id)) {
+          return voyager;
+        }
+        return voyager.copyWith(isSelected: false);
+      }).toList();
+      return updatedVoyagers
+          .where((voyager) => voyager.isSelected == null)
+          .toList();
+    }).listen((voyagers) => emit(state.copyWith(voyagers: voyagers)))
+          ..onError(
+            (error) => emit(
+              EditExpenseState(
+                status: Status.error,
+                errorMessage: error.toString(),
+              ),
+            ),
+          );
+  }
+
   Future<void> setValues(
       {required ExpenseModel expenseModel,
-      required VoyageModel voyageModel}) async {
+      required VoyageModel voyageModel,
+      VoyagerModel? voyagerModel}) async {
     emit(
       state.copyWith(
-          expenseId: expenseModel.id,
-          name: expenseModel.name,
-          price: expenseModel.price,
-          dateAdded: expenseModel.dateAdded,
-          category: expenseModel.category,
-          voyageTitle: voyageModel.title),
+        voyager: voyagerModel,
+        // initialVoyagerId: voyagerModel?.id ?? '',
+        expenseId: expenseModel.id,
+        name: expenseModel.name,
+        price: expenseModel.price,
+        dateAdded: expenseModel.dateAdded,
+        category: expenseModel.category,
+        voyageTitle: voyageModel.title,
+        voyage: voyageModel,
+        expense: expenseModel,
+        voyagerIdList: voyageModel.voyagers ?? [],
+      ),
     );
   }
 
   Future<void> update() async {
-    final voyageId =
-        await _voyagesRepository.getVoyageIdByTitle(state.voyageTitle);
-
-    emit(state.copyWith(formStatus: FormStatus.submitting));
+    emit(state.copyWith(
+        formStatus: FormStatus.submitting, status: Status.loading));
     try {
-      await _expensesRepository.update(
-        id: state.expenseId,
-        name: state.name,
-        price: state.price,
-        dateAdded: state.dateAdded!,
-        category: state.category,
-        voyageId: voyageId,
-      );
-      emit(
-        state.copyWith(
-            formStatus: FormStatus.success,
-            successMessage: '${state.name} updated'),
-      );
+      if (state.voyage != null && state.voyager != null) {
+        await _expensesRepository.update(
+          id: state.expenseId,
+          name: state.name,
+          price: state.price,
+          dateAdded: state.dateAdded!,
+          category: state.category,
+          voyageId: state.voyage!.id,
+          voyagerId: state.voyager!.id,
+        );
+        emit(
+          state.copyWith(
+              formStatus: FormStatus.success,
+              successMessage: '${state.name} updated'),
+        );
+      }
     } catch (error) {
       emit(
         EditExpenseState(
@@ -119,10 +169,17 @@ class EditExpenseCubit extends Cubit<EditExpenseState> {
     emit(state.copyWith(category: category));
   }
 
-  Future<void> changeVoyageTitle({
-    required String voyageTitle,
+  Future<void> changeVoyage({
+    required VoyageModel voyage,
   }) async {
-    emit(state.copyWith(voyageTitle: voyageTitle));
+    emit(state.copyWith(voyage: voyage, voyager: null));
+    await getVoyagerStream();
+  }
+
+  Future<void> changeVoyager({
+    required VoyagerModel voyager,
+  }) async {
+    emit(state.copyWith(voyager: voyager));
   }
 
   @override

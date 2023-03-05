@@ -4,8 +4,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:voyage_vault/app/core/enums.dart';
 import 'package:voyage_vault/app/injection_container.dart';
 import 'package:voyage_vault/components/add_edit_app_bar.dart';
-import 'package:voyage_vault/components/text_form_field_decoration.dart';
+import 'package:voyage_vault/components/add_edit_form_body.dart';
+import 'package:voyage_vault/components/add_edit_listener.dart';
+import 'package:voyage_vault/components/status_switch_case.dart';
+import 'package:voyage_vault/components/form_field_decoration.dart';
 import 'package:voyage_vault/domain/models/voyage_model.dart';
+import 'package:voyage_vault/domain/models/voyager_model.dart';
 import 'package:voyage_vault/features/home/pages/add_expense/cubit/add_expense_cubit.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -19,42 +23,19 @@ class AddExpensePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void Function()? saveExpense;
     return BlocProvider<AddExpenseCubit>(
       create: (context) => getIt<AddExpenseCubit>()..start(voyageModel),
-      child: BlocListener<AddExpenseCubit, AddExpenseState>(
+      child: BlocConsumer<AddExpenseCubit, AddExpenseState>(
         listener: (context, state) {
-          if (state.formStatus == FormStatus.success) {
-            Navigator.of(context).pop();
-          }
-          if (state.errorMessage != null) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  state.errorMessage ?? 'Unknown error',
-                ),
-                backgroundColor: Colors.red,
-              ),
-            );
-          }
-          if (state.successMessage != null) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Row(
-                  children: [
-                    const Icon(Icons.done),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Text(state.successMessage ?? 'Success')
-                  ],
-                ),
-              ),
-            );
-          }
+          AddEditListener(
+            context: context,
+            formStatus: state.formStatus,
+            errorMessage: state.errorMessage,
+            successMessage: state.successMessage,
+          ).listen();
         },
-        child: BlocBuilder<AddExpenseCubit, AddExpenseState>(
-            builder: (context, state) {
+        builder: (context, state) {
+          void Function()? saveExpense;
           saveExpense = state.formStatus == FormStatus.initial
               ? () {
                   if (formKey.currentState!.validate()) {
@@ -67,11 +48,12 @@ class AddExpensePage extends StatelessWidget {
                 title: AppLocalizations.of(context).addExpense,
                 saveAction: saveExpense,
                 appBar: AppBar(),
+                formStatus: state.formStatus,
               ),
               body: _AddExpensePageBody(
                 formKey: formKey,
               ));
-        }),
+        },
       ),
     );
   }
@@ -86,29 +68,34 @@ class _AddExpensePageBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Form(
-        key: formKey,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ListView(
+    return BlocBuilder<AddExpenseCubit, AddExpenseState>(
+      builder: (context, state) {
+        return StatusSwitchCase(
+          context: context,
+          status: state.status,
+          ifCheck: state.voyages.isEmpty,
+          ifTrueMessage: 'No voyages found, add a voyage first',
+          errorMessage: state.errorMessage,
+          child: () => AddEditFormBody(
+            formKey: formKey,
             children: [
-              _nameField(),
-              _priceField(),
-              _categoryField(),
-              _voyageField()
+              nameField(),
+              priceField(),
+              categoryField(),
+              voyageField(),
+              voyagerField(),
             ],
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
-  Widget _nameField() {
+  Widget nameField() {
     return BlocBuilder<AddExpenseCubit, AddExpenseState>(
       builder: (context, state) {
         return TextFormField(
-          decoration: textFormFieldDecoration(
+          decoration: formFieldDecoration(
             context,
             labelText: AppLocalizations.of(context).expenseName,
           ),
@@ -123,12 +110,12 @@ class _AddExpensePageBody extends StatelessWidget {
     );
   }
 
-  Widget _priceField() {
+  Widget priceField() {
     return BlocBuilder<AddExpenseCubit, AddExpenseState>(
       builder: (context, state) {
         return TextFormField(
           textAlign: TextAlign.start,
-          decoration: textFormFieldDecoration(
+          decoration: formFieldDecoration(
             context,
             labelText: AppLocalizations.of(context).price,
           ),
@@ -150,12 +137,12 @@ class _AddExpensePageBody extends StatelessWidget {
     );
   }
 
-  Widget _categoryField() {
+  Widget categoryField() {
     return BlocBuilder<AddExpenseCubit, AddExpenseState>(
       builder: (context, state) {
         return DropdownButtonFormField<String>(
           value: state.category,
-          decoration: textFormFieldDecoration(
+          decoration: formFieldDecoration(
             context,
             labelText: AppLocalizations.of(context).category,
           ),
@@ -181,33 +168,87 @@ class _AddExpensePageBody extends StatelessWidget {
     );
   }
 
-  Widget _voyageField() {
+  Widget voyageField() {
     return BlocBuilder<AddExpenseCubit, AddExpenseState>(
       builder: (context, state) {
-        return DropdownButtonFormField<String>(
-          value: state.voyageTitle,
-          decoration: textFormFieldDecoration(
+        return DropdownButtonFormField<VoyageModel>(
+          value: state.voyage,
+          decoration: formFieldDecoration(
             context,
             labelText: AppLocalizations.of(context).voyage,
           ),
           items: [
-            ...state.voyageTitles.map(
-              (String voyage) {
+            ...state.voyages.map(
+              (VoyageModel voyage) {
                 return DropdownMenuItem(
                   value: voyage,
                   child: Text(
-                    voyage[0].toUpperCase() + voyage.substring(1),
+                    voyage.title[0].toUpperCase() + voyage.title.substring(1),
                   ),
                 );
               },
             )
           ],
-          onChanged: ((value) => context
-              .read<AddExpenseCubit>()
-              .changeVoyageTitle(voyageTitle: value!)),
+          onChanged: ((value) =>
+              context.read<AddExpenseCubit>().changeVoyage(voyage: value!)),
           validator: (value) => state.isVoyageValid
               ? null
               : AppLocalizations.of(context).pleaseChooseVoyage,
+        );
+      },
+    );
+  }
+
+  Widget voyagerField() {
+    return BlocBuilder<AddExpenseCubit, AddExpenseState>(
+      builder: (context, state) {
+        return IgnorePointer(
+          ignoring: state.voyage == null,
+          child: DropdownButtonFormField<VoyagerModel>(
+            value: state.voyager,
+            decoration: formFieldDecoration(context,
+                labelText: AppLocalizations.of(context).voyager,
+                enabled: state.voyage != null),
+            items: (state.voyage == null ||
+                    state.voyage?.voyagers == null ||
+                    state.voyagers.isEmpty)
+                ? [
+                    const DropdownMenuItem(
+                      child: Text('Choose a voyage first'),
+                    )
+                  ]
+                : [
+                    ...state.voyagers.map(
+                      (VoyagerModel voyager) {
+                        return DropdownMenuItem(
+                          value: voyager,
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.person,
+                                color: voyager.color,
+                              ),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                voyager.name[0].toUpperCase() +
+                                    voyager.name.substring(1),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+
+            onChanged: ((value) =>
+                context.read<AddExpenseCubit>().changeVoyager(voyager: value!)),
+
+            // validator: (value) => state.isVoyageValid
+            //     ? null
+            //     : AppLocalizations.of(context).pleaseChooseVoyage,
+          ),
         );
       },
     );

@@ -22,9 +22,10 @@ class VoyagersRepository {
         return querySnapshot.docs.map(
           (doc) {
             return VoyagerModel(
-                id: doc.id,
-                name: doc['name'].toString(),
-                color: HexColor.fromHex(doc['color'].toString()));
+              id: doc.id,
+              name: doc['name'].toString(),
+              color: Color(doc['color']),
+            );
           },
         ).toList();
       },
@@ -47,7 +48,7 @@ class VoyagersRepository {
         .collection('voyagers')
         .add({
       'name': name,
-      'color': color.value.toRadixString(16),
+      'color': color.value,
     });
   }
 
@@ -67,7 +68,7 @@ class VoyagersRepository {
         .doc(id)
         .update({
       'name': name,
-      'color': color.toString(),
+      'color': color.value,
     });
   }
 
@@ -117,7 +118,7 @@ class VoyagersRepository {
     return VoyagerModel(
       id: doc.id,
       name: doc['name'].toString(),
-      color: doc['color'].toColor(),
+      color: Color(doc['color']),
     );
   }
 
@@ -146,29 +147,13 @@ class VoyagersRepository {
             .map(
           (doc) {
             return VoyagerModel(
-                id: doc.id,
-                name: doc['name'].toString(),
-                color: HexColor.fromHex(doc['color'].toString()));
+              id: doc.id,
+              name: doc['name'].toString(),
+              color: Color(doc['color']),
+            );
           },
         ).toList();
       },
     );
   }
-}
-
-extension HexColor on Color {
-  /// String is in the format "aabbcc" or "ffaabbcc" with an optional leading "#".
-  static Color fromHex(String hexString) {
-    final buffer = StringBuffer();
-    if (hexString.length == 6 || hexString.length == 7) buffer.write('ff');
-    buffer.write(hexString.replaceFirst('#', ''));
-    return Color(int.parse(buffer.toString(), radix: 16));
-  }
-
-  /// Prefixes a hash sign if [leadingHashSign] is set to `true` (default is `true`).
-  String toHex({bool leadingHashSign = true}) => '${leadingHashSign ? '#' : ''}'
-      '${alpha.toRadixString(16).padLeft(2, '0')}'
-      '${red.toRadixString(16).padLeft(2, '0')}'
-      '${green.toRadixString(16).padLeft(2, '0')}'
-      '${blue.toRadixString(16).padLeft(2, '0')}';
 }

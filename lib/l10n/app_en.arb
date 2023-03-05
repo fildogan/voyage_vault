@@ -69,5 +69,12 @@
   "pleaseEnterVoyageDestination": "Please enter voyage destination",
   "pleaseEnterBudgetAmount": "Please enter budget amount",
   "pleaseChooseDate": "Please choose a date",
-  "endDateShouldComeAfter": "End date should come after the start date"
+  "endDateShouldComeAfter": "End date should come after the start date",
+
+  "editVoyage": "Edit Voyage",
+  "editVoyager": "Edit Voyager",
+  "color": "Color",
+  "titleExists": "Title already exists",
+  "nameExists": "Name already exists"
+
 }

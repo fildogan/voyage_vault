@@ -6,7 +6,9 @@ import 'package:injectable/injectable.dart';
 import 'package:voyage_vault/app/core/enums.dart';
 import 'package:voyage_vault/data/data_sources/local_data_sources/expense_category_list.dart';
 import 'package:voyage_vault/domain/models/voyage_model.dart';
+import 'package:voyage_vault/domain/models/voyager_model.dart';
 import 'package:voyage_vault/domain/repositories/expenses_repository.dart';
+import 'package:voyage_vault/domain/repositories/voyager_repository.dart';
 import 'package:voyage_vault/domain/repositories/voyages_repository.dart';
 
 part 'add_expense_state.dart';
@@ -14,34 +16,50 @@ part 'add_expense_cubit.freezed.dart';
 
 @injectable
 class AddExpenseCubit extends Cubit<AddExpenseState> {
-  AddExpenseCubit(this._voyagesRepository, this._expensesRepository)
+  AddExpenseCubit(this._voyagesRepository, this._expensesRepository,
+      this._voyagersRepository)
       : super(AddExpenseState());
 
   final VoyagesRepository _voyagesRepository;
 
   final ExpensesRepository _expensesRepository;
 
+  final VoyagersRepository _voyagersRepository;
+
   StreamSubscription? _streamSubscription;
 
   Future<void> start(VoyageModel? voyageModel) async {
-    emit(state.copyWith(voyageTitle: voyageModel?.title));
-    await getVoyageTitleStream();
+    emit(state.copyWith(
+        voyage: voyageModel, voyagerIdList: voyageModel?.voyagers ?? []));
+    await getVoyagesStream();
+    if (state.voyage != null) {
+      await getVoyagerStream();
+    }
     emit(state.copyWith(status: Status.success));
   }
 
   Future<void> add() async {
-    final voyageId =
-        await _voyagesRepository.getVoyageIdByTitle(state.voyageTitle!);
-    emit(state.copyWith(formStatus: FormStatus.submitting));
+    emit(state.copyWith(
+        formStatus: FormStatus.submitting, status: Status.loading));
     try {
-      await _expensesRepository.add(
-          state.name, voyageId, state.price, state.category!);
-      emit(state.copyWith(
-          formStatus: FormStatus.success,
-          successMessage: '${state.name} added'));
+      if (state.voyage != null &&
+          state.category != null &&
+          state.voyager != null) {
+        await _expensesRepository.add(
+          name: state.name,
+          voyageId: state.voyage!.id,
+          price: state.price,
+          category: state.category!,
+          voyagerId: state.voyager!.id,
+        );
+        emit(state.copyWith(
+            formStatus: FormStatus.success,
+            successMessage: '${state.name} added'));
+      }
     } catch (error) {
       emit(
         AddExpenseState(
+          formStatus: FormStatus.error,
           status: Status.error,
           errorMessage: error.toString(),
         ),
@@ -53,26 +71,21 @@ class AddExpenseCubit extends Cubit<AddExpenseState> {
     emit(
       state.copyWith(
         errorMessage: errorMessage,
-        status: state.status,
-        voyageTitles: state.voyageTitles,
       ),
     );
   }
 
-  Future<void> getVoyageTitleStream() async {
+  Future<void> getVoyagesStream() async {
     emit(
       state.copyWith(
         status: Status.loading,
       ),
     );
-    _streamSubscription = _voyagesRepository
-        .getVoyagesStream()
-        .map((voyages) => voyages.map((voyage) => voyage.title).toList())
-        .listen(
-          (voyageTitles) => emit(
+    _streamSubscription = _voyagesRepository.getVoyagesStream().listen(
+          (voyages) => emit(
             state.copyWith(
               status: Status.success,
-              voyageTitles: voyageTitles,
+              voyages: voyages,
             ),
           ),
         )..onError(
@@ -83,6 +96,31 @@ class AddExpenseCubit extends Cubit<AddExpenseState> {
           ),
         ),
       );
+  }
+
+  Future<void> getVoyagerStream() async {
+    emit(state.copyWith(voyagerIdList: state.voyage?.voyagers ?? []));
+    _streamSubscription =
+        _voyagersRepository.getVoyagersStream().map((voyagers) {
+      // Set isSelected to true for voyagers in selectedVoyagers list
+      final updatedVoyagers = voyagers.map((voyager) {
+        if (state.voyagerIdList.contains(voyager.id)) {
+          return voyager.copyWith(isSelected: true);
+        }
+        return voyager.copyWith(isSelected: false);
+      }).toList();
+      return updatedVoyagers
+          .where((voyager) => voyager.isSelected == true)
+          .toList();
+    }).listen((voyagers) => emit(state.copyWith(voyagers: voyagers)))
+          ..onError(
+            (error) => emit(
+              AddExpenseState(
+                status: Status.error,
+                errorMessage: error.toString(),
+              ),
+            ),
+          );
   }
 
   Future<void> changeName({
@@ -103,10 +141,17 @@ class AddExpenseCubit extends Cubit<AddExpenseState> {
     emit(state.copyWith(category: category));
   }
 
-  Future<void> changeVoyageTitle({
-    required String voyageTitle,
+  Future<void> changeVoyage({
+    required VoyageModel voyage,
   }) async {
-    emit(state.copyWith(voyageTitle: voyageTitle));
+    emit(state.copyWith(voyage: voyage, voyager: null));
+    await getVoyagerStream();
+  }
+
+  Future<void> changeVoyager({
+    required VoyagerModel voyager,
+  }) async {
+    emit(state.copyWith(voyager: voyager));
   }
 
   @override

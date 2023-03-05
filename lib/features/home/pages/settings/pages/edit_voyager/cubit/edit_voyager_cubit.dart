@@ -8,46 +8,49 @@ import 'package:voyage_vault/app/core/enums.dart';
 import 'package:voyage_vault/domain/models/voyager_model.dart';
 import 'package:voyage_vault/domain/repositories/voyager_repository.dart';
 
-part 'add_voyager_state.dart';
-part 'add_voyager_cubit.freezed.dart';
+part 'edit_voyager_state.dart';
+part 'edit_voyager_cubit.freezed.dart';
 
 @injectable
-class AddVoyagerCubit extends Cubit<AddVoyagerState> {
-  AddVoyagerCubit(
+class EditVoyagerCubit extends Cubit<EditVoyagerState> {
+  EditVoyagerCubit(
     this._voyagersRepository,
-  ) : super(AddVoyagerState());
+  ) : super(EditVoyagerState());
 
   final VoyagersRepository _voyagersRepository;
 
   StreamSubscription? _streamSubscription;
 
-  Future<void> start() async {
+  Future<void> start({required VoyagerModel voyagerModel}) async {
     emit(state.copyWith(status: Status.loading));
+
+    emit(state.copyWith(voyager: voyagerModel, initialName: voyagerModel.name));
 
     await getVoyagersStream();
 
     emit(state.copyWith(status: Status.success));
   }
 
-  Future<void> add() async {
+  Future<void> update() async {
     emit(state.copyWith(
       formStatus: FormStatus.submitting,
       status: Status.loading,
     ));
 
     try {
-      await _voyagersRepository.add(
-        name: state.voyagerName ?? 'NoName',
-        color: state.voyagerColor ?? Colors.green,
+      await _voyagersRepository.update(
+        id: state.voyager?.id ?? '',
+        name: state.voyager?.name ?? 'NoName',
+        color: state.voyager?.color ?? Colors.green,
       );
       emit(state.copyWith(
         formStatus: FormStatus.success,
-        status: Status.success,
       ));
     } catch (error) {
       emit(
-        AddVoyagerState(
+        EditVoyagerState(
           status: Status.error,
+          formStatus: FormStatus.error,
           errorMessage: error.toString(),
         ),
       );
@@ -68,7 +71,7 @@ class AddVoyagerCubit extends Cubit<AddVoyagerState> {
           ),
         )..onError(
         (error) => emit(
-          AddVoyagerState(
+          EditVoyagerState(
             status: Status.error,
             errorMessage: error.toString(),
           ),
@@ -79,13 +82,13 @@ class AddVoyagerCubit extends Cubit<AddVoyagerState> {
   Future<void> changeName({
     required String name,
   }) async {
-    emit(state.copyWith(voyagerName: name));
+    emit(state.copyWith(voyager: state.voyager?.copyWith(name: name)));
   }
 
   Future<void> changeColor({
     required Color color,
   }) async {
-    emit(state.copyWith(voyagerColor: color));
+    emit(state.copyWith(voyager: state.voyager?.copyWith(color: color)));
   }
 
   @override

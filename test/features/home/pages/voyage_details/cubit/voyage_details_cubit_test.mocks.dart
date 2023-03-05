@@ -97,6 +97,7 @@ class MockVoyagesRepository extends _i1.Mock implements _i4.VoyagesRepository {
     required DateTime? endDate,
     required String? location,
     required String? description,
+    required List<String>? voyagers,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -110,6 +111,7 @@ class MockVoyagesRepository extends _i1.Mock implements _i4.VoyagesRepository {
             #endDate: endDate,
             #location: location,
             #description: description,
+            #voyagers: voyagers,
           },
         ),
         returnValue: _i5.Future<void>.value(),
@@ -165,6 +167,16 @@ class MockVoyagesRepository extends _i1.Mock implements _i4.VoyagesRepository {
         returnValue: _i5.Stream<List<String>>.empty(),
         returnValueForMissingStub: _i5.Stream<List<String>>.empty(),
       ) as _i5.Stream<List<String>>);
+  @override
+  _i5.Stream<_i2.VoyageModel> getVoyageStreamById(String? id) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getVoyageStreamById,
+          [id],
+        ),
+        returnValue: _i5.Stream<_i2.VoyageModel>.empty(),
+        returnValueForMissingStub: _i5.Stream<_i2.VoyageModel>.empty(),
+      ) as _i5.Stream<_i2.VoyageModel>);
 }
 
 /// A class which mocks [ExpensesRepository].
@@ -184,21 +196,24 @@ class MockExpensesRepository extends _i1.Mock
         returnValueForMissingStub: _i5.Stream<List<_i7.ExpenseModel>>.empty(),
       ) as _i5.Stream<List<_i7.ExpenseModel>>);
   @override
-  _i5.Future<void> add(
-    String? name,
-    String? voyageId,
-    double? price,
-    String? category,
-  ) =>
+  _i5.Future<void> add({
+    required String? name,
+    required String? voyageId,
+    required double? price,
+    required String? category,
+    required String? voyagerId,
+  }) =>
       (super.noSuchMethod(
         Invocation.method(
           #add,
-          [
-            name,
-            voyageId,
-            price,
-            category,
-          ],
+          [],
+          {
+            #name: name,
+            #voyageId: voyageId,
+            #price: price,
+            #category: category,
+            #voyagerId: voyagerId,
+          },
         ),
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
@@ -232,6 +247,7 @@ class MockExpensesRepository extends _i1.Mock
     required DateTime? dateAdded,
     required String? category,
     required String? voyageId,
+    required String? voyagerId,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -244,6 +260,7 @@ class MockExpensesRepository extends _i1.Mock
             #dateAdded: dateAdded,
             #category: category,
             #voyageId: voyageId,
+            #voyagerId: voyagerId,
           },
         ),
         returnValue: _i5.Future<void>.value(),

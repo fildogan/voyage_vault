@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:voyage_vault/components/add_edit_form_body.dart';
+import 'package:voyage_vault/components/status_switch_case.dart';
+import 'package:voyage_vault/components/form_field_decoration.dart';
 import 'package:voyage_vault/domain/models/expense_model.dart';
+import 'package:voyage_vault/domain/models/voyage_model.dart';
+import 'package:voyage_vault/domain/models/voyager_model.dart';
 import 'package:voyage_vault/features/global_widgets/select_date_form_field.dart';
 import 'package:voyage_vault/features/home/pages/edit_expense/cubit/edit_expense_cubit.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -20,87 +25,78 @@ class EditExpensePageBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Form(
-        key: formKey,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ListView(
-            children: [
-              _nameField(),
-              _priceField(),
-              _dateField(),
-              _categoryField(),
-              _voyageField()
-            ],
-          ),
-        ),
-      ),
+    return BlocBuilder<EditExpenseCubit, EditExpenseState>(
+      builder: (context, state) {
+        return StatusSwitchCase(
+            context: context,
+            child: () => AddEditFormBody(
+                  formKey: formKey,
+                  children: [
+                    _nameField(),
+                    _priceField(),
+                    _dateField(),
+                    _categoryField(),
+                    voyageField(),
+                    voyagerField(),
+                  ],
+                ),
+            status: state.status,
+            ifCheck: state.voyages.isEmpty,
+            ifTrueMessage: 'No voyages found',
+            errorMessage: state.errorMessage);
+      },
     );
   }
 
-  Widget _voyageField() {
+  Widget _nameField() {
     return BlocBuilder<EditExpenseCubit, EditExpenseState>(
       builder: (context, state) {
-        return DropdownButtonFormField<String>(
-          value: state.voyageTitle,
+        return TextFormField(
+          initialValue: expenseModel.name,
+          onChanged: (value) {
+            context.read<EditExpenseCubit>().changeName(name: value);
+          },
           decoration: InputDecoration(
             border: const UnderlineInputBorder(),
-            labelText: AppLocalizations.of(context).voyage,
+            labelText: AppLocalizations.of(context).expenseName,
             contentPadding: const EdgeInsets.all(10),
           ),
-          items: [
-            ...state.voyageTitles.map(
-              (String voyage) {
-                return DropdownMenuItem(
-                  value: voyage,
-                  child: Text(
-                    voyage[0].toUpperCase() + voyage.substring(1),
-                  ),
-                );
-              },
-            )
-          ],
-          onChanged: ((value) => context
-              .read<EditExpenseCubit>()
-              .changeVoyageTitle(voyageTitle: value ?? state.voyageTitle)),
+          validator: (value) => state.isNameValid
+              ? null
+              : AppLocalizations.of(context).pleaseEnterExpenseName,
         );
       },
     );
   }
 
-  // Widget _dateField() {
-  //   return BlocBuilder<EditExpenseCubit, EditExpenseState>(
-  //     builder: (context, state) {
-  //       return TextFormField(
-  //         controller: TextEditingController(text: state.dateAddedFormated),
-  //         decoration: InputDecoration(
-  //           border: const UnderlineInputBorder(),
-  //           icon: const Icon(
-  //             Icons.calendar_today,
-  //           ),
-  //           labelText: AppLocalizations.of(context).spentDate,
-  //           contentPadding: const EdgeInsets.all(10),
-  //         ),
-  //         readOnly: true, // when true user cannot edit text
-  //         onTap: () async {
-  //           await showDatePicker(
-  //             context: context,
-  //             initialDate: state.dateAdded ?? DateTime.now(),
-  //             firstDate: DateTime(2020),
-  //             lastDate: DateTime.now().add(const Duration(days: 365 * 10)),
-  //           ).then((selectedDate) {
-  //             if (selectedDate != null) {
-  //               context
-  //                   .read<EditExpenseCubit>()
-  //                   .changeDateAdded(dateAdded: selectedDate);
-  //             }
-  //           });
-  //         },
-  //       );
-  //     },
-  //   );
-  // }
+  Widget _priceField() {
+    return BlocBuilder<EditExpenseCubit, EditExpenseState>(
+      builder: (context, state) {
+        return TextFormField(
+          initialValue: expenseModel.price.toString(),
+          textAlign: TextAlign.start,
+          decoration: InputDecoration(
+            border: const UnderlineInputBorder(),
+            labelText: AppLocalizations.of(context).price,
+            contentPadding: const EdgeInsets.all(10),
+          ),
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(
+              RegExp(r'^\d*\.?\d{0,2}'),
+            ),
+          ],
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          onChanged: (value) {
+            final price = double.tryParse(value);
+            context.read<EditExpenseCubit>().changePrice(price: price ?? 0);
+          },
+          validator: (value) => state.isPriceValid
+              ? null
+              : AppLocalizations.of(context).pleaseEnterExpenseAmount,
+        );
+      },
+    );
+  }
 
   Widget _dateField() {
     return BlocBuilder<EditExpenseCubit, EditExpenseState>(
@@ -150,51 +146,88 @@ class EditExpensePageBody extends StatelessWidget {
     );
   }
 
-  Widget _priceField() {
+  Widget voyageField() {
     return BlocBuilder<EditExpenseCubit, EditExpenseState>(
       builder: (context, state) {
-        return TextFormField(
-          initialValue: expenseModel.price.toString(),
-          textAlign: TextAlign.start,
-          decoration: InputDecoration(
-            border: const UnderlineInputBorder(),
-            labelText: AppLocalizations.of(context).price,
-            contentPadding: const EdgeInsets.all(10),
+        return DropdownButtonFormField<VoyageModel>(
+          value: state.voyage,
+          decoration: formFieldDecoration(
+            context,
+            labelText: AppLocalizations.of(context).voyage,
           ),
-          inputFormatters: [
-            FilteringTextInputFormatter.allow(
-              RegExp(r'^\d*\.?\d{0,2}'),
-            ),
+          items: [
+            ...state.voyages.map(
+              (VoyageModel voyage) {
+                return DropdownMenuItem(
+                  value: voyage,
+                  child: Text(
+                    voyage.title[0].toUpperCase() + voyage.title.substring(1),
+                  ),
+                );
+              },
+            )
           ],
-          keyboardType: const TextInputType.numberWithOptions(decimal: true),
-          onChanged: (value) {
-            final price = double.tryParse(value);
-            context.read<EditExpenseCubit>().changePrice(price: price ?? 0);
-          },
-          validator: (value) => state.isPriceValid
+          onChanged: ((value) =>
+              context.read<EditExpenseCubit>().changeVoyage(voyage: value!)),
+          validator: (value) => state.isVoyageValid
               ? null
-              : AppLocalizations.of(context).pleaseEnterExpenseAmount,
+              : AppLocalizations.of(context).pleaseChooseVoyage,
         );
       },
     );
   }
 
-  Widget _nameField() {
+  Widget voyagerField() {
     return BlocBuilder<EditExpenseCubit, EditExpenseState>(
       builder: (context, state) {
-        return TextFormField(
-          initialValue: expenseModel.name,
-          onChanged: (value) {
-            context.read<EditExpenseCubit>().changeName(name: value);
-          },
-          decoration: InputDecoration(
-            border: const UnderlineInputBorder(),
-            labelText: AppLocalizations.of(context).expenseName,
-            contentPadding: const EdgeInsets.all(10),
+        return IgnorePointer(
+          ignoring: state.voyage == null,
+          child: DropdownButtonFormField<VoyagerModel>(
+            value: state.voyager,
+            decoration: formFieldDecoration(context,
+                labelText: AppLocalizations.of(context).voyager,
+                enabled: state.voyage != null),
+            items: (state.voyage == null ||
+                    state.voyage?.voyagers == null ||
+                    state.voyagers.isEmpty)
+                ? [
+                    const DropdownMenuItem(
+                      child: Text('Choose a voyage first'),
+                    )
+                  ]
+                : [
+                    ...state.voyagers.map(
+                      (VoyagerModel voyager) {
+                        return DropdownMenuItem(
+                          value: voyager,
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.person,
+                                color: voyager.color,
+                              ),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                voyager.name[0].toUpperCase() +
+                                    voyager.name.substring(1),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+
+            onChanged: ((value) => context
+                .read<EditExpenseCubit>()
+                .changeVoyager(voyager: value!)),
+
+            // validator: (value) => state.isVoyageValid
+            //     ? null
+            //     : AppLocalizations.of(context).pleaseChooseVoyage,
           ),
-          validator: (value) => state.isNameValid
-              ? null
-              : AppLocalizations.of(context).pleaseEnterExpenseName,
         );
       },
     );
